@@ -2,6 +2,8 @@ var express = require("express");
 var mysql = require("mysql");
 var bodyParser = require("body-parser");
 var app = express();
+var cors = require("cors");
+var jwt = require("jsonwebtoken");
 var apiRoutes = express.Router();
 app.use(bodyParser.json()); // for å tolke JSON
 const ServerDao = require("./dao/serverDao.js");
@@ -31,8 +33,8 @@ var transporter = nodemailer.createTransport({
 let dao = new ServerDao(pool);
 
 //Get one user
-app.get("/bruker/:email", (req, res) => {
-    console.log("/bruker/:brukernavn: fikk request fra klient");
+app.get("/user/:email", (req, res) => {
+    console.log("/user/:username: fikk request fra klient");
     dao.getUser(req.params.email, (status, data) => {
         res.status(status);
         res.json(data);
@@ -40,16 +42,16 @@ app.get("/bruker/:email", (req, res) => {
 });
 
 //Get one event
-app.get("/arrangement/:arr_id", (req, res) => {
-    console.log("/arrangement/:id: fikk request fra klient");
-    dao.getEvent(req.params.arr_id, (status, data) => {
+app.get("/event/:event_id", (req, res) => {
+    console.log("/event/:id: fikk request fra klient");
+    dao.getEvent(req.params.event_id, (status, data) => {
         res.status(status);
         res.json(data);
     });
 });
 
 //post a user
-app.post("/bruker", (req, res) => {
+app.post("/user", (req, res) => {
     console.log("Fikk POST-request fra klienten");
 
     let user = req.body;
@@ -62,7 +64,7 @@ app.post("/bruker", (req, res) => {
 });
 
 //post an event
-app.post("/arrangement", (req, res) => {
+app.post("/event", (req, res) => {
     console.log("Fikk POST-request fra klienten");
     dao.createEvent(req.body, (status, data) => {
         res.status(status);
@@ -70,45 +72,72 @@ app.post("/arrangement", (req, res) => {
     });
 });
 
+//post a ticket
+app.post("/ticket", (req, res) => {
+    console.log("Fikk POST-request fra klienten");
+    dao.createTicket(req.body, (status, data) => {
+        res.status(status);
+        res.json(data);
+    });
+});
+
+//post a performance
+app.post("/performance", (req, res) => {
+    console.log("Fikk POST-request fra klienten");
+    dao.createPerformance(req.body, (status, data) => {
+        res.status(status);
+        res.json(data);
+    });
+});
+
+//post a rider
+app.post("/rider", (req, res) => {
+    console.log("Fikk POST-request fra klienten");
+    dao.createRider(req.body, (status, data) => {
+        res.status(status);
+        res.json(data);
+    });
+});
+
 //Update a user
-app.put("/bruker/:bruker_id", (req, res) => {
+app.put("/user/:bruker_id", (req, res) => {
     console.log("Fikk PUT-requesr fra klienten");
-    dao.updateUser(req.params.bruker_id, req.body, (status, data) => {
+    dao.updateUser(req.params.user_id, req.body, (status, data) => {
         res.status(status);
         res.json(data);
     });
 });
 
 //Update an event
-app.put("/arrangement/:arr_id", (req, res) => {
+app.put("/event/:event_id", (req, res) => {
     console.log("Fikk PUT-requesr fra klienten");
-    dao.updateEvent(req.params.arr_id, req.body, (status, data) => {
+    dao.updateEvent(req.params.event_id, req.body, (status, data) => {
         res.status(status);
         res.json(data);
     });
 });
 
 //Delete a user
-app.delete("/bruker/:bruker_id", (req, res) => {
+app.delete("/user/:user_id", (req, res) => {
     console.log("Fikk DELETE-request fra klienten");
-    dao.deleteUser(req.params.bruker_id, (status, data) => {
+    dao.deleteUser(req.params.user_id, (status, data) => {
         res.status(status);
         res.json(data);
     });
 });
 
 //Delete an event
-app.delete("/arrangement/:arr_id", (req, res) => {
+app.delete("/event/:event_id", (req, res) => {
     console.log("Fikk DELETE-request fra klienten");
-    dao.deleteEvent(req.params.arr_id, (status, data) => {
+    dao.deleteEvent(req.params.event_id, (status, data) => {
         res.status(status);
         res.json(data);
     });
 });
 
 //Get all users
-app.get("/bruker", (req, res) => {
-    console.log("/bruker: fikk request fra klient");
+app.get("/user", (req, res) => {
+    console.log("/user: fikk request fra klient");
     dao.getUsers((status, data) => {
         res.status(status);
         res.json(data);
@@ -116,8 +145,8 @@ app.get("/bruker", (req, res) => {
 });
 
 //Get all events
-app.get("/arrangement", (req, res) => {
-    console.log("/bruker: fikk request fra klient");
+app.get("/event", (req, res) => {
+    console.log("/user: fikk request fra klient");
     dao.getAllEvents((status, data) => {
         res.status(status);
         res.json(data);
@@ -125,45 +154,45 @@ app.get("/arrangement", (req, res) => {
 });
 
 //Get all contracts for an event
-app.get("/arrangement/:arr_id", (req, res) => {
+app.get("/event/:event_id", (req, res) => {
     console.log("Fikk request fra klienten");
-    dao.getArrContracts(req.params.arr_id, (status, data) => {
+    dao.getArrContracts(req.params.event_id, (status, data) => {
         res.status(status);
         res.json(data);
     });
 });
 
 //Get all tickets for an event
-app.get("/arrangement/:arr_id", (req, res) => {
+app.get("/event/:event_id", (req, res) => {
     console.log("Fikk request fra klienten");
-    dao.getTickets(req.params.arr_id, (status, data) => {
+    dao.getTickets(req.params.event_id, (status, data) => {
         res.status(status);
         res.json(data);
     });
 });
 
 //Get all riders for each artist in a specific event
-app.get("/arrangement/:arr_id/bruker/:bruker_id", (req, res) => {
-    console.log("/bruker/:brukernavn: fikk request fra klient");
-    dao.getRiders({arr : req.params.arr_id, artist: req.params.bruker_id}, (status, data) => {
+app.get("/event/:event_id/user/:user_id", (req, res) => {
+    console.log("/user/:username: fikk request fra klient");
+    dao.getRiders({arr : req.params.event_id, artist: req.params.user_id}, (status, data) => {
         res.status(status);
         res.json(data);
     });
 });
 
 //Get all events for one user
-app.get("/bruker/:bruker_id/:active", (req, res) => {
-    console.log("/bruker/:bruker_id/:active: fikk request fra klient");
-    dao.getRiders({bruker : req.params.bruker_id, active: req.params.active}, (status, data) => {
+app.get("/user/:user_id/:active", (req, res) => {
+    console.log("/user/:user_id/:active: fikk request fra klient");
+    dao.getRiders({user : req.params.user_id, active: req.params.active}, (status, data) => {
         res.status(status);
         res.json(data);
     });
 });
 
 //Get one contract
-app.get("/arrangement/:arr_id/bruker/:bruker_id", (req, res) => {
-    console.log("/bruker/:brukernavn: fikk request fra klient");
-    dao.getContract({arr : req.params.arr_id, artist: req.params.bruker_id}, (status, data) => {
+app.get("/event/:event_id/user/:user_id", (req, res) => {
+    console.log("/user/:username: fikk request fra klient");
+    dao.getContract({arr : req.params.event_id, artist: req.params.user_id}, (status, data) => {
         res.status(status);
         res.json(data);
     });
@@ -172,8 +201,8 @@ app.get("/arrangement/:arr_id/bruker/:bruker_id", (req, res) => {
 //By request of a new password
 //generate new password and send it via email
 
-app.put("bruker/:brukermail/", (req, res) => {
-    dao.getUser(req.params.brukermail, (status, data) => {
+app.put("user/:usermail/", (req, res) => {
+    dao.getUser(req.params.usermail, (status, data) => {
 
         if(data.length > 0){
 
@@ -213,13 +242,13 @@ let privateKey = (publicKey = "shhhhhverysecret");
 // Handles login and returns JWT-token as JSON
 app.post("/login", (req, res) => {
     if (loginOk(req.body.username, req.body.password)) {
-        console.log("Brukernavn & passord ok");
+        console.log("username & passord ok");
         let token = jwt.sign({ username: req.body.username }, privateKey, {
             expiresIn: 60
         });
         res.json({ jwt: token });
     } else {
-        console.log("Brukernavn & passord IKKE ok");
+        console.log("username & passord IKKE ok");
         res.status(401);
         res.json({ error: "Not authorized" });
     }
