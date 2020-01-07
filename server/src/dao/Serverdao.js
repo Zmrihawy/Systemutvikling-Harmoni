@@ -41,5 +41,15 @@ module.exports = class ServerDao extends Dao {
         super.query(`SELECT * FROM Arrangement`, [], callback);
     }
 
+    getUsersEvents(sql, callback){
+        super.query(`SELECT * FROM Arrangement LEFT JOIN `)
+    }
+
+    getEventWithArtist(sql, callback){
+
+    }
+
+
+
 
 }
