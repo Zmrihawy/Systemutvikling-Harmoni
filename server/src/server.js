@@ -4,7 +4,7 @@ var bodyParser = require("body-parser");
 var app = express();
 var apiRoutes = express.Router();
 app.use(bodyParser.json()); // for å tolke JSON
-const dao = require("./dao/dao.js");
+const ServerDao = require("./dao/serverDao.js");
 
 var nodemailer = require('nodemailer');
 var generator = require('generate-password');
@@ -28,7 +28,7 @@ var transporter = nodemailer.createTransport({
     }
   });
 
-let dao = new dao(pool);
+let dao = new ServerDao(pool);
 
 //Get one user
 app.get("/bruker/:email", (req, res) => {
