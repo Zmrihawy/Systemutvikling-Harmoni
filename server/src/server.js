@@ -207,4 +207,53 @@ app.put("bruker/:brukermail/", (req, res) => {
     });
 });
 
+// Burde være ekte sertifikat, lest fra config...
+let privateKey = (publicKey = "shhhhhverysecret");
+
+// Handles login and returns JWT-token as JSON
+app.post("/login", (req, res) => {
+    if (loginOk(req.body.username, req.body.password)) {
+        console.log("Brukernavn & passord ok");
+        let token = jwt.sign({ username: req.body.username }, privateKey, {
+            expiresIn: 60
+        });
+        res.json({ jwt: token });
+    } else {
+        console.log("Brukernavn & passord IKKE ok");
+        res.status(401);
+        res.json({ error: "Not authorized" });
+    }
+});
+
+// middleware-function
+app.use("/api", (req, res, next) => {
+    var token = req.headers["x-access-token"];
+    jwt.verify(token, publicKey, (err, decoded) => {
+        if (err) {
+            console.log("Token IKKE ok");
+            res.status(401);
+            res.json({ error: "Not authorized" });
+        } else {
+            console.log("Token ok: " + decoded.username);
+            next();
+        }
+    });
+});
+
+app.post("/token", (req, res) => {
+    var token = req.headers["x-access-token"];
+    jwt.verify(token, publicKey, (err, decoded) => {
+        if (err){
+            console.log("Token IKKE ok");
+            res.status(401);
+            res.json({error: "Not authorized"});
+        }else{
+            let newToken = jwt.sign({username: req.body.username}, privateKey, {
+                expiresIn: 60
+            });
+            res.json({jwt: newToken});
+        }
+    });
+});
+
 var server = app.listen(8080);
