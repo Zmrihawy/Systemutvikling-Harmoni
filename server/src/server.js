@@ -169,34 +169,41 @@ app.get("/arrangement/:arr_id/bruker/:bruker_id", (req, res) => {
     });
 });
 
-app.put("/:brukermail/", (req, res) => {
+//By request of a new password
+//generate new password and send it via email
+
+app.put("bruker/:brukermail/", (req, res) => {
     dao.getUser(req.params.brukermail, (status, data) => {
-        res.status(status);
 
-        let password = generator.generate({
-            length : 12, 
-            numbers : true
-        });
+        if(data.length > 0){
 
-        dao.updateOne({epost : passwordHash.generate(password), email: data.email}, (stat, dat) => {
-
-            res.status(stat);
-
-            let mailOptions = {
-                from: 'noreply.harmoni.123@gmail.com',
-                to: data.epost,
-                subject: 'New Password',
-                text: `Her er ditt nye passord: \n${password}`
-              };
-              
-            transporter.sendMail(mailOptions, function(error, info){
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Email sent: ' + info.response);
-            }
+            let password = generator.generate({
+                length : 12, 
+                numbers : true
             });
-        });
+    
+            dao.updateOne({epost : passwordHash.generate(password), email: data.email}, (stat, dat) => {
+
+                let mailOptions = {
+                    from: 'noreply.harmoni.123@gmail.com',
+                    to: data.epost,
+                    subject: 'New Password',
+                    text: `Her er ditt nye passord: \n${password}`
+                    };
+                    
+                transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                    }
+                });
+            });
+        } else {
+            res.error("Mail not found");
+        }
+
+
     });
 });
 
