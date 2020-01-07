@@ -12,8 +12,7 @@ export default class CreateEvent extends Component {
             category: '',
             location: '',
             image: '',
-            dateFrom: null,
-            dateTo: null,
+            dateRange: [new Date(), new Date()],
             artists: [
                 {
                     name: '',
@@ -45,10 +44,14 @@ export default class CreateEvent extends Component {
         this.setState({ newEvent });
     };
 
+    handleDateChange = date => {
+        this.setState({ newEvent: { dateRange: date } });
+    };
+
     handleNext = event => {
         event.preventDefault();
-        let page = ++this.state.currentPage;
-        this.setState({ currentPage: page });
+        let page = this.state.currentPage;
+        this.setState({ currentPage: ++page });
     };
 
     getCurrentPage = () => {
@@ -95,7 +98,13 @@ export default class CreateEvent extends Component {
                 break;
 
             case 3:
-                current = <DatePicker />;
+                current = (
+                    <DatePicker
+                        clicked={this.handleNext}
+                        dates={this.state.newEvent.dateRange}
+                        dateChanged={this.handleDateChange}
+                    />
+                );
                 break;
 
             default:
