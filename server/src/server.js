@@ -6,6 +6,11 @@ var apiRoutes = express.Router();
 app.use(bodyParser.json()); // for å tolke JSON
 const dao = require("./dao/dao.js");
 
+var nodemailer = require('nodemailer');
+var generator = require('generate-password');
+
+var passwordHash = require('password-hash');
+
 var pool = mysql.createPool({
     connectionLimit: 2,
     host: "mysql.stud.iie.ntnu.no",
@@ -14,6 +19,14 @@ var pool = mysql.createPool({
     database: "kwgulake",
     debug: false
 });
+
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'noreply.harmoni.123@gmail.com',
+      pass: 'qra2ZQqh'
+    }
+  });
 
 let dao = new dao(pool);
 
@@ -38,7 +51,11 @@ app.get("/arrangement/:arr_id", (req, res) => {
 //post a user
 app.post("/bruker", (req, res) => {
     console.log("Fikk POST-request fra klienten");
-    dao.createUser(req.body, (status, data) => {
+
+    let user = req.body;
+    let pw = passwordHash.generate(user.password);
+
+    dao.createUser({username : user.username, password : pw, email : user.email, phone : user.phone, firstName : user.firstName, lastName : user.lastName}, (status, data) => {
         res.status(status);
         res.json(data);
     });
@@ -149,6 +166,37 @@ app.get("/arrangement/:arr_id/bruker/:bruker_id", (req, res) => {
     dao.getContract({arr : req.params.arr_id, artist: req.params.bruker_id}, (status, data) => {
         res.status(status);
         res.json(data);
+    });
+});
+
+app.put("/:brukermail/", (req, res) => {
+    dao.getUser(req.params.brukermail, (status, data) => {
+        res.status(status);
+
+        let password = generator.generate({
+            length : 12, 
+            numbers : true
+        });
+
+        dao.updateOne({epost : passwordHash.generate(password), email: data.email}, (stat, dat) => {
+
+            res.status(stat);
+
+            let mailOptions = {
+                from: 'noreply.harmoni.123@gmail.com',
+                to: data.epost,
+                subject: 'New Password',
+                text: `Her er ditt nye passord: \n${password}`
+              };
+              
+            transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+            });
+        });
     });
 });
 
