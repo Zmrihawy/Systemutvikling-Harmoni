@@ -1,0 +1,29 @@
+{
+  "name": "harmoni_server",
+  "version": "1.0.0",
+  "description": "server for harmoni",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start" : "nodemon --exec babel-node src/server.js",
+    "test": "jest --detectOpenHandles --forceExit"
+  },
+  "jest" : {
+    "verbose" : true,
+    "collectCoverage" : true
+  },
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "mysql": "^2.17.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "body-parser": "^1.19.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^24.9.0"
+  }
+}
