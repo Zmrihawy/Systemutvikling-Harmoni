@@ -70,7 +70,7 @@ export default class ViewProfile extends Component{
                                         <input id={"passwordInp"} className={classes.input} type='password' placeholder="password"/>
                                         <b/>
                                         <button className={classes.button} onClick={event => (this.eventHandler())}>
-                                            Send
+                                            ✓
                                         </button>
                                     </div>
                                 </div>
@@ -82,21 +82,21 @@ export default class ViewProfile extends Component{
         )
     }
     eventHandler(){
-        if(document.getElementById('nameInp') != null){
+        if(document.getElementById('nameInp') !== null){
             let newName = document.getElementById('nameInp').value;
             if(newName != null && newName != ''){
                 this.setAttribute("username",newName);
             }
         }
-        if(document.getElementById('emailInp') != null){
+        if(document.getElementById('emailInp') !== null){
             let newEmail = document.getElementById('emailInp').value;
             if(newEmail != null && newEmail != ''){
                 this.setAttribute("email",newEmail);
             }
         }
-        if(document.getElementById('telephoneInp') != null){
+        if(document.getElementById('telephoneInp') !== null){
             let newTelephone = document.getElementById('telephoneInp').value;
-            if(newTelephone != null && newTelephone != ''){
+            if(newTelephone !== null && newTelephone !== ''){
                 this.setAttribute('telephone',newTelephone);
             }
         }
