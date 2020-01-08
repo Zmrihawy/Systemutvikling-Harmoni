@@ -33,19 +33,71 @@ var transporter = nodemailer.createTransport({
 
 let dao = new ServerDao(pool);
 
+// middleware-function
+app.use("/api", (req, res, next) => {
+    var token = req.headers["x-access-token"];
+    jwt.verify(token, publicKey, (err, decoded) => {
+        if (err) {
+            console.log("Token IKKE ok");
+            res.status(401);
+            res.json({ error: "Not authorized" });
+        } else {
+            console.log("Token ok: " + decoded.username);
+            next();
+        }
+    });
+});
+
 //Get one user
-app.get("/user/:email", (req, res) => {
-    console.log("/user/:username: fikk request fra klient");
-    dao.getUser(req.params.email, (status, data) => {
+app.get("/api/user/:id", (req, res) => {
+    console.log(`/user/${req.params.id} fikk request fra klient`);
+    dao.getUser(req.params.id, (status, data) => {
         res.status(status);
         res.json(data);
     });
 });
 
-//Get one event
-app.get("/event/:event_id", (req, res) => {
-    console.log("/event/:id: fikk request fra klient");
-    dao.getEvent(req.params.event_id, (status, data) => {
+//Get all users
+app.get("/api/users", (req, res) => {
+    console.log("/user: fikk request fra klient");
+    dao.getUsers((status, data) => {
+        res.status(status);
+        res.json(data);
+    });
+});
+
+//Delete a user
+app.delete("/user/:user_id", (req, res) => {
+
+    console.log("Fikk DELETE-request fra klienten");
+
+    dao.getPassword(req.params.user_id, (status, data) => {
+
+        let pw = req.body.password;
+
+        let hashPW = crypto.createHmac('sha512', data[0].salt);
+
+        let pass = pw;
+
+        hashPW.update(pass);
+
+        pass = hashPW.digest('hex');
+
+        if(data[0].password.toString() === pass.toUpperCase()){
+            dao.deleteUser(req.params.user_id, (st, dt) => {
+                res.status(st);
+                res.json(dt);
+            });
+        } else {
+            res.error("Feil passord");
+        }  
+    })
+});
+
+//Update a user
+app.put("/user/:user_id", (req, res) => {
+    console.log("Fikk PUT-requesr fra klienten");
+    dao.updateUser(req.params.user_id, req.body, (status, data) => {
         res.status(status);
         res.json(data);
     });
@@ -74,8 +126,17 @@ app.post("/user", (req, res) => {
     });
 });
 
+//Get one event
+app.get("/api/event/:event_id", (req, res) => {
+    console.log("/event/:id: fikk request fra klient");
+    dao.getEvent(req.params.event_id, (status, data) => {
+        res.status(status);
+        res.json(data);
+    });
+});
+
 //post an event
-app.post("/event", (req, res) => {
+app.post("/api/event", (req, res) => {
     console.log("Fikk POST-request fra klienten");
     dao.createEvent(req.body, (status, data) => {
         res.status(status);
@@ -84,7 +145,7 @@ app.post("/event", (req, res) => {
 });
 
 //post a ticket
-app.post("/ticket", (req, res) => {
+app.post("/api/event/:event_id/ticket", (req, res) => {
     console.log("Fikk POST-request fra klienten");
     dao.createTicket(req.body, (status, data) => {
         res.status(status);
@@ -92,8 +153,19 @@ app.post("/ticket", (req, res) => {
     });
 });
 
+//put ticket
+app.put("/api/event/:event_id/ticket", (req,res) => {
+
+});
+
+//put rider
+
+app.put("/api/event/:event_id/rider", (req,res) => {
+    
+})
+
 //post a performance
-app.post("/performance", (req, res) => {
+app.post("api/event/:event_id/user", (req, res) => {
     console.log("Fikk POST-request fra klienten");
     dao.createPerformance(req.body, (status, data) => {
         res.status(status);
@@ -102,18 +174,9 @@ app.post("/performance", (req, res) => {
 });
 
 //post a rider
-app.post("/rider", (req, res) => {
+app.post("/api/event/:event_id/rider", (req, res) => {
     console.log("Fikk POST-request fra klienten");
     dao.createRider(req.body, (status, data) => {
-        res.status(status);
-        res.json(data);
-    });
-});
-
-//Update a user
-app.put("/user/:bruker_id", (req, res) => {
-    console.log("Fikk PUT-requesr fra klienten");
-    dao.updateUser(req.params.user_id, req.body, (status, data) => {
         res.status(status);
         res.json(data);
     });
@@ -128,35 +191,20 @@ app.put("/event/:event_id", (req, res) => {
     });
 });
 
-//Delete a user
-app.delete("/user/:user_id", (req, res) => {
-    console.log("Fikk DELETE-request fra klienten");
-    dao.deleteUser(req.params.user_id, (status, data) => {
-        res.status(status);
-        res.json(data);
-    });
-});
-
 //Delete an event
 app.delete("/event/:event_id", (req, res) => {
     console.log("Fikk DELETE-request fra klienten");
     dao.deleteEvent(req.params.event_id, (status, data) => {
-        res.status(status);
-        res.json(data);
-    });
-});
 
-//Get all users
-app.get("/user", (req, res) => {
-    console.log("/user: fikk request fra klient");
-    dao.getUsers((status, data) => {
+        // ## TODO sett inn token verify 
+
         res.status(status);
         res.json(data);
     });
 });
 
 //Get all events
-app.get("/event", (req, res) => {
+app.get("/api/events", (req, res) => {
     console.log("/user: fikk request fra klient");
     dao.getAllEvents((status, data) => {
         res.status(status);
@@ -165,16 +213,26 @@ app.get("/event", (req, res) => {
 });
 
 //Get all contracts for an event
-app.get("/event/:event_id", (req, res) => {
+app.get("/api/event/:event_id/contract", (req, res) => {
     console.log("Fikk request fra klienten");
+
+    //jwt .verify => if decoded username = arrangør => get all
+    //else get 1 
+
     dao.getArrContracts(req.params.event_id, (status, data) => {
         res.status(status);
         res.json(data);
     });
 });
 
+//Edit contract
+
+app.put("/api/event/:event_id/contract", (req,res) => {
+    //dao.EDIT CONTRACT()
+})
+
 //Get all tickets for an event
-app.get("/event/:event_id", (req, res) => {
+app.get("/api/event/:event_id/tickets", (req, res) => {
     console.log("Fikk request fra klienten");
     dao.getTickets(req.params.event_id, (status, data) => {
         res.status(status);
@@ -183,9 +241,14 @@ app.get("/event/:event_id", (req, res) => {
 });
 
 //Get all riders for each artist in a specific event
-app.get("/event/:event_id/user/:user_id", (req, res) => {
-    console.log("/user/:username: fikk request fra klient");
-    dao.getRiders({arr : req.params.event_id, artist: req.params.user_id}, (status, data) => {
+
+app.get("/api/event/:event_id/raider", (req, res) => {
+    console.log("Fikk request fra klienten");
+
+    //jwt .verify => if decoded username = arrangør => get all
+    //else get 1 
+
+    dao.getArrContracts(req.params.event_id, (status, data) => {
         res.status(status);
         res.json(data);
     });
@@ -200,19 +263,10 @@ app.get("/user/:user_id/:active", (req, res) => {
     });
 });
 
-//Get one contract
-app.get("/event/:event_id/user/:user_id", (req, res) => {
-    console.log("/user/:username: fikk request fra klient");
-    dao.getContract({arr : req.params.event_id, artist: req.params.user_id}, (status, data) => {
-        res.status(status);
-        res.json(data);
-    });
-});
-
 //By request of a new password
 //generate new password and send it via email
 
-app.put("user/:usermail/", (req, res) => {
+app.put("/user/:usermail", (req, res) => {
     dao.getUser(req.params.usermail, (status, data) => {
 
         if(data.length > 0){
@@ -252,20 +306,23 @@ let privateKey = (publicKey = "shhhhhverysecret");
 
 // Handles login and returns JWT-token as JSON
 app.post("/login", (req, res) => {
-    if (loginOk(req.body.userId, req.body.password)) {
+
+    let log = loginOk(req.body.email, req.body.password);
+
+    if (log > 0) {
         console.log("username & passord ok");
         let token = jwt.sign({ username: req.body.username }, privateKey, {
             expiresIn: 60
         });
-        res.json({ jwt: token });
+        res.json({ jwt: token, user_id : log});
     } else {
         console.log("brukernavn & passord IKKE ok");
         res.status(401);
         res.json({ error: "Not authorized" });
     }
 
-    function loginOk(usrId, pw){
-        dao.getUser(usrId, (status, data) => {
+    function loginOk(email, pw){
+        dao.getPassword(email, (status, data) => {
 
             let hashPW = crypto.createHmac('sha512', data[0].salt);
 
@@ -275,29 +332,16 @@ app.post("/login", (req, res) => {
 
             pass = hashPW.digest('hex');
 
-            if(pass === data[0].password.toString()) return true;
+            if(pass.toUpperCase() === data[0].password.toString()) return data[0].user_id;
 
-            return false;
+            return -1;
             
         })
     }
 });
 
-// middleware-function
-app.use("/api", (req, res, next) => {
-    var token = req.headers["x-access-token"];
-    jwt.verify(token, publicKey, (err, decoded) => {
-        if (err) {
-            console.log("Token IKKE ok");
-            res.status(401);
-            res.json({ error: "Not authorized" });
-        } else {
-            console.log("Token ok: " + decoded.username);
-            next();
-        }
-    });
-});
 
+/*
 app.post("/token", (req, res) => {
     var token = req.headers["x-access-token"];
     jwt.verify(token, publicKey, (err, decoded) => {
@@ -312,6 +356,6 @@ app.post("/token", (req, res) => {
             res.json({jwt: newToken});
         }
     });
-});
+});body*/
 
 var server = app.listen(8080);
