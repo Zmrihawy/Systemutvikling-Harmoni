@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import BasicForm from '../../components/BasicForm/BasicForm';
 import DatePicker from '../../components/eventCreation/DatePicker/DatePicker';
 
@@ -13,6 +14,7 @@ export default class CreateEvent extends Component {
             location: '',
             image: '',
             dateRange: [new Date(), new Date()],
+            timeRange: [moment(), moment()],
             artists: [
                 {
                     name: '',
@@ -45,7 +47,23 @@ export default class CreateEvent extends Component {
     };
 
     handleDateChange = date => {
-        this.setState({ newEvent: { dateRange: date } });
+        let newEvent = {
+            ...this.state.newEvent
+        };
+        newEvent.dateRange = date;
+        this.setState({ newEvent });
+    };
+
+    handleTimeChange = (value, id) => {
+        let newEvent = this.state.newEvent;
+
+        if (id === 'timeFrom') {
+            newEvent.timeRange[0] = value;
+        } else if (id === 'timeTo') {
+            newEvent.timeRange[1] = value;
+        }
+
+        this.setState({ newEvent });
     };
 
     handleNext = event => {
@@ -102,7 +120,9 @@ export default class CreateEvent extends Component {
                     <DatePicker
                         clicked={this.handleNext}
                         dates={this.state.newEvent.dateRange}
+                        times={this.state.newEvent.timeRange}
                         dateChanged={this.handleDateChange}
+                        timeChanged={this.handleTimeChange}
                     />
                 );
                 break;
