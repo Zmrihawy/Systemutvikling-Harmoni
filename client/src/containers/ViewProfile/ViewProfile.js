@@ -16,16 +16,16 @@ export default class ViewProfile extends Component{
         console.log(value);
         if("" + attribute + "" === "username"){
             this.setState({username: value});
-            document.getElementById("usernameP").value = value;
+            document.getElementById('usernameP').innerHTML = value;
         }
         else if("" + attribute + "" === "email"){
             this.setState({email: value});
-            document.getElementById("emailP").value = value;
+            document.getElementById('emailP').innerHTML = value;
 
         }
         else if("" + attribute + "" === "telephone"){
             this.setState({telephone: value});
-            document.getElementById("telephoneP").value = value;
+            document.getElementById('telephoneP').innerHTML = value;
 
         }
     }
@@ -61,16 +61,18 @@ export default class ViewProfile extends Component{
                                 <h4><b>Edit Info</b></h4>
                                 <div className={classes.row}>
                                     <div className={classes.column}>
-                                        <input id="nameInp" className={classes.input} type='text' placeholder="username"></input>
+                                        <input id={"nameInp"} className={classes.input} type='text' placeholder="username"/>
                                         <b/>
-                                        <input id="passwordInp" className={classes.input} type='text' placeholder="password"></input>
+                                        <input id={"passwordInp"} className={classes.input} type='text' placeholder="password"/>
                                         <b/>
-                                        <input id="emailInp" className={classes.input} type='text' placeholder="email"></input>
+                                        <input id={"emailInp"} className={classes.input} type='text' placeholder="email"/>
                                         <b/>
-                                        <input id="telephoneInp" className={classes.input} type='text' placeholder="telephone"></input>
+                                        <input id={"telephoneInp"} className={classes.input} type='text' placeholder="telephone"/>
                                     </div>
                                     <div className={classes.column}>
-                                        <input type={'submit'} onClick={this.eventHandler()}></input>
+                                        <button onClick={event => (this.eventHandler())}>
+                                            Send
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -81,23 +83,22 @@ export default class ViewProfile extends Component{
         )
     }
     eventHandler(){
-        if(document.getElementById("nameInp") != null){
-            let newName = document.getElementById("nameInp").value;
-            if(newName != null){
+        if(document.getElementById('nameInp') != null){
+            let newName = document.getElementById('nameInp').value;
+            if(newName != null && newName != ''){
                 this.setAttribute("username",newName);
             }
         }
-        if(document.getElementById("emailInp") != null){
-            let newEmail = document.getElementById("emailInp").value;
-            if(newEmail != null){
-                console.log("yes");
+        if(document.getElementById('emailInp') != null){
+            let newEmail = document.getElementById('emailInp').value;
+            if(newEmail != null && newEmail != ''){
                 this.setAttribute("email",newEmail);
             }
         }
-        if(document.getElementById("telephoneInp") != null){
-            let newTelephone = document.getElementById("telephoneInp").value;
-            if(newTelephone != null){
-                this.setAttribute("telephone",newTelephone);
+        if(document.getElementById('telephoneInp') != null){
+            let newTelephone = document.getElementById('telephoneInp').value;
+            if(newTelephone != null && newTelephone != ''){
+                this.setAttribute('telephone',newTelephone);
             }
         }
     }
