@@ -8,10 +8,11 @@ var apiRoutes = express.Router();
 app.use(bodyParser.json()); // for å tolke JSON
 const ServerDao = require("./dao/serverDao.js");
 
+var crypto = require('crypto');
+
 var nodemailer = require('nodemailer');
 var generator = require('generate-password');
 
-var passwordHash = require('password-hash');
 
 var pool = mysql.createPool({
     connectionLimit: 2,
@@ -52,12 +53,22 @@ app.get("/event/:event_id", (req, res) => {
 
 //post a user
 app.post("/user", (req, res) => {
+    
     console.log("Fikk POST-request fra klienten");
 
     let user = req.body;
-    let pw = passwordHash.generate(user.password);
+    
+    let salt = crypto.randomBytes(16).toString('hex').slice(0,16);
 
-    dao.createUser({username : user.username, password : pw, email : user.email, phone : user.phone, firstName : user.firstName, lastName : user.lastName}, (status, data) => {
+    let pw = user.password;
+
+    let hash = crypto.createHmac('sha512', salt);
+
+    hash.update(pw);
+
+    pw = hash.digest('hex');
+
+    dao.createUser({username : user.username, password : pw, salt: salt, email : user.email, phone : user.phone, firstName : user.firstName, lastName : user.lastName}, (status, data) => {
         res.status(status);
         res.json(data);
     });
