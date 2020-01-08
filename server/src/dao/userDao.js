@@ -6,6 +6,10 @@ module.exports = class UserDao extends Dao {
         super.query(`SELECT * FROM ${USER_TABLE} WHERE ${USER_EMAIL} = ?`, [sql], callback);
     }
 
+    getPassword(sql, callback) {
+        super.query(`SELECT HEX(password), HEX(salt) FROM ${USER_TABLE} WHERE ${USER_EMAIL} = ?`)
+    }
+
     getUsers(sql, callback) {
         super.query(`SELECT * FROM ${USER_TABLE}`, [], callback);
     }
