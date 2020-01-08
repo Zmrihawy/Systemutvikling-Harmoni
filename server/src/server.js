@@ -259,7 +259,7 @@ app.post("/login", (req, res) => {
         });
         res.json({ jwt: token });
     } else {
-        console.log("username & passord IKKE ok");
+        console.log("brukernavn & passord IKKE ok");
         res.status(401);
         res.json({ error: "Not authorized" });
     }
