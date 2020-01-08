@@ -53,7 +53,7 @@ app.get("/event/:event_id", (req, res) => {
 
 //post a user
 app.post("/user", (req, res) => {
-    
+
     console.log("Fikk POST-request fra klienten");
 
     let user = req.body;
@@ -252,7 +252,7 @@ let privateKey = (publicKey = "shhhhhverysecret");
 
 // Handles login and returns JWT-token as JSON
 app.post("/login", (req, res) => {
-    if (loginOk(req.body.username, req.body.password)) {
+    if (loginOk(req.body.userId, req.body.password)) {
         console.log("username & passord ok");
         let token = jwt.sign({ username: req.body.username }, privateKey, {
             expiresIn: 60
@@ -262,6 +262,24 @@ app.post("/login", (req, res) => {
         console.log("username & passord IKKE ok");
         res.status(401);
         res.json({ error: "Not authorized" });
+    }
+
+    function loginOk(usrId, pw){
+        dao.getUser(usrId, (status, data) => {
+
+            let hashPW = crypto.createHmac('sha512', data[0].salt);
+
+            let pass = pw;
+
+            hashPW.update(pass);
+
+            pass = hashPW.digest('hex');
+
+            if(pass === data[0].password) return true;
+
+            return false;
+            
+        })
     }
 });
 
