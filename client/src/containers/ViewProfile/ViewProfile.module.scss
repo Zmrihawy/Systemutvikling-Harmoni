@@ -12,7 +12,40 @@
   width: 30vw;
   text-align: center;
 }
-.bioLayer {
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .3s ease;
+  background-image: url("https://cdn.pixabay.com/photo/2015/12/22/04/00/edit-1103598_960_720.png");
+  background-repeat: no-repeat;
+  background-size: 90%;
+}
+.icon {
+  color: white;
+  font-size: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+.fadeUser:hover{
+  color: #eee;
+}
+.imgContainer{
+  position: relative;
+  width: 24vw;
+  max-width: 400px;
+}
+.imgContainer:hover .overlay {
+  opacity: 1;
 }
 .editLayer:hover{
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
@@ -24,7 +57,8 @@
   outline: none;
 }
 .profile {
-  width: 24vw;
+  width: 100%;
+  height: auto;
 }
 .p {
   font-size: 25px;
@@ -34,7 +68,7 @@
   width: 50%;
 }
 .row {
-
+  padding-top: 50px;
 }
 .row:after {
   content: "";
