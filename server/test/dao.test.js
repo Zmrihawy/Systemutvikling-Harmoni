@@ -38,6 +38,8 @@ afterAll(() => {
 
 test("get one user from database", done => {
     userDao.getUser(1, (status, data) => {
+        console.log(status);
+        console.log("AAA"+data);
         expect(data.length).toBe(1);
         let user = data[0];
         expect(user.username).toBe("testbruker");

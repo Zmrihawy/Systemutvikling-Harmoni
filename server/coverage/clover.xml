@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1578485397679" clover="3.2.0">
-  <project timestamp="1578485397680" name="All files">
+<coverage generated="1578486364713" clover="3.2.0">
+  <project timestamp="1578486364713" name="All files">
     <metrics statements="102" coveredstatements="67" conditionals="8" coveredconditionals="4" methods="35" coveredmethods="9" elements="145" coveredelements="80" complexity="0" loc="102" ncloc="102" packages="2" files="5" classes="5"/>
     <package name="src.dao">
       <metrics statements="86" coveredstatements="55" conditionals="4" coveredconditionals="2" methods="32" coveredmethods="6"/>

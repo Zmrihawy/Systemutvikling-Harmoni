@@ -6,7 +6,7 @@ module.exports = class UserDao extends Dao {
 
     getUser(sql, callback) {
         super.query(`SELECT user_id, username, email, phone, first_name, surname, phone 
-                            FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_EMAIL} = ?`, [sql], callback);
+                            FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_ID} = ?`, [sql], callback);
     }
 
     getPassword(sql, callback) {
