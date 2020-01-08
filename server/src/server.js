@@ -66,10 +66,18 @@ app.get("/api/users", (req, res) => {
     });
 });
 
+//Delete raider
+
+app.delete('/event/:event_id/raider', (req, res) => {
+    
+})
+
 //Delete a user
 app.delete("/user/:user_id", (req, res) => {
 
     console.log("Fikk DELETE-request fra klienten");
+
+    dao.getUser(req.params.user_id)
 
     dao.getPassword(req.params.user_id, (status, data) => {
 
@@ -97,7 +105,7 @@ app.delete("/user/:user_id", (req, res) => {
 //Update a user
 app.put("/user/:user_id", (req, res) => {
     console.log("Fikk PUT-requesr fra klienten");
-    dao.updateUser(req.params.user_id, req.body, (status, data) => {
+    dao.updateUser(req.body, (status, data) => {
         res.status(status);
         res.json(data);
     });
@@ -219,7 +227,7 @@ app.get("/api/event/:event_id/contract", (req, res) => {
     //jwt .verify => if decoded username = arrangør => get all
     //else get 1 
 
-    dao.getArrContracts(req.params.event_id, (status, data) => {
+    dao.getEventContracts(req.params.event_id, (status, data) => {
         res.status(status);
         res.json(data);
     });
@@ -228,13 +236,13 @@ app.get("/api/event/:event_id/contract", (req, res) => {
 //Edit contract
 
 app.put("/api/event/:event_id/contract", (req,res) => {
-    //dao.EDIT CONTRACT()
+    //dao.updateCONTRACT()
 })
 
 //Get all tickets for an event
 app.get("/api/event/:event_id/tickets", (req, res) => {
     console.log("Fikk request fra klienten");
-    dao.getTickets(req.params.event_id, (status, data) => {
+    dao.getEventTickets(req.params.event_id, (status, data) => {
         res.status(status);
         res.json(data);
     });
@@ -248,16 +256,16 @@ app.get("/api/event/:event_id/raider", (req, res) => {
     //jwt .verify => if decoded username = arrangør => get all
     //else get 1 
 
-    dao.getArrContracts(req.params.event_id, (status, data) => {
+    dao.getAllRaiders(req.params.event_id, (status, data) => {
         res.status(status);
         res.json(data);
     });
 });
 
-//Get all events for one user
-app.get("/user/:user_id/:active", (req, res) => {
+//Get all raiders for one user
+app.get("/user/event/:event_id/:performance_id", (req, res) => {
     console.log("/user/:user_id/:active: fikk request fra klient");
-    dao.getRiders({user : req.params.user_id, active: req.params.active}, (status, data) => {
+    dao.getRiders({performanceId : req.params.perfromanceId}, (status, data) => {
         res.status(status);
         res.json(data);
     });
