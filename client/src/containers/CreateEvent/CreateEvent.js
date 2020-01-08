@@ -15,6 +15,7 @@ export default class CreateEvent extends Component {
             image: '',
             dateRange: [new Date(), new Date()],
             timeRange: [moment(), moment()],
+            artistsCount: 0,
             artists: [
                 {
                     name: '',
@@ -123,6 +124,19 @@ export default class CreateEvent extends Component {
                         times={this.state.newEvent.timeRange}
                         dateChanged={this.handleDateChange}
                         timeChanged={this.handleTimeChange}
+                    />
+                );
+                break;
+
+            case 4:
+                current = (
+                    <BasicForm
+                        title="Hvor mange artister skal det være?"
+                        inputType="number"
+                        value={this.state.newEvent.artistsCount}
+                        name="artistsCount"
+                        clicked={this.handleNext}
+                        changed={this.handleChange}
                     />
                 );
                 break;

@@ -1,6 +1,5 @@
 import React from 'react';
 import Calendar from 'react-calendar';
-import moment from 'moment';
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
 
