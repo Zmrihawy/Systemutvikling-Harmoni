@@ -275,7 +275,7 @@ app.post("/login", (req, res) => {
 
             pass = hashPW.digest('hex');
 
-            if(pass === data[0].password) return true;
+            if(pass === data[0].password.toString()) return true;
 
             return false;
             
