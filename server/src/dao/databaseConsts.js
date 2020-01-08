@@ -1,38 +1,42 @@
-const EVENT_TABLE = "event";
-const EVENT_ID = "event_id";
-const EVENT_NAME = "name";
-const EVENT_HOST_ID = "host_id";
-const EVENT_ACTIVE = "active";
-const EVENT_LOCATION = "location";
-const EVENT_START_TIME = "start_time";
-const EVENT_END_TIME = "end_time";
+module.exports = class Constants {
+    constructor() {
+        this.EVENT_TABLE = "event";
+        this.EVENT_ID = "event_id";
+        this.EVENT_NAME = "name";
+        this.EVENT_HOST_ID = "host_id";
+        this.EVENT_ACTIVE = "active";
+        this.EVENT_LOCATION = "location";
+        this.EVENT_START_TIME = "start_time";
+        this.EVENT_END_TIME = "end_time";
 
-const TICKET_TABLE = "ticket";
-const TICKET_NAME = "name";
-const TICKET_EVENT_ID = "event_id";
-const TICKET_PRICE = "price";
-const TICKET_AMOUNT = "amount";
-const TICKET_DESCRIPTION = "description";
+        this.TICKET_TABLE = "ticket";
+        this.TICKET_NAME = "name";
+        this.TICKET_EVENT_ID = "event_id";
+        this.TICKET_PRICE = "price";
+        this.TICKET_AMOUNT = "amount";
+        this.TICKET_DESCRIPTION = "description";
 
-const USER_TABLE = "user";
-const USER_ID = "user_id";
-const USER_USERNAME = "username";
-const USER_PASSWORD = "password";
-const USER_SALT = "salt";
-const USER_EMAIL = "email";
-const USER_PHONE = "phone";
-const USER_FIRST_NAME = "first_name";
-const USER_LAST_NAME = "surname";
+        this.USER_TABLE = "user";
+        this.USER_ID = "user_id";
+        this.USER_USERNAME = "username";
+        this.USER_PASSWORD = "password";
+        this.USER_SALT = "salt";
+        this.USER_EMAIL = "email";
+        this.USER_PHONE = "phone";
+        this.USER_FIRST_NAME = "first_name";
+        this.USER_LAST_NAME = "surname";
 
-const PERFORMANCE_TABLE = "performance";
-const PERFORMANCE_ID = "performance_id";
-const PERFORMANCE_ARTIST_ID = "user_id";
-const PERFORMANCE_EVENT_ID = "event_id";
-const PERFORMANCE_START_TIME = "start_time";
-const PERFORMANCE_END_TIME = "end_time";
-const PERFORMANCE_CONTRACT = "contract";
+        this.PERFORMANCE_TABLE = "performance";
+        this.PERFORMANCE_ID = "performance_id";
+        this.PERFORMANCE_ARTIST_ID = "user_id";
+        this.PERFORMANCE_EVENT_ID = "event_id";
+        this.PERFORMANCE_START_TIME = "start_time";
+        this.PERFORMANCE_END_TIME = "end_time";
+        this.PERFORMANCE_CONTRACT = "contract";
 
-const RIDER_TABLE = "rider";
-const RIDER_PERFORMANCE_ID = "performance_id";
-const RIDER_NAME = "name";
-const RIDER_AMOUNT = "amount";
+        this.RIDER_TABLE = "rider";
+        this.RIDER_PERFORMANCE_ID = "performance_id";
+        this.RIDER_NAME = "name";
+        this.RIDER_AMOUNT = "amount";
+    }
+};
