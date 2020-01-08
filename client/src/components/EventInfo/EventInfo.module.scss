@@ -1,0 +1,148 @@
+.container {
+    display: grid;
+    margin: 20px 100px;
+    grid-gap: 100px 20px;
+    grid-template-areas: 
+    'title   title   title'
+    'desc    info    map'
+    'artists artists artists'
+    'tickets tickets tickets';
+    grid-template-columns: repeat(3, 1fr);
+    font-size: 1.5em;
+    height: fit-content;
+}
+
+.title {
+    grid-area: title;
+    font-size: 3em;
+}
+
+.subtitle {
+    font-size: 2.2em;
+}
+
+.subtitle::before,
+.subtitle::after {
+    display: inline-block;
+    content: "";
+    border-top: .3rem solid black;
+    width: 4rem;
+    margin: 0 1rem;
+    transform: translateY(-1rem);
+}
+
+.descTitle {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 2.2em;
+}
+
+.desc {
+    grid-area: desc;
+    text-align: justify;
+}
+
+.info {
+    grid-area: info;
+    display: grid; 
+    grid-template-areas: 
+    'location'
+    'host'
+    'ticketAmount';
+    align-items: center;
+}
+
+.location {
+    grid-area: location;
+}
+
+.host {
+    grid-area: host;
+}
+
+.ticketAmount {
+    grid-area: ticketAmount;
+}
+
+.map {
+    grid-area: map;
+    background-color: lightgray;
+    height: 500px;
+}
+
+.artists {
+    grid-area: artists;
+    display: grid;
+    grid-template-areas:
+    'artist__title'
+    'artist__list';
+    grid-gap: 10px;
+}
+
+.artists > h1 {
+    grid-area: artist__title;
+}
+
+.artist__list {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 10px;
+}
+
+.artist__wrapper {
+    display: grid;
+    justify-content: center;
+    font-weight: bold;
+    grid-gap: 5px;
+}
+
+.artist__image {
+    overflow: hidden;
+    display: grid;
+    place-content: center center;
+    border-radius: 50%;
+    width: 150px; 
+    height: 150px;
+}
+
+.artist__image > img {
+    height: 150px;;
+}
+
+.button__rider { 
+    padding: 5px;
+    border-radius: 10px;
+    font-size: 1em;
+}
+
+
+.tickets {
+    grid-area: tickets;
+    display: grid;
+    grid-template-areas:
+    'ticket__title'
+    'ticket__list';
+    grid-gap: 10px;
+}
+
+.tickets > h1 {
+    grid-area: ticket__title;
+}
+
+.ticket__wrapper > p {
+    font-size: 1.2em;
+    font-style: italic;
+}
+
+.ticket__list {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-gap: 10px;
+}
+
+.ticket__wrapper {
+    border: 1px solid lightgray;
+    border-radius: 12px;
+    padding: 5px;
+}
+
