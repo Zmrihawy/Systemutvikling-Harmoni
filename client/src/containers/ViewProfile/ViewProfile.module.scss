@@ -11,7 +11,7 @@
   font-size: 20px;
   width: 30vw;
   text-align: center;
-  padding: 20px 30px;
+  padding: 5px 30px;
 }
 .overlay {
   position: absolute;
@@ -51,11 +51,10 @@
 .editLayer:hover{
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
-.input {
+.input{
   width: 12vw;
-  background: transparent;
   border: none;
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid #333333;
 }
 .input:focus, input:focus{
   outline: none;
@@ -66,7 +65,7 @@
 }
 .h1 {
   font-family: "Agency FB";
-  color: black;
+  color: #333333;
   font-size: 40px;
 }
 .p {
@@ -87,8 +86,8 @@
   transition-duration: 0.3s;
 }
 .button:hover {
-  background-color: black;
-  color: white;
+  background-color: #333333;
+  color: whitesmoke;
 }
 .column {
   float: left;
@@ -101,12 +100,4 @@
   content: "";
   display: table;
   clear: both;
-}
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: black;
-  text-align: center;
 }
