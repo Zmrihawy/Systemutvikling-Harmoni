@@ -21,7 +21,7 @@ module.exports = class ServerDao extends Dao {
     }
 
     getRiders(sql, callback) {
-        super.query(`SELECT * FROM ${RIDER_TABLE} WHERE ${EVENT_ID} = ? AND ${USER_ID} = ?`, [sql.event, sql.artist], callback);
+        super.query(`SELECT * FROM ${RIDER_TABLE} WHERE ${PERFORMANCE_ID} = ?`, [sql.performanceId], callback);
     }
 
     getEvent(sql, callback) {
