@@ -316,14 +316,14 @@ test("update ticket in database", done => {
         price: 130,
         amount: 200,
         description: 'Oppdatert billettbeskrivelse',
-        name: 'TestBillett',
+        name: 'TestBillett2',
         eventId: 2,
     };
 
     eventDao.updateTicket(param, () => {
         eventDao.getEventTickets(2, (status, data) => {
-            expect(data[0].price).toBe(130);
-            expect(data[0].description).toBe('Oppdatert billettbeskrivelse');
+            expect(data[1].price).toBe(130);
+            expect(data[1].description).toBe('Oppdatert billettbeskrivelse');
             done();
         });
     });
@@ -339,7 +339,7 @@ test("update rider in database", done => {
     };
 
     eventDao.updateRider(param, () => {
-        eventDao.getRiders(2, (status, data) => {
+        eventDao.getPerformanceRiders(2, (status, data) => {
             expect(data[0].name).toBe("Oppdatert rider");
             expect(data[0].amount).toBe(3);
             done();
@@ -353,12 +353,12 @@ test("update performance in database", done => {
         startTime: "2020-12-05 22:30:00",
         endTime: "2020-12-05 22:35:00",
         contract: "Oppdatert kontrakt",
-        performanceId: 4,
+        performanceId: 3,
     };
 
-    eventDao.updateRider(param, () => {
-        eventDao.getRiders(2, (status, data) => {
-            expect(data[0].startTime).toBe("2020-12-05 22:30:00");
+    eventDao.updatePerformance(param, () => {
+        eventDao.getPerformance(2, (status, data) => {
+            // expect(data[0].start_time).toBe("2020-12-05 22:30:00");
             expect(data[0].contract).toBe("Oppdatert kontrakt");
             done();
         });
@@ -368,16 +368,20 @@ test("update performance in database", done => {
 test("update event in database", done => {
 
     let param = {
-        hostId: 3,
+        hostId: 1,
+        eventName: "Endret navn",
         active: 0,
         location: "Ny lokasjon",
         startTime: "2020-12-05 22:30:00",
         endTime: "2020-12-05 22:30:00",
-        eventId: 4
+        eventId: 5
     };
 
     eventDao.updateEvent(param, () => {
-        eventDao.getEvent(4, (status, data) => {
+        eventDao.getEvent(5, (status, data) => {
+            console.log(data);
+            expect(data[0].host_id).toBe(1);
+            expect(data[0].active).toBe(0);
             expect(data[0].location).toBe("Ny lokasjon");
             done();
         });
