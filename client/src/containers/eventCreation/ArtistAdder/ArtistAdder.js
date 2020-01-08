@@ -1,0 +1,69 @@
+import React, { Component } from 'react';
+
+export default class ArtistAdder extends Component {
+    state = {
+        artists: this.props.artists
+    };
+
+    handleNewArtist = () => {
+        let artists = [...this.state.artists];
+        artists.push('');
+
+        this.setState({ artists });
+    };
+
+    handleDeleteArtist = event => {
+        let artists = [...this.state.artists];
+        artists.splice(event.target.parentNode.id, 1);
+
+        this.setState({ artists });
+    };
+
+    handleChange = event => {
+        let artists = [...this.state.artists];
+        const id = event.target.parentNode.id;
+        artists[id] = event.target.value;
+
+        this.setState({ artists });
+    };
+
+    render() {
+        return (
+            <>
+                <button onClick={this.handleNewArtist}>Legg til</button>
+                {this.state.artists.map((el, i) => {
+                    return (
+                        <div key={i} id={i}>
+                            <input
+                                type="text"
+                                placeholder="Fullt navn"
+                                onChange={this.handleChange}
+                                value={el}
+                            />
+                            <span
+                                onClick={this.handleDeleteArtist}
+                                style={{ cursor: 'pointer' }}
+                            >
+                                &#10005;
+                            </span>
+                        </div>
+                    );
+                })}
+                <button
+                    onClick={() =>
+                        this.props.saveArtists(this.state.artists, 'next')
+                    }
+                >
+                    Neste
+                </button>
+                <button
+                    onClick={() =>
+                        this.props.saveArtists(this.state.artists, 'previous')
+                    }
+                >
+                    Forrige
+                </button>
+            </>
+        );
+    }
+}

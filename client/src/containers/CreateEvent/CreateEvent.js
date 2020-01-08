@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import BasicForm from '../../components/BasicForm/BasicForm';
 import DatePicker from '../../components/eventCreation/DatePicker/DatePicker';
+import ArtistAdder from '../eventCreation/ArtistAdder/ArtistAdder';
 
 import classes from './CreateEvent.module.scss';
 
@@ -15,13 +16,7 @@ export default class CreateEvent extends Component {
             image: '',
             dateRange: [new Date(), new Date()],
             timeRange: [moment(), moment()],
-            artistsCount: 0,
-            artists: [
-                {
-                    name: '',
-                    riders: ['']
-                }
-            ],
+            artists: [],
             tickets: [
                 {
                     description: '',
@@ -68,9 +63,37 @@ export default class CreateEvent extends Component {
     };
 
     handleNext = event => {
-        event.preventDefault();
+        if (event) {
+            event.preventDefault();
+        }
         let page = this.state.currentPage;
         this.setState({ currentPage: ++page });
+    };
+
+    handlePrevious = event => {
+        if (event) {
+            event.preventDefault();
+        }
+        let page = this.state.currentPage;
+        this.setState({ currentPage: --page });
+    };
+
+    handleSaveArtists = (artists, action) => {
+        // Remove empty elements from the array
+        const result = artists.filter(el => el.trim() !== '');
+
+        const newEvent = {
+            ...this.state.newEvent
+        };
+        newEvent.artists = result;
+
+        this.setState({ newEvent });
+
+        if (action === 'next') {
+            this.handleNext();
+        } else if (action === 'previous') {
+            this.handlePrevious();
+        }
     };
 
     getCurrentPage = () => {
@@ -92,27 +115,33 @@ export default class CreateEvent extends Component {
 
             case 1:
                 current = (
-                    <BasicForm
-                        title="Hvilken type arrangement er det?"
-                        inputType="text"
-                        value={this.state.newEvent.category}
-                        name="category"
-                        clicked={this.handleNext}
-                        changed={this.handleChange}
-                    />
+                    <>
+                        <BasicForm
+                            title="Hvilken type arrangement er det?"
+                            inputType="text"
+                            value={this.state.newEvent.category}
+                            name="category"
+                            clicked={this.handleNext}
+                            changed={this.handleChange}
+                        />
+                        <button onClick={this.handlePrevious}>Forrige</button>
+                    </>
                 );
                 break;
 
             case 2:
                 current = (
-                    <BasicForm
-                        title="Hvor skal arrangementet være?"
-                        inputType="text"
-                        value={this.state.newEvent.location}
-                        name="location"
-                        clicked={this.handleNext}
-                        changed={this.handleChange}
-                    />
+                    <>
+                        <BasicForm
+                            title="Hvor skal arrangementet være?"
+                            inputType="text"
+                            value={this.state.newEvent.location}
+                            name="location"
+                            clicked={this.handleNext}
+                            changed={this.handleChange}
+                        />
+                        <button onClick={this.handlePrevious}>Forrige</button>
+                    </>
                 );
                 break;
 
@@ -130,14 +159,12 @@ export default class CreateEvent extends Component {
 
             case 4:
                 current = (
-                    <BasicForm
-                        title="Hvor mange artister skal det være?"
-                        inputType="number"
-                        value={this.state.newEvent.artistsCount}
-                        name="artistsCount"
-                        clicked={this.handleNext}
-                        changed={this.handleChange}
-                    />
+                    <>
+                        <ArtistAdder
+                            artists={this.state.newEvent.artists}
+                            saveArtists={this.handleSaveArtists}
+                        />
+                    </>
                 );
                 break;
 
