@@ -16,16 +16,16 @@ export default class ViewProfile extends Component{
         console.log(value);
         if("" + attribute + "" === "username"){
             this.setState({username: value});
-            document.getElementById('usernameP').innerHTML = value;
+            document.getElementById('usernameP').innerHTML = "Username: " + value;
         }
         else if("" + attribute + "" === "email"){
             this.setState({email: value});
-            document.getElementById('emailP').innerHTML = value;
+            document.getElementById('emailP').innerHTML = "Email: " + value;
 
         }
         else if("" + attribute + "" === "telephone"){
             this.setState({telephone: value});
-            document.getElementById('telephoneP').innerHTML = value;
+            document.getElementById('telephoneP').innerHTML = "Telephone: " + value;
 
         }
     }
@@ -37,7 +37,6 @@ export default class ViewProfile extends Component{
                 <div className={classes.showLayer}>
                     <div className={classes.row}>
                         <div className={classes.column}>
-                            <h1>First name and Surname</h1>
                             <div className={classes.imgContainer}>
                                 <img className={classes.profile} src="https://images.assetsdelivery.com/compings_v2/apoev/apoev1806/apoev180600175.jpg" alt="Profile picture"/>
                                 <div className={classes.overlay}>
@@ -49,13 +48,13 @@ export default class ViewProfile extends Component{
                         </div>
                         <div className={classes.column}>
                             <div className={classes.bioLayer}>
-                                <h1>BIO</h1>
+                                <h1 className={classes.h1}>First name and Surname</h1>
                                 <b/>
-                                <div className={classes.p} id={"usernameP"}>Username</div>
+                                <div className={classes.p} id={"usernameP"}>Username: ????</div>
                                 <b/>
-                                <div className={classes.p} id={"emailP"}>Email</div>
+                                <div className={classes.p} id={"emailP"}>Email: ?????</div>
                                 <b/>
-                                <div className={classes.p} id={"telephoneP"}>Telephone number</div>
+                                <div className={classes.p} id={"telephoneP"}>Telephone number: ????</div>
                             </div>
                             <div className={classes.editLayer}>
                                 <h4><b>Edit Info</b></h4>
@@ -63,14 +62,14 @@ export default class ViewProfile extends Component{
                                     <div className={classes.column}>
                                         <input id={"nameInp"} className={classes.input} type='text' placeholder="username"/>
                                         <b/>
-                                        <input id={"passwordInp"} className={classes.input} type='text' placeholder="password"/>
-                                        <b/>
                                         <input id={"emailInp"} className={classes.input} type='text' placeholder="email"/>
                                         <b/>
                                         <input id={"telephoneInp"} className={classes.input} type='text' placeholder="telephone"/>
                                     </div>
                                     <div className={classes.column}>
-                                        <button onClick={event => (this.eventHandler())}>
+                                        <input id={"passwordInp"} className={classes.input} type='password' placeholder="password"/>
+                                        <b/>
+                                        <button className={classes.button} onClick={event => (this.eventHandler())}>
                                             Send
                                         </button>
                                     </div>

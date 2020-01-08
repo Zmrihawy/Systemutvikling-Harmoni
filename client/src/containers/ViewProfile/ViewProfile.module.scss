@@ -52,6 +52,9 @@
 }
 .input {
   width: 12vw;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #000000;
 }
 .input:focus, input:focus{
   outline: none;
@@ -60,8 +63,30 @@
   width: 100%;
   height: auto;
 }
+.h1 {
+  font-family: "Agency FB";
+  color: black;
+  font-size: 40px;
+}
 .p {
   font-size: 25px;
+}
+.button {
+  background-color: darkgrey;
+  border: none;
+  color: whitesmoke;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 2vw;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition-duration: 0.3s;
+}
+.button:hover {
+  background-color: black;
+  color: white;
 }
 .column {
   float: left;
@@ -74,4 +99,12 @@
   content: "";
   display: table;
   clear: both;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: black;
+  text-align: center;
 }
