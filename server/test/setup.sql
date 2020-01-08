@@ -88,6 +88,9 @@ INSERT INTO ticket(name, event_id, price, amount, description)
 VALUES("TestBillett", 2, 125.0, 2, "testbeskrivelse");
 
 INSERT INTO ticket(name, event_id, price, amount, description)
+VALUES("TestBillett2", 2, 145.0, 20, "testbeskrivelse2");
+
+INSERT INTO ticket(name, event_id, price, amount, description)
 VALUES("billett", 1, 200.0, 1, "beskrivelse");
 
 INSERT INTO ticket(name, event_id, price, amount, description)
