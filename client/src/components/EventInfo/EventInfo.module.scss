@@ -1,12 +1,13 @@
 .container {
     display: grid;
-    margin: 20px 100px;
+    margin: 20px 100px 100px 100px;
     grid-gap: 100px 20px;
     grid-template-areas: 
-    'title   title   title'
+    '-      title    button__edit'
     'desc    info    map'
     'artists artists artists'
-    'tickets tickets tickets';
+    'tickets tickets tickets'
+    'staff   staff   staff';
     grid-template-columns: repeat(3, 1fr);
     font-size: 1.5em;
     height: fit-content;
@@ -15,6 +16,16 @@
 .title {
     grid-area: title;
     font-size: 3em;
+}
+
+.button__edit {
+    grid-area: button__edit;
+    border-radius: 15px;
+    font-size: 1.2em;
+    margin: 10px 100px;
+    background-color: #444444;
+    color: white;
+    font-weight: 500;
 }
 
 .subtitle {
@@ -47,13 +58,47 @@
     display: grid; 
     grid-template-areas: 
     'location'
+    'date'
     'host'
     'ticketAmount';
     align-items: center;
 }
 
+.info__item {
+    display: grid; 
+    grid-template-areas: 
+    'info__icon info__title'
+    'info__icon info__description';
+    grid-template-columns: .6fr 1fr;
+    grid-gap: 0px 20px;
+    place-items: center center;
+}
+
+.info__icon {
+    grid-area: info__icon; 
+    justify-self: end;
+    font-size: 2.5em;
+    color: #272727; 
+    margin: 0;
+}
+
+.info__title {
+    grid-area: info__title; 
+    justify-self: start;
+}
+
+.info__description {
+    grid-area: info__description; 
+    justify-self: start;
+}
+
+
 .location {
     grid-area: location;
+}
+
+.date {
+    grid-area: date;
 }
 
 .host {
@@ -67,7 +112,11 @@
 .map {
     grid-area: map;
     background-color: lightgray;
-    height: 500px;
+    overflow: hidden;
+    border-radius: 20px;
+    -webkit-box-shadow: 6px 6px 10px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 6px 6px 10px 0px rgba(0,0,0,0.2);
+    box-shadow: 6px 6px 10px 0px rgba(0,0,0,0.2);
 }
 
 .artists {
@@ -109,12 +158,17 @@
     height: 150px;;
 }
 
-.button__rider { 
+.button__contract { 
     padding: 5px;
     border-radius: 10px;
     font-size: 1em;
 }
 
+.button__rider { 
+    padding: 5px;
+    border-radius: 10px;
+    font-size: 1em;
+}
 
 .tickets {
     grid-area: tickets;
@@ -141,6 +195,44 @@
 }
 
 .ticket__wrapper {
+    border: 1px solid lightgray;
+    border-radius: 12px;
+    padding: 5px;
+}
+
+.staff {
+    grid-area: staff;
+    display: grid;
+    grid-template-areas:
+    'staff__title'
+    'staff__list';
+    grid-gap: 10px;
+}
+
+.staff > h1 {
+    grid-area: staff__title;
+}
+
+.staff__name {
+    grid-area: name;
+}
+
+.staff__proffesion {
+    grid-area: proffesion; 
+}
+
+.staff__wrapper > p {
+    font-size: 1.2em;
+    font-style: italic;
+}
+
+.staff__list {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 10px;
+}
+
+.staff__wrapper {
     border: 1px solid lightgray;
     border-radius: 12px;
     padding: 5px;
