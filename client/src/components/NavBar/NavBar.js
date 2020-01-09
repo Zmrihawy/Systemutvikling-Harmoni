@@ -10,19 +10,24 @@ export default class NavBar extends Component {
         return (
             <div id="container">
                 <div className={classes.navBar}>
-                    <div className={classes.activeLink} id='eventLink' onClick={this.changePage('eventLink')}>My Events</div>
-                    <div className={classes.navLink} id='createLink' onClick={this.changePage('createLink')}>Create Event</div>
-                    <div className={classes.navLink} id='profileLink' onClick={this.changePage('profileLink')}>My Profile</div>
-                    <div className={classes.navLink} id='logLink' onClick={this.changePage('logLink')}>Log Out</div>
+                    <div className={classes.activeLink} id='eventLink' onClick={event => {this.changePage('eventLink')}}>My Events</div>
+                    <div className={classes.navLink} id='createLink' onClick={event => {this.changePage('createLink')}}>Create Event</div>
+                    <div className={classes.navLink} id='profileLink' onClick={event => {this.changePage('profileLink')}}>My Profile</div>
+                    <div className={classes.navLink} id='logLink' onClick={event => {this.changePage('logLink')}}>Log Out</div>
                 </div>
                 <br/>
             </div>
         )
     }
     changePage(id){
-        if( document.getElementsByClassName(classes.activeLink) !== null &&  document.getElementById(id) !== null){
-            document.getElementsByClassName(classes.activeLink).className = "" + classes.navLink + "";
-            document.getElementById(id).className = "" + classes.activeLink + "";
+        if(document.getElementsByClassName("" + classes.activeLink + "") !== null){
+            console.log('yes');
+            console.log(id);
+            if(document.getElementById(id) !== null){
+                console.log('yes2');
+                document.getElementsByClassName(classes.activeLink)[0].className = "" + classes.navLink + "";
+                document.getElementById(id).className = "" + classes.activeLink + "";
+            }
         }
     }
 }
