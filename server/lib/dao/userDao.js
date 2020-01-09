@@ -42,22 +42,22 @@ function (_Dao) {
   _createClass(UserDao, [{
     key: "getUser",
     value: function getUser(sql, callback) {
-      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT user_id, username, email, phone, first_name, surname, phone \n                            FROM ".concat(CONSTANTS.USER_TABLE, " WHERE ").concat(CONSTANTS.USER_ID, " = ?"), [sql], callback);
+      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT ".concat(CONSTANTS.USER_ID, ", ").concat(CONSTANTS.USER_USERNAME, ", ").concat(CONSTANTS.USER_EMAIL, ", ").concat(CONSTANTS.USER_PHONE, ", ").concat(CONSTANTS.USER_FIRST_NAME, ", ").concat(CONSTANTS.USER_LAST_NAME, " \n                    FROM ").concat(CONSTANTS.USER_TABLE, " WHERE ").concat(CONSTANTS.USER_ID, " = ?"), [sql], callback);
     }
   }, {
     key: "getPassword",
     value: function getPassword(sql, callback) {
-      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT user_id, HEX(password), HEX(salt) FROM ".concat(CONSTANTS.USER_TABLE, " WHERE ").concat(CONSTANTS.USER_EMAIL, " = ?"));
+      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT ".concat(CONSTANTS.USER_ID, ", HEX(").concat(CONSTANTS.USER_PASSWORD, ") as ").concat(CONSTANTS.USER_PASSWORD, " , HEX(").concat(CONSTANTS.USER_SALT, ") as ").concat(CONSTANTS.USER_SALT, " FROM ").concat(CONSTANTS.USER_TABLE, " WHERE ").concat(CONSTANTS.USER_EMAIL, " = ?"), [sql], callback);
     }
   }, {
     key: "getAllUsers",
     value: function getAllUsers(callback) {
-      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT user_id, username FROM ".concat(CONSTANTS.USER_TABLE), [], callback);
+      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT ".concat(CONSTANTS.USER_ID, ", ").concat(CONSTANTS.USER_USERNAME, " FROM ").concat(CONSTANTS.USER_TABLE), [], callback);
     }
   }, {
     key: "createUser",
     value: function createUser(sql, callback) {
-      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "INSERT INTO ".concat(CONSTANTS.USER_TABLE, " (").concat(CONSTANTS.USER_USERNAME, ",").concat(CONSTANTS.USER_PASSWORD, ",").concat(CONSTANTS.USER_SALT, ",").concat(CONSTANTS.USER_EMAIL, ",").concat(CONSTANTS.USER_PHONE, ",").concat(CONSTANTS.USER_FIRST_NAME, ",").concat(CONSTANTS.USER_LAST_NAME, ") \n                    VALUES (?,?,?,?,?,?)"), [sql.username, sql.password, sql.salt, sql.email, sql.phone, sql.firstName, sql.lastName], callback);
+      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "INSERT INTO ".concat(CONSTANTS.USER_TABLE, " (").concat(CONSTANTS.USER_USERNAME, ", ").concat(CONSTANTS.USER_PASSWORD, ", ").concat(CONSTANTS.USER_SALT, ",").concat(CONSTANTS.USER_EMAIL, ",").concat(CONSTANTS.USER_PHONE, ",").concat(CONSTANTS.USER_FIRST_NAME, ",").concat(CONSTANTS.USER_LAST_NAME, ") \n                    VALUES (?,UNHEX(?),UNHEX(?),?,?,?,?)"), [sql.username, sql.password, sql.salt, sql.email, sql.phone, sql.firstName, sql.lastName], callback);
     }
   }, {
     key: "deleteUser",
@@ -67,14 +67,14 @@ function (_Dao) {
   }, {
     key: "updatePassword",
     value: function updatePassword(sql, callback) {
-      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.USER_TABLE, " SET ").concat(CONSTANTS.USER_PASSWORD, " = ? WHERE ").concat(CONSTANTS.USER_ID, " = ?"), [sql.password, sql.userId], callback);
+      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.USER_TABLE, " SET ").concat(CONSTANTS.USER_PASSWORD, " = UNHEX(?) WHERE ").concat(CONSTANTS.USER_ID, " = ?"), [sql.password, sql.userId], callback);
     }
   }, {
     key: "updateUser",
     value: function updateUser(sql, callback) {
       var userAtributes = [sql.username, sql.email, sql.phone, sql.firstName, sql.lastName, sql.userId];
 
-      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.USER_TABLE, " SET ").concat(CONSTANTS.USER_USERNAME, " = ?, ").concat(CONSTANTS.USER_EMAIL, " = ?, ").concat(CONSTANTS.USER_PHONE, " = ?, ").concat(CONSTANTS.USER_FIRST_NAME, ", ").concat(CONSTANTS.USER_LAST_NAME, " = ? WHERE ").concat(CONSTANTS.USER_ID, " = ?"), userAtributes, callback);
+      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.USER_TABLE, " SET ").concat(CONSTANTS.USER_USERNAME, " = ?, ").concat(CONSTANTS.USER_EMAIL, " = ?, ").concat(CONSTANTS.USER_PHONE, " = ?, ").concat(CONSTANTS.USER_FIRST_NAME, " = ?, ").concat(CONSTANTS.USER_LAST_NAME, " = ? WHERE ").concat(CONSTANTS.USER_ID, " = ?"), userAtributes, callback);
     }
   }]);
 

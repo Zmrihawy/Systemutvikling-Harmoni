@@ -1,5 +1,5 @@
 TN:
-SF:C:\Users\torje\OneDrive\Desktop\Scrum\harmoni\server\src\dao\dao.js
+SF:/home/hansk/Scrum/harmoni/server/src/dao/dao.js
 FN:2,(anonymous_0)
 FN:7,(anonymous_1)
 FN:8,(anonymous_2)
@@ -35,7 +35,7 @@ BRF:4
 BRH:2
 end_of_record
 TN:
-SF:C:\Users\torje\OneDrive\Desktop\Scrum\harmoni\server\src\dao\databaseConsts.js
+SF:/home/hansk/Scrum/harmoni/server/src/dao/databaseConsts.js
 FN:2,(anonymous_0)
 FNF:1
 FNH:1
@@ -81,7 +81,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\torje\OneDrive\Desktop\Scrum\harmoni\server\src\dao\eventDao.js
+SF:/home/hansk/Scrum/harmoni/server/src/dao/eventDao.js
 FN:8,(anonymous_0)
 FN:12,(anonymous_1)
 FN:16,(anonymous_2)
@@ -157,7 +157,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\torje\OneDrive\Desktop\Scrum\harmoni\server\src\dao\userDao.js
+SF:/home/hansk/Scrum/harmoni/server/src/dao/userDao.js
 FN:7,(anonymous_0)
 FN:12,(anonymous_1)
 FN:16,(anonymous_2)
@@ -192,7 +192,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\torje\OneDrive\Desktop\Scrum\harmoni\server\test\runSQL.js
+SF:/home/hansk/Scrum/harmoni/server/test/runSQL.js
 FN:3,run
 FN:6,(anonymous_1)
 FN:12,(anonymous_2)

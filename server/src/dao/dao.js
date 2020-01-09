@@ -1,10 +1,15 @@
+// @flow
+
+import type {ConnectionOptions} from "mysql";
+
 module.exports = class Dao {
-  constructor(pool) {
+  pool : *;
+  constructor(pool : *) {
     // Dependency Injection
     this.pool = pool;
   }
 
-  query(sql, params, callback) {
+  query(sql: string, params: Array<mixed>, callback: Function) {
     this.pool.getConnection((err, connection) => {
       console.log("dao: connected to database");
       if (err) {
