@@ -1,6 +1,6 @@
 .container {
     display: grid;
-    margin: 20px 100px 100px 100px;
+    margin: 20px 10% 100px 10%;
     grid-gap: 60px 20px;
     grid-template-areas:
         'top__section top__section top__section'
@@ -287,6 +287,5 @@
             'host ticketAmount';
         grid-row-gap: 20px;
         font-size: 0.8em;
-
     }
 }
