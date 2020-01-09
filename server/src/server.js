@@ -305,27 +305,14 @@ app.get("/api/user/event/:event_id/:performance_id", (req, res) => {
 
 //get all active events for user
 
-app.get("/api/user/:user_id/events/active", (req, res) => {
-    console.log("Fikk get-request");
-
-    eventDao.getUsersEvents({userId : req.body.userId, active : 1}, (status, data) => {
+app.get("/bruker/:bruker_id/:active", (req, res) => {
+    console.log("/bruker/:bruker_id/:active: fikk request fra klient");
+    eventDao.getUsersEvents({userId : req.params.bruker_id, active: req.params.active}, (status, data) => {
         res.status(status);
         res.json(data);
-    })
-    
+    });
 });
 
-// get all inactive events for user
-
-app.get("/api/user/:user_id/events/inactive", (req, res) => {
-    console.log("Fikk get-request");
-
-    eventDao.getUsersEvents({userId : req.body.userId, active : 0}, (status, data) => {
-        res.status(status);
-        res.json(data);
-    })
-    
-});
 
 //By request of a new password
 //generate new password and send it via email
@@ -333,7 +320,7 @@ app.get("/api/user/:user_id/events/inactive", (req, res) => {
 app.put("/user/:usermail", (req, res) => {
     userDao.getUser(req.params.usermail, (status, data) => {
 
-        if(data.length > 0){
+        if(data.length === 1){
 
             let password = generator.generate({
                 length : 12, 
