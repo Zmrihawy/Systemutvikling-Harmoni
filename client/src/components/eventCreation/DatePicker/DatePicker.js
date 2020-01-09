@@ -37,7 +37,8 @@ const datePicker = props => {
                     props.timeChanged(value, id)
                 }
             />
-            <button onClick={props.clicked}>Neste</button>
+            <button onClick={props.last}>Forrige</button>
+            <button onClick={props.next}>Neste</button>
         </div>
     );
 };

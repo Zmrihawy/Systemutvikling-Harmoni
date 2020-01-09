@@ -51,13 +51,6 @@ export default class ArtistAdder extends Component {
                 })}
                 <button
                     onClick={() =>
-                        this.props.save(this.state.artists, 'artists', 'next')
-                    }
-                >
-                    Neste
-                </button>
-                <button
-                    onClick={() =>
                         this.props.save(
                             this.state.artists,
                             'artists',
@@ -66,6 +59,13 @@ export default class ArtistAdder extends Component {
                     }
                 >
                     Forrige
+                </button>
+                <button
+                    onClick={() =>
+                        this.props.save(this.state.artists, 'artists', 'next')
+                    }
+                >
+                    Neste
                 </button>
             </>
         );

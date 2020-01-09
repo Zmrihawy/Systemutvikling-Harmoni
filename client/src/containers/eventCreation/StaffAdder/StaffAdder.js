@@ -62,17 +62,17 @@ export default class StaffAdder extends Component {
                 })}
                 <button
                     onClick={() =>
-                        this.props.save(this.state.staff, 'staff', 'next')
-                    }
-                >
-                    Neste
-                </button>
-                <button
-                    onClick={() =>
                         this.props.save(this.state.staff, 'staff', 'previous')
                     }
                 >
                     Forrige
+                </button>
+                <button
+                    onClick={() =>
+                        this.props.save(this.state.staff, 'staff', 'next')
+                    }
+                >
+                    Opprett
                 </button>
             </>
         );

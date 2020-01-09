@@ -8,7 +8,8 @@ export default class Main extends Component {
     render() {
         return (
             <>
-                <DisplayEvent />
+                {/*<DisplayEvent />*/}
+                <CreateEvent />
             </>
         );
     }

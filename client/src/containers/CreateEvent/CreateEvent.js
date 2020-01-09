@@ -76,6 +76,16 @@ export default class CreateEvent extends Component {
             result = input.filter(
                 el => el.name.trim() !== '' && el.profession.trim() !== ''
             );
+        } else if (select === 'tickets') {
+            result = input;
+        } else if (select === 'riders') {
+            input.forEach(el => {
+                el.riders = el.riders.filter(element => {
+                    return element.description !== '';
+                });
+            });
+            select = 'artists';
+            result = [...input];
         }
 
         const newEvent = {
@@ -173,6 +183,10 @@ export default class CreateEvent extends Component {
                         />
                     </>
                 );
+                break;
+
+            case 8:
+                console.log(this.state.newEvent);
                 break;
 
             default:
