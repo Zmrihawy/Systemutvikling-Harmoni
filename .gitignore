@@ -2,3 +2,7 @@ node_modules
 .gitlab-ci.yml
 .idea
 package-lock.json
+lib
+coverage
+flow-coverage
+npm-debug.log

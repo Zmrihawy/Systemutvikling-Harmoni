@@ -90,6 +90,7 @@ app.delete('/event/:event_id/raider', (req, res) => {
 })
 
 //Delete a user
+
 app.delete("/user/:user_id", (req, res) => {
 
     console.log("Fikk DELETE-request fra klienten");
