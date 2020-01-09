@@ -71,7 +71,7 @@ export default class TicketAdder extends Component {
                         this.props.save(this.state.tickets, 'tickets', 'next')
                     }
                 >
-                    Neste
+                    Videre
                 </button>
             </>
         );

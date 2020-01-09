@@ -170,7 +170,26 @@ export default class CreateEvent extends Component {
                             artists={this.state.newEvent.artists}
                             save={this.handleSave}
                         />
-                    </>
+                    );
+                } else {
+                    current = (
+                        <>
+                            <p>No artists have been added</p>
+                            <button onClick={this.handlePrevious}>
+                                Forrige
+                            </button>
+                            <button onClick={this.handleNext}>Videre</button>
+                        </>
+                    );
+                }
+                break;
+
+            case 6:
+                current = (
+                    <TicketAdder
+                        tickets={this.state.newEvent.tickets}
+                        save={this.handleSave}
+                    />
                 );
                 break;
 

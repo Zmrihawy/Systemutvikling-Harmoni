@@ -65,7 +65,7 @@ export default class ArtistAdder extends Component {
                         this.props.save(this.state.artists, 'artists', 'next')
                     }
                 >
-                    Neste
+                    Videre
                 </button>
             </>
         );

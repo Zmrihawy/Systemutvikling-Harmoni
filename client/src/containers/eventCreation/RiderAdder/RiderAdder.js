@@ -94,7 +94,7 @@ export default class RiderAdder extends Component {
                         this.props.save(this.state.artists, 'riders', 'next')
                     }
                 >
-                    Neste
+                    Videre
                 </button>
             </>
         );
