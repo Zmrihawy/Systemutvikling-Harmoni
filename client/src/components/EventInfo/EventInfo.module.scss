@@ -1,7 +1,7 @@
 .container {
     display: grid;
     margin: 20px 100px 100px 100px;
-    grid-gap: 100px 20px;
+    grid-gap: 60px 20px;
     grid-template-areas:
         'top__section top__section top__section'
         'desc         info         map'
@@ -263,5 +263,30 @@
         grid-template-columns: repeat(2, 1fr);
         font-size: 1.5em;
         height: fit-content;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .container {
+        grid-template-areas:
+            'top__section'
+            'desc'
+            'info'
+            'map'
+            'artists'
+            'tickets'
+            'staff';
+        grid-template-columns: repeat(1, 1fr);
+        font-size: 1.5em;
+        height: fit-content;
+    }
+
+    .info {
+        grid-template-areas:
+            'location date'
+            'host ticketAmount';
+        grid-row-gap: 20px;
+        font-size: 0.8em;
+
     }
 }
