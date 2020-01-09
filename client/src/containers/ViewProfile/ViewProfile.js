@@ -32,7 +32,6 @@ export default class ViewProfile extends Component{
     render(){
         return(
             <div className={classes.viewProfile}>
-                <NavBar></NavBar>
                 <div className={classes.showLayer}>
                     <div className={classes.row}>
                         <div className={classes.column}>
