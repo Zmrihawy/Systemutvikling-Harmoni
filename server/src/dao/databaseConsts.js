@@ -1,4 +1,46 @@
+// @flow
+
 module.exports = class Constants {
+
+EVENT_TABLE: string;
+EVENT_ID :string;
+EVENT_NAME :string;
+EVENT_HOST_ID :string;
+EVENT_ACTIVE :string;
+EVENT_LOCATION :string;
+EVENT_START_TIME :string;
+EVENT_END_TIME :string;
+
+TICKET_TABLE :string;
+TICKET_NAME :string;
+TICKET_EVENT_ID :string;
+TICKET_PRICE :string;
+TICKET_AMOUNT :string;
+TICKET_DESCRIPTION :string;
+
+USER_TABLE :string;
+USER_ID :string;
+USER_USERNAME :string;
+USER_PASSWORD :string;
+USER_SALT :string;
+USER_EMAIL :string;
+USER_PHONE :string;
+USER_FIRST_NAME :string;
+USER_LAST_NAME :string;
+
+PERFORMANCE_TABLE :string;
+PERFORMANCE_ID :string;
+PERFORMANCE_ARTIST_ID :string;
+PERFORMANCE_EVENT_ID :string;
+PERFORMANCE_START_TIME :string;
+PERFORMANCE_END_TIME :string;
+PERFORMANCE_CONTRACT :string;
+
+RIDER_TABLE :string;
+RIDER_PERFORMANCE_ID :string;
+RIDER_NAME :string;
+RIDER_AMOUNT :string;
+    
     constructor() {
         this.EVENT_TABLE = "event";
         this.EVENT_ID = "event_id";

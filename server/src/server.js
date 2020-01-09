@@ -85,7 +85,7 @@ app.get("/api/users", (req, res) => {
 
 //Delete raider
 
-app.delete('/event/:event_id/raider', (req, res) => {
+app.delete('/event/:event_id/rider', (req, res) => {
 
 })
 
@@ -273,13 +273,13 @@ app.get("/api/event/:event_id/tickets", (req, res) => {
 
 //Get all riders for each artist in a specific event
 
-app.get("/api/event/:event_id/raider", (req, res) => {
+app.get("/api/event/:event_id/rider", (req, res) => {
     console.log("Fikk request fra klienten");
 
     //jwt .verify => if decoded username = arrangør => get all
     //else get 1 
 
-    eventDao.getAllRaiders(req.params.event_id, (status, data) => {
+    eventDao.getAllRiders(req.params.event_id, (status, data) => {
         res.status(status);
         res.json(data);
     });
