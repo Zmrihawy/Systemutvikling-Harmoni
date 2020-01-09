@@ -1,3 +1,5 @@
+// @flow
+
 const Constants = require("./databaseConsts.js");
 const CONSTANTS =  new Constants();
 const Dao = require("./dao.js");
@@ -5,19 +7,19 @@ const Dao = require("./dao.js");
 module.exports = class ServerDao extends Dao {
 
     /**GET*/
-    getPerformance(sql, callback) {
+    getPerformance(sql :string | number, callback: Function) {
         super.query(`SELECT * FROM ${CONSTANTS.PERFORMANCE_TABLE} WHERE ${CONSTANTS.PERFORMANCE_ARTIST_ID} = ?`, [sql], callback);
     }
 
-    getContract(sql, callback) {
+    getContract(sql : {eventId: string | number, artistId: string | number}, callback: Function) {
         super.query(`SELECT ${CONSTANTS.PERFORMANCE_CONTRACT} FROM ${CONSTANTS.PERFORMANCE_TABLE} WHERE ${CONSTANTS.PERFORMANCE_EVENT_ID} = ? AND ${CONSTANTS.PERFORMANCE_ARTIST_ID} = ?`, [sql.eventId, sql.artistId], callback);
     }
 
-    getEventContracts(sql, callback) {
+    getEventContracts(sql: string | number , callback: Function) {
         super.query(`SELECT * FROM ${CONSTANTS.PERFORMANCE_TABLE} WHERE ${CONSTANTS.EVENT_ID} = ?`, [sql], callback);
     }
 
-    getEventTickets(sql, callback) {
+    getEventTickets(sql : number | string, callback) {
         super.query(`SELECT * FROM ${CONSTANTS.TICKET_TABLE} WHERE ${CONSTANTS.EVENT_ID} = ?`, [sql], callback);
     }
 
@@ -76,12 +78,12 @@ module.exports = class ServerDao extends Dao {
     }
 
     /**UPDATE*/
-    updateTicket(sql, callback) {
+    updateTicket(sql :string, callback: Function) {
         super.query(`UPDATE ${CONSTANTS.TICKET_TABLE} SET ${CONSTANTS.TICKET_PRICE} = ?, ${CONSTANTS.TICKET_AMOUNT} = ?, ${CONSTANTS.TICKET_DESCRIPTION} = ?  WHERE ${CONSTANTS.TICKET_NAME} = ? AND ${CONSTANTS.TICKET_EVENT_ID} = ? `,
             [sql.price, sql.amount, sql.description, sql.name, sql.eventId], callback);
     }
 
-    updateRider(sql, callback) {
+    updateRider(sql :string, callback: Function) {
         super.query(`UPDATE ${CONSTANTS.RIDER_TABLE} SET ${CONSTANTS.RIDER_NAME} = ?, ${CONSTANTS.RIDER_AMOUNT} = ? WHERE ${CONSTANTS.RIDER_PERFORMANCE_ID} = ? and ${CONSTANTS.RIDER_NAME} = ?`,
             [sql.name, sql.amount, sql.performanceId, sql.oldName], callback);
     }

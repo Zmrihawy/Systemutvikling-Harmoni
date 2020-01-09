@@ -187,7 +187,7 @@ app.put("/api/event/:event_id/ticket", (req,res) => {
 //put rider
 
 app.put("/api/event/:event_id/rider", (req,res) => {
-    
+    eventDao.updateRider()
 })
 
 //post a performance
