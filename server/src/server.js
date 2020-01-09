@@ -305,9 +305,9 @@ app.get("/api/user/event/:event_id/:performance_id", (req, res) => {
 
 //get all active events for user
 
-app.get("/bruker/:bruker_id/:active", (req, res) => {
-    console.log("/bruker/:bruker_id/:active: fikk request fra klient");
-    eventDao.getUsersEvents({userId : req.params.bruker_id, active: req.params.active}, (status, data) => {
+app.get("/api/user/:user_id/event/:active", (req, res) => {
+    console.log("fikk request get fra klient");
+    eventDao.getUsersEvents({userId : req.params.user_id, active: req.params.active}, (status, data) => {
         res.status(status);
         res.json(data);
     });

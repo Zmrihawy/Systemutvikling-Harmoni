@@ -32,7 +32,7 @@ module.exports = class ServerDao extends Dao {
     }
 
     getEvent(sql : string | number, callback: Function) {
-        super.query(`SELECT * FROM ${CONSTANTS.EVENT_TABLE} JOIN ${CONSTANTS.PERFORMANCE_TABLE} ON ${CONSTANTS.EVENT_ID} = ${CONSTANTS.PERFORMANCE_EVENT_ID} WHERE ${CONSTANTS.EVENT_ID} = ?`, [sql], callback);
+        super.query(`SELECT * FROM ${CONSTANTS.EVENT_TABLE} e JOIN ${CONSTANTS.PERFORMANCE_TABLE} p ON e.${CONSTANTS.EVENT_ID} = p.${CONSTANTS.PERFORMANCE_EVENT_ID} WHERE ${CONSTANTS.EVENT_ID} = ?`, [sql], callback);
     }
 
     getAllEvents(callback: Function) {
