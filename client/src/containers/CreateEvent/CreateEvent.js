@@ -17,26 +17,9 @@ export default class CreateEvent extends Component {
       image: '',
       dateRange: [new Date(), new Date()],
       timeRange: [moment(), moment()],
-      artistsCount: 0,
-      artists: [
-        {
-          name: '',
-          riders: ['']
-        }
-      ],
-      tickets: [
-        {
-          description: '',
-          amount: null,
-          price: null
-        }
-      ],
-      staff: [
-        {
-          name: '',
-          profession: ''
-        }
-      ]
+      artists: [],
+      tickets: [],
+      staff: []
     }
   };
 
@@ -274,8 +257,8 @@ export default class CreateEvent extends Component {
       case 5:
         current = (
           <TicketSelection
-            ticketSelect={this.ticketSelect}
-            clicked={this.handleNext}
+            tickets={this.state.newEvent.tickets}
+            saveTickets={this.handleSaveTickets}
           />
         );
         break;
