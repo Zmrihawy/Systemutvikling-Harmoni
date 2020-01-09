@@ -1,5 +1,4 @@
 export class Event {
-
     constructor(id, name, hostId, active, location, startTime, endTime) {
         this.id = id;
         this.name = name;
@@ -63,8 +62,7 @@ class EventService {
             .catch(error => console.error("Error: ", error));
     }
     function handleGetEventResponse(json){
-        Event event = new Event(json.event_id, json.name, json.host_id, json.active, json.location, json.startTime, json.endTime);
-        return event;
+        return new Event(json.event_id, json.name, json.host_id, json.active, json.location, json.startTime, json.endTime);
     }
 
     getAllEvents() {
@@ -76,8 +74,7 @@ class EventService {
             .catch(error => console.error("Error: ", error));
     }
     function handleGetAllEventsResponse(json){
-        let events = json.map(Event event = new Event(json.event_id, json.name, json.host_id, json.active, json.location, json.startTime, json.endTime));
-        return events;
+        return json.map( data => new Event(data.event_id, data.name, data.host_id, data.active, data.location, data.start_time, data.end_time));
     }
 
     getPerformance(id) {
@@ -89,8 +86,7 @@ class EventService {
             .catch(error => console.error("Error: ", error));
     }
     function handleGetPerformanceResponse(json){
-        Performance performance = new Performance(json.performance_id, json.user_id, json.event_id, json.start_time, json.end_time);
-        return performance;
+        return new Performance(json.performance_id, json.user_id, json.event_id, json.start_time, json.end_time);
     }
 
     getAllRiders(eventId) {
@@ -102,8 +98,7 @@ class EventService {
             .catch(error => console.error("Error: ", error));
     }
     function handleGetAllRidersResponse(json){
-        let rider = json.map(Rider rider = new Rider(json.rider_id, json.name, json.amount));
-        return riders;
+        return json.map(data => new Rider(data.rider_id, data.name, data.amount));
     }
 
     getContract(eventId, artistId) {
@@ -115,8 +110,7 @@ class EventService {
             .catch(error => console.error("Error: ", error));
     }
     function handleGetContractResponse(json){
-        String contract = JSON.stringify(json);
-        return contract;
+        return JSON.stringify(json);
     }
 
     getEventContracts(eventId) {
@@ -128,8 +122,7 @@ class EventService {
             .catch(error => console.error("Error: ", error));
     }
     function handleGetEventContractsResponse(json){
-        let contracts = json.map(String contract = JSON.stringify(json));
-        return contracts;
+        return json.map( data => new String(JSON.stringify(data)));
     }
 
     getEventTickets(eventId) {
@@ -141,8 +134,7 @@ class EventService {
             .catch(error => console.error("Error: ", error));
     }
     function handleGetEventTicketsResponse(json){
-        let tickets = json.map(Ticket ticket = new Ticket(json.name, json.event_id, json.price, json.amount, json.description));
-        return tickets;
+        return json.map(data => new Ticket(data.name, data.event_id, data.price, data.amount, data.description));
     }
 
     getPerformanceRiders(eventId, performanceId) {
@@ -154,8 +146,7 @@ class EventService {
             .catch(error => console.error("Error: ", error));
     }
     function handleGetPerformanceRidersResponse(json){
-        let rider = json.map(Rider rider = new Rider(json.rider_id, json.name, json.amount));
-        return riders;
+        return json.map(data => new Rider(data.rider_id, data.name, data.amount));
     }
 
     getUsersEvents(userId, active) {
@@ -167,23 +158,271 @@ class EventService {
             .catch(error => console.error("Error: ", error));
     }
     function handleGetUsersEventsResponse(json){
-        Event event = new Event(json.event_id, json.name, json.host_id, json.active, json.location, json.startTime, json.endTime);
-        return event;
+        return new Event(json.event_id, json.name, json.host_id, json.active, json.location, json.startTime, json.endTime);
     }
 
     //POST
-    getUsersEvents(userId, active) {
-        fetch("/api/user/"+userId+"/event/"+active, {
-            method: "GET"
+    createEvent(eventId, name, hostId, active, location, startTime, endTime) {
+        let data = {eventId: eventId, name: name, hostId: hostId, active: active, location: location, startTime: startTime, endTime: endTime};
+        fetch("/api/event", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+            body: JSON.stringify(data);
         })
-            .then(response => response.json())
-            .then(json => return handleGetUsersEventsResponse(json))
-            .catch(error => console.error("Error: ", error));
+        .then(response => response.json())
+        .then(json => console.log(JSON.stringify(json)))
+        .catch(error => console.error("Error: ", error));
     }
-    function handleGetUsersEventsResponse(json){
-        Event event = new Event(json.event_id, json.name, json.host_id, json.active, json.location, json.startTime, json.endTime);
-        return event;
+
+    createTicket(name, eventId, price, amount, description) {
+        let data = {name: name, eventId: eventId, price: price, amount: amount, description: description};
+        fetch("/api/event/"+eventId+"/ticket", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+            body: JSON.stringify(data);
+        })
+        .then(response => response.json())
+        .then(json => console.log(JSON.stringify(json)))
+        .catch(error => console.error("Error: ", error));
+    }
+
+    createPerformance(performanceId, userId, eventId, startTime, endTime) {
+        let data = {performanceId: performanceId, userId: userId, eventId: eventId, startTime: startTime, endTime: endTime};
+        fetch("/api/event/"+eventId+"/user", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+            body: JSON.stringify(data);
+    })
+    .then(response => response.json())
+    .then(json => console.log(JSON.stringify(json)))
+    .catch(error => console.error("Error: ", error));
+    }
+
+    createRider(riderId, name, amount) {
+        let data = {riderId: riderId, name: name, amount: amount};
+        fetch("/api/event/"+eventId+"/user", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+            body: JSON.stringify(data);
+        })
+        .then(response => response.json())
+        .then(json => console.log(JSON.stringify(json)))
+        .catch(error => console.error("Error: ", error));
+    }
+
+
+    //DELETE
+    deleteRider(performanceId, name) {
+        let data = {performanceId: performanceId, name: name};
+        fetch("/api/event/"+eventId+"/rider", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+            body: JSON.stringify(data);
+        })
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(error => console.error("Error: ", error));
+    }
+
+    deleteEvent(eventId) {
+        fetch("/api/event/"+eventId, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+        })
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(error => console.error("Error: ", error));
+    }
+
+    //PUT
+    updateTicket(name, eventId, price, amount, description) {
+        let data = {name: name, eventId: eventId, price: price, amount: amount, description: description};
+        fetch("/api/event/"+eventId+"/ticket", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+            body: JSON.stringify(data);
+        })
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(error => console.error("Error: ", error));
+    }
+
+    updateRider(riderId, name, amount) {
+        let data = {riderId: riderId, name: name, amount: amount};
+        fetch("/api/event/"+eventId+"/rider", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+            body: JSON.stringify(data);
+        })
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(error => console.error("Error: ", error));
+    }
+
+    updateEvent(eventId, name, hostId, active, location, startTime, endTime) {
+        let data = {eventId: eventId, name: name, hostId: hostId, active: active, location: location, startTime: startTime, endTime: endTime};
+        fetch("/api/event/"+eventId, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+            body: JSON.stringify(data);
+        })
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(error => console.error("Error: ", error));
+    }
+
+    updateContract(eventId, contract) {
+        let data = {eventId: eventId, contract: contract};
+        fetch("/api/event/"+eventId+"/contract", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+            body: JSON.stringify(data);
+        })
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(error => console.error("Error: ", error));
     }
 
 }
+
+class UserService {
+    //GET
+    getUser(id) {
+        fetch("/api/user/" + id, {
+            method: "GET"
+        })
+            .then(response => response.json())
+    .then(json => {
+            refreshToken(json.jwt);
+        return this.handleGetUserResponse(json)
+    })
+    .catch(error => console.error("Error: ", error));
+    }
+
+    handleGetUserResponse(json) {
+        return new User(json.user_id, json.username, json.email, json.phone, json.first_name, json.surname);
+    }
+
+    getAllUsers() {
+        fetch("/api/users", {
+            method: "GET"
+        })
+            .then(response => response.json())
+    .then(json => {
+            refreshToken(json.jwt);
+        return this.handleGetAllUsersResponse(json)
+    })
+    .catch(error => console.error("Error: ", error));
+    }
+
+    handleGetAllUsersResponse(json) {
+        return json.map(data => new User(data.user_id, data.username, data.email, data.phone, data.first_name, data.surname));
+    }
+
+    //DELETE
+    deleteUser(userId) {
+        fetch("/user/" + userId, {
+            method: "DELETE"
+        })
+            .then(response => response.json())
+    .then(json => console.log(json))
+    .catch(error => console.error("Error: ", error));
+    }
+
+    //PUT
+    updateUser(userId, username, email, phone, firstName, lastName) {
+        let data = {
+            username: username,
+            email: email,
+            phone: phone,
+            firstName: firstName,
+            lastName: lastName,
+            userId: userId
+        };
+        fetch("/user/" + userId, {
+            method: "PUT",
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+    .then(json => console.log(json))
+    .catch(error => console.error("Error: ", error));
+    }
+
+    updatePassword(usermail) {
+        fetch("/user/" + usermail, {
+            method: "PUT"
+        })
+            .then(response => response.json())
+    .then(json => console.log(json))
+    .catch(error => console.error("Error: ", error));
+    }
+
+
+    //POST
+    createUser(username, password, email, phone, firstName, lastName) {
+        let data = {
+            username: username,
+            password: password,
+            email: email,
+            phone: phone,
+            firstName: firstName,
+            lastName: lastName
+        };
+        fetch("/user", {
+            method: "POST",
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+    .then(json => console.log(json))
+    .catch(error => console.error("Error: ", error));
+    }
+
+    loginUser(username, password, email) {
+        let data = {
+            username: username,
+            password: password,
+            email: email
+        };
+        fetch("/login", {
+            method: "POST",
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+    .then(json => {
+            refreshToken(json.jwt);
+        setUser(this.getUser(json.userId));
+    })
+    .catch(error => console.error("Error: ", error));
+    }
+
+
+}
+
+
+function refreshToken(jwt) {
+    window.sessionStorage.setItem("jwt", jwt);
+}
+function setUser(user) {
+    window.sessionStorage.setItem("user", user);
+
 export let studentService = new StudentService();
