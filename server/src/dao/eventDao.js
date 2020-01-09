@@ -17,12 +17,12 @@ module.exports = class ServerDao extends Dao {
         super.query(`SELECT * FROM ${CONSTANTS.PERFORMANCE_TABLE} WHERE ${CONSTANTS.EVENT_ID} = ?`, [sql], callback);
     }
 
-    getTickets(sql, callback) {
+    getEventTickets(sql, callback) {
         super.query(`SELECT * FROM ${CONSTANTS.TICKET_TABLE} WHERE ${CONSTANTS.EVENT_ID} = ?`, [sql], callback);
     }
 
-    getRiders(sql, callback) {
-        super.query(`SELECT * FROM ${CONSTANTS.RIDER_TABLE} WHERE ${CONSTANTS.PERFORMANCE_ID} = ?`, [sql.performanceId], callback);
+    getPerformanceRiders(sql, callback) {
+        super.query(`SELECT * FROM ${CONSTANTS.RIDER_TABLE} WHERE ${CONSTANTS.PERFORMANCE_ID} = ?`, [sql], callback);
     }
 
     getEvent(sql, callback) {
@@ -40,7 +40,7 @@ module.exports = class ServerDao extends Dao {
     /**CREATE*/
     createEvent(sql, callback) {
         super.query(`INSERT INTO ${CONSTANTS.EVENT_TABLE} (${CONSTANTS.EVENT_NAME},${CONSTANTS.EVENT_HOST_ID},${CONSTANTS.EVENT_START_TIME},${CONSTANTS.EVENT_END_TIME},${CONSTANTS.EVENT_LOCATION}) 
-                    VALUES (?,?,?) `, [sql.name, sql.userId, sql.startTime, sql.endTime, sql.location], callback);
+                    VALUES (?,?,?,?,?) `, [sql.name, sql.userId, sql.startTime, sql.endTime, sql.location], callback);
     }
 
     createTicket(sql, callback) {
@@ -49,22 +49,22 @@ module.exports = class ServerDao extends Dao {
     }
 
     createPerformance(sql, callback) {
-        super.query(`INSERT INTO ${CONSTANTS.PERFORMANCE_TABLE} (${CONSTANTS.PERFORMANCE_ARTIST_ID},${CONSTANTS.PERFORMANCE_EVENT_ID},${CONSTANTS.PERFORMANCE_START_TIME},${CONSTANTS.PERFORMANCE_END_TIME}
-                    ${CONSTANTS.PERFORMANCE_CONTRACT}) VALUES (?,?,?,?) `, [sql.artistId, sql.eventId, sql.startTime, sql.endTime, sql.contract], callback);
+        super.query(`INSERT INTO ${CONSTANTS.PERFORMANCE_TABLE} (${CONSTANTS.PERFORMANCE_ARTIST_ID},${CONSTANTS.PERFORMANCE_EVENT_ID},${CONSTANTS.PERFORMANCE_START_TIME},${CONSTANTS.PERFORMANCE_END_TIME},
+                    ${CONSTANTS.PERFORMANCE_CONTRACT}) VALUES (?,?,?,?,?) `, [sql.artistId, sql.eventId, sql.startTime, sql.endTime, sql.contract], callback);
     }
 
-    createRiders(sql, callback) {
-        super.query(`INSERT INTO ${CONSTANTS.RIDER_TABLE} (${CONSTANTS.RIDER_PERFORMANCE_ID},${RIDER_DESCRIPTION}) VALUES (?,?) `,
-            [sql.performanceId, sql.description], callback);
+    createRider(sql, callback) {
+        super.query(`INSERT INTO ${CONSTANTS.RIDER_TABLE} VALUES (?,?,?) `,
+            [sql.performanceId, sql.name, sql.amount], callback);
     }
 
     /**DELETE*/
     deleteRider(sql, callback) {
-        super.query(`DELETE FROM ${CONSTANTS.RIDER_TABLE} WHERE ${CONSTANTS.RIDER_PERFORMANCE_ID} = ? AND ${CONSTANTS.RIDER_NAME}`, [sql], callback);
+        super.query(`DELETE FROM ${CONSTANTS.RIDER_TABLE} WHERE ${CONSTANTS.RIDER_PERFORMANCE_ID} = ? AND ${CONSTANTS.RIDER_NAME} = ?`, [sql.performanceId, sql.name], callback);
     }
 
     deleteEvent(sql, callback) {
-        super.query(`DELETE FROM ${CONSTANTS.EVENT_TABLE} WHERE ${CONSTANTS.EVENT_ID}`, [sql], callback);
+        super.query(`DELETE FROM ${CONSTANTS.EVENT_TABLE} WHERE ${CONSTANTS.EVENT_ID} = ?`, [sql], callback);
     }
 
     deleteTicket(sql, callback) {
@@ -77,12 +77,12 @@ module.exports = class ServerDao extends Dao {
 
     /**UPDATE*/
     updateTicket(sql, callback) {
-        super.query(`UPDATE ${CONSTANTS.TICKET_TABLE} SET ${CONSTANTS.TICKET_PRICE} = ?, ${CONSTANTS.TICKET_AMOUNT} = ?, ${CONSTANTS.TICKET_DESCRIPTION} = ?  WHERE ${CONSTANTS.TICKET_NAME} = ? AND ${CONSTANTS.TICKET_EVENT_ID} = ? `
-            [sql.price, sql.description, sql.name, sql.eventId], callback);
+        super.query(`UPDATE ${CONSTANTS.TICKET_TABLE} SET ${CONSTANTS.TICKET_PRICE} = ?, ${CONSTANTS.TICKET_AMOUNT} = ?, ${CONSTANTS.TICKET_DESCRIPTION} = ?  WHERE ${CONSTANTS.TICKET_NAME} = ? AND ${CONSTANTS.TICKET_EVENT_ID} = ? `,
+            [sql.price, sql.amount, sql.description, sql.name, sql.eventId], callback);
     }
 
     updateRider(sql, callback) {
-        super.query(`UPDATE ${CONSTANTS.RIDER_TABLE} SET ${CONSTANTS.RIDER_NAME} = ?, ${CONSTANTS.RIDER_AMOUNT} = ? WHERE ${CONSTANTS.RIDER_PERFORMANCE_ID} and ${CONSTANTS.RIDER_NAME} = ?`,
+        super.query(`UPDATE ${CONSTANTS.RIDER_TABLE} SET ${CONSTANTS.RIDER_NAME} = ?, ${CONSTANTS.RIDER_AMOUNT} = ? WHERE ${CONSTANTS.RIDER_PERFORMANCE_ID} = ? and ${CONSTANTS.RIDER_NAME} = ?`,
             [sql.name, sql.amount, sql.performanceId, sql.oldName], callback);
     }
 
@@ -92,6 +92,11 @@ module.exports = class ServerDao extends Dao {
     }
 
     updateEvent(sql, callback) {
+        super.query(`UPDATE ${CONSTANTS.EVENT_TABLE} SET ${CONSTANTS.EVENT_NAME} = ?, ${CONSTANTS.EVENT_HOST_ID} = ?, ${CONSTANTS.EVENT_ACTIVE} = ?, ${CONSTANTS.EVENT_LOCATION} = ?, ${CONSTANTS.EVENT_START_TIME} = ?,
+            ${CONSTANTS.EVENT_END_TIME} = ? WHERE ${CONSTANTS.EVENT_ID} = ?`, [sql.eventName ,sql.hostId, sql.active, sql.location, sql.startTime, sql.endTime, sql.eventId], callback);
+    }
+
+    updateContract(sql, callback) {
         super.query(`UPDATE ${CONSTANTS.EVENT_TABLE} SET ${CONSTANTS.EVENT_NAME} = ?, ${CONSTANTS.EVENT_HOST_ID} = ?, ${CONSTANTS.EVENT_ACTIVE} = ?, ${CONSTANTS.EVENT_LOCATION} = ?, ${CONSTANTS.EVENT_START_TIME} = ?,
             ${CONSTANTS.EVENT_END_TIME} = ? WHERE ${CONSTANTS.EVENT_ID} = ?`, [sql.hostId, sql.active, sql.location, sql.startTime, sql.endTime, sql.eventId], callback);
     }

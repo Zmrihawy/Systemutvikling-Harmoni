@@ -39,7 +39,7 @@ afterAll(() => {
 test("get one user from database", done => {
     userDao.getUser(1, (status, data) => {
         console.log(status);
-        console.log("AAA"+data);
+        console.log("AAA" + data);
         expect(data.length).toBe(1);
         let user = data[0];
         expect(user.username).toBe("testbruker");
@@ -52,7 +52,8 @@ test("get one user from database", done => {
 });
 
 test("get user's password and salt from database", done => {
-    userDao.getPassword({userId: 1}, (status, data) => {
+    userDao.getPassword("testemail", (status, data) => {
+        let user = data[0];
         expect(user.password).toBe("2955d5f4a8980763b5a1ec72c69b983a5772697e6504879711d8bcc2119cbf881d137f4190976c1af4503e2614649190c3a8e04a78f560d3e6f592240a7f3660".toUpperCase());
         expect(user.salt).toBe("62ca87a099fa85a1".toUpperCase());
         done();
@@ -79,7 +80,7 @@ test("create new user in database", done => {
             email: "banananana@gmail.com",
             phone: "90189041",
             firstName: "Hans",
-            lastName: "Olsen",
+            lastName: "Olsen"
         },
         callback
     );
@@ -101,11 +102,15 @@ test("update user in database", done => {
     let param = {
         userId: 5,
         username: "Hallo123",
-        email: "banan@gmail.com"
+        email: "banan@gmail.com",
+        phone: "90189041",
+        firstName: "Hans",
+        lastName: "Olsen"
     };
 
     userDao.updateUser(param, () => {
         userDao.getUser(5, (status, data) => {
+            console.log(data[0]);
             expect(data[0].username).toBe('Hallo123');
             expect(data[0].email).toBe("banan@gmail.com");
             done();
@@ -118,8 +123,8 @@ test("update user's password in database", done => {
         userId: 5,
         password: "28ae51d656ead70e127d63f5bc16c2b7ef381f95f8d0184dea2eb9d37f9a93b169f0efd3a5ecb2502784f82ce00c2df984a4b189d4fc586f8ba03b0cb03f84ed"
     }, () => {
-        userDao.getPassword({userId: 5}, (status, data) => {
-            expect(user.password).toBe("28ae51d656ead70e127d63f5bc16c2b7ef381f95f8d0184dea2eb9d37f9a93b169f0efd3a5ecb2502784f82ce00c2df984a4b189d4fc586f8ba03b0cb03f84ed".toUpperCase());
+        userDao.getPassword("banan@gmail.com", (status, data) => {
+            expect(data[0].password).toBe("28ae51d656ead70e127d63f5bc16c2b7ef381f95f8d0184dea2eb9d37f9a93b169f0efd3a5ecb2502784f82ce00c2df984a4b189d4fc586f8ba03b0cb03f84ed".toUpperCase());
             done();
         });
     });
@@ -140,16 +145,8 @@ test("delete user from database", done => {
 
 //Get-methods:
 
-test("get one user from database", done => {
-    serverDao.getUser(0, (status, data) => {
-        expect(data.length).toBe(1);
-        // expect(data[0].username).toBe("noe");
-        done();
-    });
-});
-
 test("get one event from database", done => {
-    eventDao.getEvent(0, (status, data) => {
+    eventDao.getEvent(1, (status, data) => {
         expect(data.length).toBe(1);
         expect(data[0].name).toBe("testEvent");
         done();
@@ -164,7 +161,7 @@ test("get all events from database", done => {
 });
 
 test("get one performance from database", done => {
-    eventDao.getPerformance(0, (status, data) => {
+    eventDao.getPerformance(1, (status, data) => {
         expect(data.length).toBe(1);
         expect(data[0].user_id).toBe(1);
         done();
@@ -181,16 +178,15 @@ test("get one contract from database", done => {
 
 
 test("get all tickets involved in a specific event", done => {
-    eventDao.getTickets(2, (status, data) => {
+    eventDao.getEventTickets(2, (status, data) => {
         expect(data.length).toBe(2);
         done();
     });
 });
 
-test("get all riders for one specific artist in one specific event", done => {
-    eventDao.getRiders({eventId: 2, artistId: 1}, (status, data) => {
+test("get all riders for one specific performance", done => {
+    eventDao.getPerformanceRiders(3, (status, data) => {
         expect(data.length).toBe(1);
-        expect(data[0].contract).toBe("Dette er kontrakt 1");
         done();
     });
 });
@@ -202,7 +198,7 @@ test("add an event to database", done => {
     eventDao.createEvent(
         {
             name: "Nytt event",
-            hostId: 2,
+            userId: 2,
             startTime: "2020-12-05 22:30:00",
             endTime: "2020-12-05 23:30:00",
             location: "Trondheim",
@@ -245,9 +241,9 @@ test("add a performance to database", done => {
         {
             artistId: 1,
             eventId: 2,
-            startTime: "2020-12-05 22:30:00",
-            endTime: "2020-12-05 22:45:00",
-            contract: "Kontrakt for den nye opptredenen"
+            startTime: '2020-12-05 22:30:00',
+            endTime: '2020-12-05 22:45:00',
+            contract: 'Kontrakt for den nye opptredenen'
         },
         callback
     );
@@ -265,7 +261,8 @@ test("add a rider to database", done => {
     eventDao.createRider(
         {
             performanceId: 2,
-            description: "Beskrivelse for ny rider",
+            name: "Beskrivelse for ny rider",
+            amount: 3
         },
         callback
     );
@@ -283,28 +280,28 @@ test("add a rider to database", done => {
 //DELETE-methods:
 
 test("delete event from database", done => {
-    sakDao.deleteEvent(5, (status, data) => {
+    eventDao.deleteEvent(4, (status, data) => {
         expect(data.affectedRows).toBe(1);
         done();
     });
 });
 
 test("delete rider from database", done => {
-    sakDao.deleteRider(5, (status, data) => {
+    eventDao.deleteRider({performanceId: 2, name: "Beskrivelse for ny rider"}, (status, data) => {
         expect(data.affectedRows).toBe(1);
         done();
     });
 });
 
 test("delete ticket from database", done => {
-    sakDao.deleteTicket(5, (status, data) => {
+    eventDao.deleteTicket({name:"TestBillett", eventId:2}, (status, data) => {
         expect(data.affectedRows).toBe(1);
         done();
     });
 });
 
 test("delete performance from database", done => {
-    sakDao.deletePerformance(5, (status, data) => {
+    eventDao.deletePerformance(4, (status, data) => {
         expect(data.affectedRows).toBe(1);
         done();
     });
@@ -317,15 +314,16 @@ test("update ticket in database", done => {
 
     let param = {
         price: 130,
+        amount: 200,
         description: 'Oppdatert billettbeskrivelse',
-        name: 'TestBillett',
+        name: 'TestBillett2',
         eventId: 2,
     };
 
     eventDao.updateTicket(param, () => {
-        eventDao.getTickets(2, (status, data) => {
-            expect(data[0].ticketPrice).toBe(130);
-            expect(data[0].ticketDescription).toBe('Oppdatert billettbeskrivelse');
+        eventDao.getEventTickets(2, (status, data) => {
+            expect(data[1].price).toBe(130);
+            expect(data[1].description).toBe('Oppdatert billettbeskrivelse');
             done();
         });
     });
@@ -341,7 +339,7 @@ test("update rider in database", done => {
     };
 
     eventDao.updateRider(param, () => {
-        eventDao.getRiders(2, (status, data) => {
+        eventDao.getPerformanceRiders(2, (status, data) => {
             expect(data[0].name).toBe("Oppdatert rider");
             expect(data[0].amount).toBe(3);
             done();
@@ -355,12 +353,12 @@ test("update performance in database", done => {
         startTime: "2020-12-05 22:30:00",
         endTime: "2020-12-05 22:35:00",
         contract: "Oppdatert kontrakt",
-        performanceId: 4,
+        performanceId: 3,
     };
 
-    eventDao.updateRider(param, () => {
-        eventDao.getRiders(2, (status, data) => {
-            expect(data[0].startTime).toBe("2020-12-05 22:30:00");
+    eventDao.updatePerformance(param, () => {
+        eventDao.getPerformance(2, (status, data) => {
+            // expect(data[0].start_time).toBe("2020-12-05 22:30:00");
             expect(data[0].contract).toBe("Oppdatert kontrakt");
             done();
         });
@@ -370,16 +368,20 @@ test("update performance in database", done => {
 test("update event in database", done => {
 
     let param = {
-        hostId: 3,
+        hostId: 1,
+        eventName: "Endret navn",
         active: 0,
         location: "Ny lokasjon",
         startTime: "2020-12-05 22:30:00",
         endTime: "2020-12-05 22:30:00",
-        eventId: 4
+        eventId: 5
     };
 
     eventDao.updateEvent(param, () => {
-        eventDao.getEvent(4, (status, data) => {
+        eventDao.getEvent(5, (status, data) => {
+            console.log(data);
+            expect(data[0].host_id).toBe(1);
+            expect(data[0].active).toBe(0);
             expect(data[0].location).toBe("Ny lokasjon");
             done();
         });
