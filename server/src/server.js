@@ -83,19 +83,21 @@ app.get("/api/users", (req, res) => {
     });
 });
 
-//Delete raider
-
+//Delete rider
 app.delete('/event/:event_id/rider', (req, res) => {
-
-})
+    console.log("Fikk DELETE-request fra klienten");
+    userDao.deleteRider(req.body, (st, dt) => {
+        res.status(st);
+        res.json(dt);
+    });
+});
 
 //Delete a user
-
 app.delete("/user/:user_id", (req, res) => {
 
     console.log("Fikk DELETE-request fra klienten");
 
-    userDao.getUser(req.params.user_id)
+    userDao.getUser(req.params.user_id);
 
     userDao.getPassword(req.params.user_id, (status, data) => {
 
@@ -181,14 +183,21 @@ app.post("/api/event/:event_id/ticket", (req, res) => {
 
 //put ticket
 app.put("/api/event/:event_id/ticket", (req,res) => {
-
+    console.log("Fikk PUT-request fra klienten");
+    eventDao.updateTicket(req.body, (status, data) => {
+        res.status(status);
+        res.json(data);
+    });
 });
 
 //put rider
-
 app.put("/api/event/:event_id/rider", (req,res) => {
-    eventDao.updateRider()
-})
+    console.log("Fikk PUT-request fra klienten");
+    eventDao.updateRider(req.body, (status, data) => {
+        res.status(status);
+        res.json(data);
+    });
+});
 
 //post a performance
 app.post("api/event/:event_id/user", (req, res) => {
@@ -210,8 +219,8 @@ app.post("/api/event/:event_id/rider", (req, res) => {
 
 //Update an event
 app.put("/event/:event_id", (req, res) => {
-    console.log("Fikk PUT-requesr fra klienten");
-    eventDao.updateEvent(req.params.event_id, req.body, (status, data) => {
+    console.log("Fikk PUT-request fra klienten");
+    eventDao.updateEvent(req.body, (status, data) => {
         res.status(status);
         res.json(data);
     });
@@ -242,22 +251,21 @@ app.get("/api/events", (req, res) => {
 app.get("/api/event/:event_id/contract", (req, res) => {
     console.log("Fikk request fra klienten");
 
-    //jwt .verify => if decoded username = arrangør => get all
-    //else get 1 
-
     eventDao.getEventContracts(req.params.event_id, (status, data) => {
-        //let token = req.headers["x-access-token"];
-
         res.status(status);
         res.json(data);
-            
-        })
     });
+});
 
 //Edit contract
 
 app.put("/api/event/:event_id/contract", (req,res) =>{
-    //dao.updateCONTRACT()
+    console.log("Fikk put-request om å endre kontrakt");
+
+    eventDao.updateContract(req.body, (status, data) => {
+        res.status(status);
+        res.json(data);
+    })
 
 
 });
@@ -286,9 +294,10 @@ app.get("/api/event/:event_id/rider", (req, res) => {
 });
 
 //Get all raiders for one user
-app.get("/user/event/:event_id/:performance_id", (req, res) => {
+app.get("/api/user/event/:event_id/:performance_id", (req, res) => {
     console.log("/user/:user_id/:active: fikk request fra klient");
-    eventDao.getRiders({performanceId : req.params.perfromanceId}, (status, data) => {
+    if(req.params.performanceId == null || req.params.performanceId == undefined) return res.error("feil i fetch-call");
+    eventDao.getPerformanceRiders(req.params.perfromanceId, (status, data) => {
         res.status(status);
         res.json(data);
     });
