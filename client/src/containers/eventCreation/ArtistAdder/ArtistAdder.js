@@ -36,7 +36,7 @@ export default class ArtistAdder extends Component {
                         <div key={i} id={i}>
                             <input
                                 type="text"
-                                placeholder="Fullt navn"
+                                placeholder="Navn"
                                 onChange={this.handleChange}
                                 value={el}
                             />
@@ -51,14 +51,18 @@ export default class ArtistAdder extends Component {
                 })}
                 <button
                     onClick={() =>
-                        this.props.saveArtists(this.state.artists, 'next')
+                        this.props.save(this.state.artists, 'artists', 'next')
                     }
                 >
                     Neste
                 </button>
                 <button
                     onClick={() =>
-                        this.props.saveArtists(this.state.artists, 'previous')
+                        this.props.save(
+                            this.state.artists,
+                            'artists',
+                            'previous'
+                        )
                     }
                 >
                     Forrige

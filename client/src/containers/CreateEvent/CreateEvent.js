@@ -5,6 +5,7 @@ import DatePicker from '../../components/eventCreation/DatePicker/DatePicker';
 import ArtistAdder from '../eventCreation/ArtistAdder/ArtistAdder';
 
 import classes from './CreateEvent.module.scss';
+import StaffAdder from '../eventCreation/StaffAdder/StaffAdder';
 
 export default class CreateEvent extends Component {
   state = {
@@ -83,14 +84,21 @@ export default class CreateEvent extends Component {
         this.setState({ currentPage: --page });
     };
 
-    handleSaveArtists = (artists, action) => {
+    handleSave = (input, select, action) => {
+        let result;
         // Remove empty elements from the array
-        const result = artists.filter(el => el.trim() !== '');
+        if (select === 'artists') {
+            result = input.filter(el => el.trim() !== '');
+        } else if (select === 'staff') {
+            result = input.filter(
+                el => el.name.trim() !== '' && el.profession.trim() !== ''
+            );
+        }
 
         const newEvent = {
             ...this.state.newEvent
         };
-        newEvent.artists = result;
+        newEvent[select] = result;
 
         this.setState({ newEvent });
 
@@ -167,7 +175,18 @@ export default class CreateEvent extends Component {
                     <>
                         <ArtistAdder
                             artists={this.state.newEvent.artists}
-                            saveArtists={this.handleSaveArtists}
+                            save={this.handleSave}
+                        />
+                    </>
+                );
+                break;
+
+            case 5:
+                current = (
+                    <>
+                        <StaffAdder
+                            staff={this.state.newEvent.staff}
+                            save={this.handleSave}
                         />
                     </>
                 );
