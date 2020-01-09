@@ -303,10 +303,24 @@ app.get("/api/user/event/:event_id/:performance_id", (req, res) => {
     });
 });
 
-app.get("/api/user/:user_id/events", (req, res) => {
+//get all active events for user
+
+app.get("/api/user/:user_id/events/active", (req, res) => {
     console.log("Fikk get-request");
 
-    eventDao.getUsersEvents(req.body, (status, data) => {
+    eventDao.getUsersEvents({userId : req.body.userId, active : 1}, (status, data) => {
+        res.status(status);
+        res.json(data);
+    })
+    
+});
+
+// get all inactive events for user
+
+app.get("/api/user/:user_id/events/inactive", (req, res) => {
+    console.log("Fikk get-request");
+
+    eventDao.getUsersEvents({userId : req.body.userId, active : 0}, (status, data) => {
         res.status(status);
         res.json(data);
     })
