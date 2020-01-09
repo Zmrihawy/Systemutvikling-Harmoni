@@ -6,7 +6,7 @@ const CONSTANTS = new Constants();
 
 module.exports = class UserDao extends Dao {
 
-    getUser(sql: string |number, callback: (status: number, data : *) => void) {
+    getUser(sql: string | number, callback: (status: number, data : *) => void) {
         super.query(`SELECT ${CONSTANTS.USER_ID}, ${CONSTANTS.USER_USERNAME}, ${CONSTANTS.USER_EMAIL}, ${CONSTANTS.USER_PHONE}, ${CONSTANTS.USER_FIRST_NAME}, ${CONSTANTS.USER_LAST_NAME} 
                     FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_ID} = ?`, [sql], callback);
     }

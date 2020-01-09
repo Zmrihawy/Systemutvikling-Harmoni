@@ -57,19 +57,38 @@ app.use("/api", (req, res, next) => {
         if (err) {
             console.log("Token IKKE ok");
             res.status(401);
-            res.json({ error: "Not authorized" });
+            res.json({ error: "Not authorized -> Token Expired" });
         } else {
-            console.log("Token ok: " + decoded.username);
-            next();
+            userDao.getUser(req.body.user_id, (status, data) => {
+                if(data[0].email === decoded.email) {
+                    req.email = decoded.mail;
+                    next();
+                }
+                else { 
+                    res.status(401);
+                    res.json({error : "Not authorized -> Wrong username"});
+                }
+            });
         }
     });
 });
+
+function thisFunctionCreatesNewToken(passedMail): {jwt: string} {
+
+            let newToken = jwt.sign({email: passedMail}, privateKey, {
+                expiresIn: 60
+            });
+
+            return newToken;
+
+}
 
 //Get one user
 app.get("/api/user/:id", (req, res) => {
     console.log(`/user/${req.params.id} fikk request fra klient`);
     userDao.getUser(req.params.id, (status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -79,6 +98,7 @@ app.get("/api/users", (req, res) => {
     console.log("/user: fikk request fra klient");
     userDao.getAllUsers((status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -86,11 +106,18 @@ app.get("/api/users", (req, res) => {
 //Delete rider
 app.delete('/event/:event_id/rider', (req, res) => {
     console.log("Fikk DELETE-request fra klienten");
-    eventDao.deleteRider(req.body, (st, dt) => {
-        res.status(st);
-        res.json(dt);
+    eventDao.deleteRider(req.body, (status, data) => {
+        res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
+        res.json(data);
     });
 });
+
+// DELETE TICKET
+
+// DELETE PERFORMANCE
+
+//## TODO 
 
 //Delete a user
 app.delete("/user/:user_id", (req, res) => {
@@ -112,6 +139,7 @@ app.delete("/user/:user_id", (req, res) => {
         if(data[0].password.toString() === pass.toUpperCase()){
             userDao.deleteUser(req.params.user_id, (st, dt) => {
                 res.status(st);
+                dt["jwt"] = thisFunctionCreatesNewToken(req.email);
                 res.json(dt);
             });
         } else {
@@ -125,6 +153,7 @@ app.put("/user/:user_id", (req, res) => {
     console.log("Fikk PUT-requesr fra klienten");
     userDao.updateUser(req.body, (status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -157,6 +186,7 @@ app.get("/api/event/:event_id", (req, res) => {
     console.log("/event/:id: fikk request fra klient");
     eventDao.getEvent(req.params.event_id, (status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -166,6 +196,7 @@ app.post("/api/event", (req, res) => {
     console.log("Fikk POST-request fra klienten");
     eventDao.createEvent(req.body, (status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -175,6 +206,7 @@ app.post("/api/event/:event_id/ticket", (req, res) => {
     console.log("Fikk POST-request fra klienten");
     eventDao.createTicket(req.body, (status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -184,6 +216,7 @@ app.put("/api/event/:event_id/ticket", (req,res) => {
     console.log("Fikk PUT-request fra klienten");
     eventDao.updateTicket(req.body, (status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -193,6 +226,7 @@ app.put("/api/event/:event_id/rider", (req,res) => {
     console.log("Fikk PUT-request fra klienten");
     eventDao.updateRider(req.body, (status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -202,6 +236,7 @@ app.post("api/event/:event_id/user", (req, res) => {
     console.log("Fikk POST-request fra klienten");
     eventDao.createPerformance(req.body, (status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -211,6 +246,7 @@ app.post("/api/event/:event_id/rider", (req, res) => {
     console.log("Fikk POST-request fra klienten");
     eventDao.createRider(req.body, (status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -220,6 +256,7 @@ app.put("/event/:event_id", (req, res) => {
     console.log("Fikk PUT-request fra klienten");
     eventDao.updateEvent(req.body, (status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -229,9 +266,8 @@ app.delete("/event/:event_id", (req, res) => {
     console.log("Fikk DELETE-request fra klienten");
     eventDao.deleteEvent(req.params.event_id, (status, data) => {
 
-        // ## TODO sett inn token verify 
-
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -241,6 +277,7 @@ app.get("/api/events", (req, res) => {
     console.log("/user: fikk request fra klient");
     eventDao.getAllEvents((status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -251,6 +288,7 @@ app.get("/api/event/:event_id/contract", (req, res) => {
 
     eventDao.getEventContracts(req.params.event_id, (status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -262,6 +300,7 @@ app.put("/api/event/:event_id/contract", (req,res) =>{
 
     eventDao.updateContract(req.body, (status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     })
 
@@ -273,6 +312,7 @@ app.get("/api/event/:event_id/tickets", (req, res) => {
     console.log("Fikk request fra klienten");
     eventDao.getEventTickets(req.params.event_id, (status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -281,12 +321,9 @@ app.get("/api/event/:event_id/tickets", (req, res) => {
 
 app.get("/api/event/:event_id/rider", (req, res) => {
     console.log("Fikk request fra klienten");
-
-    //jwt .verify => if decoded username = arrangør => get all
-    //else get 1 
-
     eventDao.getAllRiders(req.params.event_id, (status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -297,6 +334,7 @@ app.get("/api/user/event/:event_id/:performance_id", (req, res) => {
     if(req.params.performanceId == null || req.params.performanceId == undefined) return res.error("feil i fetch-call");
     eventDao.getPerformanceRiders(req.params.perfromanceId, (status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -307,6 +345,7 @@ app.get("/api/user/:user_id/event/:active", (req, res) => {
     console.log("fikk request get fra klient");
     eventDao.getUsersEvents({userId : req.params.user_id, active: req.params.active}, (status, data) => {
         res.status(status);
+        data["jwt"] = thisFunctionCreatesNewToken(req.email);
         res.json(data);
     });
 });
@@ -368,10 +407,10 @@ app.post("/login", (req, res) => {
 
     if (log > 0) {
         console.log("username & passord ok");
-        let token = jwt.sign({ username: req.body.username }, privateKey, {
+        let token = jwt.sign({ email : req.body.email }, privateKey, {
             expiresIn: 60
         });
-        res.json({ jwt: token, user_id : log});
+        res.json({ jwt: token, userId : log});
     } else {
         console.log("brukernavn & passord IKKE ok");
         res.status(401);
@@ -397,8 +436,6 @@ app.post("/login", (req, res) => {
     
 });
 
-
-/*
 app.post("/token", (req, res) => {
     var token = req.headers["x-access-token"];
     jwt.verify(token, publicKey, (err, decoded) => {
@@ -413,7 +450,7 @@ app.post("/token", (req, res) => {
             res.json({jwt: newToken});
         }
     });
-});body*/
+});
 
 var server = app.listen(8080);
 
