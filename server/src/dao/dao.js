@@ -7,7 +7,7 @@ module.exports = class Dao {
     this.pool = pool;
   }
 
-  query(sql: string, params: Array<mixed>, callback: void) : void{
+  query(sql: string, params: Array<mixed>, callback: (res : *, data: *) => void){
 
     if(typeof callback != "function") return console.error("callback is not a function");
 

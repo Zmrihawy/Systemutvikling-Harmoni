@@ -97,8 +97,6 @@ app.delete("/user/:user_id", (req, res) => {
 
     console.log("Fikk DELETE-request fra klienten");
 
-    userDao.getUser(req.params.user_id);
-
     userDao.getPassword(req.params.user_id, (status, data) => {
 
         let pw = req.body.password;
@@ -393,7 +391,6 @@ app.post("/login", (req, res) => {
 
             if(pass.toUpperCase() === data[0].password.toString()) return data[0].user_id;
 
-            return -1;
         })
         return -1;
     }
