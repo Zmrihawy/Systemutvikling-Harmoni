@@ -10,10 +10,10 @@ export default class NavBar extends Component {
         return (
             <div id="container">
                 <div className={classes.navBar}>
-                    <div className={classes.activeLink} id='eventLink' onClick={event => {this.changePage('eventLink')}}>My Events</div>
-                    <div className={classes.navLink} id='createLink' onClick={event => {this.changePage('createLink')}}>Create Event</div>
-                    <div className={classes.navLink} id='profileLink' onClick={event => {this.changePage('profileLink')}}>My Profile</div>
-                    <div className={classes.navLink} id='logLink' onClick={event => {this.changePage('logLink')}}>Log Out</div>
+                    <div className={classes.activeLink} id='eventLink' onClick={event => {this.changePage('eventLink')}}>Mine Arrangement</div>
+                    <div className={classes.navLink} id='createLink' onClick={event => {this.changePage('createLink')}}>Lage Arrangement</div>
+                    <div className={classes.navLink} id='profileLink' onClick={event => {this.changePage('profileLink')}}>Min Profil</div>
+                    <div className={classes.navLink} id='logLink' onClick={event => {this.changePage('logLink')}}>Logge Ut</div>
                 </div>
                 <br/>
             </div>

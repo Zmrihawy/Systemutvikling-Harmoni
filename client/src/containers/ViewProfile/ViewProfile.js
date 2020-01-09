@@ -47,26 +47,26 @@ export default class ViewProfile extends Component{
                         </div>
                         <div className={classes.column}>
                             <div className={classes.bioLayer}>
-                                <h1 className={classes.h1}>First name and Surname</h1>
+                                <h1 className={classes.h1}>Navn og Etternavn</h1>
                                 <b/>
-                                <div className={classes.p} id={"usernameP"}>Username: ????</div>
+                                <div className={classes.p} id={"usernameP"}>Brukernavn: ????</div>
                                 <b/>
-                                <div className={classes.p} id={"emailP"}>Email: ?????</div>
+                                <div className={classes.p} id={"emailP"}>Epost: ?????</div>
                                 <b/>
-                                <div className={classes.p} id={"telephoneP"}>Telephone number: ????</div>
+                                <div className={classes.p} id={"telephoneP"}>Telefonnummer: ????</div>
                             </div>
                             <div className={classes.editLayer}>
-                                <h4><b>Edit Info</b></h4>
+                                <h4><b>Rediger Info</b></h4>
                                 <div className={classes.row}>
                                     <div className={classes.column}>
-                                        <input id={"nameInp"} className={classes.input} type='text' placeholder="username"/>
+                                        <input id={"nameInp"} className={classes.input} type='text' placeholder="brukernavn"/>
                                         <b/>
-                                        <input id={"emailInp"} className={classes.input} type='text' placeholder="email"/>
+                                        <input id={"emailInp"} className={classes.input} type='text' placeholder="epost"/>
                                         <b/>
-                                        <input id={"telephoneInp"} className={classes.input} type='text' placeholder="telephone"/>
+                                        <input id={"telephoneInp"} className={classes.input} type='text' placeholder="telefon"/>
                                     </div>
                                     <div className={classes.column}>
-                                        <input id={"passwordInp"} className={classes.input} type='password' placeholder="password"/>
+                                        <input id={"passwordInp"} className={classes.input} type='password' placeholder="passord"/>
                                         <b/>
                                         <button className={classes.button} onClick={event => (this.eventHandler())}>
                                             ✓
