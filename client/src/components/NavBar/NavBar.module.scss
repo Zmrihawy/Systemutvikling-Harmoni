@@ -1,0 +1,28 @@
+.navBar{
+  width: 100%;
+  background-color: #333333;
+  overflow: auto;
+  text-align: left;
+  display: inline-block;
+  position: fixed;
+}
+.navLink{
+  float: left;
+  padding: 12px;
+  color: whitesmoke;
+  text-decoration: none;
+  font-size: 17px;
+}
+.activeLink {
+  float: left;
+  padding: 12px;
+  color: #ff9f43;
+  text-decoration: none;
+  font-size: 17px;
+}
+.activeLink:hover {
+  background-color: black;
+}
+.navLink:hover{
+  background-color: black;
+}

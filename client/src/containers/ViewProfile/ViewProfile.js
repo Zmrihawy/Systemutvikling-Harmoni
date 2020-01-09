@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Header from '../../components/Header/Header';
 import classes from './ViewProfile.module.scss';
+import NavBar from "../../components/NavBar/NavBar";
 
 export default class ViewProfile extends Component{
     constructor(props){
@@ -32,8 +32,7 @@ export default class ViewProfile extends Component{
     render(){
         return(
             <div className={classes.viewProfile}>
-                <Header>
-                </Header>
+                <NavBar></NavBar>
                 <div className={classes.showLayer}>
                     <div className={classes.row}>
                         <div className={classes.column}>
