@@ -77,7 +77,7 @@ app.get("/api/user/:id", (req, res) => {
 //Get all users
 app.get("/api/users", (req, res) => {
     console.log("/user: fikk request fra klient");
-    userDao.getUsers((status, data) => {
+    userDao.getAllUsers((status, data) => {
         res.status(status);
         res.json(data);
     });
@@ -86,7 +86,7 @@ app.get("/api/users", (req, res) => {
 //Delete rider
 app.delete('/event/:event_id/rider', (req, res) => {
     console.log("Fikk DELETE-request fra klienten");
-    userDao.deleteRider(req.body, (st, dt) => {
+    eventDao.deleteRider(req.body, (st, dt) => {
         res.status(st);
         res.json(dt);
     });
@@ -303,6 +303,16 @@ app.get("/api/user/event/:event_id/:performance_id", (req, res) => {
     });
 });
 
+app.get("/api/user/:user_id/events", (req, res) => {
+    console.log("Fikk get-request");
+
+    eventDao.getUsersEvents(req.body, (status, data) => {
+        res.status(status);
+        res.json(data);
+    })
+    
+});
+
 //By request of a new password
 //generate new password and send it via email
 
@@ -315,8 +325,18 @@ app.put("/user/:usermail", (req, res) => {
                 length : 12, 
                 numbers : true
             });
+
+            
+            let pw = password;
+
+            let hashPW = crypto.createHmac('sha512', data[0].salt);
+
+            hashPW.update(pw);
+
+            pw = hashPW.digest('hex');
+
     //#TODO
-            userDao.updateOne({epost : generator.generate(password), email: data.email}, (stat, dat) => {
+            userDao.updatePassword({userId : data[0].userId, password: pw}, (stat, dat) => {
 
                 let mailOptions = {
                     from: 'noreply.harmoni.123@gmail.com',
@@ -336,8 +356,6 @@ app.put("/user/:usermail", (req, res) => {
         } else {
             res.error("Mail not found");
         }
-
-
     });
 });
 
