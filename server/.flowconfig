@@ -1,0 +1,11 @@
+[ignore]
+
+[include]
+server.js
+[libs]
+
+[lints]
+
+[options]
+
+[strict]
