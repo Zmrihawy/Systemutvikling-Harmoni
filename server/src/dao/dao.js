@@ -1,7 +1,5 @@
 // @flow
 
-import type {ConnectionOptions} from "mysql";
-
 module.exports = class Dao {
   pool : *;
   constructor(pool : *) {
@@ -9,7 +7,10 @@ module.exports = class Dao {
     this.pool = pool;
   }
 
-  query(sql: string, params: Array<mixed>, callback: Function) {
+  query(sql: string, params: Array<mixed>, callback: void) : void{
+
+    if(typeof callback != "function") return console.error("callback is not a function");
+
     this.pool.getConnection((err, connection) => {
       console.log("dao: connected to database");
       if (err) {

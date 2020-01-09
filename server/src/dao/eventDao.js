@@ -12,7 +12,8 @@ module.exports = class ServerDao extends Dao {
     }
 
     getAllRiders( sql : string | number,callback : Function){
-        super.query((`SELECT * FROM ${CONSTANTS.RIDER_TABLE} WHERE ${CONSTANTS.EVENT_ID} = ?`), [sql], callback)
+        super.query((`SELECT * FROM ${CONSTANTS.RIDER_TABLE} r JOIN ${CONSTANTS.PERFORMANCE_TABLE} p ON p.${CONSTANTS.RIDER_PERFORMANCE_ID} 
+        = r.${CONSTANTS.PERFORMANCE_ID} WHERE ${CONSTANTS.EVENT_ID} = ?`), [sql], callback)
     }
 
     getContract(sql : {eventId: string | number, artistId: string | number}, callback: Function) {
