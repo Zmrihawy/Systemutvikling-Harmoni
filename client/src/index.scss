@@ -1,0 +1,25 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%; // 1rem = 10px
+}
+
+body {
+    font-weight: 400;
+    line-height: 1.6;
+    min-height: 100vh;
+    font-family: 'Lato', sans-serif;
+}
+
+input[type='text'] {
+    border: none;
+    border-bottom: 1px solid #333;
+    background-color: rgb(247, 247, 247);
+}
