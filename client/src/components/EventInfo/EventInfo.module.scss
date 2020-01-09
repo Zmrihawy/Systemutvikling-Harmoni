@@ -2,15 +2,25 @@
     display: grid;
     margin: 20px 100px 100px 100px;
     grid-gap: 100px 20px;
-    grid-template-areas: 
-    '-      title    button__edit'
-    'desc    info    map'
-    'artists artists artists'
-    'tickets tickets tickets'
-    'staff   staff   staff';
+    grid-template-areas:
+        'top__section top__section top__section'
+        'desc         info         map'
+        'artists      artists      artists'
+        'tickets      tickets      tickets'
+        'staff        staff        staff';
     grid-template-columns: repeat(3, 1fr);
     font-size: 1.5em;
     height: fit-content;
+}
+
+.top__section {
+    grid-area: top__section;
+    display: grid;
+    grid-template-areas:
+        'title'
+        'button__edit';
+    place-items: center center;
+    margin: 0px 40px; 
 }
 
 .title {
@@ -20,12 +30,14 @@
 
 .button__edit {
     grid-area: button__edit;
+    width: 230px;
+    height: 55px;
     border-radius: 15px;
     font-size: 1.2em;
-    margin: 10px 100px;
     background-color: #444444;
     color: white;
     font-weight: 500;
+    justify-self: center;
 }
 
 .subtitle {
@@ -35,8 +47,8 @@
 .subtitle::before,
 .subtitle::after {
     display: inline-block;
-    content: "";
-    border-top: .3rem solid black;
+    content: '';
+    border-top: 0.3rem solid black;
     width: 4rem;
     margin: 0 1rem;
     transform: translateY(-1rem);
@@ -55,43 +67,42 @@
 
 .info {
     grid-area: info;
-    display: grid; 
-    grid-template-areas: 
-    'location'
-    'date'
-    'host'
-    'ticketAmount';
+    display: grid;
+    grid-template-areas:
+        'location'
+        'date'
+        'host'
+        'ticketAmount';
     align-items: center;
 }
 
 .info__item {
-    display: grid; 
-    grid-template-areas: 
-    'info__icon info__title'
-    'info__icon info__description';
-    grid-template-columns: .6fr 1fr;
+    display: grid;
+    grid-template-areas:
+        'info__icon info__title'
+        'info__icon info__description';
+    grid-template-columns: 0.6fr 1fr;
     grid-gap: 0px 20px;
     place-items: center center;
 }
 
 .info__icon {
-    grid-area: info__icon; 
+    grid-area: info__icon;
     justify-self: end;
     font-size: 2.5em;
-    color: #272727; 
+    color: #272727;
     margin: 0;
 }
 
 .info__title {
-    grid-area: info__title; 
+    grid-area: info__title;
     justify-self: start;
 }
 
 .info__description {
-    grid-area: info__description; 
+    grid-area: info__description;
     justify-self: start;
 }
-
 
 .location {
     grid-area: location;
@@ -113,18 +124,20 @@
     grid-area: map;
     background-color: lightgray;
     overflow: hidden;
+    min-height: 300px;
+    max-height: 500px;
     border-radius: 20px;
-    -webkit-box-shadow: 6px 6px 10px 0px rgba(0,0,0,0.2);
-    -moz-box-shadow: 6px 6px 10px 0px rgba(0,0,0,0.2);
-    box-shadow: 6px 6px 10px 0px rgba(0,0,0,0.2);
+    -webkit-box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.2);
 }
 
 .artists {
     grid-area: artists;
     display: grid;
     grid-template-areas:
-    'artist__title'
-    'artist__list';
+        'artist__title'
+        'artist__list';
     grid-gap: 10px;
 }
 
@@ -133,7 +146,7 @@
 }
 
 .artist__list {
-    display: grid; 
+    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-gap: 10px;
 }
@@ -150,21 +163,21 @@
     display: grid;
     place-content: center center;
     border-radius: 50%;
-    width: 150px; 
+    width: 150px;
     height: 150px;
 }
 
 .artist__image > img {
-    height: 150px;;
+    height: 150px;
 }
 
-.button__contract { 
+.button__contract {
     padding: 5px;
     border-radius: 10px;
     font-size: 1em;
 }
 
-.button__rider { 
+.button__rider {
     padding: 5px;
     border-radius: 10px;
     font-size: 1em;
@@ -174,8 +187,8 @@
     grid-area: tickets;
     display: grid;
     grid-template-areas:
-    'ticket__title'
-    'ticket__list';
+        'ticket__title'
+        'ticket__list';
     grid-gap: 10px;
 }
 
@@ -189,7 +202,7 @@
 }
 
 .ticket__list {
-    display: grid; 
+    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     grid-gap: 10px;
 }
@@ -204,8 +217,8 @@
     grid-area: staff;
     display: grid;
     grid-template-areas:
-    'staff__title'
-    'staff__list';
+        'staff__title'
+        'staff__list';
     grid-gap: 10px;
 }
 
@@ -218,7 +231,7 @@
 }
 
 .staff__proffesion {
-    grid-area: proffesion; 
+    grid-area: proffesion;
 }
 
 .staff__wrapper > p {
@@ -227,7 +240,7 @@
 }
 
 .staff__list {
-    display: grid; 
+    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 10px;
 }
@@ -238,3 +251,17 @@
     padding: 5px;
 }
 
+@media only screen and (max-width: 1250px) {
+    .container {
+        grid-template-areas:
+            'top__section top__section'
+            'desc    info'
+            'map   map'
+            'artists artists '
+            'tickets tickets '
+            'staff   staff   ';
+        grid-template-columns: repeat(2, 1fr);
+        font-size: 1.5em;
+        height: fit-content;
+    }
+}
