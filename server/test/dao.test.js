@@ -72,16 +72,17 @@ test("get all users from database", done => {
 //POST-methods
 
 test("create new user in database", done => {
+    let user = {
+        username: "LinuxHK",
+        password: "2955d5f4a8980763b5a1ec72c69b983a5772697e6504879711d8bcc2119cbf881d137f4190976c1af4503e2614649190c3a8e04a78f560d3e6f592240a7f3660",
+        salt: "62ca87a099fa85a1",
+        email: "banananana@gmail.com",
+        phone: "90189041",
+        firstName: "Hans",
+        lastName: "Olsen"
+    };
     userDao.createUser(
-        {
-            username: "LinuxHK",
-            password: "2955d5f4a8980763b5a1ec72c69b983a5772697e6504879711d8bcc2119cbf881d137f4190976c1af4503e2614649190c3a8e04a78f560d3e6f592240a7f3660",
-            salt: "62ca87a099fa85a1",
-            email: "banananana@gmail.com",
-            phone: "90189041",
-            firstName: "Hans",
-            lastName: "Olsen"
-        },
+        user,
         callback
     );
 
@@ -90,6 +91,96 @@ test("create new user in database", done => {
             "Test callback: status=" + status + ", data=" + JSON.stringify(status, data)
         );
         expect(data.affectedRows).toBe(1);
+        done();
+    }
+});
+
+test("create new users with username already in use", done => {
+    let user = {
+        username: "LinuxHK",
+        password: "3955d5f4a8980763b5a1ec72c69b983a5772697e6504879711d8bcc2119cbf881d137f4190976c1af4503e2614649190c3a8e04a78f560d3e6f592240a7f3660",
+        salt: "32ca87a099fa85a1",
+        email: "123a@gmail.com",
+        phone: "93189041",
+        firstName: "Peter",
+        lastName: "Kake"
+    };
+    userDao.createUser(
+        user,
+        () => userDao.createUser(
+            user,
+            () => userDao.createUser(
+                user,
+                callback
+            )
+        )
+    );
+
+    function callback(status, data) {
+        console.log(
+            "Test callback: status=" + status + ", data=" + JSON.stringify(status, data)
+        );
+        expect(status).toBe(500);
+        done();
+    }
+});
+
+test("create new users with email already in use", done => {
+    let user = {
+        username: "Heihei123",
+        password: "3955d5f4a8980763b5a1ec72c69b983a5772697e6504879711d8bcc2119cbf881d137f4190976c1af4503e2614649190c3a8e04a78f560d3e6f592240a7f3660",
+        salt: "32ca87a099fa85a1",
+        email: "banananana@gmail.com",
+        phone: "93189041",
+        firstName: "Peter",
+        lastName: "Kake"
+    };
+    userDao.createUser(
+        user,
+        () => userDao.createUser(
+            user,
+            () => userDao.createUser(
+                user,
+                callback
+            )
+        )
+    );
+
+    function callback(status, data) {
+        console.log(
+            "Test callback: status=" + status + ", data=" + JSON.stringify(status, data)
+        );
+        expect(status).toBe(500);
+        done();
+    }
+});
+
+test("create new users with email and username already in use", done => {
+    let user = {
+        username: "LinuxHK",
+        password: "3955d5f4a8980763b5a1ec72c69b983a5772697e6504879711d8bcc2119cbf881d137f4190976c1af4503e2614649190c3a8e04a78f560d3e6f592240a7f3660",
+        salt: "32ca87a099fa85a1",
+        email: "banananana@gmail.com",
+        phone: "93189041",
+        firstName: "Peter",
+        lastName: "Kake"
+    };
+    userDao.createUser(
+        user,
+        () => userDao.createUser(
+            user,
+            () => userDao.createUser(
+                user,
+                callback
+            )
+        )
+    );
+
+    function callback(status, data) {
+        console.log(
+            "Test callback: status=" + status + ", data=" + JSON.stringify(status, data)
+        );
+        expect(status).toBe(500);
         done();
     }
 });
@@ -294,7 +385,7 @@ test("delete rider from database", done => {
 });
 
 test("delete ticket from database", done => {
-    eventDao.deleteTicket({name:"TestBillett", eventId:2}, (status, data) => {
+    eventDao.deleteTicket({name: "TestBillett", eventId: 2}, (status, data) => {
         expect(data.affectedRows).toBe(1);
         done();
     });
