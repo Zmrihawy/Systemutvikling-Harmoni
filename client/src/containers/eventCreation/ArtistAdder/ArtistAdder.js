@@ -7,7 +7,7 @@ export default class ArtistAdder extends Component {
 
     handleNewArtist = () => {
         let artists = [...this.state.artists];
-        artists.push('');
+        artists.push({ name: '', riders: [] });
 
         this.setState({ artists });
     };
@@ -22,7 +22,7 @@ export default class ArtistAdder extends Component {
     handleChange = event => {
         let artists = [...this.state.artists];
         const id = event.target.parentNode.id;
-        artists[id] = event.target.value;
+        artists[id].name = event.target.value;
 
         this.setState({ artists });
     };
@@ -38,7 +38,7 @@ export default class ArtistAdder extends Component {
                                 type="text"
                                 placeholder="Navn"
                                 onChange={this.handleChange}
-                                value={el}
+                                value={el.name}
                             />
                             <span
                                 onClick={this.handleDeleteArtist}
