@@ -351,7 +351,7 @@ app.put("/api/event/:event_id", (req, res) => {
     if(req.body.location == undefined) return res.json({error : "bad request : mssing location parameter"});
 
     eventDao.updateEvent({eventName : req.body.eventName, hostId : req.body.hostId, active : req.body.active, 
-    location : req.body.location , startTime : req.body.startTime, endTime: req.body.endTime, eventId : req.params.event_id}, (status, data) => {
+    location : req.body.location , category : req.body.category, startTime : req.body.startTime, endTime: req.body.endTime, eventId : req.params.event_id}, (status, data) => {
         res.status(status);
         let token =  thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
@@ -393,24 +393,10 @@ app.get("/api/event/:event_id/contract", (req, res) => {
     });
 });
 
-//Edit contract
-
-app.put("/api/event/:event_id/contract", (req, res) => {
-    console.log("Fikk put-request om å endre kontrakt");
-
-    eventDao.updateContract(req.body, (status, data) => {
-        res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
-        res.json({data, jwt: token});
-    })
-
-
-});
-
 //Get all tickets for an event
 app.get("/api/event/:event_id/tickets", (req, res) => {
     console.log("Fikk request fra klienten");
-    eventDao.getEventTickets(req.params.event_id, (status, data) => {
+    eventDao.getTickets(req.params.event_id, (status, data) => {
         res.status(status);
         let token =  thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
@@ -432,7 +418,7 @@ app.get("/api/event/:event_id/rider", (req, res) => {
 app.get("/api/user/event/:event_id/:performance_id", (req, res) => {
     console.log("/user/:user_id/:active: fikk request fra klient");
     if (req.params.performanceId == null || req.params.performanceId == undefined) return res.error("feil i fetch-call");
-    eventDao.getPerformanceRiders(req.params.perfromanceId, (status, data) => {
+    eventDao.getRiders(req.params.perfromanceId, (status, data) => {
         res.status(status);
         let token =  thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
@@ -447,6 +433,41 @@ app.get("/api/user/:user_id/event/:active", (req, res) => {
         res.status(status);
         let token =  thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
+    });
+});
+
+// get crew given event id
+
+app.get('/api/event/:event_id/crew', (req, res) => {
+    console.log('Fikk get-request fra klient');
+
+    eventDao.getCrew(req.params.event_id, (st, dt) => {
+        res.status(status);
+        let token = thisFunctionCreatesNewToken(req.email);
+        res.json({dt, jwt : token});
+    }); 
+});
+
+// post new crew
+
+app.post('/api/event/:event_id/crew', (req, res) => {
+    console.log('fikk post-request fra klient');
+
+    eventDao.createCrew({profession : req.body.profession, name : req.body.name, contactInfo : req.body.contactInfo, eventId : req.params.event_id}, (status, data) => {
+        res.status(status);
+        let token = thisFunctionCreatesNewToken(req.email);
+        res.json({data, jwt : token});
+    });
+});
+
+//update crew
+
+app.put('/api/event/:event_id/crew/:crew_id', (req, res) => {
+    console.log('fikk put-request fra klient');
+    eventDao.updateCrew({profession : req.body.profession, name : req.body.name, contactInfo : req.body.contactInfo, crewId : req.params.crew_id}, (status, data) => {
+        res.status(status);
+        let token = thisFunctionCreatesNewToken(req.email);
+        res.json({data, jwt : token});
     });
 });
 
