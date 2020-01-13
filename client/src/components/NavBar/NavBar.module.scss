@@ -5,7 +5,10 @@
   text-align: left;
   display: inline-block;
   position: fixed;
+  margin-bottom: 25px;
+  z-index: 100;
 }
+
 .navLink{
   float: left;
   padding: 12px;

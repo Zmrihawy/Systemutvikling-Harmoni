@@ -56,8 +56,8 @@ export default class DisplayEvent extends Component {
                 image: 'https://yt3.ggpht.com/a-/AN66SAx-enzte_C9I5lYbxE81YRw6KDq0QdGF-jnJA=s900-mo-c-c0xffffffff-rj-k-no'
             }, 
             {
-                name: 'boi',
-                image: 'https://yt3.ggpht.com/a-/AN66SAx-enzte_C9I5lYbxE81YRw6KDq0QdGF-jnJA=s900-mo-c-c0xffffffff-rj-k-no'
+                name: 'Torje Thorkildsen',
+                image: 'https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/11745966_900217626718522_810341310080559599_n.jpg?_nc_cat=104&_nc_ohc=43mIm-b8EL4AQkdvkWV2NG2ICSHhTl1jD40ytTi-0VN5UbCq6TY7nF-uQ&_nc_ht=scontent-arn2-1.xx&oh=1584203c5b173c3f55c7eeb033e331e8&oe=5E93BB8F'
             }
         ];
 
