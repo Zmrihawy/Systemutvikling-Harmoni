@@ -290,9 +290,10 @@ test("add an event to database", done => {
         {
             name: "Nytt event",
             userId: 2,
-            startTime: "2020-12-05 22:30:00",
-            endTime: "2020-12-05 23:30:00",
+            category: "Festival",
             location: "Trondheim",
+            startTime: "2020-12-05 22:30:00",
+            endTime: "2020-12-05 23:30:00"
         },
         callback
     );
@@ -462,6 +463,7 @@ test("update event in database", done => {
         hostId: 1,
         eventName: "Endret navn",
         active: 0,
+        category: "Ny kategoi",
         location: "Ny lokasjon",
         startTime: "2020-12-05 22:30:00",
         endTime: "2020-12-05 22:30:00",

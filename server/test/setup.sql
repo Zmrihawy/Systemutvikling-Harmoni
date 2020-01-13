@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS crew;
 DROP TABLE IF EXISTS ticket;
 DROP TABLE IF EXISTS rider;
 DROP TABLE IF EXISTS performance;
@@ -120,7 +121,7 @@ INSERT INTO performance (user_id, event_id, start_time, end_time, contract)
 VALUES (4, 3, "2021-12-05 18:45:00", "2021-12-05 19:00:00", "Dette er kontrakt 4");
 
 INSERT INTO rider
-VALUES (1, "trenger cola", 2),
+VALUES (1, "trenger cola", 2);
 
 INSERT INTO rider
 VALUES (2, "trenger fanta", 1);

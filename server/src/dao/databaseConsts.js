@@ -56,7 +56,7 @@ CREW_EVENT_ID :string;
         this.EVENT_HOST_ID = "host_id";
         this.EVENT_ACTIVE = "active";
         this.EVENT_LOCATION = "location";
-        this.EVENT_CATEGORY = "location";
+        this.EVENT_CATEGORY = "category";
         this.EVENT_START_TIME = "start_time";
         this.EVENT_END_TIME = "end_time";
 
