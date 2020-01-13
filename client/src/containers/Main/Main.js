@@ -20,7 +20,11 @@ export default class Main extends Component {
                 <Route exact path="/" component={Login} />
                 <Route exact path="/registrer" component={Registration} />
                 <Route exact path="/arrangement/:id" component={DisplayEvent} />
-                <Route exact path="/registrerarrangement" component={CreateEvent} />
+                <Route
+                    exact
+                    path="/registrerarrangement"
+                    component={CreateEvent}
+                />
                 <Route exact path="/user/:id" component={ViewProfile} />
             </HashRouter>
         );

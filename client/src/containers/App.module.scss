@@ -3,3 +3,64 @@
     display: grid;
     grid-template-rows: 7rem 100vh;
 }
+
+:global {
+    .Button {
+        border-radius: 0.5rem;
+        background: linear-gradient(to left, #feca57 50%, #ff9f43 50%);
+        border: none;
+        background-position: right bottom;
+        background-size: 200% 100%;
+        margin-top: 3rem;
+        font-family: 'Lato', sans-serif;
+        font-size: 2.2rem;
+        padding: 1rem 5rem;
+        transition: background-position 0.5s ease-in-out, transform 0.4s,
+            box-shadow 0.4s;
+        cursor: pointer;
+
+        &:hover,
+        &:active {
+            background-position: left bottom;
+            transform: translateY(-0.8rem) scale(1.03);
+            box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.25);
+        }
+
+        &--inverse {
+            background: linear-gradient(to left, #ff9f43 50%, #feca57 50%);
+            background-position: left bottom;
+            background-size: 200% 100%;
+
+            &:hover,
+            &:active {
+                background-position: right bottom;
+                transform: translateY(-0.8rem) scale(1.03);
+                box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.25);
+            }
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .Input {
+        font-family: 'Lato', sans-serif;
+        font-size: 2.2rem;
+        margin-top: 3rem;
+        border: none;
+        border-bottom: 1px solid #333;
+        background-color: rgb(247, 247, 247);
+        transition: all 0.4s;
+        padding: 1rem 5rem;
+
+        &:focus {
+            transform: scale(1.1);
+        }
+    }
+
+    .MediumTitle {
+        font-weight: 400;
+        font-size: 3.2rem;
+    }
+}
