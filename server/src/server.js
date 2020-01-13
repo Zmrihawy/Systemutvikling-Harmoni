@@ -24,9 +24,9 @@ const MASTER_TOKEN:string = "MASTER"; //TODO DELEEEEEETE
 
 var apiRoutes = express.Router();
 
-app.use(cors());
-
 var app = express();
+
+app.use(cors());
 
 app.use(bodyParser.json()); // for å tolke JSON
 
