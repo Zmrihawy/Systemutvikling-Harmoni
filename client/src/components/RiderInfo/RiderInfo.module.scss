@@ -56,7 +56,16 @@
     font-weight: bold;
     border-left: none;
     font-size: 2.1em;
+    display: inline-block;
+    transition: all 0.3s ease 0s;
 }
+
+.button__delete:hover {
+background: #7e102d;
+color: #b71540 !important;
+transition: all 0.4s ease 0s;
+}
+
 
 .button__edit {
     height: 100%;
@@ -67,6 +76,13 @@
     border-right: none;
     font-size: 1.7em;
 }
+
+.button__edit:hover {
+    background: #3d884d;
+    color: #4eb163;
+    transition: all 0.4s ease 0s;
+    }
+    
 
 .rider__wrapper > input {
     font-size: 1em;
@@ -100,6 +116,12 @@
     grid-column: 3 / 5;
 }
 
+.button__add:hover {
+    background: #39508f;
+    color:#4a69bd !important;
+    transition: all 0.4s ease 0s;
+    }
+    
 @media only screen and (max-width: 812px) {
     .rider__wrapper {
         grid-template-areas: 

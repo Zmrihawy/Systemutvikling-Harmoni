@@ -39,7 +39,7 @@ export default class DisplayRider extends Component {
                 }, 
                 {
                     amount: 4,
-                    name: 'engangshansker (de fra biltema til niånitti kronå hasdkasdkasdkladæaksdak æak dæksæadksadkasdø øæadksøædkasdøkaæksaødksa k æakscæøaskdæasdkæasdk ækaøkasøldksaøldklsail kent ronny i kassa au)'
+                    name: 'engangshansker'
                 }, 
             ]
         };

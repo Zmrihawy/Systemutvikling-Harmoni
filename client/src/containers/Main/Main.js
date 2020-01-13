@@ -11,6 +11,7 @@ export default class Main extends Component {
         return (
             <>
                 {/*<DisplayEvent />*/}
+                <NavBar/>
                 <CreateEvent />
             </>
         );
