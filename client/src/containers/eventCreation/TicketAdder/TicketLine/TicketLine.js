@@ -1,22 +1,37 @@
 import React from 'react';
 
 const ticketLine = props => {
-  return (
-    <div>
-      <select
-        title="Billettype"
-        onChange={props.ticketSelect}
-        // value={props.value}
-        class="ticketSelect"
-        name="description"
-      >
-        <option>Velg billett</option>
-        <option /*value={props.value}*/> valg </option>
-      </select>
-      <input type="text" name="amount" onChange={props.ticketSelect} />
-      <input type="text" name="price" onChange={props.ticketSelect} />
-    </div>
-  );
+    return (
+        <>
+            <select
+                title="Billettype"
+                onChange={props.changed}
+                value={props.description}
+                name="description"
+            >
+                <option>Velg billett</option>
+                <option>Early Bird</option>
+                <option>Student</option>
+                <option>Junior</option>
+                <option>Honnør</option>
+                <option>VIP</option>
+            </select>
+            <input
+                type="text"
+                name="amount"
+                onChange={props.changed}
+                placeholder="Antall"
+                value={props.amount}
+            />
+            <input
+                type="text"
+                name="price"
+                onChange={props.changed}
+                placeholder="Pris"
+                value={props.price}
+            />
+        </>
+    );
 };
 
 export default ticketLine;

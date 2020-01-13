@@ -30,6 +30,7 @@ export default class ArtistAdder extends Component {
     render() {
         return (
             <>
+                <div>Hvilke artister kommer?</div>
                 <button onClick={this.handleNewArtist}>Legg til</button>
                 {this.state.artists.map((el, i) => {
                     return (
@@ -39,6 +40,7 @@ export default class ArtistAdder extends Component {
                                 placeholder="Navn"
                                 onChange={this.handleChange}
                                 value={el.name}
+                                className="Input"
                             />
                             <span
                                 onClick={this.handleDeleteArtist}

@@ -1,0 +1,12 @@
+.BasicForm {
+    width: 50%;
+
+    &__title {
+        font-size: 3rem;
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: space-around;
+    }
+}
