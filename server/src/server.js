@@ -295,8 +295,8 @@ app.post("/api/event/:event_id/ticket", (req, res) => {
 app.put("/api/event/:event_id/ticket", (req, res) => {
     console.log("Fikk PUT-request fra klienten");
     if(req.body.price === undefined || req.body.price === null) return res.json({error : "request missing ticket - price"});
-    if(req.body.amount == undefined) return res.json({error : "request missing number of tickets"});
-    if(req.body.name == undefined) return res.json({error : "request missing ticket-name"});
+    if(req.body.amount === undefined) return res.json({error : "request missing number of tickets"});
+    if(req.body.name === undefined) return res.json({error : "request missing ticket-name"});
     eventDao.updateTicket(req.body, (status, data) => {
         res.status(status);
         let token =  thisFunctionCreatesNewToken(req.email);
@@ -308,9 +308,9 @@ app.put("/api/event/:event_id/ticket", (req, res) => {
 app.put("/api/performance/:performance_id/rider", (req, res) => {
     console.log("Fikk PUT-request fra klienten");
 
-    if(req.body.name == undefined) return res.json({error : "bad request : missing name"});
-    if(req.body.amount == undefined) return res.json({error : "bad request : missing amount of tickets"});
-    if(req.body.oldName == undefined) return res.json({error : "bad request : missing old name - parameter"});
+    if(req.body.name === undefined) return res.json({error : "bad request : missing name"});
+    if(req.body.amount === undefined) return res.json({error : "bad request : missing amount of tickets"});
+    if(req.body.oldName === undefined) return res.json({error : "bad request : missing old name - parameter"});
 
     eventDao.updateRider({name : req.body.name, amount : req.body.amount, performanceId : req.params.performance_id, oldName : req.body.oldName}, (status, data) => {
         res.status(status);
@@ -322,10 +322,10 @@ app.put("/api/performance/:performance_id/rider", (req, res) => {
 //post a performance
 app.post("api/event/:event_id/performance", (req, res) => {
     console.log("Fikk POST-request fra klienten");
-    if(req.body.artistId == undefined) return res.json({error : "bad request : missing artist parameter"});
-    if(req.body.startTime == undefined) return res.json({error : "bad requst : missing startTime parameter"});
-    if(req.body.endTime == undefined) return res.json({error : "bad request : missing endTime parameter"});
-    if(req.body.contract == undefined) req.body.contract = "";
+    if(req.body.artistId === undefined) return res.json({error : "bad request : missing artist parameter"});
+    if(req.body.startTime === undefined) return res.json({error : "bad requst : missing startTime parameter"});
+    if(req.body.endTime === undefined) return res.json({error : "bad request : missing endTime parameter"});
+    if(req.body.contract === undefined) req.body.contract = "";
     eventDao.createPerformance({artistId: req.body.artistId, eventId: req.params.event_id, startTime : req.body.startTime, endTime : req.body.endTime, contract: req.body.contract}, (status, data) => {
         res.status(status);
         let token =  thisFunctionCreatesNewToken(req.email);
@@ -336,7 +336,7 @@ app.post("api/event/:event_id/performance", (req, res) => {
 //post a rider
 app.post("/api/performance/:performance_id/rider", (req, res) => {
     console.log("Fikk POST-request fra klienten");
-    if(req.body.amount == undefined) return res.json({error : "bad request : missing amount parameter"});
+    if(req.body.amount === undefined) return res.json({error : "bad request : missing amount parameter"});
 
     eventDao.createRider({performanceId : req.params.performance_id, name : req.params.name, amount : req.body.amount}, (status, data) => {
         res.status(status);
@@ -349,11 +349,11 @@ app.post("/api/performance/:performance_id/rider", (req, res) => {
 app.put("/api/event/:event_id", (req, res) => {
     console.log("Fikk PUT-request fra klienten");
 
-    if(req.body.eventName == undefined) return res.json({error : "bad request : missing eventName parameter"});
-    if(req.body.startTime == undefined) return res.json({error : "bad request : missing startTime parameter"});
-    if(req.body.hostId == undefined) return res.json({error : "bad request : missing hostId parameter"});
-    if(req.body.active == undefined) req.body.active = 1;
-    if(req.body.location == undefined) return res.json({error : "bad request : mssing location parameter"});
+    if(req.body.eventName === undefined) return res.json({error : "bad request : missing eventName parameter"});
+    if(req.body.startTime === undefined) return res.json({error : "bad request : missing startTime parameter"});
+    if(req.body.hostId === undefined) return res.json({error : "bad request : missing hostId parameter"});
+    if(req.body.active === undefined) req.body.active = 1;
+    if(req.body.location === undefined) return res.json({error : "bad request : mssing location parameter"});
 
     eventDao.updateEvent({eventName : req.body.eventName, hostId : req.body.hostId, active : req.body.active, 
     location : req.body.location , category : req.body.category, startTime : req.body.startTime, endTime: req.body.endTime, eventId : req.params.event_id}, (status, data) => {
@@ -422,7 +422,7 @@ app.get("/api/event/:event_id/rider", (req, res) => {
 //Get all raiders for one user
 app.get("/api/user/event/:event_id/:performance_id", (req, res) => {
     console.log("/user/:user_id/:active: fikk request fra klient");
-    if (req.params.performanceId == null || req.params.performanceId == undefined) return res.error("feil i fetch-call");
+    if (req.params.performanceId === null || req.params.performanceId === undefined) return res.error("feil i fetch-call");
     eventDao.getRiders(req.params.perfromanceId, (status, data) => {
         res.status(status);
         let token =  thisFunctionCreatesNewToken(req.email);
@@ -526,8 +526,8 @@ app.put("/user/:usermail", (req, res) => {
 // Handles login and returns JWT-token as JSON
 app.post("/login", (req, res) => {
 
-    if(req.body.email == undefined) return res.json({error : "bad request : missing email parameter"});
-    if(req.body.password == undefined) return res.json({error : " bad request : mssing password parameter"})
+    if(req.body.email === undefined) return res.json({error : "bad request : missing email parameter"});
+    if(req.body.password === undefined) return res.json({error : " bad request : mssing password parameter"})
 
     loginOk(req.body.email, req.body.password).then(data => {
         let log: number = data;
