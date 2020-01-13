@@ -1,4 +1,6 @@
-const ERROR_STATUS = 500;
+//TODO Make these the same?
+const ERROR_STATUS_1 = 500;
+const ERROR_STATUS_2 = 401;
 
 export class Event {
     constructor(id, name, hostId, active, location, startTime, endTime) {
@@ -76,7 +78,7 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -84,13 +86,13 @@ class EventService {
                     resolve(handleGetEventResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
-        })
+        });
+
+        function handleGetEventResponse(json) {
+            return new Event(json.event_id, json.name, json.host_id, json.active, json.location, json.startTime, json.endTime);
+        }
     }
 
-
-    handleGetEventResponse(json) {
-        return new Event(json.event_id, json.name, json.host_id, json.active, json.location, json.startTime, json.endTime);
-    }
 
     getAllEvents() {
         return new Promise((resolve, reject) => {
@@ -103,7 +105,7 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -111,12 +113,13 @@ class EventService {
                     resolve(handleGetAllEventsResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
-        })
+        });
+
+        function handleGetAllEventsResponse(json) {
+            return json.map(data => new Event(data.event_id, data.name, data.host_id, data.active, data.location, data.start_time, data.end_time));
+        }
     }
 
-    handleGetAllEventsResponse(json) {
-        return json.map(data => new Event(data.event_id, data.name, data.host_id, data.active, data.location, data.start_time, data.end_time));
-    }
 
     getPerformance(id) {
         return new Promise((resolve, reject) => {
@@ -129,7 +132,7 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -137,12 +140,13 @@ class EventService {
                     resolve(handleGetPerformanceResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
-        })
+        });
+
+        function handleGetPerformanceResponse(json) {
+            return new Performance(json.performance_id, json.user_id, json.event_id, json.start_time, json.end_time);
+        }
     }
 
-    handleGetPerformanceResponse(json) {
-        return new Performance(json.performance_id, json.user_id, json.event_id, json.start_time, json.end_time);
-    }
 
     getAllRiders(eventId) {
         return new Promise((resolve, reject) => {
@@ -155,7 +159,7 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -163,12 +167,13 @@ class EventService {
                     resolve(handleGetAllRidersResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
-        })
+        });
+
+        function handleGetAllRidersResponse(json) {
+            return json.map(data => new Rider(data.rider_id, data.name, data.amount));
+        }
     }
 
-    handleGetAllRidersResponse(json) {
-        return json.map(data => new Rider(data.rider_id, data.name, data.amount));
-    }
 
     getContract(eventId, artistId) {
         return new Promise((resolve, reject) => {
@@ -181,7 +186,7 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -189,12 +194,13 @@ class EventService {
                     resolve(handleGetContractResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
-        })
+        });
+
+        function handleGetContractResponse(json) {
+            return JSON.stringify(json);
+        }
     }
 
-    handleGetContractResponse(json) {
-        return JSON.stringify(json);
-    }
 
     getEventContracts(eventId) {
         return new Promise((resolve, reject) => {
@@ -207,7 +213,7 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -215,12 +221,13 @@ class EventService {
                     resolve(handleGetEventContractsResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
-        })
+        });
+
+        function handleGetEventContractsResponse(json) {
+            return json.map(data => String(JSON.stringify(data)));
+        }
     }
 
-    handleGetEventContractsResponse(json) {
-        return json.map(data => new String(JSON.stringify(data)));
-    }
 
     getEventTickets(eventId) {
         return new Promise((resolve, reject) => {
@@ -233,7 +240,7 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -241,12 +248,13 @@ class EventService {
                     resolve(handleGetEventTicketsResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
-        })
+        });
+
+        function handleGetEventTicketsResponse(json) {
+            return json.map(data => new Ticket(data.name, data.event_id, data.price, data.amount, data.description));
+        }
     }
 
-    handleGetEventTicketsResponse(json) {
-        return json.map(data => new Ticket(data.name, data.event_id, data.price, data.amount, data.description));
-    }
 
     getPerformanceRiders(eventId, performanceId) {
         return new Promise((resolve, reject) => {
@@ -259,7 +267,7 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -267,12 +275,13 @@ class EventService {
                     resolve(handleGetPerformanceRidersResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
-        })
+        });
+
+        function handleGetPerformanceRidersResponse(json) {
+            return json.map(data => new Rider(data.rider_id, data.name, data.amount));
+        }
     }
 
-    handleGetPerformanceRidersResponse(json) {
-        return json.map(data => new Rider(data.rider_id, data.name, data.amount));
-    }
 
     getUsersEvents(userId, active) {
         return new Promise((resolve, reject) => {
@@ -285,7 +294,7 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -293,12 +302,13 @@ class EventService {
                     resolve(handleGetUsersEventsResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
-        })
+        });
+
+        function handleGetUsersEventsResponse(json) {
+            return new Event(json.event_id, json.name, json.host_id, json.active, json.location, json.startTime, json.endTime);
+        }
     }
 
-    handleGetUsersEventsResponse(json) {
-        return new Event(json.event_id, json.name, json.host_id, json.active, json.location, json.startTime, json.endTime);
-    }
 
     getCrew(eventId) {
         return new Promise((resolve, reject) => {
@@ -311,7 +321,7 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -319,12 +329,13 @@ class EventService {
                     resolve(handleGetCrewResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
-        })
+        });
+
+        function handleGetCrewResponse(json) {
+            return json.map(data => new Crew(data.drew_id, data.profession, data.name, data.contact_info, data.eventId));
+        }
     }
 
-    handleGetCrewResponse(json) {
-        return json.map(data => new Crew(data.drew_id, data.profession, data.name, data.contact_info, data.eventId));
-    }
 
     //POST
     createEvent(eventId, name, hostId, active, location, startTime, endTime) {
@@ -348,7 +359,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -372,7 +383,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -402,7 +413,7 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -427,7 +438,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -452,7 +463,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -479,7 +490,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -502,7 +513,7 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -528,7 +539,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -553,7 +564,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -586,7 +597,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -611,7 +622,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -641,7 +652,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -665,7 +676,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -689,7 +700,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -713,7 +724,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -739,7 +750,7 @@ class UserService {
                     }
                 })
                     .then(response => {
-                        if (response.status === ERROR_STATUS) reject("ERROR");
+                        if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                         response.json()
                     })
                     .then(json => {
@@ -766,7 +777,7 @@ class UserService {
                 }
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -792,7 +803,7 @@ class UserService {
                 }
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -823,7 +834,7 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -844,7 +855,7 @@ class UserService {
                 }
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -877,7 +888,7 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
@@ -905,7 +916,7 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    if (response.status === ERROR_STATUS_1 || response.status === ERROR_STATUS_2) reject("ERROR");
                     response.json()
                 })
                 .then(json => {
