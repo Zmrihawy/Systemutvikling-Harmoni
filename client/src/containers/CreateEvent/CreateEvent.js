@@ -118,7 +118,7 @@ export default class CreateEvent extends Component {
                         inputType="text"
                         value={this.state.newEvent.title}
                         name="title"
-                        clicked={this.handleNext}
+                        next={this.handleNext}
                         changed={this.handleChange}
                     />
                 );
@@ -132,10 +132,11 @@ export default class CreateEvent extends Component {
                             inputType="text"
                             value={this.state.newEvent.category}
                             name="category"
-                            clicked={this.handleNext}
+                            next={this.handleNext}
+                            previous={this.handlePrevious}
                             changed={this.handleChange}
+                            last
                         />
-                        <button onClick={this.handlePrevious}>Forrige</button>
                     </>
                 );
                 break;
@@ -148,10 +149,11 @@ export default class CreateEvent extends Component {
                             inputType="text"
                             value={this.state.newEvent.location}
                             name="location"
-                            clicked={this.handleNext}
+                            next={this.handleNext}
+                            previous={this.handlePrevious}
                             changed={this.handleChange}
+                            last
                         />
-                        <button onClick={this.handlePrevious}>Forrige</button>
                     </>
                 );
                 break;

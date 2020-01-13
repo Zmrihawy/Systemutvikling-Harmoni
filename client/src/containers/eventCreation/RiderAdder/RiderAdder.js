@@ -76,7 +76,7 @@ export default class RiderAdder extends Component {
 
         return (
             <>
-                <h3>Add riders</h3>
+                <div className="MediumTitle">Har artistene riders?</div>
                 {artists}
                 <button
                     onClick={() =>

@@ -11,8 +11,6 @@ export default class TicketAdder extends Component {
         tickets.push({ description: 'Velg billett', amount: 0, price: 0 });
 
         this.setState({ tickets });
-
-        console.log(tickets);
     };
 
     handleDeleteTickets = event => {

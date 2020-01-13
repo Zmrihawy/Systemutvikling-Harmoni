@@ -34,7 +34,8 @@
     box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
 }
 
-.rider__wrapper > p, .ride__wrapper > input{
+.rider__wrapper > p,
+.ride__wrapper > input {
     padding: 10px;
 }
 
@@ -61,11 +62,10 @@
 }
 
 .button__delete:hover {
-background: #7e102d;
-color: #b71540 !important;
-transition: all 0.4s ease 0s;
+    background: #7e102d;
+    color: #b71540 !important;
+    transition: all 0.4s ease 0s;
 }
-
 
 .button__edit {
     height: 100%;
@@ -81,8 +81,7 @@ transition: all 0.4s ease 0s;
     background: #3d884d;
     color: #4eb163;
     transition: all 0.4s ease 0s;
-    }
-    
+}
 
 .rider__wrapper > input {
     font-size: 1em;
@@ -111,22 +110,21 @@ transition: all 0.4s ease 0s;
     color: white;
     font-weight: bold;
     border-left: none;
-    font-size: 2.0em;
+    font-size: 2em;
     padding: 0;
     grid-column: 3 / 5;
 }
 
 .button__add:hover {
     background: #39508f;
-    color:#4a69bd !important;
+    color: #4a69bd !important;
     transition: all 0.4s ease 0s;
-    }
-    
+}
+
 @media only screen and (max-width: 812px) {
     .rider__wrapper {
-        grid-template-areas: 
-        'rider__amount rider__name button__edit button__delete';
-        grid-template-columns: 60px 1fr 60px 60px; 
+        grid-template-areas: 'rider__amount rider__name button__edit button__delete';
+        grid-template-columns: 60px 1fr 60px 60px;
     }
 
     .container {
