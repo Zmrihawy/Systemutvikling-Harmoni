@@ -50,6 +50,16 @@ export class User {
     }
 }
 
+export class Crew{
+    constructor(id, profession, name, contactInfo,eventId){
+        this.id = id;
+        this.profession = profession;
+        this.name = name;
+        this.contactInfo = contactInfo;
+        this.evendId = eventId;
+    }
+}
+
 
 class EventService {
     //GET
@@ -57,7 +67,9 @@ class EventService {
         fetch("/api/event/" + id, {
             method: "GET",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
         })
             .then(response => response.json())
@@ -76,7 +88,9 @@ class EventService {
         fetch("/api/events/", {
             method: "GET",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
         })
             .then(response => response.json())
@@ -95,7 +109,9 @@ class EventService {
         fetch("/api/performance/" + id, {
             method: "GET",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
         })
             .then(response => response.json())
@@ -114,7 +130,9 @@ class EventService {
         fetch("/api/event/" + eventId + "/rider", {
             method: "GET",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
         })
             .then(response => response.json())
@@ -133,7 +151,9 @@ class EventService {
         fetch("/api/event/" + eventId + "/user/" + artistId + "/contract", {
             method: "GET",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
         })
             .then(response => response.json())
@@ -152,7 +172,9 @@ class EventService {
         fetch("/api/event/" + eventId + "/contracts", {
             method: "GET",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
         })
             .then(response => response.json())
@@ -171,7 +193,9 @@ class EventService {
         fetch("/api/event/" + eventId + "/tickets", {
             method: "GET",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
         })
             .then(response => response.json())
@@ -190,7 +214,9 @@ class EventService {
         fetch("/api/user/event/" + eventId + "/" + performanceId, {
             method: "GET",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
         })
             .then(response => response.json())
@@ -209,7 +235,9 @@ class EventService {
         fetch("/api/user/" + userId + "/event/" + active, {
             method: "GET",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
         })
             .then(response => response.json())
@@ -222,6 +250,27 @@ class EventService {
 
     handleGetUsersEventsResponse(json) {
         return new Event(json.event_id, json.name, json.host_id, json.active, json.location, json.startTime, json.endTime);
+    }
+
+    getCrew(eventId) {
+        fetch("/api/event/" + eventId + "/crew", {
+            method: "GET",
+            headers: {
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(json => {
+            refreshToken(json.jwt);
+        return handleGetCrewResponse(json);
+    })
+    .catch(error => console.error("Error: ", error));
+    }
+
+    handleGetCrewResponse(json) {
+        return json.map(data => new Crew(data.drew_id, data.profession, data.name, data.contact_info, data.eventId));
     }
 
     //POST
@@ -238,7 +287,9 @@ class EventService {
         fetch("/api/event", {
             method: "POST",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
@@ -252,7 +303,9 @@ class EventService {
         fetch("/api/event/" + eventId + "/ticket", {
             method: "POST",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
@@ -272,7 +325,9 @@ class EventService {
         fetch("/api/event/" + eventId + "/user", {
             method: "POST",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
         })
             .then(response => response.json())
@@ -285,13 +340,31 @@ class EventService {
         fetch("/api/event/" + eventId + "/user", {
             method: "POST",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
             .then(response => response.json())
             .then(json => refreshToken(json.jwt))
             .catch(error => console.error("Error: ", error));
+    }
+
+    createCrew(eventId, profession, name, contactInfo) {
+        let data = {profession: profession, name: name, contactInfo: contactInfo, eventId: eventId};
+        fetch("/api/event/" + eventId + "/crew", {
+            method: "POST",
+            headers: {
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+    .then(json => refreshToken(json.jwt))
+    .catch(error => console.error("Error: ", error));
     }
 
 
@@ -301,7 +374,9 @@ class EventService {
         fetch("/api/event/" + eventId + "/rider", {
             method: "DELETE",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
@@ -314,7 +389,9 @@ class EventService {
         fetch("/api/event/" + eventId, {
             method: "DELETE",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
         })
             .then(response => response.json())
@@ -328,7 +405,9 @@ class EventService {
         fetch("/api/event/" + eventId + "/ticket", {
             method: "PUT",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
@@ -342,7 +421,9 @@ class EventService {
         fetch("/api/event/" + eventId + "/rider", {
             method: "PUT",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
@@ -364,7 +445,9 @@ class EventService {
         fetch("/api/event/" + eventId, {
             method: "PUT",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
@@ -378,7 +461,9 @@ class EventService {
         fetch("/api/event/" + eventId + "/contract", {
             method: "PUT",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
@@ -398,7 +483,25 @@ class EventService {
         fetch("/api/event/" + eventId + "/performance", {
             method: "PUT",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(response => console.log(response))
+            .catch(error => console.error("Error: ", error));
+    }
+
+    updateCrew(eventId, crewId, profession, name, contactInfo) {
+        let data = {profession: profession, name: name, contactInfo: contactInfo, crewId: crewId};
+        fetch("/api/event/" + eventId + "/crew/"+crewId, {
+            method: "PUT",
+            headers: {
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
@@ -412,7 +515,9 @@ class EventService {
         fetch("/api/event/" + eventId + "/ticket", {
             method: "DELETE",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
@@ -426,7 +531,9 @@ class EventService {
         fetch("/api/event/" + eventId + "/performance", {
             method: "DELETE",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
@@ -440,20 +547,25 @@ class EventService {
 class UserService {
     //GET
     getUser(id) {
-        fetch("/api/user/" + id, {
+        return new Promise( (resolve, reject)  => {
+            fetch("/api/user/" + id, {
             method: "GET",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
-            }
-        })
-            .then(response => response.json())
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+            if (status === 500)reject();
+            response.json()})
             .then(json => {
-                refreshToken(json.jwt);
-                return this.handleGetUserResponse(json)
+            refreshToken(json.jwt);
+            resolve(this.handleGetUserResponse(json));
             })
             .catch(error => console.error("Error: ", error));
-    }
-
+        }
+    )}
     handleGetUserResponse(json) {
         return new User(json.user_id, json.username, json.email, json.phone, json.first_name, json.surname);
     }
@@ -462,7 +574,9 @@ class UserService {
         fetch("/api/users", {
             method: "GET",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
         })
             .then(response => response.json())
@@ -480,7 +594,11 @@ class UserService {
     //DELETE
     deleteUser(userId) {
         fetch("/user/" + userId, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
         })
             .then(response => response.json())
             .then(json => console.log(json))
@@ -499,6 +617,10 @@ class UserService {
         };
         fetch("/user/" + userId, {
             method: "PUT",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(data)
         })
             .then(response => response.json())
@@ -508,7 +630,11 @@ class UserService {
 
     updatePassword(usermail) {
         fetch("/user/" + usermail, {
-            method: "PUT"
+            method: "PUT",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
         })
             .then(response => response.json())
             .then(json => console.log(json))
@@ -526,13 +652,20 @@ class UserService {
             firstName: firstName,
             lastName: lastName
         };
-        fetch("/user", {
+        console.log(data);
+        return new Promise((resolve, reject) => {
+            fetch("/user", {
             method: "POST",
-            body: JSON.stringify(data)
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body:  JSON.stringify(data)
         })
-            .then(response => response.json())
-            .then(json => console.log(json))
-            .catch(error => console.error("Error: ", error));
+        .then(response => response.json())
+        .then(json => resolve(json))
+        .catch(error => console.error("Error: ", error));
+        })
     }
 
     loginUser(username, password, email) {
@@ -544,7 +677,9 @@ class UserService {
         fetch("/login", {
             method: "POST",
             headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt")
+                'x-access-token': window.sessionStorage.getItem("jwt"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
