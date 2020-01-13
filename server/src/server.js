@@ -204,9 +204,14 @@ app.put("/api/user/:user_id", (req, res) => {
     if(req.body.username === undefined || req.body.username === null) return res.json({error : "request missing username"});
     if(req.body.email === undefined || req.body.email === null) return res.json({error : "request missing email"});
     if(req.body.firstName === undefined) return res.json({error: "request missing first-name"});
-    if(req.body.lastName === undefined) return res.json({error : "requst misssing last-name"}); 
-    let params = {username : req.body.username, email : req.body.email, phone : req.body.phone, firstName : req.body.firstName, lastName : req.body.lastName, userId : req.params.userId}
-    userDao.updateUser(req.params, (status, data) => {
+    if(req.body.lastName === undefined) return res.json({error : "requst misssing last-name"});
+    if(req.params.user_id !== req.userId{
+        res.status(401);
+        res.json({error : "Not authorized"});
+    }
+
+    let params = {username : req.body.username, email : req.body.email, phone : req.body.phone, firstName : req.body.firstName, lastName : req.body.lastName, userId : req.params.userId};
+    userDao.updateUser(params, (status, data) => {
         res.status(status);
         let token =  thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
