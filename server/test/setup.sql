@@ -60,6 +60,16 @@ CREATE TABLE rider (
   FOREIGN KEY (performance_id) REFERENCES performance(performance_id) ON DELETE CASCADE
 );
 
+CREATE TABLE crew(
+  crew_id int(11) AUTO_INCREMENT NOT NULL,
+  profession varchar(500) NOT NULL,
+  name varchar(500) NOT NULL,
+  contact_info varchar(500),
+  event_id int(11) NOT NULL,
+  PRIMARY KEY (crew_id),
+  FOREIGN KEY (event_id) REFERENCES event(event_id) ON DELETE CASCADE
+);
+
 INSERT INTO user (username, password, salt, email, phone, first_name, surname, picture)
 VALUES("testbruker", UNHEX("2955d5f4a8980763b5a1ec72c69b983a5772697e6504879711d8bcc2119cbf881d137f4190976c1af4503e2614649190c3a8e04a78f560d3e6f592240a7f3660"), UNHEX("62ca87a099fa85a1"), "testemail", "999999", "test", "bruker", "bildelink");
  

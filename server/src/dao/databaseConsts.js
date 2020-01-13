@@ -40,7 +40,14 @@ RIDER_TABLE :string;
 RIDER_PERFORMANCE_ID :string;
 RIDER_NAME :string;
 RIDER_AMOUNT :string;
-    
+
+CREW_TABLE :string;
+CREW_ID :string;
+CREW_PROFESSION :string;
+CREW_NAME :string;
+CREW_CONTACT_INFO :string;
+CREW_EVENT_ID :string;
+
     constructor() {
         this.EVENT_TABLE = "event";
         this.EVENT_ID = "event_id";
@@ -80,5 +87,12 @@ RIDER_AMOUNT :string;
         this.RIDER_PERFORMANCE_ID = "performance_id";
         this.RIDER_NAME = "name";
         this.RIDER_AMOUNT = "amount";
+
+        this.CREW_TABLE = "crew";
+        this.CREW_ID = "crew_id";
+        this.CREW_PROFESSION = "profession";
+        this.CREW_NAME = "name";
+        this.CREW_CONTACT_INFO = "contact_info";
+        this.CREW_EVENT_ID = "event_id";
     }
 };
