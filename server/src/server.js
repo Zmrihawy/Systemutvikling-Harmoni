@@ -205,7 +205,7 @@ app.put("/api/user/:user_id", (req, res) => {
     if(req.body.email === undefined || req.body.email === null) return res.json({error : "request missing email"});
     if(req.body.firstName === undefined) return res.json({error: "request missing first-name"});
     if(req.body.lastName === undefined) return res.json({error : "request missing last-name"});
-    if(req.params.user_id !== req.userId{
+    if(req.params.user_id !== req.userId){
         res.status(401);
         res.json({error : "Not authorized"});
     }
