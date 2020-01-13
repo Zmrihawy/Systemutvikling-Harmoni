@@ -77,7 +77,7 @@ module.exports = class ServerDao extends Dao {
             [sql.performanceId, sql.name, sql.amount], callback);
     }
 
-    createCrew() {
+    createCrew(sql: { profession: string, name: string, contactInfo: string | number , eventId: string | number}, callback: (status: number, data: *) => void) {
         super.query(`INSERT INTO ${CONSTANTS.CREW_TABLE} (${CONSTANTS.CREW_PROFESSION},${CONSTANTS.CREW_NAME},${CONSTANTS.CREW_CONTACT_INFO},${CONSTANTS.CREW_EVENT_ID}) 
                     VALUES (?,?,?,?) `, [sql.profession, sql.name, sql.contactInfo, sql.eventId], callback);
     }
