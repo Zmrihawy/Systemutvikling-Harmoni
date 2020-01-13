@@ -48,9 +48,12 @@ module.exports = class ServerDao extends Dao {
     }
 
     getTickets(sql: number | string, callback: (status: number, data: *) => void) {
-        super.query(`SELECT * FROM ${CONSTANTS.TICKET_TABLE} WHERE ${CONSTANTS.EVENT_ID} = ?`, [sql], callback);
+        super.query(`SELECT * FROM ${CONSTANTS.TICKET_TABLE} WHERE ${CONSTANTS.TICKET_EVENT_ID} = ?`, [sql], callback);
     }
 
+    getCrew(sql: number | string, callback: (status: number, data: *) => void) {
+        super.query(`SELECT * FROM ${CONSTANTS.CREW_TABLE} WHERE ${CONSTANTS.CREW_EVENT_ID} = ?`, [sql], callback);
+    }
 
 
     /**CREATE*/

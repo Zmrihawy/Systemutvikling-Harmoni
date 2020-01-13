@@ -1,5 +1,11 @@
 "use strict";
 
+var _dao = _interopRequireDefault(require("./dao.js"));
+
+var _databaseConsts = _interopRequireDefault(require("./databaseConsts.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22,11 +28,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var Dao = require("./dao.js");
-
-var Constants = require("./databaseConsts.js");
-
-var CONSTANTS = new Constants();
+var CONSTANTS = new _databaseConsts["default"]();
 
 module.exports =
 /*#__PURE__*/
@@ -72,11 +74,9 @@ function (_Dao) {
   }, {
     key: "updateUser",
     value: function updateUser(sql, callback) {
-      var userAtributes = [sql.username, sql.email, sql.phone, sql.firstName, sql.lastName, sql.userId];
-
-      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.USER_TABLE, " SET ").concat(CONSTANTS.USER_USERNAME, " = ?, ").concat(CONSTANTS.USER_EMAIL, " = ?, ").concat(CONSTANTS.USER_PHONE, " = ?, ").concat(CONSTANTS.USER_FIRST_NAME, " = ?, ").concat(CONSTANTS.USER_LAST_NAME, " = ? WHERE ").concat(CONSTANTS.USER_ID, " = ?"), userAtributes, callback);
+      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.USER_TABLE, " SET ").concat(CONSTANTS.USER_USERNAME, " = ?, ").concat(CONSTANTS.USER_EMAIL, " = ?, ").concat(CONSTANTS.USER_PHONE, " = ?, ").concat(CONSTANTS.USER_FIRST_NAME, " = ?, ").concat(CONSTANTS.USER_LAST_NAME, " = ? WHERE ").concat(CONSTANTS.USER_ID, " = ?"), [sql.username, sql.email, sql.phone, sql.firstName, sql.lastName, sql.userId], callback);
     }
   }]);
 
   return UserDao;
-}(Dao);
+}(_dao["default"]);
