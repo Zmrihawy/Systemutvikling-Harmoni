@@ -3,6 +3,7 @@ import EventInfo from '../../components/EventInfo/EventInfo';
 
 export default class DisplayEvent extends Component {
     state = {
+        id: '',
         title: '',
         category: '',
         location: '',
@@ -11,6 +12,7 @@ export default class DisplayEvent extends Component {
         dateTo: null,
         artists: [
             {
+                id: '',
                 name: '',
                 riders: ['']
             }
@@ -25,7 +27,8 @@ export default class DisplayEvent extends Component {
         staff: [
             {
                 name: '',
-                profession: ''
+                profession: '',
+                number: ''
             }
         ]
     };
@@ -53,8 +56,8 @@ export default class DisplayEvent extends Component {
                 image: 'https://yt3.ggpht.com/a-/AN66SAx-enzte_C9I5lYbxE81YRw6KDq0QdGF-jnJA=s900-mo-c-c0xffffffff-rj-k-no'
             }, 
             {
-                name: 'boi',
-                image: 'https://yt3.ggpht.com/a-/AN66SAx-enzte_C9I5lYbxE81YRw6KDq0QdGF-jnJA=s900-mo-c-c0xffffffff-rj-k-no'
+                name: 'Torje Thorkildsen',
+                image: 'https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/11745966_900217626718522_810341310080559599_n.jpg?_nc_cat=104&_nc_ohc=43mIm-b8EL4AQkdvkWV2NG2ICSHhTl1jD40ytTi-0VN5UbCq6TY7nF-uQ&_nc_ht=scontent-arn2-1.xx&oh=1584203c5b173c3f55c7eeb033e331e8&oe=5E93BB8F'
             }
         ];
 
@@ -94,19 +97,23 @@ export default class DisplayEvent extends Component {
         let staff = [
             {
                 name: 'Sandnes Lys & Leven AS', 
-                proffesion: 'Lysmann'
+                proffesion: 'Lysmann',
+                number: '99933345'
             }, 
             {
                 name: 'Vetle Harnes', 
-                proffesion: 'Skabbansvarlig'
+                proffesion: 'Skabbansvarlig',
+                number: '32937444'
             }, 
             {
                 name: 'Knut Knudsen', 
-                proffesion: 'Lydmann'
+                proffesion: 'Lydmann',
+                number: '42069999'
             }, 
             {
                 name: 'Tony Tango', 
-                proffesion: 'Luring'
+                proffesion: 'Luring',
+                number: '12345566'
             }, 
         ]
 

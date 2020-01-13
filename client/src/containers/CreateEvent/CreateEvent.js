@@ -3,9 +3,11 @@ import moment from 'moment';
 import BasicForm from '../../components/BasicForm/BasicForm';
 import DatePicker from '../../components/eventCreation/DatePicker/DatePicker';
 import ArtistAdder from '../eventCreation/ArtistAdder/ArtistAdder';
+import StaffAdder from '../eventCreation/StaffAdder/StaffAdder';
+import TicketAdder from '../eventCreation/TicketAdder/TicketAdder';
 
 import classes from './CreateEvent.module.scss';
-import StaffAdder from '../eventCreation/StaffAdder/StaffAdder';
+import RiderAdder from '../eventCreation/RiderAdder/RiderAdder';
 
 export default class CreateEvent extends Component {
     state = {
@@ -24,33 +26,33 @@ export default class CreateEvent extends Component {
         }
     };
 
-  handleChange = event => {
-    const newEvent = {
-      ...this.state.newEvent,
-      [event.target.name]: event.target.value
+    handleChange = event => {
+        const newEvent = {
+            ...this.state.newEvent,
+            [event.target.name]: event.target.value
+        };
+        this.setState({ newEvent });
     };
-    this.setState({ newEvent });
-  };
 
-  handleDateChange = date => {
-    let newEvent = {
-      ...this.state.newEvent
+    handleDateChange = date => {
+        let newEvent = {
+            ...this.state.newEvent
+        };
+        newEvent.dateRange = date;
+        this.setState({ newEvent });
     };
-    newEvent.dateRange = date;
-    this.setState({ newEvent });
-  };
 
-  handleTimeChange = (value, id) => {
-    let newEvent = this.state.newEvent;
+    handleTimeChange = (value, id) => {
+        let newEvent = this.state.newEvent;
 
-    if (id === 'timeFrom') {
-      newEvent.timeRange[0] = value;
-    } else if (id === 'timeTo') {
-      newEvent.timeRange[1] = value;
-    }
+        if (id === 'timeFrom') {
+            newEvent.timeRange[0] = value;
+        } else if (id === 'timeTo') {
+            newEvent.timeRange[1] = value;
+        }
 
-    this.setState({ newEvent });
-  };
+        this.setState({ newEvent });
+    };
 
     handleNext = event => {
         if (event) {
@@ -72,7 +74,7 @@ export default class CreateEvent extends Component {
         let result;
         // Remove empty elements from the array
         if (select === 'artists') {
-            result = input.filter(el => el.trim() !== '');
+            result = input.filter(el => el.name.trim() !== '');
         } else if (select === 'staff') {
             result = input.filter(
                 el => el.name.trim() !== '' && el.profession.trim() !== ''
@@ -166,8 +168,16 @@ export default class CreateEvent extends Component {
 
             case 4:
                 current = (
-                    <>
-                        <ArtistAdder
+                    <ArtistAdder
+                        artists={this.state.newEvent.artists}
+                        save={this.handleSave}
+                    />
+                );
+                break;
+            case 5:
+                if (this.state.newEvent.artists.length > 0) {
+                    current = (
+                        <RiderAdder
                             artists={this.state.newEvent.artists}
                             save={this.handleSave}
                         />
@@ -194,7 +204,7 @@ export default class CreateEvent extends Component {
                 );
                 break;
 
-            case 5:
+            case 7:
                 current = (
                     <>
                         <StaffAdder
@@ -217,101 +227,12 @@ export default class CreateEvent extends Component {
             default:
                 current = <div>ERROR 404</div>;
         }
-
-      [event.target.name]: event.target.value
+        return current;
     };
-    console.log(event.target.value);
-    console.log(event.target.name);
-    this.setState({ newEvent });
-  };
 
-  getCurrentPage = () => {
-    let current;
+    render() {
+        let current = this.getCurrentPage();
 
-    switch (this.state.currentPage) {
-      case 0:
-        current = (
-          <BasicForm
-            title="Hva skal arrangementet hete?"
-            inputType="text"
-            value={this.state.newEvent.title}
-            name="title"
-            clicked={this.handleNext}
-            changed={this.handleChange}
-          />
-        );
-        break;
-
-      case 1:
-        current = (
-          <BasicForm
-            title="Hvilken type arrangement er det?"
-            inputType="text"
-            value={this.state.newEvent.category}
-            name="category"
-            clicked={this.handleNext}
-            changed={this.handleChange}
-          />
-        );
-        break;
-
-      case 2:
-        current = (
-          <BasicForm
-            title="Hvor skal arrangementet være?"
-            inputType="text"
-            value={this.state.newEvent.location}
-            name="location"
-            clicked={this.handleNext}
-            changed={this.handleChange}
-          />
-        );
-        break;
-
-      case 3:
-        current = (
-          <DatePicker
-            clicked={this.handleNext}
-            dates={this.state.newEvent.dateRange}
-            times={this.state.newEvent.timeRange}
-            dateChanged={this.handleDateChange}
-            timeChanged={this.handleTimeChange}
-          />
-        );
-        break;
-
-      case 4:
-        current = (
-          <BasicForm
-            title="Hvor mange artister skal det være?"
-            inputType="number"
-            value={this.state.newEvent.artistsCount}
-            name="artistsCount"
-            clicked={this.handleNext}
-            changed={this.handleChange}
-          />
-        );
-        break;
-
-      case 5:
-        current = (
-          <TicketSelection
-            tickets={this.state.newEvent.tickets}
-            saveTickets={this.handleSaveTickets}
-          />
-        );
-        break;
-
-      default:
-        current = <div>TEST</div>;
+        return <div className={classes.CreateEvent}>{current}</div>;
     }
-
-    return current;
-  };
-
-  render() {
-    let current = this.getCurrentPage();
-
-    return <div className={classes.CreateEvent}>{current}</div>;
-  }
 }
