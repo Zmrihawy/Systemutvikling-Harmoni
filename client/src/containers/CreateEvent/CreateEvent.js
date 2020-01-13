@@ -8,20 +8,21 @@ import classes from './CreateEvent.module.scss';
 import StaffAdder from '../eventCreation/StaffAdder/StaffAdder';
 
 export default class CreateEvent extends Component {
-  state = {
-    currentPage: 0,
-    newEvent: {
-      title: '',
-      category: '',
-      location: '',
-      image: '',
-      dateRange: [new Date(), new Date()],
-      timeRange: [moment(), moment()],
-      artists: [],
-      tickets: [],
-      staff: []
-    }
-  };
+    state = {
+        currentPage: 0,
+        newEvent: {
+            title: '',
+            category: '',
+            location: '',
+            times: [
+                moment().format('YYYY-MM-DD hh:mm:ss'),
+                moment().format('YYYY-MM-DD hh:mm:ss')
+            ],
+            artists: [],
+            tickets: [],
+            staff: []
+        }
+    };
 
   handleChange = event => {
     const newEvent = {
@@ -85,6 +86,8 @@ export default class CreateEvent extends Component {
                 });
             });
             select = 'artists';
+            result = [...input];
+        } else if (select === 'times') {
             result = [...input];
         }
 
@@ -154,11 +157,9 @@ export default class CreateEvent extends Component {
             case 3:
                 current = (
                     <DatePicker
-                        clicked={this.handleNext}
-                        dates={this.state.newEvent.dateRange}
-                        times={this.state.newEvent.timeRange}
-                        dateChanged={this.handleDateChange}
-                        timeChanged={this.handleTimeChange}
+                        save={this.handleSave}
+                        timeFrom={this.state.newEvent.times[0]}
+                        timeTo={this.state.newEvent.times[1]}
                     />
                 );
                 break;
@@ -205,11 +206,16 @@ export default class CreateEvent extends Component {
                 break;
 
             case 8:
+                if (window.confirm('Vil du opprette dette arrangementet?')) {
+                    alert('Confirmed');
+                } else {
+                    alert('Not confirmed');
+                }
                 console.log(this.state.newEvent);
                 break;
 
             default:
-                current = <div>TEST</div>;
+                current = <div>ERROR 404</div>;
         }
 
       [event.target.name]: event.target.value

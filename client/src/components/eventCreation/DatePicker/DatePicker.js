@@ -1,48 +1,117 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Calendar from 'react-calendar';
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
+import moment from 'moment';
 
 import classes from './Datepicker.module.scss';
 
-const datePicker = props => {
-    return (
-        <div>
-            <h3>Når skal arrangementet være?</h3>
-            <Calendar
-                selectRange={true}
-                minDate={new Date()}
-                value={[props.dates[0], props.dates[1]]}
-                onChange={props.dateChanged}
-            />
-            <TimePicker
-                minuteStep={5}
-                id="timeFrom"
-                style={{ width: 80 }}
-                showSecond={false}
-                defaultValue={props.times[0]}
-                className={classes.TimePicker}
-                onChange={(value, id = 'timeFrom') =>
-                    props.timeChanged(value, id)
-                }
-            />
-            <TimePicker
-                minuteStep={5}
-                id="timeTo"
-                style={{ width: 80 }}
-                showSecond={false}
-                defaultValue={props.times[1]}
-                className={classes.TimePicker}
-                onChange={(value, id = 'timeTo') =>
-                    props.timeChanged(value, id)
-                }
-            />
-            <button onClick={props.last}>Forrige</button>
-            <button onClick={props.next}>Videre</button>
-        </div>
-    );
-};
+export default class DatePicker extends Component {
+    state = {
+        timeFrom: this.props.timeFrom,
+        timeTo: this.props.timeTo
+    };
 
-export default datePicker;
+    handleTimeChange = (value, id) => {
+        let time = this.state[id].split(' ');
+        time[1] = value.format('HH:mm:ss');
+        let newTime = time.join(' ');
 
+        if (id === 'timeFrom') {
+            this.setState({ timeFrom: newTime });
+        } else {
+            this.setState({ timeTo: newTime });
+        }
+    };
+
+    handleDateChange = dates => {
+        let state = {
+            ...this.state
+        };
+
+        let timeFrom = state.timeFrom.split(' ');
+        let timeTo = state.timeTo.split(' ');
+        timeFrom[0] = this.formatDate(dates[0]);
+        timeTo[0] = this.formatDate(dates[1]);
+        timeFrom = timeFrom.join(' ');
+        timeTo = timeTo.join(' ');
+
+        this.setState({ timeFrom, timeTo });
+    };
+
+    formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+
+    render() {
+        return (
+            <div>
+                <h3>Når skal arrangementet være?</h3>
+                <Calendar
+                    selectRange={true}
+                    minDate={new Date()}
+                    value={[
+                        new Date(this.state.timeFrom.replace(/-/g, '/')),
+                        new Date(this.state.timeTo.replace(/-/g, '/'))
+                    ]}
+                    onChange={this.handleDateChange}
+                />
+                <TimePicker
+                    allowEmpty={false}
+                    minuteStep={5}
+                    id="timeFrom"
+                    style={{ width: 80 }}
+                    showSecond={false}
+                    className={classes.TimePicker}
+                    defaultValue={moment(this.state.timeFrom)}
+                    onChange={(value, id = 'timeFrom') =>
+                        this.handleTimeChange(value, id)
+                    }
+                />
+                <TimePicker
+                    allowEmpty={false}
+                    minuteStep={5}
+                    id="timeTo"
+                    style={{ width: 80 }}
+                    showSecond={false}
+                    className={classes.TimePicker}
+                    defaultValue={moment(this.state.timeTo)}
+                    onChange={(value, id = 'timeTo') =>
+                        this.handleTimeChange(value, id)
+                    }
+                />
+                <button
+                    onClick={() =>
+                        this.props.save(
+                            [this.state.timeFrom, this.state.timeTo],
+                            'times',
+                            'previous'
+                        )
+                    }
+                >
+                    Forrige
+                </button>
+                <button
+                    onClick={() =>
+                        this.props.save(
+                            [this.state.timeFrom, this.state.timeTo],
+                            'times',
+                            'next'
+                        )
+                    }
+                >
+                    Videre
+                </button>
+            </div>
+        );
+    }
+}
 // value={[props.dateFrom, props.dateTo]}
