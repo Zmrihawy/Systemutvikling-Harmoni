@@ -50,6 +50,16 @@ export class User {
     }
 }
 
+export class Crew{
+    constructor(id, profession, name, contactInfo,eventId){
+        this.id = id;
+        this.profession = profession;
+        this.name = name;
+        this.contactInfo = contactInfo;
+        this.evendId = eventId;
+    }
+}
+
 
 class EventService {
     //GET
@@ -224,6 +234,25 @@ class EventService {
         return new Event(json.event_id, json.name, json.host_id, json.active, json.location, json.startTime, json.endTime);
     }
 
+    getCrew(eventId) {
+        fetch("/api/event/" + eventId + "/crew", {
+            method: "GET",
+            headers: {
+                'x-access-token': window.sessionStorage.getItem("jwt")
+            }
+        })
+            .then(response => response.json())
+            .then(json => {
+            refreshToken(json.jwt);
+        return handleGetCrewResponse(json);
+    })
+    .catch(error => console.error("Error: ", error));
+    }
+
+    handleGetCrewResponse(json) {
+        return json.map(data => new Crew(data.drew_id, data.profession, data.name, data.contact_info, data.eventId));
+    }
+
     //POST
     createEvent(eventId, name, hostId, active, location, startTime, endTime) {
         let data = {
@@ -292,6 +321,20 @@ class EventService {
             .then(response => response.json())
             .then(json => refreshToken(json.jwt))
             .catch(error => console.error("Error: ", error));
+    }
+
+    createCrew(eventId, profession, name, contactInfo) {
+        let data = {profession: profession, name: name, contactInfo: contactInfo, eventId: eventId};
+        fetch("/api/event/" + eventId + "/crew", {
+            method: "POST",
+            headers: {
+                'x-access-token': window.sessionStorage.getItem("jwt")
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+    .then(json => refreshToken(json.jwt))
+    .catch(error => console.error("Error: ", error));
     }
 
 
@@ -396,6 +439,20 @@ class EventService {
             endTime: endTime
         };
         fetch("/api/event/" + eventId + "/performance", {
+            method: "PUT",
+            headers: {
+                'x-access-token': window.sessionStorage.getItem("jwt")
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(response => console.log(response))
+            .catch(error => console.error("Error: ", error));
+    }
+
+    updateCrew(eventId, crewId, profession, name, contactInfo) {
+        let data = {profession: profession, name: name, contactInfo: contactInfo, crewId: crewId};
+        fetch("/api/event/" + eventId + "/crew/"+crewId, {
             method: "PUT",
             headers: {
                 'x-access-token': window.sessionStorage.getItem("jwt")
