@@ -497,20 +497,23 @@ class EventService {
 class UserService {
     //GET
     getUser(id) {
-        fetch("/api/user/" + id, {
+        return new Promise( (resolve, reject)  => {
+            fetch("/api/user/" + id, {
             method: "GET",
-            headers: {
+                headers: {
                 'x-access-token': window.sessionStorage.getItem("jwt")
-            }
-        })
-            .then(response => response.json())
+                }
+            })
+            .then(response => {
+            if (status === 500)reject();
+            response.json()})
             .then(json => {
-                refreshToken(json.jwt);
-                return this.handleGetUserResponse(json)
+            refreshToken(json.jwt);
+            resolve(this.handleGetUserResponse(json));
             })
             .catch(error => console.error("Error: ", error));
-    }
-
+        }
+    )}
     handleGetUserResponse(json) {
         return new User(json.user_id, json.username, json.email, json.phone, json.first_name, json.surname);
     }
@@ -583,13 +586,20 @@ class UserService {
             firstName: firstName,
             lastName: lastName
         };
-        fetch("/user", {
+        console.log(data);
+        return new Promise((resolve, reject) => {
+            fetch("/user", {
             method: "POST",
-            body: JSON.stringify(data)
+                headers: {
+                'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+            },
+            body:  JSON.stringify(data)
         })
-            .then(response => response.json())
-            .then(json => console.log(json))
-            .catch(error => console.error("Error: ", error));
+    .then(response => response.json())
+    .then(json => resolve(json))
+    .catch(error => console.error("Error: ", error));
+    })
     }
 
     loginUser(username, password, email) {
