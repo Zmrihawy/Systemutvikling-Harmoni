@@ -929,4 +929,6 @@ function setUser(user) {
     window.sessionStorage.setItem("user", user);
 }
 
-export let studentService = new StudentService();
+export let user = new User();
+export let userService = new UserService();
+export let eventService = new EventService();
