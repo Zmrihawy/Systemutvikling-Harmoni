@@ -280,7 +280,7 @@ class EventService {
             .catch(error => console.error("Error: ", error));
     }
 
-    createRider(riderId, name, amount) {
+    createRider(eventId, riderId, name, amount) {
         let data = {riderId: riderId, name: name, amount: amount};
         fetch("/api/event/" + eventId + "/user", {
             method: "POST",
@@ -296,7 +296,7 @@ class EventService {
 
 
     //DELETE
-    deleteRider(performanceId, name) {
+    deleteRider(eventId, performanceId, name) {
         let data = {performanceId: performanceId, name: name};
         fetch("/api/event/" + eventId + "/rider", {
             method: "DELETE",
@@ -337,7 +337,7 @@ class EventService {
             .catch(error => console.error("Error: ", error));
     }
 
-    updateRider(riderId, name, amount) {
+    updateRider(eventId, riderId, name, amount) {
         let data = {riderId: riderId, name: name, amount: amount};
         fetch("/api/event/" + eventId + "/rider", {
             method: "PUT",
@@ -421,7 +421,7 @@ class EventService {
             .catch(error => console.error("Error: ", error));
     }
 
-    deletePerformance(artistId) {
+    deletePerformance(eventId, artistId) {
         let data = {artistId: artistId};
         fetch("/api/event/" + eventId + "/performance", {
             method: "DELETE",
