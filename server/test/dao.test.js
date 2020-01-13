@@ -276,7 +276,7 @@ test("get all tickets involved in a specific event", done => {
 });
 
 test("get all riders for one specific performance", done => {
-    eventDao.getPerformanceRiders(3, (status, data) => {
+    eventDao.getRiders(3, (status, data) => {
         expect(data.length).toBe(1);
         done();
     });
@@ -430,7 +430,7 @@ test("update rider in database", done => {
     };
 
     eventDao.updateRider(param, () => {
-        eventDao.getPerformanceRiders(2, (status, data) => {
+        eventDao.getRiders(2, (status, data) => {
             expect(data[0].name).toBe("Oppdatert rider");
             expect(data[0].amount).toBe(3);
             done();
