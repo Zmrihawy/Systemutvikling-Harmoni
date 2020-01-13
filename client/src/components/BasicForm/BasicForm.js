@@ -11,7 +11,7 @@ const basicForm = props => {
                     name={props.name}
                     onChange={props.changed}
                 />
-                <input type="submit" value="Neste" />
+                <input type="submit" value="Videre" />
             </form>
         </>
     );
