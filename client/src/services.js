@@ -1,3 +1,5 @@
+const ERROR_STATUS = 500;
+
 export class Event {
     constructor(id, name, hostId, active, location, startTime, endTime) {
         this.id = id;
@@ -50,8 +52,8 @@ export class User {
     }
 }
 
-export class Crew{
-    constructor(id, profession, name, contactInfo,eventId){
+export class Crew {
+    constructor(id, profession, name, contactInfo, eventId) {
         this.id = id;
         this.profession = profession;
         this.name = name;
@@ -64,41 +66,52 @@ export class Crew{
 class EventService {
     //GET
     getEvent(id) {
-        fetch("/api/event/" + id, {
-            method: "GET",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(json => {
-                refreshToken(json.jwt);
-                return handleGetEventResponse(json);
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + id, {
+                method: "GET",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             })
-            .catch(error => console.error("Error: ", error));
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    resolve(handleGetEventResponse(json));
+                })
+                .catch(error => console.error("Error: ", error));
+        })
     }
+
 
     handleGetEventResponse(json) {
         return new Event(json.event_id, json.name, json.host_id, json.active, json.location, json.startTime, json.endTime);
     }
 
     getAllEvents() {
-        fetch("/api/events/", {
-            method: "GET",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(json => {
-                refreshToken(json.jwt);
-                return handleGetAllEventsResponse(json);
+        return new Promise((resolve, reject) => {
+            fetch("/api/events/", {
+                method: "GET",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             })
-            .catch(error => console.error("Error: ", error));
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    resolve(handleGetAllEventsResponse(json));
+                })
+                .catch(error => console.error("Error: ", error));
+        })
     }
 
     handleGetAllEventsResponse(json) {
@@ -106,20 +119,25 @@ class EventService {
     }
 
     getPerformance(id) {
-        fetch("/api/performance/" + id, {
-            method: "GET",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(json => {
-                refreshToken(json.jwt);
-                return handleGetPerformanceResponse(json);
+        return new Promise((resolve, reject) => {
+            fetch("/api/performance/" + id, {
+                method: "GET",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             })
-            .catch(error => console.error("Error: ", error));
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    resolve(handleGetPerformanceResponse(json));
+                })
+                .catch(error => console.error("Error: ", error));
+        })
     }
 
     handleGetPerformanceResponse(json) {
@@ -127,20 +145,25 @@ class EventService {
     }
 
     getAllRiders(eventId) {
-        fetch("/api/event/" + eventId + "/rider", {
-            method: "GET",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(json => {
-                refreshToken(json.jwt);
-                return handleGetAllRidersResponse(json);
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId + "/rider", {
+                method: "GET",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             })
-            .catch(error => console.error("Error: ", error));
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    resolve(handleGetAllRidersResponse(json));
+                })
+                .catch(error => console.error("Error: ", error));
+        })
     }
 
     handleGetAllRidersResponse(json) {
@@ -148,20 +171,25 @@ class EventService {
     }
 
     getContract(eventId, artistId) {
-        fetch("/api/event/" + eventId + "/user/" + artistId + "/contract", {
-            method: "GET",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(json => {
-                refreshToken(json.jwt);
-                return handleGetContractResponse(json);
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId + "/user/" + artistId + "/contract", {
+                method: "GET",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             })
-            .catch(error => console.error("Error: ", error));
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    resolve(handleGetContractResponse(json));
+                })
+                .catch(error => console.error("Error: ", error));
+        })
     }
 
     handleGetContractResponse(json) {
@@ -169,20 +197,25 @@ class EventService {
     }
 
     getEventContracts(eventId) {
-        fetch("/api/event/" + eventId + "/contracts", {
-            method: "GET",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(json => {
-                refreshToken(json.jwt);
-                return handleGetEventContractsResponse(json);
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId + "/contracts", {
+                method: "GET",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             })
-            .catch(error => console.error("Error: ", error));
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    resolve(handleGetEventContractsResponse(json));
+                })
+                .catch(error => console.error("Error: ", error));
+        })
     }
 
     handleGetEventContractsResponse(json) {
@@ -190,20 +223,25 @@ class EventService {
     }
 
     getEventTickets(eventId) {
-        fetch("/api/event/" + eventId + "/tickets", {
-            method: "GET",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(json => {
-                refreshToken(json.jwt);
-                return handleGetEventTicketsResponse(json);
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId + "/tickets", {
+                method: "GET",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             })
-            .catch(error => console.error("Error: ", error));
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    resolve(handleGetEventTicketsResponse(json));
+                })
+                .catch(error => console.error("Error: ", error));
+        })
     }
 
     handleGetEventTicketsResponse(json) {
@@ -211,20 +249,25 @@ class EventService {
     }
 
     getPerformanceRiders(eventId, performanceId) {
-        fetch("/api/user/event/" + eventId + "/" + performanceId, {
-            method: "GET",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(json => {
-                refreshToken(json.jwt);
-                return handleGetPerformanceRidersResponse(json);
+        return new Promise((resolve, reject) => {
+            fetch("/api/user/event/" + eventId + "/" + performanceId, {
+                method: "GET",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             })
-            .catch(error => console.error("Error: ", error));
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    resolve(handleGetPerformanceRidersResponse(json));
+                })
+                .catch(error => console.error("Error: ", error));
+        })
     }
 
     handleGetPerformanceRidersResponse(json) {
@@ -232,20 +275,25 @@ class EventService {
     }
 
     getUsersEvents(userId, active) {
-        fetch("/api/user/" + userId + "/event/" + active, {
-            method: "GET",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(json => {
-                refreshToken(json.jwt);
-                return handleGetUsersEventsResponse(json);
+        return new Promise((resolve, reject) => {
+            fetch("/api/user/" + userId + "/event/" + active, {
+                method: "GET",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             })
-            .catch(error => console.error("Error: ", error));
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    resolve(handleGetUsersEventsResponse(json));
+                })
+                .catch(error => console.error("Error: ", error));
+        })
     }
 
     handleGetUsersEventsResponse(json) {
@@ -253,20 +301,25 @@ class EventService {
     }
 
     getCrew(eventId) {
-        fetch("/api/event/" + eventId + "/crew", {
-            method: "GET",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId + "/crew", {
+                method: "GET",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    resolve(handleGetCrewResponse(json));
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(json => {
-            refreshToken(json.jwt);
-        return handleGetCrewResponse(json);
-    })
-    .catch(error => console.error("Error: ", error));
     }
 
     handleGetCrewResponse(json) {
@@ -284,34 +337,51 @@ class EventService {
             startTime: startTime,
             endTime: endTime
         };
-        fetch("/api/event", {
-            method: "POST",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        return new Promise((resolve, reject) => {
+            fetch("/api/event", {
+                method: "POST",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(json => refreshToken(json.jwt))
-            .catch(error => console.error("Error: ", error));
     }
 
     createTicket(name, eventId, price, amount, description) {
         let data = {name: name, eventId: eventId, price: price, amount: amount, description: description};
-        fetch("/api/event/" + eventId + "/ticket", {
-            method: "POST",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId + "/ticket", {
+                method: "POST",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(json => refreshToken(json.jwt))
-            .catch(error => console.error("Error: ", error));
     }
 
     createPerformance(performanceId, userId, eventId, startTime, endTime) {
@@ -322,114 +392,177 @@ class EventService {
             startTime: startTime,
             endTime: endTime
         };
-        fetch("/api/event/" + eventId + "/user", {
-            method: "POST",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId + "/user", {
+                method: "POST",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(json => refreshToken(json.jwt))
-            .catch(error => console.error("Error: ", error));
     }
 
     createRider(eventId, riderId, name, amount) {
         let data = {riderId: riderId, name: name, amount: amount};
-        fetch("/api/event/" + eventId + "/user", {
-            method: "POST",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId + "/user", {
+                method: "POST",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(json => refreshToken(json.jwt))
-            .catch(error => console.error("Error: ", error));
     }
 
     createCrew(eventId, profession, name, contactInfo) {
         let data = {profession: profession, name: name, contactInfo: contactInfo, eventId: eventId};
-        fetch("/api/event/" + eventId + "/crew", {
-            method: "POST",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId + "/crew", {
+                method: "POST",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-    .then(json => refreshToken(json.jwt))
-    .catch(error => console.error("Error: ", error));
     }
 
 
     //DELETE
     deleteRider(eventId, performanceId, name) {
         let data = {performanceId: performanceId, name: name};
-        fetch("/api/event/" + eventId + "/rider", {
-            method: "DELETE",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId + "/rider", {
+                method: "DELETE",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(json => refreshToken(json.jwt))
-            .catch(error => console.error("Error: ", error));
     }
 
     deleteEvent(eventId) {
-        fetch("/api/event/" + eventId, {
-            method: "DELETE",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId, {
+                method: "DELETE",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(json => refreshToken(json.jwt))
-            .catch(error => console.error("Error: ", error));
     }
 
     //PUT
     updateTicket(name, eventId, price, amount, description) {
         let data = {name: name, eventId: eventId, price: price, amount: amount, description: description};
-        fetch("/api/event/" + eventId + "/ticket", {
-            method: "PUT",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId + "/ticket", {
+                method: "PUT",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(json => refreshToken(json.jwt))
-            .catch(error => console.error("Error: ", error));
     }
 
     updateRider(eventId, riderId, name, amount) {
         let data = {riderId: riderId, name: name, amount: amount};
-        fetch("/api/event/" + eventId + "/rider", {
-            method: "PUT",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId + "/rider", {
+                method: "PUT",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(json => refreshToken(json.jwt))
-            .catch(error => console.error("Error: ", error));
     }
 
     updateEvent(eventId, name, hostId, active, location, startTime, endTime) {
@@ -442,34 +575,51 @@ class EventService {
             startTime: startTime,
             endTime: endTime
         };
-        fetch("/api/event/" + eventId, {
-            method: "PUT",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId, {
+                method: "PUT",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(json => refreshToken(json.jwt))
-            .catch(error => console.error("Error: ", error));
     }
 
     updateContract(eventId, contract) {
         let data = {eventId: eventId, contract: contract};
-        fetch("/api/event/" + eventId + "/contract", {
-            method: "PUT",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId + "/contract", {
+                method: "PUT",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(json => refreshToken(json.jwt))
-            .catch(error => console.error("Error: ", error));
     }
 
     updatePerformance(performanceId, userId, eventId, startTime, endTime) {
@@ -480,66 +630,98 @@ class EventService {
             startTime: startTime,
             endTime: endTime
         };
-        fetch("/api/event/" + eventId + "/performance", {
-            method: "PUT",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId + "/performance", {
+                method: "PUT",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(response => console.log(response))
-            .catch(error => console.error("Error: ", error));
     }
 
     updateCrew(eventId, crewId, profession, name, contactInfo) {
         let data = {profession: profession, name: name, contactInfo: contactInfo, crewId: crewId};
-        fetch("/api/event/" + eventId + "/crew/"+crewId, {
-            method: "PUT",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId + "/crew/" + crewId, {
+                method: "PUT",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(response => console.log(response))
-            .catch(error => console.error("Error: ", error));
     }
 
     deleteTicket(name, eventId) {
         let data = {name: name, eventId: eventId};
-        fetch("/api/event/" + eventId + "/ticket", {
-            method: "DELETE",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId + "/ticket", {
+                method: "DELETE",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(response => console.log(response))
-            .catch(error => console.error("Error: ", error));
     }
 
     deletePerformance(eventId, artistId) {
         let data = {artistId: artistId};
-        fetch("/api/event/" + eventId + "/performance", {
-            method: "DELETE",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        return new Promise((resolve, reject) => {
+            fetch("/api/event/" + eventId + "/performance", {
+                method: "DELETE",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(response => console.log(response))
-            .catch(error => console.error("Error: ", error));
     }
 
 }
@@ -547,44 +729,52 @@ class EventService {
 class UserService {
     //GET
     getUser(id) {
-        return new Promise( (resolve, reject)  => {
-            fetch("/api/user/" + id, {
-            method: "GET",
+        return new Promise((resolve, reject) => {
+                fetch("/api/user/" + id, {
+                    method: "GET",
+                    headers: {
+                        'x-access-token': window.sessionStorage.getItem("jwt"),
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        if (response.status === ERROR_STATUS) reject("ERROR");
+                        response.json()
+                    })
+                    .then(json => {
+                        refreshToken(json.jwt);
+                        resolve(this.handleGetUserResponse(json));
+                    })
+                    .catch(error => console.error("Error: ", error));
+            }
+        )
+    }
+
+    handleGetUserResponse(json) {
+        return new User(json.user_id, json.username, json.email, json.phone, json.first_name, json.surname);
+    }
+
+    getAllUsers() {
+        return new Promise((resolve, reject) => {
+            fetch("/api/users", {
+                method: "GET",
                 headers: {
                     'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
-            .then(response => {
-            if (status === 500)reject();
-            response.json()})
-            .then(json => {
-            refreshToken(json.jwt);
-            resolve(this.handleGetUserResponse(json));
-            })
-            .catch(error => console.error("Error: ", error));
-        }
-    )}
-    handleGetUserResponse(json) {
-        return new User(json.user_id, json.username, json.email, json.phone, json.first_name, json.surname);
-    }
-
-    getAllUsers() {
-        fetch("/api/users", {
-            method: "GET",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    resolve(this.handleGetAllUsersResponse(json));
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(json => {
-                refreshToken(json.jwt);
-                return this.handleGetAllUsersResponse(json)
-            })
-            .catch(error => console.error("Error: ", error));
     }
 
     handleGetAllUsersResponse(json) {
@@ -593,16 +783,24 @@ class UserService {
 
     //DELETE
     deleteUser(userId) {
-        fetch("/user/" + userId, {
-            method: "DELETE",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
+        return new Promise((resolve, reject) => {
+            fetch("/user/" + userId, {
+                method: "DELETE",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(json => console.log(json))
-            .catch(error => console.error("Error: ", error));
     }
 
     //PUT
@@ -615,30 +813,46 @@ class UserService {
             lastName: lastName,
             userId: userId
         };
-        fetch("/user/" + userId, {
-            method: "PUT",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        return new Promise((resolve, reject) => {
+            fetch("/user/" + userId, {
+                method: "PUT",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(json => console.log(json))
-            .catch(error => console.error("Error: ", error));
     }
 
     updatePassword(usermail) {
-        fetch("/user/" + usermail, {
-            method: "PUT",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
+        return new Promise((resolve, reject) => {
+            fetch("/user/" + usermail, {
+                method: "PUT",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
-            .then(response => response.json())
-            .then(json => console.log(json))
-            .catch(error => console.error("Error: ", error));
     }
 
 
@@ -655,16 +869,22 @@ class UserService {
         console.log(data);
         return new Promise((resolve, reject) => {
             fetch("/user", {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body:  JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(json => resolve(json))
-        .catch(error => console.error("Error: ", error));
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    console.log(json);
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
         })
     }
 
@@ -674,21 +894,27 @@ class UserService {
             password: password,
             email: email
         };
-        fetch("/login", {
-            method: "POST",
-            headers: {
-                'x-access-token': window.sessionStorage.getItem("jwt"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-            .then(response => response.json())
-            .then(json => {
-                refreshToken(json.jwt);
-                setUser(this.getUser(json.userId));
+        return new Promise((resolve, reject) => {
+            fetch("/login", {
+                method: "POST",
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
             })
-            .catch(error => console.error("Error: ", error));
+                .then(response => {
+                    if (response.status === ERROR_STATUS) reject("ERROR");
+                    response.json()
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    setUser(this.getUser(json.userId));
+                    resolve("SUCCESS");
+                })
+                .catch(error => console.error("Error: ", error));
+        })
     }
 
 

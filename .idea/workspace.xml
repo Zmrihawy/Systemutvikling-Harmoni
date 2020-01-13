@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d564113e-d503-4011-a1d8-11e1e28f4b09" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/harmoni.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/harmoni.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/services.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -108,6 +112,7 @@
       <workItem from="1578390573166" duration="8227000" />
       <workItem from="1578398975206" duration="34801000" />
       <workItem from="1578555472546" duration="17058000" />
+      <workItem from="1578925641246" duration="1288000" />
     </task>
     <servers />
   </component>
