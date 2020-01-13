@@ -218,6 +218,7 @@
     display: grid;
     grid-template-areas:
         'staff__title'
+        'staff__number'
         'staff__list';
     grid-gap: 10px;
 }
@@ -228,6 +229,10 @@
 
 .staff__name {
     grid-area: name;
+}
+
+.staff_number{
+    grid-area: staff_number;
 }
 
 .staff__proffesion {

@@ -3,6 +3,7 @@ import EventInfo from '../../components/EventInfo/EventInfo';
 
 export default class DisplayEvent extends Component {
     state = {
+        id: '',
         title: '',
         category: '',
         location: '',
@@ -11,6 +12,7 @@ export default class DisplayEvent extends Component {
         dateTo: null,
         artists: [
             {
+                id: '',
                 name: '',
                 riders: ['']
             }
@@ -25,7 +27,8 @@ export default class DisplayEvent extends Component {
         staff: [
             {
                 name: '',
-                profession: ''
+                profession: '',
+                number: ''
             }
         ]
     };
@@ -94,19 +97,23 @@ export default class DisplayEvent extends Component {
         let staff = [
             {
                 name: 'Sandnes Lys & Leven AS', 
-                proffesion: 'Lysmann'
+                proffesion: 'Lysmann',
+                number: '99933345'
             }, 
             {
                 name: 'Vetle Harnes', 
-                proffesion: 'Skabbansvarlig'
+                proffesion: 'Skabbansvarlig',
+                number: '32937444'
             }, 
             {
                 name: 'Knut Knudsen', 
-                proffesion: 'Lydmann'
+                proffesion: 'Lydmann',
+                number: '42069999'
             }, 
             {
                 name: 'Tony Tango', 
-                proffesion: 'Luring'
+                proffesion: 'Luring',
+                number: '12345566'
             }, 
         ]
 

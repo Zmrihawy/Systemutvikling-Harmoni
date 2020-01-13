@@ -26,3 +26,4 @@ const map = props => {
     );
 };
 export default map;
+

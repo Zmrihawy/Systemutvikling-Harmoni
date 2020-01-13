@@ -33,7 +33,7 @@ const eventInfo = props => {
                     </p>
                     <FontAwesomeIcon
                         className={classes.info__icon}
-                        icon={faCalendarAlt}
+                        icon={faLocationArrow}
                     />
                 </div>
                 <div className={`${classes.date} ${classes.info__item}`}>
@@ -41,7 +41,7 @@ const eventInfo = props => {
                     <p className={classes.info__description}>{props.date}</p>
                     <FontAwesomeIcon
                         className={classes.info__icon}
-                        icon={faLocationArrow}
+                        icon={faCalendarAlt}
                     />
                 </div>
                 <div className={`${classes.host} ${classes.info__item}`}>
@@ -118,6 +118,9 @@ const eventInfo = props => {
                             <h2 className={classes.staff__name}>
                                 {staff.name}
                             </h2>
+                            <p className={classes.staff_number}>
+                                Mobil: {staff.number}
+                            </p>
                             <p className={classes.staff_proffesion}>
                                 {staff.proffesion}
                             </p>
