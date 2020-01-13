@@ -269,7 +269,7 @@ test("get one contract from database", done => {
 
 
 test("get all tickets involved in a specific event", done => {
-    eventDao.getEventTickets(2, (status, data) => {
+    eventDao.getTickets(2, (status, data) => {
         expect(data.length).toBe(2);
         done();
     });
@@ -412,7 +412,7 @@ test("update ticket in database", done => {
     };
 
     eventDao.updateTicket(param, () => {
-        eventDao.getEventTickets(2, (status, data) => {
+        eventDao.getTickets(2, (status, data) => {
             expect(data[1].price).toBe(130);
             expect(data[1].description).toBe('Oppdatert billettbeskrivelse');
             done();

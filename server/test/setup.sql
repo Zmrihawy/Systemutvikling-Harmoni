@@ -24,6 +24,7 @@ CREATE TABLE `event` (
   host_id int(11) NOT NULL,
   active tinyint(1) NOT NULL DEFAULT '1',
   location varchar(200) DEFAULT NULL,
+  category varchar(150) DEFAULT NULL,
   start_time datetime NOT NULL,
   end_time datetime NOT NULL,
   PRIMARY KEY (event_id),
@@ -82,17 +83,17 @@ VALUES("kåreandersen", UNHEX("949c083c8eeceaca63ac5da7db9b129fef1d757b0100f16d8
 INSERT INTO user (username, password, salt, email, phone, first_name, surname, picture)
 VALUES("torstein", UNHEX("83176d4c3b58a50f9c024e9ef57ec3b01398a591f3ad3b5243aa25e311a2eaab6c78208f5ffa8421eff6d3db96c3f6b79ca4cc1fa4f3c02e44d1824ebe8d11e1"), UNHEX("f3734ea50ad945e9"), "tormail", "5555555", "tor", "stein", "torbildelink");
 
-INSERT INTO event (name, host_id, active, location, start_time, end_time)
-VALUES("testEvent", 4, 1, "Trondheim", "2020-12-05 13:45:00", "2020-12-05 14:00:00");
+INSERT INTO event (name, host_id, active, location, category, start_time, end_time)
+VALUES("testEvent", 4, 1, "Trondheim", "Festival", "2020-12-05 13:45:00", "2020-12-05 14:00:00");
 
-INSERT INTO event (name, host_id, active, location, start_time, end_time)
-VALUES("party", 1, 1, "Oslo", "2020-12-05 22:30:00", "2020-12-06 14:00:00");
+INSERT INTO event (name, host_id, active, location, category, start_time, end_time)
+VALUES("party", 1, 1, "Oslo", "Fest", "2020-12-05 22:30:00", "2020-12-06 14:00:00");
 
-INSERT INTO event (name, host_id, active, location, start_time, end_time)
-VALUES("konsert", 2, 0, "Tromsø", "2020-05-05 20:45:00", "2020-05-05 22:00:00");
+INSERT INTO event (name, host_id, active, location, category, start_time, end_time)
+VALUES("konsert", 2, 0, "Tromsø", "Konsert", "2020-05-05 20:45:00", "2020-05-05 22:00:00");
 
-INSERT INTO event (name, host_id, active, location, start_time, end_time)
-VALUES("kino", 3, 1, "Trondheim", "2021-12-05 13:45:00", "2021-12-05 14:00:00");
+INSERT INTO event (name, host_id, active, location, category, start_time, end_time)
+VALUES("kino", 3, 1, "Trondheim", "Festival", "2021-12-05 13:45:00", "2021-12-05 14:00:00");
 
 INSERT INTO ticket(name, event_id, price, amount, description)
 VALUES("TestBillett", 2, 125.0, 2, "testbeskrivelse");
