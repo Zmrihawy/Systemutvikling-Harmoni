@@ -10,14 +10,13 @@ class NewEventHandler {
                 newEvent.times[0],
                 newEvent.times[1]
             );
-            console.log(event);
         } catch (err) {
             console.log(err.message);
         }
     };
 
     saveEvent = async (name, location, description, startTime, endTime) => {
-        const event = eventService.createEvent(
+        const event = await eventService.createEvent(
             name,
             1,
             1,
@@ -26,6 +25,7 @@ class NewEventHandler {
             startTime,
             endTime
         );
+        console.log('Event: ' + event);
 
         return event;
     };
