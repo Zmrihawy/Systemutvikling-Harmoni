@@ -29,7 +29,6 @@ export default class CreateEvent extends Component {
     };
 
     handleToggleBackdrop = () => {
-        console.log('test');
         this.state.showBackdrop
             ? this.setState({ showBackdrop: false })
             : this.setState({ showBackdrop: true });
@@ -79,7 +78,11 @@ export default class CreateEvent extends Component {
         this.setState({ currentPage: --page });
     };
 
-    handleCreateEvent = input => {
+    handleNewEvent = () => {
+        alert('Arrangement opprettet :)');
+    };
+
+    handleSaveStaff = input => {
         this.handleSave(input, 'staff', '');
         this.handleToggleBackdrop();
     };
@@ -232,7 +235,9 @@ export default class CreateEvent extends Component {
                         >
                             <div>Vil du opprette dette arrangementet?</div>
                             <div>
-                                <button>Ja</button>
+                                <button onClick={this.handleNewEvent}>
+                                    Ja
+                                </button>
                                 <button onClick={this.handleToggleBackdrop}>
                                     Nei
                                 </button>
@@ -240,20 +245,11 @@ export default class CreateEvent extends Component {
                         </Modal>
                         <StaffAdder
                             staff={this.state.newEvent.staff}
-                            finished={this.handleCreateEvent}
+                            finished={this.handleSaveStaff}
                             save={this.handleSave}
                         />
                     </>
                 );
-                break;
-
-            case 8:
-                if (window.confirm('Vil du opprette dette arrangementet?')) {
-                    alert('Confirmed');
-                } else {
-                    alert('Not confirmed');
-                }
-                console.log(this.state.newEvent);
                 break;
 
             default:

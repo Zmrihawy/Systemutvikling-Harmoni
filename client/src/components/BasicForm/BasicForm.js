@@ -13,6 +13,7 @@ const basicForm = props => {
                     name={props.name}
                     onChange={props.changed}
                     className="Input"
+                    required
                 />
                 <div className={classes.BasicForm__buttons}>
                     {props.last ? (
