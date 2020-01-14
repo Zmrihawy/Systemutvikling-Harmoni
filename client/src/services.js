@@ -339,9 +339,8 @@ class EventService {
 
 
     //POST
-    createEvent(eventId, name, hostId, active, location, description, startTime, endTime) {
+    createEvent(name, hostId, active, location, description, startTime, endTime) {
         let data = {
-            eventId: eventId,
             name: name,
             hostId: hostId,
             active: active,
@@ -397,9 +396,8 @@ class EventService {
         })
     }
 
-    createPerformance(performanceId, userId, eventId, startTime, endTime) {
+    createPerformance(userId, eventId, startTime, endTime) {
         let data = {
-            performanceId: performanceId,
             userId: userId,
             eventId: eventId,
             startTime: startTime,
@@ -427,10 +425,10 @@ class EventService {
         })
     }
 
-    createRider(eventId, riderId, name, amount) {
-        let data = {riderId: riderId, name: name, amount: amount};
+    createRider(performanceId, name, amount) {
+        let data = {name: name, amount: amount};
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId + "/user", {
+            fetch("/api/performance/" + performanceId + "/rider", {
                 method: "POST",
                 headers: {
                     'x-access-token': window.sessionStorage.getItem("jwt"),
@@ -453,7 +451,7 @@ class EventService {
     }
 
     createCrew(eventId, profession, name, contactInfo) {
-        let data = {profession: profession, name: name, contactInfo: contactInfo, eventId: eventId};
+        let data = {profession: profession, name: name, contactInfo: contactInfo};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/crew", {
                 method: "POST",
