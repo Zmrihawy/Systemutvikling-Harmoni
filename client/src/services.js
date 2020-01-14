@@ -60,7 +60,7 @@ export class Crew {
         this.profession = profession;
         this.name = name;
         this.contactInfo = contactInfo;
-        this.evendId = eventId;
+        this.eventId = eventId;
     }
 }
 

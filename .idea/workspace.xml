@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d564113e-d503-4011-a1d8-11e1e28f4b09" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/EventInfo/EventInfo.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/EventInfo/EventInfo.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/RiderInfo/RiderInfo.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/RiderInfo/RiderInfo.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/containers/DisplayRider/DisplayRider.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/DisplayRider/DisplayRider.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/containers/Main/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/Main/Main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/services.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
