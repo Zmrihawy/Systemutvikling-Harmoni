@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import classes from './NavBar.module.scss';
 
+import { createHashHistory } from 'history';
+const history = createHashHistory();
+
 export default class NavBar extends Component {
     constructor(props) {
         super(props);
@@ -21,12 +24,16 @@ export default class NavBar extends Component {
     }
     changePage(id){
         if(document.getElementsByClassName("" + classes.activeLink + "") !== null){
-            console.log('yes');
-            console.log(id);
             if(document.getElementById(id) !== null){
-                console.log('yes2');
                 document.getElementsByClassName(classes.activeLink)[0].className = "" + classes.navLink + "";
                 document.getElementById(id).className = "" + classes.activeLink + "";
+
+                switch(id){
+                    case 'profileLink': history.push('/user/id'); break;
+                    case 'createLink': history.push('/registrerarrangement'); break;
+                    case 'eventLink': history.push('/arrangement/id'); break;
+                    case 'logLink': history.push('/'); break;
+                }
             }
         }
     }
