@@ -487,7 +487,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/ticket', {
                 method: 'POST',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': 'MASTER',
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
