@@ -3,12 +3,13 @@ const ERROR_STATUS_1 = 500;
 const ERROR_STATUS_2 = 401;
 
 export class Event {
-    constructor(id, name, hostId, active, location, startTime, endTime) {
+    constructor(id, name, hostId, active, location, description, startTime, endTime) {
         this.id = id;
         this.name = name;
         this.hostId = hostId;
         this.active = active;
         this.location = location;
+        this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -89,7 +90,7 @@ class EventService {
         });
 
         function handleGetEventResponse(json) {
-            return new Event(json.event_id, json.name, json.host_id, json.active, json.location, json.startTime, json.endTime);
+            return new Event(json.event_id, json.name, json.host_id, json.active, json.location, json.description, json.startTime, json.endTime);
         }
     }
 
