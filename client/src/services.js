@@ -57,13 +57,15 @@ export class Performance {
     eventid: number;
     startTime: string;
     endTime: string;
+    contract: string;
 
-    constructor(id: number, userId: number, eventId: number, startTime: string, endTime: string) {
+    constructor(id: number, userId: number, eventId: number, startTime: string, endTime: string, contract: string) {
         this.id = id;
         this.userId = userId;
         this.eventId = eventId;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.contract = contract;
     }
 }
 
@@ -180,7 +182,7 @@ class EventService {
         });
 
         function handleGetPerformanceResponse(json) {
-            return new Performance(json.performance_id, json.user_id, json.event_id, json.start_time, json.end_time);
+            return new Performance(json.performance_id, json.user_id, json.event_id, json.start_time, json.end_time, json.contract);
         }
     }
 
@@ -432,12 +434,13 @@ class EventService {
         })
     }
 
-    createPerformance(userId: number, eventId: number, startTime: string, endTime: string): Promise {
+    createPerformance(userId: number, eventId: number, startTime: string, endTime: string, contract: string): Promise {
         let data = {
             userId: userId,
             eventId: eventId,
             startTime: startTime,
-            endTime: endTime
+            endTime: endTime,
+            contract: contract
         };
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/user", {
@@ -670,13 +673,14 @@ class EventService {
         })
     }
 
-    updatePerformance(performanceId: number, userId: number, eventId: number, startTime: string, endTime: string): Promise {
+    updatePerformance(performanceId: number, userId: number, eventId: number, startTime: string, endTime: string, contract: string): Promise {
         let data = {
             performanceId: performanceId,
             userId: userId,
             eventId: eventId,
             startTime: startTime,
-            endTime: endTime
+            endTime: endTime,
+            contract: contract
         };
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/performance", {
