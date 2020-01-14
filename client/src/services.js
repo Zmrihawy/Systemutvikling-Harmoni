@@ -1,6 +1,3 @@
-//TODO Make these the same?
-const ERROR_STATUS_1 = 500;
-const ERROR_STATUS_2 = 401;
 
 export class Event {
     constructor(id, name, hostId, active, location, description, startTime, endTime) {
@@ -941,6 +938,8 @@ function isErrorStatus(status) {
         case 401:
             return true;
         case 500:
+            return true;
+        case 400:
             return true;
         default:
             return false;
