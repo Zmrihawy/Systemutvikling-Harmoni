@@ -1,6 +1,4 @@
-//TODO Make these the same?
-const ERROR_STATUS_1 = 500;
-const ERROR_STATUS_2 = 401;
+//@flow
 
 export class Event {
     constructor(
@@ -25,6 +23,12 @@ export class Event {
 }
 
 export class Ticket {
+    name;
+    eventId;
+    price;
+    amount;
+    description;
+
     constructor(name, eventId, price, amount, description) {
         this.name = name;
         this.eventId = eventId;
@@ -35,6 +39,10 @@ export class Ticket {
 }
 
 export class Rider {
+    id;
+    name;
+    amount;
+
     constructor(id, name, amount) {
         this.id = id;
         this.name = name;
@@ -43,16 +51,31 @@ export class Rider {
 }
 
 export class Performance {
-    constructor(id, userId, eventId, startTime, endTime) {
+    id;
+    userId;
+    eventid;
+    startTime;
+    endTime;
+    contract;
+
+    constructor(id, userId, eventId, startTime, endTime, contract) {
         this.id = id;
         this.userId = userId;
         this.eventId = eventId;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.contract = contract;
     }
 }
 
 export class User {
+    id;
+    username;
+    email;
+    phone;
+    firstName;
+    surname;
+
     constructor(id, username, email, phone, firstName, surname) {
         this.id = id;
         this.username = username;
@@ -64,6 +87,12 @@ export class User {
 }
 
 export class Crew {
+    id;
+    profession;
+    name;
+    contactInfo;
+    eventId;
+
     constructor(id, profession, name, contactInfo, eventId) {
         this.id = id;
         this.profession = profession;
@@ -458,7 +487,11 @@ class EventService {
             fetch('/api/event/' + eventId + '/ticket', {
                 method: 'POST',
                 headers: {
+<<<<<<< HEAD
                     'x-access-token': window.sessionStorage.getItem('jwt'),
+=======
+                    'x-access-token': 'MASTER',
+>>>>>>> a5e131f90be197a59b788975d97ba5294555e0e1
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
@@ -478,12 +511,13 @@ class EventService {
         });
     }
 
-    createPerformance(userId, eventId, startTime, endTime) {
+    createPerformance(userId, eventId, startTime, endTime, contract) {
         let data = {
             userId: userId,
             eventId: eventId,
             startTime: startTime,
-            endTime: endTime
+            endTime: endTime,
+            contract: contract
         };
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/user', {
@@ -743,13 +777,21 @@ class EventService {
         });
     }
 
-    updatePerformance(performanceId, userId, eventId, startTime, endTime) {
+    updatePerformance(
+        performanceId,
+        userId,
+        eventId,
+        startTime,
+        endTime,
+        contract
+    ) {
         let data = {
             performanceId: performanceId,
             userId: userId,
             eventId: eventId,
             startTime: startTime,
-            endTime: endTime
+            endTime: endTime,
+            contract: contract
         };
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/performance', {
@@ -1055,7 +1097,7 @@ class UserService {
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data)
+                body: JSOify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status))
@@ -1077,6 +1119,8 @@ function isErrorStatus(status) {
         case 401:
             return true;
         case 500:
+            return true;
+        case 400:
             return true;
         default:
             return false;

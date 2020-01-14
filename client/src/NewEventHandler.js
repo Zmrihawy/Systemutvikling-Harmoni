@@ -10,6 +10,22 @@ class NewEventHandler {
                 newEvent.times[0],
                 newEvent.times[1]
             );
+            const ticketsSuccess = await this.saveTickets(
+                newEvent.tickets,
+                eventID
+            );
+            const performanceIDs = await this.savePerformance(
+                newEvent.artists,
+                eventID,
+                newEvent.times[0],
+                newEvent.times[1]
+            );
+            console.log(performanceIDs);
+            const riderSuccess = await this.saveRiders(
+                newEvent.artist,
+                performanceIDs
+            );
+            console.log(riderSuccess);
         } catch (err) {
             console.log(err.message);
         }
@@ -29,11 +45,47 @@ class NewEventHandler {
         return event.insertId;
     };
 
-    saveTickets = async () => {};
+    saveTickets = async (tickets, eventID) => {
+        const ticketsID = tickets.map(async ticket => {
+            return await eventService.createTicket(
+                ticket.description,
+                eventID,
+                ticket.price,
+                ticket.amount,
+                ticket.description
+            );
+        });
 
-    savePerformance = async () => {};
+        return ticketsID.length > 0;
+    };
 
-    saveRiders = async () => {};
+    savePerformance = async (artists, eventID, startTime, endTime) => {
+        const performanceIDs = artists.map(async artist => {
+            return await eventService.createPerformance(
+                1,
+                eventID,
+                startTime,
+                endTime,
+                artist.name
+            );
+        });
+
+        return performanceIDs.map(performanceIDs => performanceIDs.insertId);
+    };
+
+    saveRiders = async (artists, performanceIDs) => {
+        const riderIDs = artists.map(async (artist, index) => {
+            return artists.riders.map(async rider => {
+                return await eventService.createRider(
+                    performanceIDs[index],
+                    rider.description,
+                    rider.amount
+                );
+            });
+        });
+
+        return riderIDs.length > 0;
+    };
 
     saveCrew = async () => {};
 }
