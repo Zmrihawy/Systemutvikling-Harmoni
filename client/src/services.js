@@ -1,7 +1,16 @@
 //@flow
 
 export class Event {
-    constructor(id, name, hostId, active, location, description, startTime, endTime) {
+    id: number;
+    name: string;
+    hostId: number;
+    active: number;
+    location: string;
+    description: string;
+    startTime: string;
+    endTime: string;
+
+    constructor(id: number, name: string, hostId: number, active: number, location: string, description: string, startTime: string, endTime: string) {
         this.id = id;
         this.name = name;
         this.hostId = hostId;
@@ -15,7 +24,13 @@ export class Event {
 }
 
 export class Ticket {
-    constructor(name, eventId, price, amount, description) {
+    name: string;
+    eventId: number;
+    price: number;
+    amount: number;
+    description: string;
+
+    constructor(name: string, eventId: number, price: number, amount: number, description: string) {
         this.name = name;
         this.eventId = eventId;
         this.price = price;
@@ -25,7 +40,11 @@ export class Ticket {
 }
 
 export class Rider {
-    constructor(id, name, amount) {
+    id: number;
+    name: string;
+    amount: number;
+
+    constructor(id: number, name: string, amount: number) {
         this.id = id;
         this.name = name;
         this.amount = amount;
@@ -33,7 +52,13 @@ export class Rider {
 }
 
 export class Performance {
-    constructor(id, userId, eventId, startTime, endTime) {
+    id: number;
+    userId: number;
+    eventid: number;
+    startTime: string;
+    endTime: string;
+
+    constructor(id: number, userId: number, eventId: number, startTime: string, endTime: string) {
         this.id = id;
         this.userId = userId;
         this.eventId = eventId;
@@ -43,7 +68,14 @@ export class Performance {
 }
 
 export class User {
-    constructor(id, username, email, phone, firstName, surname) {
+    id: number;
+    username: string;
+    email: string;
+    phone: string;
+    firstName: string;
+    surname: string;
+
+    constructor(id: number, username: string, email: string, phone: string, firstName: string, surname: string) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -54,7 +86,13 @@ export class User {
 }
 
 export class Crew {
-    constructor(id, profession, name, contactInfo, eventId) {
+    id: number;
+    profession: string;
+    name: string;
+    contactInfo: string;
+    eventId: number;
+
+    constructor(id: number, profession: string, name: string, contactInfo: string, eventId: number) {
         this.id = id;
         this.profession = profession;
         this.name = name;
@@ -66,7 +104,7 @@ export class Crew {
 
 class EventService {
     //GET
-    getEvent(id) {
+    getEvent(id: number): Promise {
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + id, {
                 method: "GET",
@@ -93,7 +131,7 @@ class EventService {
     }
 
 
-    getAllEvents() {
+    getAllEvents(): Promise {
         return new Promise((resolve, reject) => {
             fetch("/api/events/", {
                 method: "GET",
@@ -120,7 +158,7 @@ class EventService {
     }
 
 
-    getPerformance(id) {
+    getPerformance(id: number): Promise {
         return new Promise((resolve, reject) => {
             fetch("/api/performance/" + id, {
                 method: "GET",
@@ -147,7 +185,7 @@ class EventService {
     }
 
 
-    getAllRiders(eventId) {
+    getAllRiders(eventId: number) :Promise {
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/rider", {
                 method: "GET",
@@ -174,7 +212,7 @@ class EventService {
     }
 
 
-    getContract(eventId, artistId) {
+    getContract(eventId: number, artistId: number): Promise {
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/user/" + artistId + "/contract", {
                 method: "GET",
@@ -201,7 +239,7 @@ class EventService {
     }
 
 
-    getEventContracts(eventId) {
+    getEventContracts(eventId: number): Promise {
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/contracts", {
                 method: "GET",
@@ -228,7 +266,7 @@ class EventService {
     }
 
 
-    getEventTickets(eventId) {
+    getEventTickets(eventId: number): Promise {
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/tickets", {
                 method: "GET",
@@ -255,7 +293,7 @@ class EventService {
     }
 
 
-    getPerformanceRiders(eventId, performanceId) {
+    getPerformanceRiders(eventId: number, performanceId: number): Promise {
         return new Promise((resolve, reject) => {
             fetch("/api/user/event/" + eventId + "/" + performanceId, {
                 method: "GET",
@@ -282,7 +320,7 @@ class EventService {
     }
 
 
-    getUsersEvents(userId, active) {
+    getUsersEvents(userId: number, active: number): Promise {
         return new Promise((resolve, reject) => {
             fetch("/api/user/" + userId + "/event/" + active, {
                 method: "GET",
@@ -309,7 +347,7 @@ class EventService {
     }
 
 
-    getCrew(eventId) {
+    getCrew(eventId: number): Promise {
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/crew", {
                 method: "GET",
@@ -337,7 +375,7 @@ class EventService {
 
 
     //POST
-    createEvent(name, hostId, active, location, description, startTime, endTime) {
+    createEvent(name: string, hostId: number, active: number, location: string, description: string, startTime: string, endTime: string): Promise {
         let data = {
             name: name,
             hostId: hostId,
@@ -369,7 +407,7 @@ class EventService {
         })
     }
 
-    createTicket(name, eventId, price, amount, description) {
+    createTicket(name: string, eventId: number, price: number, amount: number, description: string): Promise {
         let data = {name: name, eventId: eventId, price: price, amount: amount, description: description};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/ticket", {
@@ -394,7 +432,7 @@ class EventService {
         })
     }
 
-    createPerformance(userId, eventId, startTime, endTime) {
+    createPerformance(userId: number, eventId: number, startTime: string, endTime: string): Promise {
         let data = {
             userId: userId,
             eventId: eventId,
@@ -423,7 +461,7 @@ class EventService {
         })
     }
 
-    createRider(performanceId, name, amount) {
+    createRider(performanceId: number, name: string, amount: number): Promise {
         let data = {name: name, amount: amount};
         return new Promise((resolve, reject) => {
             fetch("/api/performance/" + performanceId + "/rider", {
@@ -448,7 +486,7 @@ class EventService {
         })
     }
 
-    createCrew(eventId, profession, name, contactInfo) {
+    createCrew(eventId: number, profession: string, name: string, contactInfo: string): Promise {
         let data = {profession: profession, name: name, contactInfo: contactInfo};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/crew", {
@@ -475,7 +513,7 @@ class EventService {
 
 
     //DELETE
-    deleteRider(eventId, performanceId, name) {
+    deleteRider(eventId: number, performanceId: number, name: string): Promise {
         let data = {performanceId: performanceId, name: name};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/rider", {
@@ -500,7 +538,7 @@ class EventService {
         })
     }
 
-    deleteEvent(eventId) {
+    deleteEvent(eventId: number): Promise {
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId, {
                 method: "DELETE",
@@ -524,7 +562,7 @@ class EventService {
     }
 
     //PUT
-    updateTicket(name, eventId, price, amount, description) {
+    updateTicket(name: string, eventId: number, price: number, amount: number, description: string): Promise {
         let data = {name: name, eventId: eventId, price: price, amount: amount, description: description};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/ticket", {
@@ -549,7 +587,7 @@ class EventService {
         })
     }
 
-    updateRider(eventId, riderId, name, amount) {
+    updateRider(eventId: number, riderId: number, name: string, amount: number): Promise {
         let data = {riderId: riderId, name: name, amount: amount};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/rider", {
@@ -574,7 +612,7 @@ class EventService {
         })
     }
 
-    updateEvent(eventId, name, hostId, active, location, description, startTime, endTime) {
+    updateEvent(eventId: number, name: string, hostId: number, active: number, location: string, description: string, startTime: string, endTime: string): Promise {
         let data = {
             eventId: eventId,
             name: name,
@@ -608,7 +646,7 @@ class EventService {
         })
     }
 
-    updateContract(eventId, contract) {
+    updateContract(eventId: number, contract: string): Promise {
         let data = {eventId: eventId, contract: contract};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/contract", {
@@ -632,7 +670,7 @@ class EventService {
         })
     }
 
-    updatePerformance(performanceId, userId, eventId, startTime, endTime) {
+    updatePerformance(performanceId: number, userId: number, eventId: number, startTime: string, endTime: string): Promise {
         let data = {
             performanceId: performanceId,
             userId: userId,
@@ -662,7 +700,7 @@ class EventService {
         })
     }
 
-    updateCrew(eventId, crewId, profession, name, contactInfo) {
+    updateCrew(eventId: number, crewId: number, profession: string, name: string, contactInfo: string): Promise {
         let data = {profession: profession, name: name, contactInfo: contactInfo, crewId: crewId};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/crew/" + crewId, {
@@ -686,7 +724,7 @@ class EventService {
         })
     }
 
-    deleteTicket(name, eventId) {
+    deleteTicket(name: string, eventId: number): Promise {
         let data = {name: name, eventId: eventId};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/ticket", {
@@ -710,7 +748,7 @@ class EventService {
         })
     }
 
-    deletePerformance(eventId, artistId) {
+    deletePerformance(eventId: number, artistId: number): Promise {
         let data = {artistId: artistId};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/performance", {
@@ -738,7 +776,7 @@ class EventService {
 
 class UserService {
     //GET
-    getUser(id) {
+    getUser(id: number): Promise {
         return new Promise((resolve, reject) => {
                 fetch("/api/user/" + id, {
                     method: "GET",
@@ -765,7 +803,7 @@ class UserService {
         return new User(json.user_id, json.username, json.email, json.phone, json.first_name, json.surname);
     }
 
-    getAllUsers() {
+    getAllUsers(): Promise {
         return new Promise((resolve, reject) => {
             fetch("/api/users", {
                 method: "GET",
@@ -792,7 +830,7 @@ class UserService {
     }
 
     //DELETE
-    deleteUser(userId) {
+    deleteUser(userId: number): Promise {
         return new Promise((resolve, reject) => {
             fetch("api/user/" + userId, {
                 method: "DELETE",
@@ -815,7 +853,7 @@ class UserService {
     }
 
     //PUT
-    updateUser(userId, username, email, phone, firstName, lastName) {
+    updateUser(userId: number, username: string, email: string, phone: string, firstName: string, lastName: string): Promise {
         let data = {
             username: username,
             email: email,
@@ -846,7 +884,7 @@ class UserService {
         })
     }
 
-    updatePassword(usermail) {
+    updatePassword(usermail: string): Promise {
         return new Promise((resolve, reject) => {
             fetch("api/user/" + usermail, {
                 method: "PUT",
@@ -870,7 +908,7 @@ class UserService {
 
 
     //POST
-    createUser(username, password, email, phone, firstName, lastName) {
+    createUser(username: string, password: string, email: string, phone: string, firstName: string, lastName: string): Promise {
         let data = {
             username: username,
             password: password,
@@ -901,7 +939,7 @@ class UserService {
         })
     }
 
-    loginUser(username, password, email) {
+    loginUser(username: string, password: string, email: string): Promise {
         let data = {
             username: username,
             password: password,
@@ -934,7 +972,7 @@ class UserService {
 }
 
 
-function isErrorStatus(status) {
+function isErrorStatus(status: number): boolean {
     switch (status) {
         case 401:
             return true;
@@ -947,12 +985,12 @@ function isErrorStatus(status) {
     }
 }
 
-function refreshToken(jwt) {
+function refreshToken(jwt: string) {
     window.sessionStorage.setItem("jwt", jwt);
 }
 
-function setUser(user) {
-    window.sessionStorage.setItem("user", user);
+function setUser(userId: number) {
+    window.sessionStorage.setItem("user", userId);
 }
 
 export let user = new User();
