@@ -382,14 +382,17 @@ class EventService {
         });
 
         function handleGetUsersEventsResponse(json) {
-            return new Event(
-                json.event_id,
-                json.name,
-                json.host_id,
-                json.active,
-                json.location,
-                json.startTime,
-                json.endTime
+            return json.map(
+                data =>
+                    new Event(
+                        data.event_id,
+                        data.name,
+                        data.host_id,
+                        data.active,
+                        data.location,
+                        data.startTime,
+                        data.endTime
+                    )
             );
         }
     }
@@ -420,11 +423,11 @@ class EventService {
             return json.map(
                 data =>
                     new Crew(
-                        data.drew_id,
+                        data.crew_id,
                         data.profession,
                         data.name,
                         data.contact_info,
-                        data.eventId
+                        data.event_id
                     )
             );
         }
