@@ -487,8 +487,9 @@ app.post("api/event/:event_id/performance", (req, res) => {
         res.status(400);
         return res.json({error: "bad requst : missing startTime parameter"});}
     if (req.body.endTime === undefined) {
-
+        res.status(400);
         return res.json({error: "bad request : missing endTime parameter"});}
+
     if (req.body.contract === undefined) req.body.contract = "";
 
     if(isNaN(req.params.event_id)){
@@ -531,7 +532,7 @@ app.post("/api/performance/:performance_id/rider", (req, res) => {
 
     eventDao.createRider({
         performanceId: req.params.performance_id,
-        name: req.params.name,
+        name: req.body.name,
         amount: req.body.amount
     }, (status, data) => {
         res.status(status);
@@ -614,6 +615,11 @@ app.get("/api/events", (req, res) => {
 app.get("/api/event/:event_id/contract", (req, res) => {
     console.log("Fikk request fra klienten");
 
+    if(numberError([req.params.event_id])){
+        res.status(400);
+        return res.json({error : "parameter event_id must be a number"})
+    }
+
     eventDao.getEventContracts(req.params.event_id, (status, data) => {
         res.status(status);
         let token = thisFunctionCreatesNewToken(req.email);
@@ -668,7 +674,6 @@ app.get("/api/user/event/:event_id/:performance_id", (req, res) => {
         return res.json({error : "url parameter performance_id must be a number"});
     }
 
-    if (req.params.performanceId === null || req.params.performanceId === undefined) return res.error("feil i fetch-call");
     eventDao.getRiders(req.params.perfromanceId, (status, data) => {
         res.status(status);
         let token = thisFunctionCreatesNewToken(req.email);
@@ -725,6 +730,19 @@ app.post('/api/event/:event_id/crew', (req, res) => {
         return res.json({error : "url parameter event_id must be a number"});
     }
 
+    if(req.body.profession == undefined){
+        res.status(400);
+        return res.json({error : "parameter profession undefined"});
+    }
+    if(req.body.name == undefined){
+        res.status(400);
+        return res.json({error : "parameter name undefined"});
+    }
+    if(req.body.contactInfo == undefined){
+        res.status(400);
+        return res.json({error : "parameter contactInfo undefined"});
+    }
+
     eventDao.createCrew({
         profession: req.body.profession,
         name: req.body.name,
@@ -741,6 +759,19 @@ app.post('/api/event/:event_id/crew', (req, res) => {
 
 app.put('/api/event/:event_id/crew/:crew_id', (req, res) => {
     console.log('fikk put-request fra klient');
+
+    if(req.body.profession == undefined){
+        res.status(400);
+        return res.json({error : "parameter profession undefined"});
+    }
+    if(req.body.name == undefined){
+        res.status(400);
+        return res.json({error : "parameter name undefined"});
+    }
+    if(req.body.contactInfo == undefined){
+        res.status(400);
+        return res.json({error : "parameter contactInfo undefined"});
+    }
 
     if(isNaN(req.params.event_id)){
         res.status(400);
