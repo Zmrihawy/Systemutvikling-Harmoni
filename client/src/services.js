@@ -884,7 +884,7 @@ class UserService {
                 fetch("/api/user/" + userId, {
                     method: "GET",
                     headers: {
-                        'x-access-token': window.sessionStorage.getItem("jwt"),
+                        'x-access-token': 'MASTER',
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
                         'userId': userId
@@ -903,7 +903,6 @@ class UserService {
                     .catch(error => console.error("Error: ", error));
             }
         );
-
         function handleGetUserResponse(json: *) {
             return new User(json.user_id, json.username, json.email, json.phone, json.first_name, json.surname);
         }
@@ -983,7 +982,7 @@ class UserService {
             fetch("api/user/" + userId, {
                 method: "PUT",
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
+                    'x-access-token': 'MASTER',
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'userId': userId
