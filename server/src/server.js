@@ -52,7 +52,7 @@ let userDao: UserDao = new UserDao(pool);
 
 let publicKey: string;
 
-let privateKey = (publicKey = "shhhhhverysecret");
+let privateKey = (publicKey = "arbeiderklassenrusteropptilvepnetrevolusjon");
 
 // middleware-functiona
 
@@ -95,10 +95,10 @@ app.use("/api", (req, res, next) => {
 
 });
 
-function thisFunctionCreatesNewToken(passedMail): { jwt: string } {
+function thisFunctionCreatesNewToken(passedMail: string): { jwt: string } {
 
     let newToken = jwt.sign({email: passedMail}, privateKey, {
-        expiresIn: 60
+        expiresIn: 5000
     });
 
     return newToken;

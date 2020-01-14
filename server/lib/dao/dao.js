@@ -20,6 +20,7 @@ function () {
     key: "query",
     value: function query(sql, params, callback) {
       if (typeof callback != "function") return console.error("callback is not a function");
+      console.log(sql);
       this.pool.getConnection(function (err, connection) {
         console.log("dao: connected to database");
 

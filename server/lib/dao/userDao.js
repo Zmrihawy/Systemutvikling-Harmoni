@@ -74,6 +74,8 @@ function (_Dao) {
   }, {
     key: "updateUser",
     value: function updateUser(sql, callback) {
+      console.log(sql);
+
       _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.USER_TABLE, " SET ").concat(CONSTANTS.USER_USERNAME, " = ?, ").concat(CONSTANTS.USER_EMAIL, " = ?, ").concat(CONSTANTS.USER_PHONE, " = ?, ").concat(CONSTANTS.USER_FIRST_NAME, " = ?, ").concat(CONSTANTS.USER_LAST_NAME, " = ? WHERE ").concat(CONSTANTS.USER_ID, " = ?"), [sql.username, sql.email, sql.phone, sql.firstName, sql.lastName, sql.userId], callback);
     }
   }]);

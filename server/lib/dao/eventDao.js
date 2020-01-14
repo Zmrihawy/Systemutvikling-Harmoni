@@ -92,14 +92,19 @@ function (_Dao) {
   }, {
     key: "getTickets",
     value: function getTickets(sql, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "SELECT * FROM ".concat(CONSTANTS.TICKET_TABLE, " WHERE ").concat(CONSTANTS.EVENT_ID, " = ?"), [sql], callback);
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "SELECT * FROM ".concat(CONSTANTS.TICKET_TABLE, " WHERE ").concat(CONSTANTS.TICKET_EVENT_ID, " = ?"), [sql], callback);
+    }
+  }, {
+    key: "getCrew",
+    value: function getCrew(sql, callback) {
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "SELECT * FROM ".concat(CONSTANTS.CREW_TABLE, " WHERE ").concat(CONSTANTS.CREW_EVENT_ID, " = ?"), [sql], callback);
     }
     /**CREATE*/
 
   }, {
     key: "createEvent",
     value: function createEvent(sql, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "INSERT INTO ".concat(CONSTANTS.EVENT_TABLE, " (").concat(CONSTANTS.EVENT_NAME, ",").concat(CONSTANTS.EVENT_HOST_ID, ",").concat(CONSTANTS.EVENT_LOCATION, ",").concat(CONSTANTS.EVENT_CATEGORY, ",").concat(CONSTANTS.EVENT_START_TIME, ",").concat(CONSTANTS.EVENT_END_TIME, ") \n                    VALUES (?,?,?,?,?) "), [sql.name, sql.userId, sql.location, sql.category, sql.startTime, sql.endTime], callback);
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "INSERT INTO ".concat(CONSTANTS.EVENT_TABLE, " (").concat(CONSTANTS.EVENT_NAME, ",").concat(CONSTANTS.EVENT_HOST_ID, ",").concat(CONSTANTS.EVENT_LOCATION, ",").concat(CONSTANTS.EVENT_DESCRIPTION, ",").concat(CONSTANTS.EVENT_START_TIME, ",").concat(CONSTANTS.EVENT_END_TIME, ") \n                    VALUES (?,?,?,?,?,?) "), [sql.name, sql.userId, sql.location, sql.category, sql.startTime, sql.endTime], callback);
     }
   }, {
     key: "createTicket",
@@ -118,7 +123,7 @@ function (_Dao) {
     }
   }, {
     key: "createCrew",
-    value: function createCrew() {
+    value: function createCrew(sql, callback) {
       _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "INSERT INTO ".concat(CONSTANTS.CREW_TABLE, " (").concat(CONSTANTS.CREW_PROFESSION, ",").concat(CONSTANTS.CREW_NAME, ",").concat(CONSTANTS.CREW_CONTACT_INFO, ",").concat(CONSTANTS.CREW_EVENT_ID, ") \n                    VALUES (?,?,?,?) "), [sql.profession, sql.name, sql.contactInfo, sql.eventId], callback);
     }
     /**DELETE*/
@@ -168,7 +173,7 @@ function (_Dao) {
   }, {
     key: "updateEvent",
     value: function updateEvent(sql, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.EVENT_TABLE, " SET ").concat(CONSTANTS.EVENT_NAME, " = ?, ").concat(CONSTANTS.EVENT_HOST_ID, " = ?, ").concat(CONSTANTS.EVENT_ACTIVE, " = ?, ").concat(CONSTANTS.EVENT_LOCATION, " = ?, ").concat(CONSTANTS.EVENT_CATEGORY, " = ?, \n            ").concat(CONSTANTS.EVENT_START_TIME, " = ?, ").concat(CONSTANTS.EVENT_END_TIME, " = ? WHERE ").concat(CONSTANTS.EVENT_ID, " = ?"), [sql.eventName, sql.hostId, sql.active, sql.location, sql.category, sql.startTime, sql.endTime, sql.eventId], callback);
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.EVENT_TABLE, " SET ").concat(CONSTANTS.EVENT_NAME, " = ?, ").concat(CONSTANTS.EVENT_HOST_ID, " = ?, ").concat(CONSTANTS.EVENT_ACTIVE, " = ?, ").concat(CONSTANTS.EVENT_LOCATION, " = ?, ").concat(CONSTANTS.EVENT_DESCRIPTION, " = ?, \n            ").concat(CONSTANTS.EVENT_START_TIME, " = ?, ").concat(CONSTANTS.EVENT_END_TIME, " = ? WHERE ").concat(CONSTANTS.EVENT_ID, " = ?"), [sql.eventName, sql.hostId, sql.active, sql.location, sql.category, sql.startTime, sql.endTime, sql.eventId], callback);
     }
   }, {
     key: "updateCrew",
