@@ -1,16 +1,16 @@
 //@flow
 
 export class Event {
-    id: number;
-    name: string;
-    hostId: number;
-    active: number;
-    location: string;
-    description: string;
-    startTime: string;
-    endTime: string;
-
-    constructor(id: number, name: string, hostId: number, active: number, location: string, description: string, startTime: string, endTime: string) {
+    constructor(
+        id,
+        name,
+        hostId,
+        active,
+        location,
+        description,
+        startTime,
+        endTime
+    ) {
         this.id = id;
         this.name = name;
         this.hostId = hostId;
@@ -20,17 +20,16 @@ export class Event {
         this.startTime = startTime;
         this.endTime = endTime;
     }
-
 }
 
 export class Ticket {
-    name: string;
-    eventId: number;
-    price: number;
-    amount: number;
-    description: string;
+    name;
+    eventId;
+    price;
+    amount;
+    description;
 
-    constructor(name: string, eventId: number, price: number, amount: number, description: string) {
+    constructor(name, eventId, price, amount, description) {
         this.name = name;
         this.eventId = eventId;
         this.price = price;
@@ -40,11 +39,11 @@ export class Ticket {
 }
 
 export class Rider {
-    id: number;
-    name: string;
-    amount: number;
+    id;
+    name;
+    amount;
 
-    constructor(id: number, name: string, amount: number) {
+    constructor(id, name, amount) {
         this.id = id;
         this.name = name;
         this.amount = amount;
@@ -52,14 +51,14 @@ export class Rider {
 }
 
 export class Performance {
-    id: number;
-    userId: number;
-    eventid: number;
-    startTime: string;
-    endTime: string;
-    contract: string;
+    id;
+    userId;
+    eventid;
+    startTime;
+    endTime;
+    contract;
 
-    constructor(id: number, userId: number, eventId: number, startTime: string, endTime: string, contract: string) {
+    constructor(id, userId, eventId, startTime, endTime, contract) {
         this.id = id;
         this.userId = userId;
         this.eventId = eventId;
@@ -70,14 +69,14 @@ export class Performance {
 }
 
 export class User {
-    id: number;
-    username: string;
-    email: string;
-    phone: string;
-    firstName: string;
-    surname: string;
+    id;
+    username;
+    email;
+    phone;
+    firstName;
+    surname;
 
-    constructor(id: number, username: string, email: string, phone: string, firstName: string, surname: string) {
+    constructor(id, username, email, phone, firstName, surname) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -88,13 +87,13 @@ export class User {
 }
 
 export class Crew {
-    id: number;
-    profession: string;
-    name: string;
-    contactInfo: string;
-    eventId: number;
+    id;
+    profession;
+    name;
+    contactInfo;
+    eventId;
 
-    constructor(id: number, profession: string, name: string, contactInfo: string, eventId: number) {
+    constructor(id, profession, name, contactInfo, eventId) {
         this.id = id;
         this.profession = profession;
         this.name = name;
@@ -103,136 +102,164 @@ export class Crew {
     }
 }
 
-
 class EventService {
     //GET
-    getEvent(id: number): Promise {
+    getEvent(id) {
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + id, {
-                method: "GET",
+            fetch('/api/event/' + id, {
+                method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
                     resolve(handleGetEventResponse(json.data[0]));
                 })
-                .catch(error => console.error("Error: ", error));
+                .catch(error => console.error('Error: ', error));
         });
 
         function handleGetEventResponse(json) {
-            return new Event(json.event_id, json.name, json.host_id, json.active, json.location, json.description, json.startTime, json.endTime);
+            return new Event(
+                json.event_id,
+                json.name,
+                json.host_id,
+                json.active,
+                json.location,
+                json.description,
+                json.startTime,
+                json.endTime
+            );
         }
     }
 
-
-    getAllEvents(): Promise {
+    getAllEvents() {
         return new Promise((resolve, reject) => {
-            fetch("/api/events/", {
-                method: "GET",
+            fetch('/api/events/', {
+                method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
                     resolve(handleGetAllEventsResponse(json));
                 })
-                .catch(error => console.error("Error: ", error));
+                .catch(error => console.error('Error: ', error));
         });
 
         function handleGetAllEventsResponse(json) {
-            return json.map(data => new Event(data.event_id, data.name, data.host_id, data.active, data.location, data.start_time, data.end_time));
+            return json.map(
+                data =>
+                    new Event(
+                        data.event_id,
+                        data.name,
+                        data.host_id,
+                        data.active,
+                        data.location,
+                        data.start_time,
+                        data.end_time
+                    )
+            );
         }
     }
 
-
-    getPerformance(id: number): Promise {
+    getPerformance(id) {
         return new Promise((resolve, reject) => {
-            fetch("/api/performance/" + id, {
-                method: "GET",
+            fetch('/api/performance/' + id, {
+                method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
                     resolve(handleGetPerformanceResponse(json.data[0]));
                 })
-                .catch(error => console.error("Error: ", error));
+                .catch(error => console.error('Error: ', error));
         });
 
         function handleGetPerformanceResponse(json) {
-            return new Performance(json.performance_id, json.user_id, json.event_id, json.start_time, json.end_time, json.contract);
+            return new Performance(
+                json.performance_id,
+                json.user_id,
+                json.event_id,
+                json.start_time,
+                json.end_time
+            );
         }
     }
 
-
-    getAllRiders(eventId: number) :Promise {
+    getAllRiders(eventId) {
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId + "/rider", {
-                method: "GET",
+            fetch('/api/event/' + eventId + '/rider', {
+                method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
                     resolve(handleGetAllRidersResponse(json));
                 })
-                .catch(error => console.error("Error: ", error));
+                .catch(error => console.error('Error: ', error));
         });
 
         function handleGetAllRidersResponse(json) {
-            return json.map(data => new Rider(data.rider_id, data.name, data.amount));
+            return json.map(
+                data => new Rider(data.rider_id, data.name, data.amount)
+            );
         }
     }
 
-
-    getContract(eventId: number, artistId: number): Promise {
+    getContract(eventId, artistId) {
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId + "/user/" + artistId + "/contract", {
-                method: "GET",
+            fetch('/api/event/' + eventId + '/user/' + artistId + '/contract', {
+                method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
                     resolve(handleGetContractResponse(json.data[0]));
                 })
-                .catch(error => console.error("Error: ", error));
+                .catch(error => console.error('Error: ', error));
         });
 
         function handleGetContractResponse(json) {
@@ -240,26 +267,26 @@ class EventService {
         }
     }
 
-
-    getEventContracts(eventId: number): Promise {
+    getEventContracts(eventId) {
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId + "/contracts", {
-                method: "GET",
+            fetch('/api/event/' + eventId + '/contracts', {
+                method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
                     resolve(handleGetEventContractsResponse(json));
                 })
-                .catch(error => console.error("Error: ", error));
+                .catch(error => console.error('Error: ', error));
         });
 
         function handleGetEventContractsResponse(json) {
@@ -267,117 +294,152 @@ class EventService {
         }
     }
 
-
-    getEventTickets(eventId: number): Promise {
+    getEventTickets(eventId) {
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId + "/tickets", {
-                method: "GET",
+            fetch('/api/event/' + eventId + '/tickets', {
+                method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
                     resolve(handleGetEventTicketsResponse(json));
                 })
-                .catch(error => console.error("Error: ", error));
+                .catch(error => console.error('Error: ', error));
         });
 
         function handleGetEventTicketsResponse(json) {
-            return json.map(data => new Ticket(data.name, data.event_id, data.price, data.amount, data.description));
+            return json.map(
+                data =>
+                    new Ticket(
+                        data.name,
+                        data.event_id,
+                        data.price,
+                        data.amount,
+                        data.description
+                    )
+            );
         }
     }
 
-
-    getPerformanceRiders(eventId: number, performanceId: number): Promise {
+    getPerformanceRiders(eventId, performanceId) {
         return new Promise((resolve, reject) => {
-            fetch("/api/user/event/" + eventId + "/" + performanceId, {
-                method: "GET",
+            fetch('/api/user/event/' + eventId + '/' + performanceId, {
+                method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
                     resolve(handleGetPerformanceRidersResponse(json));
                 })
-                .catch(error => console.error("Error: ", error));
+                .catch(error => console.error('Error: ', error));
         });
 
         function handleGetPerformanceRidersResponse(json) {
-            return json.map(data => new Rider(data.rider_id, data.name, data.amount));
+            return json.map(
+                data => new Rider(data.rider_id, data.name, data.amount)
+            );
         }
     }
 
-
-    getUsersEvents(userId: number, active: number): Promise {
+    getUsersEvents(userId, active) {
         return new Promise((resolve, reject) => {
-            fetch("/api/user/" + userId + "/event/" + active, {
-                method: "GET",
+            fetch('/api/user/' + userId + '/event/' + active, {
+                method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
                     resolve(handleGetUsersEventsResponse(json));
                 })
-                .catch(error => console.error("Error: ", error));
+                .catch(error => console.error('Error: ', error));
         });
 
         function handleGetUsersEventsResponse(json) {
-            return json.map(data => new Event(data.event_id, data.name, data.host_id, data.active, data.location, data.startTime, data.endTime))
+            return new Event(
+                json.event_id,
+                json.name,
+                json.host_id,
+                json.active,
+                json.location,
+                json.startTime,
+                json.endTime
+            );
         }
     }
 
-
-    getCrew(eventId: number): Promise {
+    getCrew(eventId) {
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId + "/crew", {
-                method: "GET",
+            fetch('/api/event/' + eventId + '/crew', {
+                method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
                     resolve(handleGetCrewResponse(json));
                 })
-                .catch(error => console.error("Error: ", error));
+                .catch(error => console.error('Error: ', error));
         });
 
         function handleGetCrewResponse(json) {
-            return json.map(data => new Crew(data.crew_id, data.profession, data.name, data.contact_info, data.event_id));
+            return json.map(
+                data =>
+                    new Crew(
+                        data.drew_id,
+                        data.profession,
+                        data.name,
+                        data.contact_info,
+                        data.eventId
+                    )
+            );
         }
     }
 
-
     //POST
-    createEvent(name: string, hostId: number, active: number, location: string, description: string, startTime: string, endTime: string): Promise {
+    createEvent(
+        name,
+        hostId,
+        active,
+        location,
+        description,
+        startTime,
+        endTime
+    ) {
         let data = {
             name: name,
             hostId: hostId,
@@ -388,41 +450,49 @@ class EventService {
             endTime: endTime
         };
         return new Promise((resolve, reject) => {
-            fetch("/api/event", {
-                method: "POST",
+            fetch('/api/event', {
+                method: 'POST',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': 'MASTER',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
-    createTicket(name: string, eventId: number, price: number, amount: number, description: string): Promise {
-        let data = {name: name, eventId: eventId, price: price, amount: amount, description: description};
+    createTicket(name, eventId, price, amount, description) {
+        let data = {
+            name: name,
+            eventId: eventId,
+            price: price,
+            amount: amount,
+            description: description
+        };
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId + "/ticket", {
-                method: "POST",
+            fetch('/api/event/' + eventId + '/ticket', {
+                method: 'POST',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
@@ -430,11 +500,11 @@ class EventService {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
-    createPerformance(userId: number, eventId: number, startTime: string, endTime: string, contract: string): Promise {
+    createPerformance(userId, eventId, startTime, endTime, contract) {
         let data = {
             userId: userId,
             eventId: eventId,
@@ -443,16 +513,17 @@ class EventService {
             contract: contract
         };
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId + "/user", {
-                method: "POST",
+            fetch('/api/event/' + eventId + '/user', {
+                method: 'POST',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
@@ -460,24 +531,25 @@ class EventService {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
-    createRider(performanceId: number, name: string, amount: number): Promise {
-        let data = {name: name, amount: amount};
+    createRider(performanceId, name, amount) {
+        let data = { name: name, amount: amount };
         return new Promise((resolve, reject) => {
-            fetch("/api/performance/" + performanceId + "/rider", {
-                method: "POST",
+            fetch('/api/performance/' + performanceId + '/rider', {
+                method: 'POST',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
@@ -485,24 +557,29 @@ class EventService {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
-    createCrew(eventId: number, profession: string, name: string, contactInfo: string): Promise {
-        let data = {profession: profession, name: name, contactInfo: contactInfo};
+    createCrew(eventId, profession, name, contactInfo) {
+        let data = {
+            profession: profession,
+            name: name,
+            contactInfo: contactInfo
+        };
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId + "/crew", {
-                method: "POST",
+            fetch('/api/event/' + eventId + '/crew', {
+                method: 'POST',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
@@ -510,26 +587,26 @@ class EventService {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
-
 
     //DELETE
-    deleteRider(eventId: number, performanceId: number, name: string): Promise {
-        let data = {performanceId: performanceId, name: name};
+    deleteRider(eventId, performanceId, name) {
+        let data = { performanceId: performanceId, name: name };
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId + "/rider", {
-                method: "DELETE",
+            fetch('/api/event/' + eventId + '/rider', {
+                method: 'DELETE',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
@@ -537,22 +614,23 @@ class EventService {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
-    deleteEvent(eventId: number): Promise {
+    deleteEvent(eventId) {
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId, {
-                method: "DELETE",
+            fetch('/api/event/' + eventId, {
+                method: 'DELETE',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
@@ -560,25 +638,32 @@ class EventService {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
     //PUT
-    updateTicket(name: string, eventId: number, price: number, amount: number, description: string): Promise {
-        let data = {name: name, eventId: eventId, price: price, amount: amount, description: description};
+    updateTicket(name, eventId, price, amount, description) {
+        let data = {
+            name: name,
+            eventId: eventId,
+            price: price,
+            amount: amount,
+            description: description
+        };
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId + "/ticket", {
-                method: "PUT",
+            fetch('/api/event/' + eventId + '/ticket', {
+                method: 'PUT',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
@@ -586,24 +671,25 @@ class EventService {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
-    updateRider(eventId: number, riderId: number, name: string, amount: number): Promise {
-        let data = {riderId: riderId, name: name, amount: amount};
+    updateRider(eventId, riderId, name, amount) {
+        let data = { riderId: riderId, name: name, amount: amount };
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId + "/rider", {
-                method: "PUT",
+            fetch('/api/event/' + eventId + '/rider', {
+                method: 'PUT',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
@@ -611,11 +697,20 @@ class EventService {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
-    updateEvent(eventId: number, name: string, hostId: number, active: number, location: string, description: string, startTime: string, endTime: string): Promise {
+    updateEvent(
+        eventId,
+        name,
+        hostId,
+        active,
+        location,
+        description,
+        startTime,
+        endTime
+    ) {
         let data = {
             eventId: eventId,
             name: name,
@@ -627,17 +722,18 @@ class EventService {
             endTime: endTime
         };
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId, {
-                method: "PUT",
+            fetch('/api/event/' + eventId, {
+                method: 'PUT',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
@@ -645,35 +741,43 @@ class EventService {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
-    updateContract(eventId: number, contract: string): Promise {
-        let data = {eventId: eventId, contract: contract};
+    updateContract(eventId, contract) {
+        let data = { eventId: eventId, contract: contract };
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId + "/contract", {
-                method: "PUT",
+            fetch('/api/event/' + eventId + '/contract', {
+                method: 'PUT',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
-    updatePerformance(performanceId: number, userId: number, eventId: number, startTime: string, endTime: string, contract: string): Promise {
+    updatePerformance(
+        performanceId,
+        userId,
+        eventId,
+        startTime,
+        endTime,
+        contract
+    ) {
         let data = {
             performanceId: performanceId,
             userId: userId,
@@ -683,181 +787,208 @@ class EventService {
             contract: contract
         };
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId + "/performance", {
-                method: "PUT",
+            fetch('/api/event/' + eventId + '/performance', {
+                method: 'PUT',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
-    updateCrew(eventId: number, crewId: number, profession: string, name: string, contactInfo: string): Promise {
-        let data = {profession: profession, name: name, contactInfo: contactInfo, crewId: crewId};
+    updateCrew(eventId, crewId, profession, name, contactInfo) {
+        let data = {
+            profession: profession,
+            name: name,
+            contactInfo: contactInfo,
+            crewId: crewId
+        };
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId + "/crew/" + crewId, {
-                method: "PUT",
+            fetch('/api/event/' + eventId + '/crew/' + crewId, {
+                method: 'PUT',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
-    deleteTicket(name: string, eventId: number): Promise {
-        let data = {name: name, eventId: eventId};
+    deleteTicket(name, eventId) {
+        let data = { name: name, eventId: eventId };
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId + "/ticket", {
-                method: "DELETE",
+            fetch('/api/event/' + eventId + '/ticket', {
+                method: 'DELETE',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
-    deletePerformance(eventId: number, artistId: number): Promise {
-        let data = {artistId: artistId};
+    deletePerformance(eventId, artistId) {
+        let data = { artistId: artistId };
         return new Promise((resolve, reject) => {
-            fetch("/api/event/" + eventId + "/performance", {
-                method: "DELETE",
+            fetch('/api/event/' + eventId + '/performance', {
+                method: 'DELETE',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
-
 }
 
 class UserService {
     //GET
-    getUser(id: number): Promise {
+    getUser(id) {
         return new Promise((resolve, reject) => {
-                fetch("/api/user/" + id, {
-                    method: "GET",
-                    headers: {
-                        'x-access-token': window.sessionStorage.getItem("jwt"),
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                })
-                    .then(response => {
-                        if (isErrorStatus(response.status)) reject("Error status: " + response.status);
-                        return response.json();
-                    })
-                    .then(json => {
-                        refreshToken(json.jwt);
-                        resolve(this.handleGetUserResponse(json.data[0]));
-                    })
-                    .catch(error => console.error("Error: ", error));
-            }
-        )
-    }
-
-    handleGetUserResponse(json) {
-        return new User(json.user_id, json.username, json.email, json.phone, json.first_name, json.surname);
-    }
-
-    getAllUsers(): Promise {
-        return new Promise((resolve, reject) => {
-            fetch("/api/users", {
-                method: "GET",
+            fetch('/api/user/' + id, {
+                method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
+                    return response.json();
+                })
+                .then(json => {
+                    refreshToken(json.jwt);
+                    resolve(this.handleGetUserResponse(json.data[0]));
+                })
+                .catch(error => console.error('Error: ', error));
+        });
+    }
+
+    handleGetUserResponse(json) {
+        return new User(
+            json.user_id,
+            json.username,
+            json.email,
+            json.phone,
+            json.first_name,
+            json.surname
+        );
+    }
+
+    getAllUsers() {
+        return new Promise((resolve, reject) => {
+            fetch('/api/users', {
+                method: 'GET',
+                headers: {
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
                     resolve(this.handleGetAllUsersResponse(json));
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
     handleGetAllUsersResponse(json) {
-        return json.map(data => new User(data.user_id, data.username, data.email, data.phone, data.first_name, data.surname));
+        return json.map(
+            data =>
+                new User(
+                    data.user_id,
+                    data.username,
+                    data.email,
+                    data.phone,
+                    data.first_name,
+                    data.surname
+                )
+        );
     }
 
     //DELETE
-    deleteUser(userId: number): Promise {
+    deleteUser(userId) {
         return new Promise((resolve, reject) => {
-            fetch("api/user/" + userId, {
-                method: "DELETE",
+            fetch('api/user/' + userId, {
+                method: 'DELETE',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
     //PUT
-    updateUser(userId: number, username: string, email: string, phone: string, firstName: string, lastName: string): Promise {
+    updateUser(userId, username, email, phone, firstName, lastName) {
         let data = {
             username: username,
             email: email,
@@ -867,52 +998,53 @@ class UserService {
             userId: userId
         };
         return new Promise((resolve, reject) => {
-            fetch("api/user/" + userId, {
-                method: "PUT",
+            fetch('api/user/' + userId, {
+                method: 'PUT',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
-    updatePassword(usermail: string): Promise {
+    updatePassword(usermail) {
         return new Promise((resolve, reject) => {
-            fetch("api/user/" + usermail, {
-                method: "PUT",
+            fetch('api/user/' + usermail, {
+                method: 'PUT',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
-
     //POST
-    createUser(username: string, password: string, email: string, phone: string, firstName: string, lastName: string): Promise {
+    createUser(username, password, email, phone, firstName, lastName) {
         let data = {
             username: username,
             password: password,
@@ -923,44 +1055,46 @@ class UserService {
         };
         console.log(data);
         return new Promise((resolve, reject) => {
-            fetch("/user", {
-                method: "POST",
+            fetch('/user', {
+                method: 'POST',
                 headers: {
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
                     console.log(json);
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
 
-    loginUser(username: string, password: string, email: string): Promise {
+    loginUser(username, password, email) {
         let data = {
             username: username,
             password: password,
             email: email
         };
         return new Promise((resolve, reject) => {
-            fetch("/login", {
-                method: "POST",
+            fetch('/login', {
+                method: 'POST',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
-                    'Accept': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data)
+                body: JSOify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status))
+                        reject('Error status: ' + response.status);
                     return response.json();
                 })
                 .then(json => {
@@ -968,15 +1102,12 @@ class UserService {
                     setUser(this.getUser(json.userId));
                     resolve(json);
                 })
-                .catch(error => console.error("Error: ", error));
-        })
+                .catch(error => console.error('Error: ', error));
+        });
     }
-
-
 }
 
-
-function isErrorStatus(status: number): boolean {
+function isErrorStatus(status) {
     switch (status) {
         case 401:
             return true;
@@ -989,12 +1120,12 @@ function isErrorStatus(status: number): boolean {
     }
 }
 
-function refreshToken(jwt: string) {
-    window.sessionStorage.setItem("jwt", jwt);
+function refreshToken(jwt) {
+    window.sessionStorage.setItem('jwt', jwt);
 }
 
-function setUser(userId: number) {
-    window.sessionStorage.setItem("user", userId);
+function setUser(user) {
+    window.sessionStorage.setItem('user', user);
 }
 
 export let user = new User();
