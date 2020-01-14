@@ -700,11 +700,19 @@ app.put("/api/event/:event_id", (req, res) => {
         return res.json({error : "number field is a string"});
     }
 
-    if (req.body.eventName === undefined) return res.json({error: "bad request : missing eventName parameter"});
-    if (req.body.startTime === undefined) return res.json({error: "bad request : missing startTime parameter"});
-    if (req.body.hostId === undefined) return res.json({error: "bad request : missing hostId parameter"});
+    if (req.body.eventName === undefined) {
+        res.status(400);
+        return res.json({error: "bad request : missing eventName parameter"});}
+    if (req.body.startTime === undefined) {
+        res.status(400);
+        return res.json({error: "bad request : missing startTime parameter"});}
+    if (req.body.hostId === undefined) {
+        res.status(400);
+        return res.json({error: "bad request : missing hostId parameter"});}
     if (req.body.active === undefined) req.body.active = 1;
-    if (req.body.location === undefined) return res.json({error: "bad request : mssing location parameter"});
+    if (req.body.location === undefined) {
+        res.status(400);
+        return res.json({error: "bad request : mssing location parameter"});}
 
     let cat = req.body.category;
     if(cat == undefined) cat = "";
