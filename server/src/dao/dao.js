@@ -10,7 +10,7 @@ module.exports = class Dao {
   query(sql: string, params: Array<mixed>, callback: (res : *, data: *) => void){
 
     if(typeof callback != "function") return console.error("callback is not a function");
-
+    console.log(sql);
     this.pool.getConnection((err, connection) => {
       console.log("dao: connected to database");
       if (err) {

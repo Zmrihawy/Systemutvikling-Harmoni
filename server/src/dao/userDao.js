@@ -33,6 +33,7 @@ module.exports = class UserDao extends Dao {
     }
 
     updateUser(sql : {username : string, email : string, phone : string |number, firstName : string, lastName : string, userId : string | number}, callback: (status: number, data : *) => void) {
+        console.log(sql);
         super.query(`UPDATE ${CONSTANTS.USER_TABLE} SET ${CONSTANTS.USER_USERNAME} = ?, ${CONSTANTS.USER_EMAIL} = ?, ${CONSTANTS.USER_PHONE} = ?, ${CONSTANTS.USER_FIRST_NAME} = ?, ${CONSTANTS.USER_LAST_NAME} = ? WHERE ${CONSTANTS.USER_ID} = ?`,
             [sql.username, sql.email, sql.phone, sql.firstName, sql.lastName, sql.userId], callback);
     }

@@ -20,7 +20,7 @@ import UserDao from './dao/userDao.js';
 
 import EventDao from './dao/eventDao.js';
 
-const MASTER_TOKEN:string = "MASTER"; //TODO DELEEEEEETE
+const MASTER_TOKEN: string = "MASTER"; //TODO DELEEEEEETE
 
 var apiRoutes = express.Router();
 
@@ -59,11 +59,11 @@ let privateKey = (publicKey = "shhhhhverysecret");
 
 app.use("/api", (req, res, next) => {
 
-    if(req.headers['x-access-token'] === undefined) return res.json({error: "missing access token header"});
+    if (req.headers['x-access-token'] === undefined) return res.json({error: "missing access token header"});
 
     var token = req.headers["x-access-token"];
 
-    if(token === MASTER_TOKEN){
+    if (token === MASTER_TOKEN) {
         req.email = req.body.email;
         req.userId = req.body.userId;
         next();
@@ -72,21 +72,21 @@ app.use("/api", (req, res, next) => {
             if (err) {
                 console.log("Token IKKE ok");
                 res.status(401);
-                res.json({ error: "Not authorized -> Token Expired" });
+                res.json({error: "Not authorized -> Token Expired"});
             } else {
                 userDao.getUser(req.body.userId, (status, data) => {
                     console.log(decoded);
                     console.log(data);
-                    if(data.length === 0){
+                    if (data.length === 0) {
                         res.status(401);
-                        res.json({error : "Not authorized -> Invalid Token"});
-                    } else if(data[0].email === decoded.email) {
+                        res.json({error: "Not authorized -> Invalid Token"});
+                    } else if (data[0].email === decoded.email) {
                         req.email = decoded.email;
                         req.userId = data[0].userId;
                         next();
                     } else {
                         res.status(401);
-                        res.json({error : "Not authorized -> Wrong username"});
+                        res.json({error: "Not authorized -> Wrong username"});
                     }
                 });
             }
@@ -95,7 +95,7 @@ app.use("/api", (req, res, next) => {
 
 });
 
-function thisFunctionCreatesNewToken(passedMail): {jwt: string} {
+function thisFunctionCreatesNewToken(passedMail): { jwt: string } {
 
     let newToken = jwt.sign({email: passedMail}, privateKey, {
         expiresIn: 60
@@ -109,7 +109,7 @@ app.get("/api/user/:id", (req, res) => {
     console.log(`/user/${req.params.id} fikk request fra klient`);
     userDao.getUser(req.params.id, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     });
 });
@@ -119,7 +119,7 @@ app.get("/api/users", (req, res) => {
     console.log("/user: fikk request fra klient");
     userDao.getAllUsers((status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     });
 });
@@ -127,10 +127,10 @@ app.get("/api/users", (req, res) => {
 //Delete rider
 app.delete('/api/performance/:performance_id/rider', (req, res) => {
     console.log("Fikk DELETE-request fra klienten");
-    if(req.body.name === undefined) return res.json({error : "bad request"});
-    eventDao.deleteRider({performanceId : req.params.performance_id, name : req.body.name}, (status, data) => {
+    if (req.body.name === undefined) return res.json({error: "bad request"});
+    eventDao.deleteRider({performanceId: req.params.performance_id, name: req.body.name}, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     });
 });
@@ -138,11 +138,11 @@ app.delete('/api/performance/:performance_id/rider', (req, res) => {
 // DELETE TICKET
 
 app.delete("/api/event/:event_id/ticket", (req, res) => {
-    if(req.body.name === undefined) return res.json({error : "bad request"});
+    if (req.body.name === undefined) return res.json({error: "bad request"});
     console.log("Fikk Delete-request fra klient");
-    eventDao.deleteTicket({eventId : req.params.event_id, name : req.body.name}, (status, data) => {
+    eventDao.deleteTicket({eventId: req.params.event_id, name: req.body.name}, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     })
 
@@ -153,7 +153,7 @@ app.delete("/api/event/:event_id/ticket", (req, res) => {
 app.delete("/api/performance/:performance_id", (req, res) => {
     eventDao.deletePerformance(req.params.performance_id, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     })
 })
@@ -161,10 +161,15 @@ app.delete("/api/performance/:performance_id", (req, res) => {
 // UPDATE PERFORMANCE
 
 app.put("/api/performance/:performance_id", (req, res) => {
-    if(req.body.startTime === undefined || req.body.endTime === undefined || req.body.contract === undefined) return res.json({error : "bad request"});
-    eventDao.updatePerformance({startTime : req.body.startTime, endTime : req.body.endTime, contract : req.body.contract, performanceId : req.params.performance_id}, (status, data) => {
+    if (req.body.startTime === undefined || req.body.endTime === undefined || req.body.contract === undefined) return res.json({error: "bad request"});
+    eventDao.updatePerformance({
+        startTime: req.body.startTime,
+        endTime: req.body.endTime,
+        contract: req.body.contract,
+        performanceId: req.params.performance_id
+    }, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     })
 });
@@ -174,7 +179,7 @@ app.delete("/api/user/:user_id", (req, res) => {
 
     console.log("Fikk DELETE-request fra klienten");
 
-    if(req.body.password === undefined) return res.json({error : "request missing password"});
+    if (req.body.password === undefined) return res.json({error: "request missing password"});
 
     userDao.getPassword(req.params.user_id, (status, data) => {
 
@@ -203,19 +208,28 @@ app.delete("/api/user/:user_id", (req, res) => {
 //Update a user
 app.put("/api/user/:user_id", (req, res) => {
     console.log("Fikk PUT-request fra klienten");
-    if(req.body.username === undefined || req.body.username === null) return res.json({error : "request missing username"});
-    if(req.body.email === undefined || req.body.email === null) return res.json({error : "request missing email"});
-    if(req.body.firstName === undefined) return res.json({error: "request missing first-name"});
-    if(req.body.lastName === undefined) return res.json({error : "request missing last-name"});
-    if(req.params.user_id !== req.userId){
+    if ((req.body.username === undefined || req.body.username === null) ||
+        (req.body.email === undefined || req.body.email === null) ||
+        (req.body.firstName === undefined || req.body.firstName === null) ||
+        (req.body.lastName === undefined || req.body.lastName === null)) {
+        res.status(400);
+        return res.json({error: "Wrong parameter"})
+    } else if (Number(req.params.user_id) !== Number(req.userId)) {
         res.status(401);
-        res.json({error : "Not authorized"});
+        return res.json({error: "Not authorized -ur not master"});
     }
 
-    let params = {username : req.body.username, email : req.body.email, phone : req.body.phone, firstName : req.body.firstName, lastName : req.body.lastName, userId : req.params.userId};
+    let params = {
+        username: req.body.username,
+        email: req.body.email,
+        phone: req.body.phone,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        userId: req.params.user_id
+    };
     userDao.updateUser(params, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     });
 });
@@ -225,9 +239,9 @@ app.post("/user", (req, res) => {
 
     console.log("Fikk POST-request fra klienten");
 
-    if(req.body.username === undefined || req.body.username === null ) return res.json({error : "request missing username"});
-    if(req.body.password === undefined) return res.json({error : "request missing password"});
-    if(req.body.email === undefined || req.body.email === null ) return res.json({error : "request missing email"}); 
+    if (req.body.username === undefined || req.body.username === null) return res.json({error: "request missing username"});
+    if (req.body.password === undefined) return res.json({error: "request missing password"});
+    if (req.body.email === undefined || req.body.email === null) return res.json({error: "request missing email"});
 
     let user = req.body;
 
@@ -260,7 +274,7 @@ app.get("/api/event/:event_id", (req, res) => {
     console.log("/event/:id: fikk request fra klient");
     eventDao.getEvent(req.params.event_id, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     });
 });
@@ -268,11 +282,11 @@ app.get("/api/event/:event_id", (req, res) => {
 //post an event
 app.post("/api/event", (req, res) => {
     console.log("Fikk POST-request fra klienten");
-    if(req.body.name === undefined || req.body.name === null) return res.json({error : "request missing event-name"});
-    if(req.body.userId === undefined || req.body.userId === null) return res.json({error : "request missing event-host user Id"});
+    if (req.body.name === undefined || req.body.name === null) return res.json({error: "request missing event-name"});
+    if (req.body.userId === undefined || req.body.userId === null) return res.json({error: "request missing event-host user Id"});
 
     eventDao.createEvent(req.body, (status, data) => {
-        console.log("sdasa",data);
+        console.log("sdasa", data);
         res.status(status);
         data.jwt = thisFunctionCreatesNewToken(req.email);
         res.send(data);
@@ -282,13 +296,13 @@ app.post("/api/event", (req, res) => {
 //post a ticket
 app.post("/api/event/:event_id/ticket", (req, res) => {
     console.log("Fikk POST-request fra klienten");
-    if(req.body.name === null || req.body.name === undefined) return res.json({error : "post-request missing ticket name"});
-    if(req.body.eventId === null || req.body.eventId === undefined) return res.json({error : "post-request : ticket missing event"});
-    if(req.body.price === null || req.body.price === undefined) return res.json({error : "post-request ticket missing ticket-price"});
-    if(req.body.amount === null || req.body.amount === undefined) return res.json({error : "post request missing number of tickets"});
+    if (req.body.name === null || req.body.name === undefined) return res.json({error: "post-request missing ticket name"});
+    if (req.body.eventId === null || req.body.eventId === undefined) return res.json({error: "post-request : ticket missing event"});
+    if (req.body.price === null || req.body.price === undefined) return res.json({error: "post-request ticket missing ticket-price"});
+    if (req.body.amount === null || req.body.amount === undefined) return res.json({error: "post request missing number of tickets"});
     eventDao.createTicket(req.body, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     });
 });
@@ -296,12 +310,12 @@ app.post("/api/event/:event_id/ticket", (req, res) => {
 //put ticket
 app.put("/api/event/:event_id/ticket", (req, res) => {
     console.log("Fikk PUT-request fra klienten");
-    if(req.body.price === undefined || req.body.price === null) return res.json({error : "request missing ticket - price"});
-    if(req.body.amount === undefined) return res.json({error : "request missing number of tickets"});
-    if(req.body.name === undefined) return res.json({error : "request missing ticket-name"});
+    if (req.body.price === undefined || req.body.price === null) return res.json({error: "request missing ticket - price"});
+    if (req.body.amount === undefined) return res.json({error: "request missing number of tickets"});
+    if (req.body.name === undefined) return res.json({error: "request missing ticket-name"});
     eventDao.updateTicket(req.body, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     });
 });
@@ -310,13 +324,18 @@ app.put("/api/event/:event_id/ticket", (req, res) => {
 app.put("/api/performance/:performance_id/rider", (req, res) => {
     console.log("Fikk PUT-request fra klienten");
 
-    if(req.body.name === undefined) return res.json({error : "bad request : missing name"});
-    if(req.body.amount === undefined) return res.json({error : "bad request : missing amount of tickets"});
-    if(req.body.oldName === undefined) return res.json({error : "bad request : missing old name - parameter"});
+    if (req.body.name === undefined) return res.json({error: "bad request : missing name"});
+    if (req.body.amount === undefined) return res.json({error: "bad request : missing amount of tickets"});
+    if (req.body.oldName === undefined) return res.json({error: "bad request : missing old name - parameter"});
 
-    eventDao.updateRider({name : req.body.name, amount : req.body.amount, performanceId : req.params.performance_id, oldName : req.body.oldName}, (status, data) => {
+    eventDao.updateRider({
+        name: req.body.name,
+        amount: req.body.amount,
+        performanceId: req.params.performance_id,
+        oldName: req.body.oldName
+    }, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     });
 });
@@ -324,13 +343,19 @@ app.put("/api/performance/:performance_id/rider", (req, res) => {
 //post a performance
 app.post("api/event/:event_id/performance", (req, res) => {
     console.log("Fikk POST-request fra klienten");
-    if(req.body.artistId === undefined) return res.json({error : "bad request : missing artist parameter"});
-    if(req.body.startTime === undefined) return res.json({error : "bad requst : missing startTime parameter"});
-    if(req.body.endTime === undefined) return res.json({error : "bad request : missing endTime parameter"});
-    if(req.body.contract === undefined) req.body.contract = "";
-    eventDao.createPerformance({artistId: req.body.artistId, eventId: req.params.event_id, startTime : req.body.startTime, endTime : req.body.endTime, contract: req.body.contract}, (status, data) => {
+    if (req.body.artistId === undefined) return res.json({error: "bad request : missing artist parameter"});
+    if (req.body.startTime === undefined) return res.json({error: "bad requst : missing startTime parameter"});
+    if (req.body.endTime === undefined) return res.json({error: "bad request : missing endTime parameter"});
+    if (req.body.contract === undefined) req.body.contract = "";
+    eventDao.createPerformance({
+        artistId: req.body.artistId,
+        eventId: req.params.event_id,
+        startTime: req.body.startTime,
+        endTime: req.body.endTime,
+        contract: req.body.contract
+    }, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     });
 });
@@ -338,11 +363,15 @@ app.post("api/event/:event_id/performance", (req, res) => {
 //post a rider
 app.post("/api/performance/:performance_id/rider", (req, res) => {
     console.log("Fikk POST-request fra klienten");
-    if(req.body.amount === undefined) return res.json({error : "bad request : missing amount parameter"});
+    if (req.body.amount === undefined) return res.json({error: "bad request : missing amount parameter"});
 
-    eventDao.createRider({performanceId : req.params.performance_id, name : req.params.name, amount : req.body.amount}, (status, data) => {
+    eventDao.createRider({
+        performanceId: req.params.performance_id,
+        name: req.params.name,
+        amount: req.body.amount
+    }, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     });
 });
@@ -351,16 +380,24 @@ app.post("/api/performance/:performance_id/rider", (req, res) => {
 app.put("/api/event/:event_id", (req, res) => {
     console.log("Fikk PUT-request fra klienten");
 
-    if(req.body.eventName === undefined) return res.json({error : "bad request : missing eventName parameter"});
-    if(req.body.startTime === undefined) return res.json({error : "bad request : missing startTime parameter"});
-    if(req.body.hostId === undefined) return res.json({error : "bad request : missing hostId parameter"});
-    if(req.body.active === undefined) req.body.active = 1;
-    if(req.body.location === undefined) return res.json({error : "bad request : mssing location parameter"});
+    if (req.body.eventName === undefined) return res.json({error: "bad request : missing eventName parameter"});
+    if (req.body.startTime === undefined) return res.json({error: "bad request : missing startTime parameter"});
+    if (req.body.hostId === undefined) return res.json({error: "bad request : missing hostId parameter"});
+    if (req.body.active === undefined) req.body.active = 1;
+    if (req.body.location === undefined) return res.json({error: "bad request : mssing location parameter"});
 
-    eventDao.updateEvent({eventName : req.body.eventName, hostId : req.body.hostId, active : req.body.active, 
-    location : req.body.location , description : req.body.description, startTime : req.body.startTime, endTime: req.body.endTime, eventId : req.params.event_id}, (status, data) => {
+    eventDao.updateEvent({
+        eventName: req.body.eventName,
+        hostId: req.body.hostId,
+        active: req.body.active,
+        location: req.body.location,
+        description: req.body.description,
+        startTime: req.body.startTime,
+        endTime: req.body.endTime,
+        eventId: req.params.event_id
+    }, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     });
 });
@@ -369,13 +406,13 @@ app.put("/api/event/:event_id", (req, res) => {
 app.delete("/api/event/:event_id", (req, res) => {
     console.log("Fikk DELETE-request fra klienten");
     eventDao.getEvent(req.params.event_id, (status, data) => {
-        if(data[0].user_id === req.userId){    
+        if (data[0].user_id === req.userId) {
             eventDao.deleteEvent(req.params.event_id, (status, data) => {
                 res.status(status);
-                let token =  thisFunctionCreatesNewToken(req.email);
+                let token = thisFunctionCreatesNewToken(req.email);
                 res.json({data, jwt: token});
             });
-        } else res.json({error : "not authorized"});
+        } else res.json({error: "not authorized"});
     });
 });
 
@@ -384,7 +421,7 @@ app.get("/api/events", (req, res) => {
     console.log("/user: fikk request fra klient");
     eventDao.getAllEvents((status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     });
 });
@@ -395,7 +432,7 @@ app.get("/api/event/:event_id/contract", (req, res) => {
 
     eventDao.getEventContracts(req.params.event_id, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     });
 });
@@ -405,7 +442,7 @@ app.get("/api/event/:event_id/tickets", (req, res) => {
     console.log("Fikk request fra klienten");
     eventDao.getTickets(req.params.event_id, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     });
 });
@@ -416,7 +453,7 @@ app.get("/api/event/:event_id/rider", (req, res) => {
     console.log("Fikk request fra klienten");
     eventDao.getAllRiders(req.params.event_id, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     });
 });
@@ -427,7 +464,7 @@ app.get("/api/user/event/:event_id/:performance_id", (req, res) => {
     if (req.params.performanceId === null || req.params.performanceId === undefined) return res.error("feil i fetch-call");
     eventDao.getRiders(req.params.perfromanceId, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     });
 });
@@ -438,7 +475,7 @@ app.get("/api/user/:user_id/event/:active", (req, res) => {
     console.log("fikk request get fra klient");
     eventDao.getUsersEvents({userId: req.params.user_id, active: req.params.active}, (status, data) => {
         res.status(status);
-        let token =  thisFunctionCreatesNewToken(req.email);
+        let token = thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
     });
 });
@@ -451,8 +488,8 @@ app.get('/api/event/:event_id/crew', (req, res) => {
     eventDao.getCrew(req.params.event_id, (st, dt) => {
         res.status(status);
         let token = thisFunctionCreatesNewToken(req.email);
-        res.json({dt, jwt : token});
-    }); 
+        res.json({dt, jwt: token});
+    });
 });
 
 // post new crew
@@ -460,10 +497,15 @@ app.get('/api/event/:event_id/crew', (req, res) => {
 app.post('/api/event/:event_id/crew', (req, res) => {
     console.log('fikk post-request fra klient');
 
-    eventDao.createCrew({profession : req.body.profession, name : req.body.name, contactInfo : req.body.contactInfo, eventId : req.params.event_id}, (status, data) => {
+    eventDao.createCrew({
+        profession: req.body.profession,
+        name: req.body.name,
+        contactInfo: req.body.contactInfo,
+        eventId: req.params.event_id
+    }, (status, data) => {
         res.status(status);
         let token = thisFunctionCreatesNewToken(req.email);
-        res.json({data, jwt : token});
+        res.json({data, jwt: token});
     });
 });
 
@@ -471,10 +513,15 @@ app.post('/api/event/:event_id/crew', (req, res) => {
 
 app.put('/api/event/:event_id/crew/:crew_id', (req, res) => {
     console.log('fikk put-request fra klient');
-    eventDao.updateCrew({profession : req.body.profession, name : req.body.name, contactInfo : req.body.contactInfo, crewId : req.params.crew_id}, (status, data) => {
+    eventDao.updateCrew({
+        profession: req.body.profession,
+        name: req.body.name,
+        contactInfo: req.body.contactInfo,
+        crewId: req.params.crew_id
+    }, (status, data) => {
         res.status(status);
         let token = thisFunctionCreatesNewToken(req.email);
-        res.json({data, jwt : token});
+        res.json({data, jwt: token});
     });
 });
 
@@ -485,7 +532,7 @@ app.put('/api/event/:event_id/crew/:crew_id', (req, res) => {
 app.put("/user/:usermail", (req, res) => {
     userDao.getUser(req.params.usermail, (status, data) => {
 
-        if (data.length === 1) {
+        if (data[0].salt) {
 
             let password = generator.generate({
                 length: 12,
@@ -518,9 +565,13 @@ app.put("/user/:usermail", (req, res) => {
                         console.log('Email sent: ' + info.response);
                     }
                 });
+
+                res.status(200);
+                res.send();
             });
         } else {
-            res.error("Mail not found");
+            res.status(400);
+            res.json({error: "User not found"});
         }
     });
 });
@@ -528,8 +579,8 @@ app.put("/user/:usermail", (req, res) => {
 // Handles login and returns JWT-token as JSON
 app.post("/login", (req, res) => {
 
-    if(req.body.email === undefined) return res.json({error : "bad request : missing email parameter"});
-    if(req.body.password === undefined) return res.json({error : " bad request : mssing password parameter"})
+    if (req.body.email === undefined) return res.json({error: "bad request : missing email parameter"});
+    if (req.body.password === undefined) return res.json({error: " bad request : mssing password parameter"})
 
     loginOk(req.body.email, req.body.password).then(data => {
         let log: number = data;

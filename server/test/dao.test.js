@@ -1,5 +1,3 @@
-// import mysql from "mysql";
-
 const mysql = require("mysql");
 const UserDao = require("../src/dao/userDao.js");
 const EventDao = require("../src/dao/eventDao.js");
@@ -28,6 +26,7 @@ var pool = mysql.createPool({
     multipleStatements: true
   });
 
+
 // test
 let userDao = new UserDao(pool);
 let eventDao = new EventDao(pool);
@@ -49,7 +48,6 @@ afterAll(() => {
 test("get one user from database", done => {
     userDao.getUser(1, (status, data) => {
         console.log(status);
-        console.log("AAA" + data);
         expect(data.length).toBe(1);
         let user = data[0];
         expect(user.username).toBe("testbruker");
