@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d564113e-d503-4011-a1d8-11e1e28f4b09" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/containers/Main/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/Main/Main.js" afterDir="false" />
+    <list default="true" id="f97516cd-a94e-472c-be99-cc58bb87deb6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/containers/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/containers/ViewProfile/ViewProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/ViewProfile/ViewProfile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,44 +15,14 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FavoritesManager">
-    <favorites_list name="harmoni" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="JavaScript File" />
-      </list>
-    </option>
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="JsFlowSettings">
-    <service-enabled>true</service-enabled>
-    <exe-path />
-    <other-services-enabled>true</other-services-enabled>
-    <auto-save>true</auto-save>
-  </component>
-  <component name="ProjectId" id="1W3ha7L0BaU0EJUbXAtZRNI5zzB" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="javascript.nodejs.core.library.configured.version" value="10.16.3" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Dataing2/SysUtv2/Miniproject/oving12/src/index.js" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs.jest.jest_package" value="$PROJECT_DIR$/server/node_modules/jest" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\torje\OneDrive\Desktop\Scrum\harmoni\server\src\dao" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\torje\OneDrive\Desktop\Scrum\harmoni\server\test" />
-    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -64,62 +36,17 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.ViewProfile.js">
-    <configuration name="Run tests" type="JavaScriptTestRunnerJest" temporary="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$/server" />
-      <envs />
-      <scope-kind value="TEST_FILE" />
-      <test-file value="$PROJECT_DIR$/server/test/dao.test.js" />
-      <method v="2" />
-    </configuration>
-    <configuration name="get one user from database" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$/server" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/server/test/dao.test.js" />
-      <test-names>
-        <test-name value="get one user from database" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="ViewProfile.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/client/src/containers/ViewProfile/ViewProfile.js" working-dir="$PROJECT_DIR$/client/src/containers/ViewProfile">
-      <method v="2" />
-    </configuration>
-    <list>
-      <item itemvalue="Jest.Run tests" />
-      <item itemvalue="Jest.get one user from database" />
-      <item itemvalue="Node.js.ViewProfile.js" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Node.js.ViewProfile.js" />
-        <item itemvalue="Jest.Run tests" />
-        <item itemvalue="Jest.get one user from database" />
-      </list>
-    </recent_temporary>
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d564113e-d503-4011-a1d8-11e1e28f4b09" name="Default Changelist" comment="" />
-      <created>1578384246933</created>
+      <changelist id="f97516cd-a94e-472c-be99-cc58bb87deb6" name="Default Changelist" comment="" />
+      <created>1579096868864</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1578384246933</updated>
-      <workItem from="1578384250527" duration="49000" />
-      <workItem from="1578384366399" duration="2233000" />
-      <workItem from="1578390573166" duration="8227000" />
-      <workItem from="1578398975206" duration="34801000" />
-      <workItem from="1578555472546" duration="17058000" />
-      <workItem from="1578925641246" duration="1804000" />
+      <updated>1579096868864</updated>
+      <workItem from="1579096870122" duration="173000" />
     </task>
     <servers />
   </component>
@@ -131,9 +58,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>

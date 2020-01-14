@@ -1,57 +1,26 @@
 import React, {Component} from 'react';
 import classes from './ViewProfile.module.scss';
 import NavBar from "../../components/NavBar/NavBar";
-import {user,userService} from "../../services";
+import {User,userService} from "../../services";
 
 export default class ViewProfile extends Component{
     constructor(props){
         super(props);
         this.state = {
-            id: null,
+            id: 1,
             username: null,
             email: null,
-            telephone: null,
+            phone: null,
             firstName: null,
             surname: null
         };
     }
     componentDidMount() {
        userService.getUser(this.state.id)
-           .then(userData => (
-               this.setState({
-                   username: userData.username,
-                   email: userData.email,
-                   telephone: userData.telephone,
-                   firstName: userData.firstName,
-                   surname: userData.firstName
-               })
-       ))
-            .catch(Error error => console.log(error))
-    }
-
-    updateGUI(){
-        document.getElementById('usernameP').innerHTML = "Username: " + this.state.username;
-        document.getElementById('emailP').innerHTML = "Email: " + this.state.email;
-        document.getElementById('telephoneP').innerHTML = "Telephone: " + this.state.telephone;
-    }
-
-
-    setAttribute(attribute,value){
-        console.log(value);
-        if("" + attribute + "" === "username"){
-            this.setState({username: value});
-            document.getElementById('usernameP').innerHTML = "Username: " + value;
-        }
-        else if("" + attribute + "" === "email"){
-            this.setState({email: value});
-            document.getElementById('emailP').innerHTML = "Email: " + value;
-
-        }
-        else if("" + attribute + "" === "telephone"){
-            this.setState({telephone: value});
-            document.getElementById('telephoneP').innerHTML = "Telephone: " + value;
-
-        }
+           .then(userData => {
+                this.setState(userData);
+            })
+            .catch((error: Error) => console.log(error));
     }
     render(){
         return(
@@ -70,13 +39,13 @@ export default class ViewProfile extends Component{
                         </div>
                         <div className={classes.column}>
                             <div className={classes.bioLayer}>
-                                <h1 className={classes.h1}>Navn og Etternavn</h1>
+                                <h1 className={classes.h1} id={"nameP"}>{"" + this.state.firstName + " " + this.state.surname + ""}</h1>
                                 <b/>
-                                <div className={classes.p} id={"usernameP"}>Brukernavn: ????</div>
+                                <div className={classes.p} id={"usernameP"}>Brukernavn: {this.state.username}</div>
                                 <b/>
-                                <div className={classes.p} id={"emailP"}>Epost: ?????</div>
+                                <div className={classes.p} id={"emailP"}>Epost: {this.state.email}</div>
                                 <b/>
-                                <div className={classes.p} id={"telephoneP"}>Telefonnummer: ????</div>
+                                <div className={classes.p} id={"telephoneP"}>Telefonnummer: {this.state.phone}</div>
                             </div>
                             <div className={classes.editLayer}>
                                 <h4><b>Rediger Info</b></h4>
@@ -104,28 +73,30 @@ export default class ViewProfile extends Component{
         )
     }
     eventHandler(){
-        if(document.getElementById('nameInp') !== null){
-            let newName = document.getElementById('nameInp').value;
-            if(newName != null && newName != ''){
-                this.setAttribute("username",newName);
-            }
+        let newName = this.state.username;
+        let newEmail = this.state.email;
+        let newTelephone = this.state.phone;
+        if((document.getElementById('nameInp') !== null) &&
+            (document.getElementById('nameInp').value !== '')){
+            newName = document.getElementById('nameInp').value;
         }
-        if(document.getElementById('emailInp') !== null){
-            let newEmail = document.getElementById('emailInp').value;
-            if(newEmail != null && newEmail != ''){
-                this.setAttribute("email",newEmail);
-            }
+        if((document.getElementById('emailInp') !== null) &&
+            (document.getElementById('emailInp').value !== '')){
+            newEmail = document.getElementById('emailInp').value;
         }
-        if(document.getElementById('telephoneInp') !== null){
-            let newTelephone = document.getElementById('telephoneInp').value;
-            if(newTelephone !== null && newTelephone !== ''){
-                this.setAttribute('telephone',newTelephone);
-            }
+        if((document.getElementById('telephoneInp') !== null) &&
+            (document.getElementById('telephoneInp').value !== '')){
+            newTelephone = document.getElementById('telephoneInp').value;
         }
-        this.setUser();
+        this.setState({
+            username: newName,
+            email: newEmail,
+            phone: newTelephone
+        }, () => this.setUser());
     }
     setUser(){
-        console.log(this.state.id,this.state.username,this.state.email,this.state.telephone,this.state.firstName,this.state.surname);
-        userService.updateUser(this.state.id,this.state.username,this.state.email,this.state.telephone,this.state.firstName,this.state.surname)
-            .catch((error: Error) => console.log(error.message));    }
+        console.log(this.state.username);
+        userService.updateUser(this.state.id,this.state.username,this.state.email,this.state.phone,this.state.firstName,this.state.surname)
+            .catch((error: Error) => console.log(error.message));
+    }
 }

@@ -8,13 +8,7 @@ import NavBar from '../components/NavBar/NavBar';
 
 function App() {
     return (
-        /**<div className={classes.App}>
-            <Header />
-            <Main />
-        </div>**/
         <div>
-            {/*<NavBar></NavBar>
-            <ViewProfile></ViewProfile>*/}
             <Main />
         </div>
     );
