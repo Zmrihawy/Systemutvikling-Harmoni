@@ -7,6 +7,7 @@ import CreateEvent from '../CreateEvent/CreateEvent';
 import DisplayEvent from '../DisplayEvent/DisplayEvent';
 import DisplayRider from '../DisplayRider/DisplayRider';
 import ViewProfile from '../ViewProfile/ViewProfile';
+import Header from '../../components/Header/Header';
 
 export default class Main extends Component {
     render() {

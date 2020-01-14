@@ -30,7 +30,7 @@ export class Ticket {
     description;
 
     constructor(name, eventId, price, amount, description) {
-        this.name = name;
+        this.name = name; 
         this.eventId = eventId;
         this.price = price;
         this.amount = amount;
