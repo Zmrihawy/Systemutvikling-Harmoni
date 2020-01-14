@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import classes from './ArtistAdder.module.scss';
+
 export default class ArtistAdder extends Component {
     state = {
         artists: this.props.artists
@@ -31,7 +33,12 @@ export default class ArtistAdder extends Component {
         return (
             <>
                 <div>Hvilke artister kommer?</div>
-                <button onClick={this.handleNewArtist}>Legg til</button>
+                <button
+                    className="Button Button--add"
+                    onClick={this.handleNewArtist}
+                >
+                    Legg til
+                </button>
                 {this.state.artists.map((el, i) => {
                     return (
                         <div key={i} id={i}>
@@ -42,33 +49,41 @@ export default class ArtistAdder extends Component {
                                 value={el.name}
                                 className="Input"
                             />
-                            <span
+                            <div
                                 onClick={this.handleDeleteArtist}
-                                style={{ cursor: 'pointer' }}
+                                className="Deleter"
                             >
                                 &#10005;
-                            </span>
+                            </div>
                         </div>
                     );
                 })}
-                <button
-                    onClick={() =>
-                        this.props.save(
-                            this.state.artists,
-                            'artists',
-                            'previous'
-                        )
-                    }
-                >
-                    Forrige
-                </button>
-                <button
-                    onClick={() =>
-                        this.props.save(this.state.artists, 'artists', 'next')
-                    }
-                >
-                    Videre
-                </button>
+                <div className={classes.ArtistAdder__buttons}>
+                    <button
+                        className="Button Button--inverse"
+                        onClick={() =>
+                            this.props.save(
+                                this.state.artists,
+                                'artists',
+                                'previous'
+                            )
+                        }
+                    >
+                        Forrige
+                    </button>
+                    <button
+                        className="Button"
+                        onClick={() =>
+                            this.props.save(
+                                this.state.artists,
+                                'artists',
+                                'next'
+                            )
+                        }
+                    >
+                        Videre
+                    </button>
+                </div>
             </>
         );
     }

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import BasicForm from '../../components/BasicForm/BasicForm';
-import DatePicker from '../../components/eventCreation/DatePicker/DatePicker';
+import DatePicker from '../DatePicker/DatePicker';
 import ArtistAdder from '../eventCreation/ArtistAdder/ArtistAdder';
 import StaffAdder from '../eventCreation/StaffAdder/StaffAdder';
 import TicketAdder from '../eventCreation/TicketAdder/TicketAdder';
+import RiderAdder from '../eventCreation/RiderAdder/RiderAdder';
 
 import classes from './CreateEvent.module.scss';
-import RiderAdder from '../eventCreation/RiderAdder/RiderAdder';
 
 export default class CreateEvent extends Component {
     state = {
