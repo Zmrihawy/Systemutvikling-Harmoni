@@ -1,3 +1,4 @@
+//@flow
 
 export class Event {
     constructor(id, name, hostId, active, location, description, startTime, endTime) {
