@@ -358,7 +358,7 @@ app.put("/api/event/:event_id", (req, res) => {
     if(req.body.location === undefined) return res.json({error : "bad request : mssing location parameter"});
 
     eventDao.updateEvent({eventName : req.body.eventName, hostId : req.body.hostId, active : req.body.active, 
-    location : req.body.location , category : req.body.category, startTime : req.body.startTime, endTime: req.body.endTime, eventId : req.params.event_id}, (status, data) => {
+    location : req.body.location , description : req.body.description, startTime : req.body.startTime, endTime: req.body.endTime, eventId : req.params.event_id}, (status, data) => {
         res.status(status);
         let token =  thisFunctionCreatesNewToken(req.email);
         res.json({data, jwt: token});
