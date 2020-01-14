@@ -42,6 +42,21 @@
         &:focus {
             outline: none;
         }
+
+        &--add {
+            background: linear-gradient(
+                to right bottom,
+                #2ecc71 30%,
+                #27ae60 70%
+            );
+            transition: all 0.2s;
+
+            &:hover,
+            &:active {
+                transform: scale(1.03);
+                color: #fff;
+            }
+        }
     }
 
     .Input {
@@ -62,5 +77,17 @@
     .MediumTitle {
         font-weight: 400;
         font-size: 3.2rem;
+    }
+
+    .Deleter {
+        display: inline-block;
+        color: rgb(219, 7, 7);
+        font-size: 3rem;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover {
+            font-size: 4rem;
+        }
     }
 }
