@@ -8,6 +8,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import Login from '../../Login';
 import Registration from '../../Registration';
 import CreateEvent from '../CreateEvent/CreateEvent';
+import ViewProfile from '../ViewProfile/ViewProfile';
 import DisplayEvent from '../DisplayEvent/DisplayEvent';
 import DisplayRider from '../DisplayRider/DisplayRider';
 import ViewProfile from '../ViewProfile/ViewProfile';

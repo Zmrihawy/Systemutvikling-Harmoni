@@ -1,17 +1,41 @@
 import React, {Component} from 'react';
 import classes from './ViewProfile.module.scss';
 import NavBar from "../../components/NavBar/NavBar";
+import {user,userService} from "../../services";
 
 export default class ViewProfile extends Component{
     constructor(props){
         super(props);
         this.state = {
+            id: null,
             username: null,
-            password: null,
             email: null,
-            telephone: null
+            telephone: null,
+            firstName: null,
+            surname: null
         };
     }
+    componentDidMount() {
+       userService.getUser(this.state.id)
+           .then(userData => (
+               this.setState({
+                   username: userData.username,
+                   email: userData.email,
+                   telephone: userData.telephone,
+                   firstName: userData.firstName,
+                   surname: userData.firstName
+               })
+       ))
+            .catch(Error error => console.log(error))
+    }
+
+    updateGUI(){
+        document.getElementById('usernameP').innerHTML = "Username: " + this.state.username;
+        document.getElementById('emailP').innerHTML = "Email: " + this.state.email;
+        document.getElementById('telephoneP').innerHTML = "Telephone: " + this.state.telephone;
+    }
+
+
     setAttribute(attribute,value){
         console.log(value);
         if("" + attribute + "" === "username"){
@@ -98,5 +122,10 @@ export default class ViewProfile extends Component{
                 this.setAttribute('telephone',newTelephone);
             }
         }
+        this.setUser();
     }
+    setUser(){
+        console.log(this.state.id,this.state.username,this.state.email,this.state.telephone,this.state.firstName,this.state.surname);
+        userService.updateUser(this.state.id,this.state.username,this.state.email,this.state.telephone,this.state.firstName,this.state.surname)
+            .catch((error: Error) => console.log(error.message));    }
 }
