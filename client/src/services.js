@@ -796,9 +796,10 @@ class UserService {
     //DELETE
     deleteUser(userId) {
         return new Promise((resolve, reject) => {
-            fetch("/user/" + userId, {
+            fetch("api/user/" + userId, {
                 method: "DELETE",
                 headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
@@ -826,9 +827,10 @@ class UserService {
             userId: userId
         };
         return new Promise((resolve, reject) => {
-            fetch("/user/" + userId, {
+            fetch("api/user/" + userId, {
                 method: "PUT",
                 headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
@@ -848,9 +850,10 @@ class UserService {
 
     updatePassword(usermail) {
         return new Promise((resolve, reject) => {
-            fetch("/user/" + usermail, {
+            fetch("api/user/" + usermail, {
                 method: "PUT",
                 headers: {
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
