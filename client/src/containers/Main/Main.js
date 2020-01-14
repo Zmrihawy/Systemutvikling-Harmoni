@@ -1,9 +1,5 @@
-import ReactDOM from 'react-dom';
-import * as React from 'react';
-
+import React, { Component } from 'react';
 import { HashRouter, Route } from 'react-router-dom';
-import { Component } from 'react-simplified';
-
 import NavBar from '../../components/NavBar/NavBar';
 import Login from '../../Login';
 import Registration from '../../Registration';
