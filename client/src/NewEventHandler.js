@@ -1,21 +1,14 @@
 import { eventService } from './services';
 
-export default class NewEventHandler {
-    handleNewEvent = async (
-        eventName,
-        eventHostID,
-        eventLocation,
-        eventDescription,
-        eventStartTime,
-        eventEndTime
-    ) => {
+class NewEventHandler {
+    handleNewEvent = async newEvent => {
         try {
             const event = await this.saveEvent(
-                eventName,
-                eventLocation,
-                eventDescription,
-                eventStartTime,
-                eventEndTime
+                newEvent.title,
+                newEvent.location,
+                newEvent.category,
+                newEvent.times[0],
+                newEvent.times[1]
             );
             console.log(event);
         } catch (err) {
@@ -25,9 +18,8 @@ export default class NewEventHandler {
 
     saveEvent = async (name, location, description, startTime, endTime) => {
         const event = eventService.createEvent(
-            'DEFAULT_VALUE',
             name,
-            123,
+            1,
             1,
             location,
             description,
@@ -46,3 +38,5 @@ export default class NewEventHandler {
 
     saveCrew = async () => {};
 }
+
+export default new NewEventHandler();

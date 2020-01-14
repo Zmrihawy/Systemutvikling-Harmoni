@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import NewEventHandler from '../../NewEventHandler';
 import moment from 'moment';
 import Modal from '../../components/UI/Modal/Modal';
 import BasicForm from '../../components/BasicForm/BasicForm';
@@ -79,7 +80,10 @@ export default class CreateEvent extends Component {
     };
 
     handleNewEvent = () => {
-        alert('Arrangement opprettet :)');
+        const newEvent = {
+            ...this.state.newEvent
+        };
+        NewEventHandler.handleNewEvent(newEvent);
     };
 
     handleSaveStaff = input => {
