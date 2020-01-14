@@ -79,8 +79,8 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -106,8 +106,8 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -133,8 +133,8 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -160,8 +160,8 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -187,8 +187,8 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -214,8 +214,8 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -241,8 +241,8 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -268,8 +268,8 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -295,8 +295,8 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -322,8 +322,8 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -339,13 +339,14 @@ class EventService {
 
 
     //POST
-    createEvent(eventId, name, hostId, active, location, startTime, endTime) {
+    createEvent(eventId, name, hostId, active, location, description, startTime, endTime) {
         let data = {
             eventId: eventId,
             name: name,
             hostId: hostId,
             active: active,
             location: location,
+            description: description,
             startTime: startTime,
             endTime: endTime
         };
@@ -360,8 +361,8 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     console.log(json);
@@ -384,8 +385,8 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -414,8 +415,8 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -439,8 +440,8 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -464,8 +465,8 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -491,8 +492,8 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -514,8 +515,8 @@ class EventService {
                 }
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -540,8 +541,8 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -565,8 +566,8 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -577,13 +578,14 @@ class EventService {
         })
     }
 
-    updateEvent(eventId, name, hostId, active, location, startTime, endTime) {
+    updateEvent(eventId, name, hostId, active, location, description, startTime, endTime) {
         let data = {
             eventId: eventId,
             name: name,
             hostId: hostId,
             active: active,
             location: location,
+            description: description,
             startTime: startTime,
             endTime: endTime
         };
@@ -598,8 +600,8 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -623,8 +625,8 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     console.log(json);
@@ -653,8 +655,8 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     console.log(json);
@@ -677,8 +679,8 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     console.log(json);
@@ -701,8 +703,8 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     console.log(json);
@@ -725,8 +727,8 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     console.log(json);
@@ -751,8 +753,8 @@ class UserService {
                     }
                 })
                     .then(response => {
-                        if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                        response.json()
+                        if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                        return response.json();
                     })
                     .then(json => {
                         refreshToken(json.jwt);
@@ -778,8 +780,8 @@ class UserService {
                 }
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -805,8 +807,8 @@ class UserService {
                 }
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     console.log(json);
@@ -837,8 +839,8 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     console.log(json);
@@ -859,8 +861,8 @@ class UserService {
                 }
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     console.log(json);
@@ -892,8 +894,8 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     console.log(json);
@@ -920,8 +922,8 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if(isErrorStatus(response.status)) reject("Error status: "+response.status);
-                    response.json()
+                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
@@ -936,7 +938,7 @@ class UserService {
 }
 
 
-function isErrorStatus(status){
+function isErrorStatus(status) {
     switch (status) {
         case 401:
             return true;
