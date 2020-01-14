@@ -8,25 +8,62 @@ export default class NavBar extends Component {
     }
     render() {
         return (
-            <div id="container">
+            <>
                 <div className={classes.navBar}>
-                    <div className={classes.activeLink} id='eventLink' onClick={event => {this.changePage('eventLink')}}>Mine Arrangement</div>
-                    <div className={classes.navLink} id='createLink' onClick={event => {this.changePage('createLink')}}>Lage Arrangement</div>
-                    <div className={classes.navLink} id='profileLink' onClick={event => {this.changePage('profileLink')}}>Min Profil</div>
-                    <div className={classes.navLink} id='logLink' onClick={event => {this.changePage('logLink')}}>Logge Ut</div>
+                    <div
+                        className={classes.activeLink}
+                        id="eventLink"
+                        onClick={event => {
+                            this.changePage('eventLink');
+                        }}
+                    >
+                        Mine Arrangement
+                    </div>
+                    <div
+                        className={classes.navLink}
+                        id="createLink"
+                        onClick={event => {
+                            this.changePage('createLink');
+                        }}
+                    >
+                        Lage Arrangement
+                    </div>
+                    <div
+                        className={classes.navLink}
+                        id="profileLink"
+                        onClick={event => {
+                            this.changePage('profileLink');
+                        }}
+                    >
+                        Min Profil
+                    </div>
+                    <div
+                        className={classes.navLink}
+                        id="logLink"
+                        onClick={event => {
+                            this.changePage('logLink');
+                        }}
+                    >
+                        Logge Ut
+                    </div>
                 </div>
-                <br/>
-            </div>
-        )
+            </>
+        );
     }
-    changePage(id){
-        if(document.getElementsByClassName("" + classes.activeLink + "") !== null){
+    changePage(id) {
+        if (
+            document.getElementsByClassName('' + classes.activeLink + '') !==
+            null
+        ) {
             console.log('yes');
             console.log(id);
-            if(document.getElementById(id) !== null){
+            if (document.getElementById(id) !== null) {
                 console.log('yes2');
-                document.getElementsByClassName(classes.activeLink)[0].className = "" + classes.navLink + "";
-                document.getElementById(id).className = "" + classes.activeLink + "";
+                document.getElementsByClassName(
+                    classes.activeLink
+                )[0].className = '' + classes.navLink + '';
+                document.getElementById(id).className =
+                    '' + classes.activeLink + '';
             }
         }
     }

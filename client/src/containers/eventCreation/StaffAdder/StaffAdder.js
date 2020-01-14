@@ -9,7 +9,8 @@ export default class StaffAdder extends Component {
         let staff = this.state.staff;
         staff.push({
             name: '',
-            profession: ''
+            profession: '',
+            contact: ''
         });
 
         this.setState({ staff });
@@ -51,6 +52,13 @@ export default class StaffAdder extends Component {
                                 value={el.name}
                                 name="name"
                             />
+                            <input
+                                type="text"
+                                placeholder="Kontaktinfo"
+                                onChange={this.handleChange}
+                                value={el.contact}
+                                name="contact"
+                            />
                             <span
                                 onClick={this.handleDeleteStaff}
                                 style={{ cursor: 'pointer' }}
@@ -68,9 +76,9 @@ export default class StaffAdder extends Component {
                     Forrige
                 </button>
                 <button
-                    onClick={() =>
-                        this.props.save(this.state.staff, 'staff', 'next')
-                    }
+                    onClick={() => {
+                        this.props.finished(this.state.staff, 'staff', '');
+                    }}
                 >
                     Opprett
                 </button>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import Modal from '../../components/UI/Modal/Modal';
 import BasicForm from '../../components/BasicForm/BasicForm';
 import DatePicker from '../DatePicker/DatePicker';
 import ArtistAdder from '../eventCreation/ArtistAdder/ArtistAdder';
@@ -11,6 +12,7 @@ import classes from './CreateEvent.module.scss';
 
 export default class CreateEvent extends Component {
     state = {
+        showBackdrop: false,
         currentPage: 0,
         newEvent: {
             title: '',
@@ -24,6 +26,13 @@ export default class CreateEvent extends Component {
             tickets: [],
             staff: []
         }
+    };
+
+    handleToggleBackdrop = () => {
+        console.log('test');
+        this.state.showBackdrop
+            ? this.setState({ showBackdrop: false })
+            : this.setState({ showBackdrop: true });
     };
 
     handleChange = event => {
@@ -70,6 +79,11 @@ export default class CreateEvent extends Component {
         this.setState({ currentPage: --page });
     };
 
+    handleCreateEvent = input => {
+        this.handleSave(input, 'staff', '');
+        this.handleToggleBackdrop();
+    };
+
     handleSave = (input, select, action) => {
         let result;
         // Remove empty elements from the array
@@ -77,7 +91,10 @@ export default class CreateEvent extends Component {
             result = input.filter(el => el.name.trim() !== '');
         } else if (select === 'staff') {
             result = input.filter(
-                el => el.name.trim() !== '' && el.profession.trim() !== ''
+                el =>
+                    el.name.trim() !== '' &&
+                    el.profession.trim() !== '' &&
+                    el.contact.trim() !== ''
             );
         } else if (select === 'tickets') {
             result = input;
@@ -209,8 +226,21 @@ export default class CreateEvent extends Component {
             case 7:
                 current = (
                     <>
+                        <Modal
+                            show={this.state.showBackdrop}
+                            closed={this.handleToggleBackdrop}
+                        >
+                            <div>Vil du opprette dette arrangementet?</div>
+                            <div>
+                                <button>Ja</button>
+                                <button onClick={this.handleToggleBackdrop}>
+                                    Nei
+                                </button>
+                            </div>
+                        </Modal>
                         <StaffAdder
                             staff={this.state.newEvent.staff}
+                            finished={this.handleCreateEvent}
                             save={this.handleSave}
                         />
                     </>
