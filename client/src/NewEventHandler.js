@@ -3,7 +3,7 @@ import { eventService } from './services';
 class NewEventHandler {
     handleNewEvent = async newEvent => {
         try {
-            const event = await this.saveEvent(
+            const eventID = await this.saveEvent(
                 newEvent.title,
                 newEvent.location,
                 newEvent.category,
@@ -25,9 +25,8 @@ class NewEventHandler {
             startTime,
             endTime
         );
-        console.log('Event: ' + event);
 
-        return event;
+        return event.insertId;
     };
 
     saveTickets = async () => {};
