@@ -3,6 +3,7 @@ import { eventService } from './services';
 class NewEventHandler {
     handleNewEvent = async newEvent => {
         try {
+            console.log(newEvent);
             const eventID = await this.saveEvent(
                 newEvent.title,
                 newEvent.location,
@@ -37,8 +38,8 @@ class NewEventHandler {
 
     saveEvent = async (name, location, description, startTime, endTime) => {
         const event = await eventService.createEvent(
-            name,
             1,
+            name,
             1,
             location,
             description,
