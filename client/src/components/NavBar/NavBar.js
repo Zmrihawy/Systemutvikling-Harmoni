@@ -81,6 +81,8 @@ export default class NavBar extends Component {
                         );
                         break;
                     case 'logLink':
+                        window.sessionStorage.removeItem('jwt');
+                        window.sessionStorage.removeItem('user');
                         history.push('/');
                         break;
                 }
