@@ -51,14 +51,14 @@ export class Rider {
 }
 
 export class Performance {
-    id;
-    userId;
-    eventid;
-    startTime;
-    endTime;
-    contract;
+    id: number;
+    userId: number;
+    eventId: number;
+    startTime: string;
+    endTime: string;
+    contract: string;
 
-    constructor(id, userId, eventId, startTime, endTime, contract) {
+    constructor(id: number, userId: number, eventId: number, startTime: string, endTime: string, contract: string) {
         this.id = id;
         this.userId = userId;
         this.eventId = eventId;
@@ -104,7 +104,8 @@ export class Crew {
 
 class EventService {
     //GET
-    getEvent(id) {
+    getEvent(userId: number, id: number): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + id, {
                 method: 'GET',
@@ -112,7 +113,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status))
@@ -140,7 +142,9 @@ class EventService {
         }
     }
 
-    getAllEvents() {
+
+    getAllEvents(userId: number): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
             fetch('/api/events/', {
                 method: 'GET',
@@ -148,7 +152,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status))
@@ -163,22 +168,13 @@ class EventService {
         });
 
         function handleGetAllEventsResponse(json) {
-            return json.map(
-                data =>
-                    new Event(
-                        data.event_id,
-                        data.name,
-                        data.host_id,
-                        data.active,
-                        data.location,
-                        data.start_time,
-                        data.end_time
-                    )
-            );
+            return json.map(data => new Event(data.event_id, data.name, data.host_id, data.active, data.location, data.description, data.start_time, data.end_time));
         }
     }
 
-    getPerformance(id) {
+
+    getPerformance(userId: number, id: number): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
             fetch('/api/performance/' + id, {
                 method: 'GET',
@@ -186,7 +182,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status))
@@ -211,7 +208,13 @@ class EventService {
         }
     }
 
+<<<<<<< HEAD
     getAllRiders(eventId) {
+=======
+
+    getAllRiders(userId: number, eventId: number): Promise<any> {
+        let data = {userId: userId};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/rider', {
                 method: 'GET',
@@ -219,7 +222,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status))
@@ -240,7 +244,13 @@ class EventService {
         }
     }
 
+<<<<<<< HEAD
     getContract(eventId, artistId) {
+=======
+
+    getContract(userId: number, eventId: number, artistId: number): Promise<any> {
+        let data = {userId: userId};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/user/' + artistId + '/contract', {
                 method: 'GET',
@@ -248,7 +258,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status))
@@ -267,7 +278,13 @@ class EventService {
         }
     }
 
+<<<<<<< HEAD
     getEventContracts(eventId) {
+=======
+
+    getEventContracts(userId: number, eventId: number): Promise<any> {
+        let data = {userId: userId};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/contracts', {
                 method: 'GET',
@@ -275,7 +292,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status))
@@ -294,7 +312,13 @@ class EventService {
         }
     }
 
+<<<<<<< HEAD
     getEventTickets(eventId) {
+=======
+
+    getEventTickets(userId: number, eventId: number): Promise<any> {
+        let data = {userId: userId};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/tickets', {
                 method: 'GET',
@@ -302,7 +326,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status))
@@ -330,7 +355,13 @@ class EventService {
         }
     }
 
+<<<<<<< HEAD
     getPerformanceRiders(eventId, performanceId) {
+=======
+
+    getPerformanceRiders(userId: number, eventId: number, performanceId: number): Promise<any> {
+        let data = {userId: userId};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('/api/user/event/' + eventId + '/' + performanceId, {
                 method: 'GET',
@@ -338,7 +369,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status))
@@ -359,7 +391,13 @@ class EventService {
         }
     }
 
+<<<<<<< HEAD
     getUsersEvents(userId, active) {
+=======
+
+    getUsersEvents(userId: number, active: number): Promise<any> {
+        let data = {userId: userId};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('/api/user/' + userId + '/event/' + active, {
                 method: 'GET',
@@ -367,7 +405,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status))
@@ -382,6 +421,7 @@ class EventService {
         });
 
         function handleGetUsersEventsResponse(json) {
+<<<<<<< HEAD
             return json.map(
                 data =>
                     new Event(
@@ -398,6 +438,15 @@ class EventService {
     }
 
     getCrew(eventId) {
+=======
+            return json.map(data => new Event(data.event_id, data.name, data.host_id, data.active, data.location, data.description, data.startTime, data.endTime))
+        }
+    }
+
+
+    getCrew(userId: number, eventId: number): Promise<any> {
+        let data = {userId: userId};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/crew', {
                 method: 'GET',
@@ -405,7 +454,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status))
@@ -434,6 +484,7 @@ class EventService {
     }
 
     //POST
+<<<<<<< HEAD
     createEvent(
         name,
         hostId,
@@ -443,7 +494,11 @@ class EventService {
         startTime,
         endTime
     ) {
+=======
+    createEvent(userId: number, name: string, hostId: number, active: number, location: string, description: string, startTime: string, endTime: string): Promise<any> {
+>>>>>>> origin/frontend
         let data = {
+            userId: userId,
             name: name,
             hostId: hostId,
             active: active,
@@ -475,8 +530,14 @@ class EventService {
         });
     }
 
+<<<<<<< HEAD
     createTicket(name, eventId, price, amount, description) {
         let data = {
+=======
+    createTicket(userId: number, name: string, eventId: number, price: number, amount: number, description: string): Promise<any> {
+        let data = {
+            userId: userId,
+>>>>>>> origin/frontend
             name: name,
             eventId: eventId,
             price: price,
@@ -507,7 +568,11 @@ class EventService {
         });
     }
 
+<<<<<<< HEAD
     createPerformance(userId, eventId, startTime, endTime, contract) {
+=======
+    createPerformance(userId: number, eventId: number, startTime: string, endTime: string, contract: string): Promise<any> {
+>>>>>>> origin/frontend
         let data = {
             userId: userId,
             eventId: eventId,
@@ -522,7 +587,8 @@ class EventService {
                     'x-access-token': 'MASTER',
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status))
@@ -538,8 +604,13 @@ class EventService {
         });
     }
 
+<<<<<<< HEAD
     createRider(performanceId, name, amount) {
         let data = { name: name, amount: amount };
+=======
+    createRider(userId: number, performanceId: number, name: string, amount: number): Promise<any> {
+        let data = {userId: userId, name: name, amount: amount};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('/api/performance/' + performanceId + '/rider', {
                 method: 'POST',
@@ -564,6 +635,7 @@ class EventService {
         });
     }
 
+<<<<<<< HEAD
     createCrew(eventId, profession, name, contactInfo) {
         let data = {
             eventId: eventId,
@@ -571,6 +643,10 @@ class EventService {
             name: name,
             contactInfo: contactInfo
         };
+=======
+    createCrew(userId: number, eventId: number, profession: string, name: string, contactInfo: string): Promise<any> {
+        let data = {userId: userId, profession: profession, name: name, contactInfo: contactInfo};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/crew', {
                 method: 'POST',
@@ -596,8 +672,13 @@ class EventService {
     }
 
     //DELETE
+<<<<<<< HEAD
     deleteRider(eventId, performanceId, name) {
         let data = { performanceId: performanceId, name: name };
+=======
+    deleteRider(userId: number, eventId: number, performanceId: number, name: string): Promise<any> {
+        let data = {userId: userId, performanceId: performanceId, name: name};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/rider', {
                 method: 'DELETE',
@@ -622,7 +703,12 @@ class EventService {
         });
     }
 
+<<<<<<< HEAD
     deleteEvent(eventId) {
+=======
+    deleteEvent(userId: number, eventId: number): Promise<any> {
+        let data = {userId: userId};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId, {
                 method: 'DELETE',
@@ -630,7 +716,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status))
@@ -647,8 +734,14 @@ class EventService {
     }
 
     //PUT
+<<<<<<< HEAD
     updateTicket(name, eventId, price, amount, description) {
         let data = {
+=======
+    updateTicket(userId: number, name: string, eventId: number, price: number, amount: number, description: string): Promise<any> {
+        let data = {
+            userId: userId,
+>>>>>>> origin/frontend
             name: name,
             eventId: eventId,
             price: price,
@@ -679,8 +772,13 @@ class EventService {
         });
     }
 
+<<<<<<< HEAD
     updateRider(eventId, riderId, name, amount) {
         let data = { riderId: riderId, name: name, amount: amount };
+=======
+    updateRider(userId: number, eventId: number, riderId: number, name: string, amount: number): Promise<any> {
+        let data = {userId: userId, riderId: riderId, name: name, amount: amount};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/rider', {
                 method: 'PUT',
@@ -705,6 +803,7 @@ class EventService {
         });
     }
 
+<<<<<<< HEAD
     updateEvent(
         eventId,
         name,
@@ -715,7 +814,11 @@ class EventService {
         startTime,
         endTime
     ) {
+=======
+    updateEvent(userId: number, eventId: number, name: string, hostId: number, active: number, location: string, description: string, startTime: string, endTime: string): Promise<any> {
+>>>>>>> origin/frontend
         let data = {
+            userId: userId,
             eventId: eventId,
             name: name,
             hostId: hostId,
@@ -749,8 +852,13 @@ class EventService {
         });
     }
 
+<<<<<<< HEAD
     updateContract(eventId, contract) {
         let data = { eventId: eventId, contract: contract };
+=======
+    updateContract(userId: number, eventId: number, contract: string): Promise<any> {
+        let data = {userId: userId, eventId: eventId, contract: contract};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/contract', {
                 method: 'PUT',
@@ -774,6 +882,7 @@ class EventService {
         });
     }
 
+<<<<<<< HEAD
     updatePerformance(
         performanceId,
         userId,
@@ -782,9 +891,12 @@ class EventService {
         endTime,
         contract
     ) {
+=======
+    updatePerformance(userId: number, performanceId: number, eventId: number, startTime: string, endTime: string, contract: string): Promise<any> {
+>>>>>>> origin/frontend
         let data = {
-            performanceId: performanceId,
             userId: userId,
+            performanceId: performanceId,
             eventId: eventId,
             startTime: startTime,
             endTime: endTime,
@@ -813,6 +925,7 @@ class EventService {
         });
     }
 
+<<<<<<< HEAD
     updateCrew(eventId, crewId, profession, name, contactInfo) {
         let data = {
             profession: profession,
@@ -820,6 +933,10 @@ class EventService {
             contactInfo: contactInfo,
             crewId: crewId
         };
+=======
+    updateCrew(userId: number, eventId: number, crewId: number, profession: string, name: string, contactInfo: string): Promise<any> {
+        let data = {userId: userId, profession: profession, name: name, contactInfo: contactInfo, crewId: crewId};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/crew/' + crewId, {
                 method: 'PUT',
@@ -843,8 +960,13 @@ class EventService {
         });
     }
 
+<<<<<<< HEAD
     deleteTicket(name, eventId) {
         let data = { name: name, eventId: eventId };
+=======
+    deleteTicket(userId: number, name: string, eventId: number): Promise<any> {
+        let data = {userId: userId, name: name, eventId: eventId};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/ticket', {
                 method: 'DELETE',
@@ -868,8 +990,13 @@ class EventService {
         });
     }
 
+<<<<<<< HEAD
     deletePerformance(eventId, artistId) {
         let data = { artistId: artistId };
+=======
+    deletePerformance(userId: number, eventId: number, artistId: number): Promise<any> {
+        let data = {userId: userId, artistId: artistId};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/performance', {
                 method: 'DELETE',
@@ -896,6 +1023,7 @@ class EventService {
 
 class UserService {
     //GET
+<<<<<<< HEAD
     getUser(id) {
         return new Promise((resolve, reject) => {
             fetch('/api/user/' + id, {
@@ -931,6 +1059,39 @@ class UserService {
     }
 
     getAllUsers() {
+=======
+    getUser(userId: number): Promise<any> {
+        let data = {userId: userId};
+        return new Promise((resolve, reject) => {
+                fetch("/api/user/" + userId, {
+                    method: "GET",
+                    headers: {
+                        'x-access-token': window.sessionStorage.getItem("jwt"),
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => {
+                        if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                        return response.json();
+                    })
+                    .then(json => {
+                        refreshToken(json.jwt);
+                        resolve(handleGetUserResponse(json.data[0]));
+                    })
+                    .catch(error => console.error("Error: ", error));
+            }
+        );
+
+        function handleGetUserResponse(json: *) {
+            return new User(json.user_id, json.username, json.email, json.phone, json.first_name, json.surname);
+        }
+    }
+
+    getAllUsers(userId: number): Promise<any> {
+        let data = {userId: userId};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('/api/users', {
                 method: 'GET',
@@ -938,7 +1099,8 @@ class UserService {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status))
@@ -947,8 +1109,9 @@ class UserService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    resolve(this.handleGetAllUsersResponse(json));
+                    resolve(handleGetAllUsersResponse(json));
                 })
+<<<<<<< HEAD
                 .catch(error => console.error('Error: ', error));
         });
     }
@@ -969,6 +1132,19 @@ class UserService {
 
     //DELETE
     deleteUser(userId) {
+=======
+                .catch(error => console.error("Error: ", error));
+        });
+
+        function handleGetAllUsersResponse(json: *) {
+            return json.map(data => new User(data.user_id, data.username, data.email, data.phone, data.first_name, data.surname));
+        }
+    }
+
+    //DELETE
+    deleteUser(userId: number): Promise<any> {
+        let data = {userId: userId};
+>>>>>>> origin/frontend
         return new Promise((resolve, reject) => {
             fetch('api/user/' + userId, {
                 method: 'DELETE',
@@ -976,7 +1152,8 @@ class UserService {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status))
@@ -992,7 +1169,11 @@ class UserService {
     }
 
     //PUT
+<<<<<<< HEAD
     updateUser(userId, username, email, phone, firstName, lastName) {
+=======
+    updateUser(userId: number, username: string, email: string, phone: string, firstName: string, lastName: string): Promise<any> {
+>>>>>>> origin/frontend
         let data = {
             username: username,
             email: email,
@@ -1024,15 +1205,24 @@ class UserService {
         });
     }
 
+<<<<<<< HEAD
     updatePassword(usermail) {
         return new Promise((resolve, reject) => {
             fetch('api/user/' + usermail, {
                 method: 'PUT',
+=======
+    updatePassword(userId: number, userMail: string): Promise<any> {
+        let data = {userId: userId};
+        return new Promise((resolve, reject) => {
+            fetch("api/user/" + userMail, {
+                method: "PUT",
+>>>>>>> origin/frontend
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status))
@@ -1048,7 +1238,11 @@ class UserService {
     }
 
     //POST
+<<<<<<< HEAD
     createUser(username, password, email, phone, firstName, lastName) {
+=======
+    createUser(username: string, password: string, email: string, phone: string, firstName: string, lastName: string): Promise<any> {
+>>>>>>> origin/frontend
         let data = {
             username: username,
             password: password,
@@ -1080,7 +1274,11 @@ class UserService {
         });
     }
 
+<<<<<<< HEAD
     loginUser(username, password, email) {
+=======
+    loginUser(username: string, password: string, email: string): Promise<any> {
+>>>>>>> origin/frontend
         let data = {
             username: username,
             password: password,
@@ -1128,10 +1326,14 @@ function refreshToken(jwt) {
     window.sessionStorage.setItem('jwt', jwt);
 }
 
+<<<<<<< HEAD
 function setUser(user) {
     window.sessionStorage.setItem('user', user);
+=======
+function setUser(userId: number | Promise<any>) {
+    window.sessionStorage.setItem("user", userId);
+>>>>>>> origin/frontend
 }
 
-export let user = new User();
 export let userService = new UserService();
 export let eventService = new EventService();
