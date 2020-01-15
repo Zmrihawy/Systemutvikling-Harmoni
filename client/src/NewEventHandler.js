@@ -10,10 +10,14 @@ class NewEventHandler {
                 newEvent.times[0],
                 newEvent.times[1]
             );
+            console.log(eventID);
             const ticketsSuccess = await this.saveTickets(
                 newEvent.tickets,
                 eventID
             );
+            console.log(ticketsSuccess);
+            const crewSuccess = await this.saveCrew(newEvent.staff, eventID);
+            console.log(crewSuccess);
             const performanceIDs = await this.savePerformance(
                 newEvent.artists,
                 eventID,
@@ -68,11 +72,12 @@ class NewEventHandler {
                 staff.contact
             );
         });
+        return staffID.length > 0;
     };
 
     savePerformance = async (artists, eventID, startTime, endTime) => {
         const performanceIDs = artists.map(async artist => {
-            console.log(artist.name);
+            //console.log(artist.name);
             return await eventService.createPerformance(
                 1,
                 eventID,
