@@ -8,6 +8,7 @@ export default class DisplayEvent extends Component {
         title: '',
         category: '',
         location: '',
+        ticketAmount: null,
         image: '',
         dateFrom: null,
         dateTo: null,
@@ -34,30 +35,34 @@ export default class DisplayEvent extends Component {
         ]
     };
 
-
-    render() {
-
+    async componentDidMount() {
+        //TODO eventid
         let eventId = 1;
-        let service_event = eventService.getEvent(eventId);
+            eventService
+            .getEvent(eventId)
+            .then(recivedEvent => {
+                this.setState({title: recivedEvent.name, location: recivedEvent.location, dateFrom: new Date(recivedEvent.startTime).toUTCString().slice(0,-7)})
+            }).catch((error:Error) => console.log('Error event')); 
+       
 
 
-          let artists = [
-            {
-                name: 'Steven Kvinlaug',
-                image: 'https://www.kvinesdal24.no/images/4817c829-a1f7-45b7-90cf-f3cbd4a64109?fit=crop&q=80&w=580'
-            },
-            {
-                name: 'Torje Thorkildsen',
-                image: 'https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/11745966_900217626718522_810341310080559599_n.jpg?_nc_cat=104&_nc_ohc=43mIm-b8EL4AQkdvkWV2NG2ICSHhTl1jD40ytTi-0VN5UbCq6TY7nF-uQ&_nc_ht=scontent-arn2-1.xx&oh=1584203c5b173c3f55c7eeb033e331e8&oe=5E93BB8F'
-            }
-        ];
+        let ticketcount;
+    
+        eventService
+        .getEventTickets(eventId)
+        .then(ticket_array => {
+            this.setState({tickets : ticket_array.map(ticketConvert)});
+        }).then(ticket_array => {
+            ticketcounter(ticket_array)
+            this.setState({ticketAmount : ticketcount})
+        }).catch((error : Error) => console.log('Error ticket'));
 
-
-        let serv_tickets = eventService.getEventTickets(eventId);
-
-        let tickets;
-
+        function ticketcounter(tickets) {
+            tickets.map(ticket => ticketcount += ticket.amount)
+        }
+        
         function ticketConvert(ticket) {
+            ticketcount += ticket.amount; 
             return ({
                 description: ticket.name,
                 amount: ticket.amount,
@@ -66,6 +71,7 @@ export default class DisplayEvent extends Component {
             })
           };
 
+          
 
         const getTickets = (serv_tickets) => {
             Promise.all(tickets.map(ticketConvert))
@@ -84,6 +90,28 @@ export default class DisplayEvent extends Component {
             })
           };
 
+           eventService
+           .getCrew(eventId)
+           .then(staff_array => {
+               this.setState({staff : staff_array.map(staffConvert)});
+           }).catch((error : Error) => console.log('error staff'));
+   
+    }
+
+    render() {
+
+          let artists = [
+            {
+                name: 'Steven Kvinlaug',
+                image: 'https://www.kvinesdal24.no/images/4817c829-a1f7-45b7-90cf-f3cbd4a64109?fit=crop&q=80&w=580'
+            },
+            {
+                name: 'Torje Thorkildsen',
+                image: 'https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/11745966_900217626718522_810341310080559599_n.jpg?_nc_cat=104&_nc_ohc=43mIm-b8EL4AQkdvkWV2NG2ICSHhTl1jD40ytTi-0VN5UbCq6TY7nF-uQ&_nc_ht=scontent-arn2-1.xx&oh=1584203c5b173c3f55c7eeb033e331e8&oe=5E93BB8F'
+            }
+        ];
+
+
 
         const getStaff = (serv_staff) => {
             Promise.all(staff.map(staffConvert))
@@ -98,7 +126,7 @@ export default class DisplayEvent extends Component {
                 latitude='63.446827'
                 date={service_event.startTime}
                 host='Espen Kalleberg'
-                ticketAmount='115'
+                ticketAmount={this.state.ticketAmount}
                 artists={artists}
                 tickets={tickets}
                 staff={staff}
