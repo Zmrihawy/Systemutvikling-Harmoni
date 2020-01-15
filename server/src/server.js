@@ -991,6 +991,9 @@ app.post("/token", (req, res) => {
 function numberError(nums: Array<mixed>): boolean {
     for (let i = 0; i < nums.length; i++) {
         if (isNaN(nums[i])) return true;
+        if(typeof nums[i] === 'string'){
+            if(nums[i].trim() === '') return true;
+        }
     }
     return false;
 }
