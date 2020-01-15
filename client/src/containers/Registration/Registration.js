@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import '../Login/Login.css'; 
 import {User, userService} from "../../services.js";
+import {history} from "../../components/NavBar/NavBar";
 
 /*
 const validatedEmailRegex = /\S+@\S+\.\S+/;
@@ -57,7 +58,7 @@ export default class Registration extends Component {
         this.state.firstName,
         this.state.lastName
       )
-      .then(() => userService.loginUser(this.state.username, this.state.password, this.state.email))
+      .then(() => userService.loginUser(this.state.password, this.state.email))
       .catch(data => {
         
         let s = data.sqlMessage.slice(data.sqlMessage.indexOf('key'));
@@ -76,7 +77,7 @@ export default class Registration extends Component {
         }
         
       });
-
+      history.push('/user/'+window.sessionStorage.getItem("user"));
     }
 
     onChange = (event) => {

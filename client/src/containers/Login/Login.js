@@ -20,11 +20,14 @@ export default class Login extends Component {
                 <input type="email" required name="email" value={this.state.email} placeholder="Email" onChange={this.onChange}/>
                 <input type="password" required name="password" value={this.state.username} placeholder="Password" onChange={this.onChange}/>
                 <input type = "submit" value="Login"></input>
-                <p className="message">Not registered? <a onClick={this.handleClick} href="/registrer">Create an account</a></p>
+                <p className="message">Not registered? <a onClick={this.handleClick}>Create an account</a></p>
               </form>
             </div>
           </div>
         );
+      }
+      handleClick(){
+        history.push('/registrer');
       }
 
       onChange = (event) => {

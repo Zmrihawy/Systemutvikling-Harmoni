@@ -981,7 +981,7 @@ class UserService {
             fetch("api/user/" + userId, {
                 method: "PUT",
                 headers: {
-                    'x-access-token': 'MASTER',
+                    'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'userId': userId
