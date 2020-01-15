@@ -968,7 +968,6 @@ class UserService {
             firstName: firstName,
             lastName: lastName
         };
-        console.log(data);
         return new Promise((resolve, reject) => {
             fetch("/user", {
                 method: "POST",
