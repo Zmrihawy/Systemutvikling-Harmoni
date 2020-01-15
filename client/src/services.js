@@ -1050,6 +1050,7 @@ class UserService {
                 })
                 .then(json => {
                     if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    refreshToken(json.jwt);
                     console.log("services"+json);
                     resolve(json);
                 })
@@ -1086,6 +1087,7 @@ class UserService {
                 .then(json => {
                     console.log(json);
                     if (isError) return reject(json);
+                    refreshToken(json.jwt);
                     console.log(json);
                     setUser(Number(json.userId));
                     resolve(json);
