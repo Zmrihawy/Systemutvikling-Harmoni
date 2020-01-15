@@ -122,7 +122,7 @@ const eventInfo = props => {
                                 Mobil: {staff.number}
                             </p>
                             <p className={classes.staff_proffesion}>
-                                {staff.proffesion}
+                                {staff.profession}
                             </p>
                         </div>
                     ))}
