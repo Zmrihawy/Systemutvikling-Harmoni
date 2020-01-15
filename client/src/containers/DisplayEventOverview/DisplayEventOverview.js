@@ -24,6 +24,7 @@ export default class DisplayEventOverview extends Component {
 
     async componentDidMount() {
         eventService
+        //TODO Hardkoda window.sessionStorage.getItem('user')
             .getUsersEvents(1, 1)
             .then(serverEvents => {
                 this.setState({ events: serverEvents });
