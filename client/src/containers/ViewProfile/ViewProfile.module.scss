@@ -13,28 +13,12 @@
   text-align: center;
   padding: 5px 30px;
 }
-.overlay {
-  position: absolute;
-  top: 40px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  transition: .3s ease;
-  background-image: url("https://cdn.pixabay.com/photo/2015/12/22/04/00/edit-1103598_960_720.png");
-  background-repeat: no-repeat;
-  background-size: 90%;
-}
 .icon {
   color: white;
   font-size: 100px;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
   text-align: center;
 }
 .fadeUser:hover{
@@ -115,4 +99,23 @@ input[type=text]{
   visibility: hidden;
   font-family: "Agency FB";
   font-size: large;
+}
+.redigerBtn {
+  width: 90px;
+  background-color: #333333;
+  border: none;
+  border-radius: 20px;
+  color: whitesmoke;
+  padding: 7.5px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 3px 1.5px;
+  cursor: pointer;
+  transition-duration: 0.3s;
+}
+.redigerBtn:hover {
+  background-color: #333333;
+  color: #ff9f43;
 }

@@ -29,12 +29,9 @@ export default class ViewProfile extends Component{
                         <div className={classes.column} id={"imageColumn"}>
                             <div className={classes.imgContainer} onClick={this.showImageForm}>
                                 <img className={classes.profile} id={"profileImg"} src="https://images.assetsdelivery.com/compings_v2/apoev/apoev1806/apoev180600175.jpg" alt="Profile picture"/>
-                                <div className={classes.overlay}>
-                                    <a href="#" className={classes.icon} title="User Profile">
-                                        <i className={classes.fadeUser}></i>
-                                    </a>
-                                </div>
                             </div>
+                            <button className={classes.redigerBtn}>Rediger profilbilde</button>
+                            <img className={classes.icon} src={"http://simpleicon.com/wp-content/uploads/wrench.png"}></img>
                             <div className={classes.imageForm} id={"imageFormId"}>
                                 <div className={classes.row}>
                                     <div className={classes.column}>
