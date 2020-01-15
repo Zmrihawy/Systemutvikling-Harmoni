@@ -108,7 +108,7 @@ class EventService {
     //GET
     getEvent(userId: number, id: number): Promise<any> {
         let data = {userId: userId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + id, {
                 method: "GET",
@@ -139,7 +139,7 @@ class EventService {
 
     getAllEvents(userId: number): Promise<any> {
         let data = {userId: userId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/events/", {
                 method: "GET",
@@ -170,7 +170,7 @@ class EventService {
 
     getPerformance(userId: number, id: number): Promise<any> {
         let data = {userId: userId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/performance/" + id, {
                 method: "GET",
@@ -201,7 +201,7 @@ class EventService {
 
     getAllRiders(userId: number, eventId: number): Promise<any> {
         let data = {userId: userId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/rider", {
                 method: "GET",
@@ -232,7 +232,7 @@ class EventService {
 
     getContract(userId: number, eventId: number, artistId: number): Promise<any> {
         let data = {userId: userId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/user/" + artistId + "/contract", {
                 method: "GET",
@@ -263,7 +263,7 @@ class EventService {
 
     getEventContracts(userId: number, eventId: number): Promise<any> {
         let data = {userId: userId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/contracts", {
                 method: "GET",
@@ -294,7 +294,7 @@ class EventService {
 
     getEventTickets(userId: number, eventId: number): Promise<any> {
         let data = {userId: userId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/tickets", {
                 method: "GET",
@@ -325,7 +325,7 @@ class EventService {
 
     getPerformanceRiders(userId: number, eventId: number, performanceId: number): Promise<any> {
         let data = {userId: userId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/user/event/" + eventId + "/" + performanceId, {
                 method: "GET",
@@ -356,7 +356,7 @@ class EventService {
 
     getUsersEvents(userId: number, active: number): Promise<any> {
         let data = {userId: userId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/user/" + userId + "/event/" + active, {
                 method: "GET",
@@ -387,7 +387,7 @@ class EventService {
 
     getCrew(userId: number, eventId: number): Promise<any> {
         let data = {userId: userId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/crew", {
                 method: "GET",
@@ -427,7 +427,7 @@ class EventService {
             startTime: startTime,
             endTime: endTime
         };
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event", {
                 method: "POST",
@@ -461,7 +461,7 @@ class EventService {
             amount: amount,
             description: description
         };
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/ticket", {
                 method: "POST",
@@ -494,7 +494,7 @@ class EventService {
             endTime: endTime,
             contract: contract
         };
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/performance", {
                 method: "POST",
@@ -521,7 +521,7 @@ class EventService {
 
     createRider(userId: number, performanceId: number, name: string, amount: number): Promise<any> {
         let data = {userId: userId, name: name, amount: amount};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/performance/" + performanceId + "/rider", {
                 method: "POST",
@@ -548,7 +548,7 @@ class EventService {
 
     createCrew(userId: number, eventId: number, profession: string, name: string, contactInfo: string): Promise<any> {
         let data = {userId: userId, profession: profession, name: name, contactInfo: contactInfo};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/crew", {
                 method: "POST",
@@ -577,7 +577,7 @@ class EventService {
     //DELETE
     deleteRider(userId: number, eventId: number, performanceId: number, name: string): Promise<any> {
         let data = {userId: userId, performanceId: performanceId, name: name};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/rider", {
                 method: "DELETE",
@@ -604,7 +604,7 @@ class EventService {
 
     deleteEvent(userId: number, eventId: number): Promise<any> {
         let data = {userId: userId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId, {
                 method: "DELETE",
@@ -639,7 +639,7 @@ class EventService {
             amount: amount,
             description: description
         };
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/ticket", {
                 method: "PUT",
@@ -666,7 +666,7 @@ class EventService {
 
     updateRider(userId: number, eventId: number, riderId: number, name: string, amount: number): Promise<any> {
         let data = {userId: userId, riderId: riderId, name: name, amount: amount};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/rider", {
                 method: "PUT",
@@ -702,7 +702,7 @@ class EventService {
             startTime: startTime,
             endTime: endTime
         };
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId, {
                 method: "PUT",
@@ -729,7 +729,7 @@ class EventService {
 
     updateContract(userId: number, eventId: number, contract: string): Promise<any> {
         let data = {userId: userId, eventId: eventId, contract: contract};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/contract", {
                 method: "PUT",
@@ -763,7 +763,7 @@ class EventService {
             endTime: endTime,
             contract: contract
         };
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/performance", {
                 method: "PUT",
@@ -790,7 +790,7 @@ class EventService {
 
     updateCrew(userId: number, eventId: number, crewId: number, profession: string, name: string, contactInfo: string): Promise<any> {
         let data = {userId: userId, profession: profession, name: name, contactInfo: contactInfo, crewId: crewId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/crew/" + crewId, {
                 method: "PUT",
@@ -817,7 +817,7 @@ class EventService {
 
     deleteTicket(userId: number, name: string, eventId: number): Promise<any> {
         let data = {userId: userId, name: name, eventId: eventId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/ticket", {
                 method: "DELETE",
@@ -844,7 +844,7 @@ class EventService {
 
     deletePerformance(userId: number, eventId: number, artistId: number): Promise<any> {
         let data = {userId: userId, artistId: artistId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/performance", {
                 method: "DELETE",
@@ -875,7 +875,7 @@ class UserService {
     //GET
     getUser(userId: number): Promise<any> {
         let data = {userId: userId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
                 fetch("/api/user/" + userId, {
                     method: "GET",
@@ -906,7 +906,7 @@ class UserService {
 
     getAllUsers(userId: number): Promise<any> {
         let data = {userId: userId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/api/users", {
                 method: "GET",
@@ -937,7 +937,7 @@ class UserService {
     //DELETE
     deleteUser(userId: number): Promise<any> {
         let data = {userId: userId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("api/user/" + userId, {
                 method: "DELETE",
@@ -971,7 +971,7 @@ class UserService {
             lastName: lastName,
             userId: userId
         };
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("api/user/" + userId, {
                 method: "PUT",
@@ -998,7 +998,7 @@ class UserService {
 
     updatePassword(userId: number, userMail: string): Promise<any> {
         let data = {userId: userId};
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("api/user/" + userMail, {
                 method: "PUT",
@@ -1034,7 +1034,7 @@ class UserService {
             firstName: firstName,
             lastName: lastName
         };
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/user", {
                 method: "POST",
@@ -1062,7 +1062,7 @@ class UserService {
             password: password,
             email: email
         };
-        let isError:Boolean = false;
+        let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/login", {
                 method: "POST",
