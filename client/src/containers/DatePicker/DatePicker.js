@@ -54,7 +54,9 @@ export default class DatePicker extends Component {
     render() {
         return (
             <>
-                <div className="MediumTitle">Når skal arrangementet være?</div>
+                <div className="MediumTitle" style={{ marginBottom: '3rem' }}>
+                    Når skal arrangementet være?
+                </div>
                 <Calendar
                     selectRange={true}
                     minDate={new Date()}
@@ -64,8 +66,8 @@ export default class DatePicker extends Component {
                     ]}
                     onChange={this.handleDateChange}
                 />
-                <div>Fra || Til</div>
-                <div>
+                <div>Fra &nbsp;||&nbsp; Til</div>
+                <div className={classes.DatePicker__times}>
                     <TimePicker
                         allowEmpty={false}
                         minuteStep={5}
@@ -123,4 +125,3 @@ export default class DatePicker extends Component {
         );
     }
 }
-// value={[props.dateFrom, props.dateTo]}

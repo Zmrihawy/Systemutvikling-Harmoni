@@ -1,6 +1,15 @@
 .TimePicker {
     transform: scale(1.25);
+
+    &:first-of-type {
+        margin-right: 4rem;
+    }
 }
 
 .DatePicker {
+    &__buttons {
+        align-self: stretch;
+        display: flex;
+        justify-content: space-around;
+    }
 }

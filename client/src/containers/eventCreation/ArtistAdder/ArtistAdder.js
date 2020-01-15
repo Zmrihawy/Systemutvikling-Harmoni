@@ -32,7 +32,7 @@ export default class ArtistAdder extends Component {
     render() {
         return (
             <>
-                <div>Hvilke artister kommer?</div>
+                <div className="MediumTitle">Hvilke artister kommer?</div>
                 <button
                     className="Button Button--add"
                     onClick={this.handleNewArtist}
@@ -47,7 +47,7 @@ export default class ArtistAdder extends Component {
                                 placeholder="Navn"
                                 onChange={this.handleChange}
                                 value={el.name}
-                                className="Input"
+                                className="Input Input--small"
                             />
                             <div
                                 onClick={this.handleDeleteArtist}

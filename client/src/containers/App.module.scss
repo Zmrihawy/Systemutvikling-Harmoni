@@ -6,8 +6,13 @@
 
 :global {
     .Button {
+        box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.4);
         border-radius: 0.5rem;
-        background: linear-gradient(to left, #feca57 50%, #ff9f43 50%);
+        background: linear-gradient(
+            to left,
+            #fff 50%,
+            rgba(0, 0, 0, 0.795) 50%
+        );
         border: none;
         background-position: right bottom;
         background-size: 200% 100%;
@@ -16,18 +21,23 @@
         font-size: 2.2rem;
         padding: 1rem 5rem;
         transition: background-position 0.5s ease-in-out, transform 0.4s,
-            box-shadow 0.4s;
+            box-shadow 0.4s, color 0.4s;
         cursor: pointer;
 
         &:hover,
         &:active {
+            color: white;
             background-position: left bottom;
             transform: translateY(-0.8rem) scale(1.03);
-            box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.25);
+            box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.45);
         }
 
         &--inverse {
-            background: linear-gradient(to left, #ff9f43 50%, #feca57 50%);
+            background: linear-gradient(
+                to left,
+                rgba(0, 0, 0, 0.795) 50%,
+                #fff 50%
+            );
             background-position: left bottom;
             background-size: 200% 100%;
 
@@ -35,7 +45,7 @@
             &:active {
                 background-position: right bottom;
                 transform: translateY(-0.8rem) scale(1.03);
-                box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.25);
+                box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.45);
             }
         }
 
@@ -60,14 +70,21 @@
     }
 
     .Input {
+        position: relative;
+        border-radius: 1rem;
         font-family: 'Lato', sans-serif;
-        font-size: 2.2rem;
+        font-size: 2.5rem;
         margin-top: 3rem;
         border: none;
         border-bottom: 1px solid #333;
-        background-color: rgb(247, 247, 247);
+        background-color: rgb(245, 245, 245);
         transition: all 0.4s;
         padding: 1rem 5rem;
+
+        &--small {
+            font-size: 1.8rem;
+            border: none;
+        }
 
         &:focus {
             transform: scale(1.1);
@@ -80,6 +97,7 @@
     }
 
     .Deleter {
+        margin-left: 1rem;
         display: inline-block;
         color: rgb(219, 7, 7);
         font-size: 3rem;
@@ -87,7 +105,7 @@
         transition: all 0.3s;
 
         &:hover {
-            font-size: 4rem;
+            transform: translateX(0.6rem);
         }
     }
 }

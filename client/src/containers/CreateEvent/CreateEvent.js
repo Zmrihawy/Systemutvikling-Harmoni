@@ -211,7 +211,7 @@ export default class CreateEvent extends Component {
                 } else {
                     current = (
                         <>
-                            <p>No artists have been added</p>
+                            <p>Ingen artister har blitt lagt til</p>
                             <button onClick={this.handlePrevious}>
                                 Forrige
                             </button>
