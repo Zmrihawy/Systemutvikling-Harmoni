@@ -566,6 +566,8 @@ class EventService {
             endTime: endTime,
             contract: contract
         };
+        console.log('Data:');
+        console.log(data);
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/user', {
                 method: 'POST',

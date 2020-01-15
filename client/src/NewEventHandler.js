@@ -17,20 +17,20 @@ class NewEventHandler {
                 eventID
             );
             console.log(ticketsSuccess);
-            const crewSuccess = await this.saveCrew(newEvent.staff, eventID);
-            console.log(crewSuccess);
+            //const crewSuccess = await this.saveCrew(newEvent.staff, eventID);
+            //console.log(crewSuccess);
             const performanceIDs = await this.savePerformance(
                 newEvent.artists,
                 eventID,
                 newEvent.times[0],
                 newEvent.times[1]
             );
-            console.log(performanceIDs);
-            const riderSuccess = await this.saveRiders(
+            //console.log(performanceIDs);
+            /* const riderSuccess = await this.saveRiders(
                 newEvent.artist,
                 performanceIDs
-            );
-            console.log(riderSuccess);
+            ); */
+            //console.log(riderSuccess);
         } catch (err) {
             console.log(err.message);
         }
@@ -38,7 +38,7 @@ class NewEventHandler {
 
     saveEvent = async (name, location, description, startTime, endTime) => {
         const event = await eventService.createEvent(
-            1,
+            1, //userID
             name,
             1,
             location,
@@ -53,6 +53,7 @@ class NewEventHandler {
     saveTickets = async (tickets, eventID) => {
         const ticketsID = tickets.map(async ticket => {
             return await eventService.createTicket(
+                1,
                 ticket.description,
                 eventID,
                 ticket.price,
@@ -64,9 +65,10 @@ class NewEventHandler {
         return ticketsID.length > 0;
     };
 
-    saveCrew = async (staff, eventID) => {
+    /* saveCrew = async (staff, eventID) => {
         const staffID = staff.map(async staff => {
             return await eventService.createCrew(
+                1,
                 eventID,
                 staff.profession,
                 staff.name,
@@ -74,27 +76,29 @@ class NewEventHandler {
             );
         });
         return staffID.length > 0;
-    };
+    }; */
 
     savePerformance = async (artists, eventID, startTime, endTime) => {
-        const performanceIDs = artists.map(async artist => {
-            //console.log(artist.name);
-            return await eventService.createPerformance(
+        const performanceIDs = await artists.map(async artist => {
+            const performance = await eventService.createPerformance(
                 1,
                 eventID,
                 startTime,
                 endTime,
                 artist.name
             );
+            console.log('Performance:');
+            console.log(performance);
+            return performance;
         });
-        //console.log(performanceIDs.insertId);
-        return performanceIDs.map(performanceIDs => performanceIDs.insertId);
+        return 1;
     };
 
-    saveRiders = async (artists, performanceIDs) => {
+    /* saveRiders = async (artists, performanceIDs) => {
         const riderIDs = artists.map(async (artist, index) => {
             return artists.riders.map(async rider => {
                 return await eventService.createRider(
+                    1,
                     performanceIDs[index],
                     rider.description,
                     rider.amount
@@ -103,7 +107,7 @@ class NewEventHandler {
         });
 
         return riderIDs.length > 0;
-    };
+    }; */
 }
 
 export default new NewEventHandler();
