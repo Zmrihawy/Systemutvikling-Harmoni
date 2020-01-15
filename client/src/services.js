@@ -1057,9 +1057,8 @@ class UserService {
         })
     }
 
-    loginUser(username: string, password: string, email: string): Promise<any> {
+    loginUser(password: string, email: string): Promise<any> {
         let data = {
-            username: username,
             password: password,
             email: email
         };
@@ -1068,7 +1067,6 @@ class UserService {
             fetch("/login", {
                 method: "POST",
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
