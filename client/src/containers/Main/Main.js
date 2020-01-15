@@ -10,6 +10,7 @@ import CreateEvent from '../CreateEvent/CreateEvent';
 import DisplayEvent from '../DisplayEvent/DisplayEvent';
 import DisplayRider from '../DisplayRider/DisplayRider';
 import ViewProfile from '../ViewProfile/ViewProfile';
+import DisplayEventEdit from '../DisplayEventEdit/DisplayEventEdit';
 import Header from '../../components/Header/Header';
 
 export default class Main extends Component {
@@ -21,6 +22,7 @@ export default class Main extends Component {
                 <Route exact path="/registrer" component={Registration} />
                 <Route exact path="/arrangement" component={DisplayEventOverview} />
                 <Route exact path="/arrangement/:id" component={DisplayEvent} />
+                <Route exact path="/arrangement/:id/rediger" component={DisplayEventEdit} />
                 <Route
                     exact
                     path="/arrangement/user/id/rider"

@@ -13,8 +13,7 @@ import {
 
 import { faCommentDollar } from '@fortawesome/free-solid-svg-icons';
 
-import { createHashHistory } from 'history';
-const history = createHashHistory();
+import { history } from '../App';
 
 export default class DisplayEvent extends Component {
     state = {
@@ -54,7 +53,6 @@ export default class DisplayEvent extends Component {
         eventService
             .getEvent(eventId)
             .then(recivedEvent => {
-                console.log(recivedEvent);
                 this.setState({
                     title: recivedEvent.name,
                     location: recivedEvent.location,
