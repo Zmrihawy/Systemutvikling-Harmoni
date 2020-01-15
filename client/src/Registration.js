@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css';
 
-import { createHashHistory } from 'history';
-const history = createHashHistory();
+import { history } from './containers/App'
 
 export default class Registration extends Component {
     handleClick = e => {

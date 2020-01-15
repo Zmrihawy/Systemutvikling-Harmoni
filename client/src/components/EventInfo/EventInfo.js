@@ -12,11 +12,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const eventInfo = props => {
+    console.log(props.id);
     return (
         <div className={classes.container}>
             <div className={classes.top__section}>
                 <h1 className={classes.title}>{props.title}</h1>
-                <button className={classes.button__edit}>
+                <button
+                    className={classes.button__edit}
+                    onClick={() => props.handleEditClick(1)}
+                >
                     Rediger arrangement
                 </button>
             </div>
@@ -38,7 +42,10 @@ const eventInfo = props => {
                 </div>
                 <div className={`${classes.date} ${classes.info__item}`}>
                     <h2 className={classes.info__title}>Dato</h2>
-                    <p className={classes.info__description}>{props.date}</p>
+                    <p className={classes.info__description}>
+                        {' '}
+                        Til: {props.dateFrom} <br /> Fra: {props.dateTo}
+                    </p>
                     <FontAwesomeIcon
                         className={classes.info__icon}
                         icon={faCalendarAlt}
@@ -87,7 +94,10 @@ const eventInfo = props => {
                             <button className={classes.button__contract}>
                                 Kontrakt
                             </button>
-                            <button className={classes.button__rider}>
+                            <button
+                                className={classes.button__rider}
+                                onClick={props.handleRiderClick}
+                            >
                                 Rider
                             </button>
                         </div>
@@ -122,7 +132,7 @@ const eventInfo = props => {
                                 Mobil: {staff.number}
                             </p>
                             <p className={classes.staff_proffesion}>
-                                {staff.proffesion}
+                                {staff.profession}
                             </p>
                         </div>
                     ))}

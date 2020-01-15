@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import RiderInfo from '../../components/RiderInfo/RiderInfo';
 
+import { history } from '../App'; 
+
 export default class DisplayRider extends Component {
+    handleBackClick = (e) => {
+        e.preventDefault(); 
+        history.goBack(); 
+    }
+
     render() {
         let artist = {
             name: 'Steven Kvinlaug',
@@ -44,6 +51,8 @@ export default class DisplayRider extends Component {
             ]
         };
 
-        return <RiderInfo artist={artist} />;
+        return <RiderInfo 
+        artist={artist}
+        handleBackClick={this.handleBackClick} />;
     }
 }

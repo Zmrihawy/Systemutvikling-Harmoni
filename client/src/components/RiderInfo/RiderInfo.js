@@ -10,7 +10,10 @@ import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 const riderInfo = props => {
     return (
         <div className={classes.container}>
-            <h1 className={classes.title}>Rider for {props.artist.name}</h1>
+            <div className={classes.header}>
+                <button className={classes.button__back} onClick={props.handleBackClick}>Tilbake</button>
+                <h1 className={classes.title}>Rider for {props.artist.name}</h1>
+            </div>
 
             <div className={classes.rider__list}>
                 {props.artist.riders.map((rider, i) => (

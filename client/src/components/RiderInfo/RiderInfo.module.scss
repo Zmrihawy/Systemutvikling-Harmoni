@@ -3,15 +3,27 @@
     margin: 20px 100px 100px 100px;
     grid-gap: 20px;
     grid-template-areas:
-        'title'
+        'header'
         'rider__list';
     font-size: 1.5em;
     height: fit-content;
 }
 
+.header {
+    grid-area: header;
+    grid-template-areas:
+    'button__back'
+    'title';
+}
+
+.button__back {
+    grid-area: button__back;
+    padding: 10px;
+    border-radius: 10px;
+}
+
 .title {
     grid-area: title;
-    margin-top: 30px;
     font-size: 3em;
 }
 

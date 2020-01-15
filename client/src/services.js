@@ -1,5 +1,4 @@
 //@flow
-
 export class Event {
     constructor(
         id,
@@ -117,7 +116,7 @@ class EventService {
             fetch('/api/event/' + id, {
                 method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': 'MASTER',
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -143,8 +142,8 @@ class EventService {
                 json.active,
                 json.location,
                 json.description,
-                json.startTime,
-                json.endTime
+                json.start_time,
+                json.end_time
             );
         }
     }
@@ -324,7 +323,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/tickets', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': 'MASTER',
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -343,7 +342,7 @@ class EventService {
         });
 
         function handleGetEventTicketsResponse(json) {
-            return json.map(
+            return json.data.map(
                 data =>
                     new Ticket(
                         data.name,
@@ -397,7 +396,7 @@ class EventService {
             fetch('/api/user/' + userId + '/event/' + active, {
                 method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': 'MASTER',
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -410,7 +409,7 @@ class EventService {
                 .then(json => {
                     refreshToken(json.jwt);
                     if (isError) return reject(json);
-                    resolve(handleGetUsersEventsResponse(json));
+                    resolve(handleGetUsersEventsResponse(json.data));
                 })
                 .catch(error => console.error('Error: ', error));
         });
@@ -421,12 +420,12 @@ class EventService {
                     new Event(
                         data.event_id,
                         data.name,
-                        data.host_id,
-                        data.active,
+                        '',
+                        '',
                         data.location,
-                        data.description,
-                        data.startTime,
-                        data.endTime
+                        '',
+                        data.start_time,
+                        ''
                     )
             );
         }
@@ -438,7 +437,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/crew', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': 'MASTER',
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -457,7 +456,7 @@ class EventService {
         });
 
         function handleGetCrewResponse(json) {
-            return json.map(
+            return json.data.map(
                 data =>
                     new Crew(
                         data.crew_id,
@@ -825,7 +824,9 @@ class EventService {
         let data = {
             userId: userId,
             eventId: eventId,
-            name: name,
+            eventName: name,
+            hostId: hostId,
+            userId: 1,
             active: active,
             location: location,
             description: description,
@@ -833,11 +834,12 @@ class EventService {
             endTime: endTime
         };
         let isError: boolean = false;
+        console.log(data);
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId, {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': 'MASTER',
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
