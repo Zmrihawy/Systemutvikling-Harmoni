@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import EventInfo from '../../components/EventInfo/EventInfo';
 import {Event, Ticket, Crew, Performance, User, eventService, userService} from '../../services';
+import { faCommentDollar } from '@fortawesome/free-solid-svg-icons';
 
 export default class DisplayEvent extends Component {
     state = {
@@ -41,28 +42,24 @@ export default class DisplayEvent extends Component {
             eventService
             .getEvent(eventId)
             .then(recivedEvent => {
-                this.setState({title: recivedEvent.name, location: recivedEvent.location, dateFrom: new Date(recivedEvent.startTime).toUTCString().slice(0,-7)})
+                this.setState({title: recivedEvent.name, location: recivedEvent.location, dateFrom: new Date(recivedEvent.startTime).toUTCString().slice(0,-7), dateTo: new Date(recivedEvent.endTime).toUTCString().slice(0,-7)})
             }).catch((error:Error) => console.log('Error event')); 
-       
-
-
-        let ticketcount;
     
         eventService
         .getEventTickets(eventId)
         .then(ticket_array => {
             this.setState({tickets : ticket_array.map(ticketConvert)});
-        }).then(ticket_array => {
-            ticketcounter(ticket_array)
-            this.setState({ticketAmount : ticketcount})
-        }).catch((error : Error) => console.log('Error ticket'));
+            let ticketCount = ticketcounter(ticket_array);
+            this.setState({ticketAmount: ticketCount})
+        }).catch((error : Error) => console.error(error));
 
         function ticketcounter(tickets) {
-            tickets.map(ticket => ticketcount += ticket.amount)
+            let ticketCount = 0; 
+            tickets.map(ticket => ticketCount += ticket.amount); 
+            return ticketCount; 
         }
         
-        function ticketConvert(ticket) {
-            ticketcount += ticket.amount; 
+        function ticketConvert(ticket) { 
             return ({
                 description: ticket.name,
                 amount: ticket.amount,
@@ -124,7 +121,8 @@ export default class DisplayEvent extends Component {
                 location={service_event.location}
                 longitude='10.421906'
                 latitude='63.446827'
-                date={service_event.startTime}
+                dateFrom={this.state.dateFrom}
+                dateTo= {this.state.dateTo}
                 host='Espen Kalleberg'
                 ticketAmount={this.state.ticketAmount}
                 artists={artists}

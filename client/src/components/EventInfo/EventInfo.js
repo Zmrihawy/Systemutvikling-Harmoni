@@ -38,7 +38,7 @@ const eventInfo = props => {
                 </div>
                 <div className={`${classes.date} ${classes.info__item}`}>
                     <h2 className={classes.info__title}>Dato</h2>
-                    <p className={classes.info__description}>{props.date}</p>
+                    <p className={classes.info__description}> Til: {props.dateFrom} Fra: {props.dateTo}</p>
                     <FontAwesomeIcon
                         className={classes.info__icon}
                         icon={faCalendarAlt}
