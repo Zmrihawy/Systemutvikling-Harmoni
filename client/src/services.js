@@ -109,7 +109,7 @@ class EventService {
             fetch('/api/event/' + id, {
                 method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token':'MASTER',
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
@@ -121,6 +121,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    console.log("service" +json.data[0])
                     resolve(handleGetEventResponse(json.data[0]));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -134,8 +135,8 @@ class EventService {
                 json.active,
                 json.location,
                 json.description,
-                json.startTime,
-                json.endTime
+                json.start_time,
+                json.end_time
             );
         }
     }
@@ -299,7 +300,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/tickets', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token':'MASTER',
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
@@ -317,7 +318,7 @@ class EventService {
         });
 
         function handleGetEventTicketsResponse(json) {
-            return json.map(
+            return json.data.map(
                 data =>
                     new Ticket(
                         data.name,
@@ -402,7 +403,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/crew', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token':'MASTER',
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
@@ -420,7 +421,7 @@ class EventService {
         });
 
         function handleGetCrewResponse(json) {
-            return json.map(
+            return json.data.map(
                 data =>
                     new Crew(
                         data.crew_id,

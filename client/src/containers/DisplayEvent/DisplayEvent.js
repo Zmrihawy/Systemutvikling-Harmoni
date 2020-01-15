@@ -37,13 +37,18 @@ export default class DisplayEvent extends Component {
     };
 
     async componentDidMount() {
-        //TODO eventid
         let eventId = 1;
             eventService
             .getEvent(eventId)
             .then(recivedEvent => {
+                console.log(recivedEvent)
                 this.setState({title: recivedEvent.name, location: recivedEvent.location, dateFrom: new Date(recivedEvent.startTime).toUTCString().slice(0,-7), dateTo: new Date(recivedEvent.endTime).toUTCString().slice(0,-7)})
             }).catch((error:Error) => console.log('Error event')); 
+
+
+            const getTickets = (tickets) => {
+                Promise.all(tickets.map(ticketConvert))
+               }
     
         eventService
         .getEventTickets(eventId)
@@ -70,9 +75,10 @@ export default class DisplayEvent extends Component {
 
           
 
-        const getTickets = (serv_tickets) => {
-            Promise.all(tickets.map(ticketConvert))
+           const getStaff = (serv_staff) => {
+            Promise.all(staff.map(staffConvert))
            }
+    
 
 
         let serv_staff = eventService.getCrew(eventId);
@@ -94,7 +100,7 @@ export default class DisplayEvent extends Component {
            }).catch((error : Error) => console.log('error staff'));
    
     }
-
+    
     render() {
 
           let artists = [
@@ -108,17 +114,12 @@ export default class DisplayEvent extends Component {
             }
         ];
 
-
-
-        const getStaff = (serv_staff) => {
-            Promise.all(staff.map(staffConvert))
-           }
   
         return (
             <EventInfo
-                title= {service_event.name}
+                title= {this.state.title}
                 desc='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id sapien aliquam, dictum magna vel, accumsan felis. Vivamus ultricies, urna eget lobortis lacinia, dolor tortor accumsan nisi, et mattis quam lectus non sem. Pellentesque elementum cursus luctus. Vestibulum a odio in purus condimentum congue lacinia a risus. Phasellus porta nisl dolor, eu luctus orci dictum ut. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus velit lacus, mattis sit amet convallis ac, eleifend non nunc. Nam semper diam at mauris luctus, nec suscipit quam efficitur. Aliquam dolor nulla, facilisis at dictum vitae, interdum at augue. Nunc ut magna libero. Curabitur ac faucibus eros, eget sodales ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque lobortis dictum efficitur. In magna turpis, tristique in euismod non, sodales in justo. Etiam sed enim ut ante consequat vehicula nec eu leo. Etiam leo tellus, sagittis at sagittis aliquam, aliquam eu magna. Mauris eu suscipit tortor, non aliquam tortor. Pellentesque volutpat ornare venenatis. Nunc sollicitudin quam et felis consequat, a vulputate dolor fringilla. Donec porttitor aliquet placerat. Maecenas sodales augue quis odio condimentum placerat. Quisque vitae pulvinar velit.'
-                location={service_event.location}
+                location={this.state.location}
                 longitude='10.421906'
                 latitude='63.446827'
                 dateFrom={this.state.dateFrom}
@@ -126,8 +127,8 @@ export default class DisplayEvent extends Component {
                 host='Espen Kalleberg'
                 ticketAmount={this.state.ticketAmount}
                 artists={artists}
-                tickets={tickets}
-                staff={staff}
+                tickets={this.state.tickets}
+                staff={this.state.staff}
             />
         );
     }
