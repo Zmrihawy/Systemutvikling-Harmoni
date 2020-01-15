@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classes from './NavBar.module.scss';
 
 import { createHashHistory } from 'history';
-const history = createHashHistory();
+export const history = createHashHistory();
 
 export default class NavBar extends Component {
     constructor(props) {

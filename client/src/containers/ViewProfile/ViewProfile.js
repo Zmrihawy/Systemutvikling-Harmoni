@@ -15,15 +15,14 @@ export default class ViewProfile extends Component{
         };
     }
     componentDidMount() {
-
-
         var intId = parseInt(this.props.match.params.id, 10);
-        this.setState({id:intId});
-        userService.getUser(this.state.id)
-           .then(userData => {
-                this.setState(userData);
-            })
-            .catch((error: Error) => console.log(error));
+        this.setState({id:intId}, () => {
+            userService.getUser(intId)
+                .then(userData => {
+                    this.setState(userData);
+                })
+                .catch((error: Error) => console.log(error));
+        });
     }
     render(){
         return(

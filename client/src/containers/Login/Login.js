@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import './Login.css'; 
 import { User, userService } from "../../services";
+import {history} from "../../components/NavBar/NavBar";
 export default class Login extends Component {
 
   constructor(props){
@@ -43,6 +44,6 @@ export default class Login extends Component {
           p.innerHTML = data.error;
           document.querySelector(".login-form").appendChild(p);
         })
-
+        history.push('/user/'+window.sessionStorage.getItem("user"));
       }
 }

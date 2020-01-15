@@ -888,8 +888,7 @@ class UserService {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
                         'userId': userId
-                    },
-                    body: JSON.stringify(data)
+                    }
                 })
                     .then(response => {
                         isError = isErrorStatus(response.status);
@@ -991,6 +990,7 @@ class UserService {
             })
                 .then(response => {
                     isError = isErrorStatus(response.status);
+                    console.log(response);
                     return response.json();
                 })
                 .then(json => {
