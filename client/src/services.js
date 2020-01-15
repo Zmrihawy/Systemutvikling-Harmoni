@@ -1106,7 +1106,7 @@ function refreshToken(jwt: string) {
     window.sessionStorage.setItem("jwt", jwt);
 }
 
-function setUser(userId: number | Promise<any>) {
+function setUser(userId: number) {
     window.sessionStorage.setItem("user", userId);
 }
 
