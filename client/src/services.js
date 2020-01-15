@@ -119,7 +119,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -148,7 +148,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -177,7 +177,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -206,7 +206,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -235,7 +235,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -264,7 +264,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -293,7 +293,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -322,7 +322,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -351,7 +351,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -380,7 +380,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -418,7 +418,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -449,7 +449,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -480,7 +480,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -505,7 +505,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -530,7 +530,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -557,7 +557,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -582,7 +582,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -615,7 +615,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -640,7 +640,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -674,7 +674,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -699,7 +699,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -730,7 +730,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -754,7 +754,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -778,7 +778,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -802,7 +802,7 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -830,7 +830,7 @@ class UserService {
                     body: JSON.stringify(data)
                 })
                     .then(response => {
-                        if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                        if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                         return response.json();
                     })
                     .then(json => {
@@ -859,7 +859,7 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -888,7 +888,7 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -920,7 +920,7 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -944,7 +944,7 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -976,7 +976,7 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
@@ -1004,7 +1004,7 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status)) reject("Error status: " + response.status);
+                    if (isErrorStatus(response.status)) reject({error : response.status, sqlMessage : response.sqlMessage});
                     return response.json();
                 })
                 .then(json => {
