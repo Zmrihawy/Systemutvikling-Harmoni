@@ -700,9 +700,9 @@ app.put("/api/event/:event_id", (req, res) => {
     if (req.body.startTime === undefined) {
         res.status(400);
         return res.json({error: "bad request : missing startTime parameter"});}
-    if (req.body.hostId === undefined) {
+    if (req.body.userId === undefined) {
         res.status(400);
-        return res.json({error: "bad request : missing hostId parameter"});}
+        return res.json({error: "bad request : missing userId parameter"});}
     if (req.body.active === undefined) req.body.active = 1;
     if (req.body.location === undefined) {
         res.status(400);
@@ -713,7 +713,7 @@ app.put("/api/event/:event_id", (req, res) => {
 
     eventDao.updateEvent({
         eventName: req.body.eventName,
-        hostId: req.body.hostId,
+        hostId: req.body.userId,
         active: req.body.active,
         location: req.body.location,
         description: req.body.description,
@@ -797,14 +797,14 @@ app.post("/api/event", (req, res) => {
         res.status(400);
         return res.json({error: "request missing event-name"});
     }
-    if (req.body.hostId === undefined || req.body.hostId === null) {
+    if (req.body.userId === undefined || req.body.userId === null) {
         res.status(400);
         return res.json({error: "request missing event-host user Id"});
     }
 
     eventDao.createEvent({
         name : req.body.name, 
-        userId : req.body.hostId, 
+        userId : req.body.userId,
         location : req.body.location,
         category : req.body.category,
         startTime : req.body.startTime,
