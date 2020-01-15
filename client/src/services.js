@@ -120,7 +120,6 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    console.log("service" +json.data[0])
                     resolve(handleGetEventResponse(json.data[0]));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -718,19 +717,21 @@ class EventService {
     ) {
         let data = {
             eventId: eventId,
-            name: name,
+            eventName: name,
             hostId: hostId,
+            userId: 1,
             active: active,
             location: location,
             description: description,
             startTime: startTime,
             endTime: endTime
         };
+        console.log(data);
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId, {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': 'MASTER',
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },

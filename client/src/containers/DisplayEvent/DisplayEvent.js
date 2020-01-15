@@ -116,10 +116,14 @@ export default class DisplayEvent extends Component {
             .catch((error: Error) => console.error(error));
     }
 
-    handleRiderClick = (e) => {
-        e.preventDefault(); 
-        history.push('/arrangement/user/id/rider'); 
-    }
+    handleRiderClick = e => {
+        e.preventDefault();
+        history.push('/arrangement/user/id/rider');
+    };
+
+    handleEditClick = id => {
+        history.push('/arrangement/' + id + '/rediger');
+    };
 
     render() {
         let artists = [
@@ -148,6 +152,7 @@ export default class DisplayEvent extends Component {
                 ticketAmount={this.state.ticketAmount}
                 artists={artists}
                 handleRiderClick={this.handleRiderClick}
+                handleEditClick={this.handleEditClick}
                 tickets={this.state.tickets}
                 staff={this.state.staff}
             />

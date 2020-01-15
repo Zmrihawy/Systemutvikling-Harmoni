@@ -1,0 +1,59 @@
+.container {
+    display: grid;
+    grid-template-areas:
+        'title'
+        'input__name'
+        'input__location'
+        'input__end__time'
+        'input__start__time'
+        'input__description'
+        'button__submit';
+    grid-gap: 10px;
+    margin: 50px auto;
+    place-items: center center;
+}
+
+.title {
+    grid-area: title;
+    font-size: 4em;
+    font-weight: bolder;
+}
+
+.input__name {
+    grid-area: input__name;
+}
+
+.input__location {
+    grid-area: input__location;
+}
+
+.input__start_time {
+    grid-area: input__start_time;
+}
+
+.input__end__time {
+    grid-area: input__end__time;
+}
+
+.input__description {
+    grid-area: input__description;
+    height: 500px;
+}
+
+input {
+    padding: 15px;
+    font-size: 1.4em;
+    width: 60%;
+    background-color: #fdfdfd;
+    border-radius: 15px;
+    border: 1px solid lightgray;
+}
+
+textarea {
+    padding: 15px;
+    font-size: 1.4em;
+    width: 60%;
+    background-color: #fdfdfd;
+    border-radius: 15px;
+    border: 1px solid lightgray;
+}
