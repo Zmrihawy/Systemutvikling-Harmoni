@@ -397,11 +397,10 @@ class EventService {
 
 
     //POST
-    createEvent(userId: number, name: string, hostId: number, active: number, location: string, description: string, startTime: string, endTime: string): Promise<any> {
+    createEvent(userId: number, name: string, active: number, location: string, description: string, startTime: string, endTime: string): Promise<any> {
         let data = {
             userId: userId,
             name: name,
-            hostId: hostId,
             active: active,
             location: location,
             description: description,
