@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classes from './NavBar.module.scss';
 
 import { createHashHistory } from 'history';
-const history = createHashHistory();
+export const history = createHashHistory();
 
 export default class NavBar extends Component {
     constructor(props) {
@@ -67,13 +67,18 @@ export default class NavBar extends Component {
 
                 switch (id) {
                     case 'profileLink':
-                        history.push('/user/id');
+                        history.push(
+                            '/user/' + window.sessionStorage.getItem('user')
+                        );
                         break;
                     case 'createLink':
                         history.push('/registrerarrangement');
                         break;
                     case 'eventLink':
-                        history.push('/arrangement/id');
+                        history.push(
+                            '/arrangement/' +
+                                window.sessionStorage.getItem('user')
+                        );
                         break;
                     case 'logLink':
                         history.push('/');
