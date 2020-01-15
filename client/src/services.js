@@ -124,7 +124,7 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     refreshToken(json.jwt);
                     resolve(handleGetEventResponse(json.data[0]));
                 })
@@ -156,7 +156,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     resolve(handleGetAllEventsResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
@@ -187,7 +187,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     resolve(handleGetPerformanceResponse(json.data[0]));
                 })
                 .catch(error => console.error("Error: ", error));
@@ -218,7 +218,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     resolve(handleGetAllRidersResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
@@ -249,7 +249,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     resolve(handleGetContractResponse(json.data[0]));
                 })
                 .catch(error => console.error("Error: ", error));
@@ -280,7 +280,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     resolve(handleGetEventContractsResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
@@ -311,7 +311,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     resolve(handleGetEventTicketsResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
@@ -342,7 +342,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     resolve(handleGetPerformanceRidersResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
@@ -373,7 +373,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     resolve(handleGetUsersEventsResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
@@ -404,7 +404,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     resolve(handleGetCrewResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
@@ -444,7 +444,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -478,7 +478,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -511,7 +511,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -538,7 +538,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -565,7 +565,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -594,7 +594,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -621,7 +621,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -656,7 +656,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -683,7 +683,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -719,7 +719,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -746,7 +746,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -780,7 +780,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -807,7 +807,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -834,7 +834,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -861,7 +861,7 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -892,7 +892,7 @@ class UserService {
                     })
                     .then(json => {
                         refreshToken(json.jwt);
-                        if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                        if (isError) return reject(json);
                         resolve(handleGetUserResponse(json.data[0]));
                     })
                     .catch(error => console.error("Error: ", error));
@@ -923,7 +923,7 @@ class UserService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     resolve(handleGetAllUsersResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
@@ -953,7 +953,7 @@ class UserService {
                     return response.json();
                 })
                 .then(json => {
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -988,7 +988,7 @@ class UserService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -1015,7 +1015,7 @@ class UserService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    if (isError) return reject(json);
                     console.log(json);
                     resolve(json);
                 })
@@ -1062,6 +1062,10 @@ class UserService {
             password: password,
             email: email
         };
+        
+        console.log("pw " + password + " email "  + email);
+        console.log(JSON.stringify(data));
+        
         let isError:boolean = false;
         return new Promise((resolve, reject) => {
             fetch("/login", {
@@ -1073,12 +1077,17 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
+                    console.log(isError);
                     isError = isErrorStatus(response.status);
+                    console.log(isError);
+                    console.log(response);
                     return response.json();
                 })
                 .then(json => {
-                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
-                    setUser(this.getUser(json.userId));
+                    console.log(json);
+                    if (isError) return reject(json);
+                    console.log(json);
+                    setUser(Number(json.userId));
                     resolve(json);
                 })
                 .catch(error => console.error("Error: ", error));
