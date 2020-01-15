@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import classes from './ViewProfile.module.scss';
 import NavBar from "../../components/NavBar/NavBar";
-import {User,userService} from "../../services";
+import {userService} from "../../services";
 
 export default class ViewProfile extends Component{
     constructor(props){
