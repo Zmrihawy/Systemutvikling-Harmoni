@@ -106,7 +106,8 @@ export class Crew {
 
 class EventService {
     //GET
-    getEvent(id: number): Promise<any> {
+    getEvent(userId: number, id: number): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + id, {
                 method: "GET",
@@ -114,7 +115,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status)) reject("Error status: " + response.status);
@@ -133,7 +135,8 @@ class EventService {
     }
 
 
-    getAllEvents(): Promise<any> {
+    getAllEvents(userId: number): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
             fetch("/api/events/", {
                 method: "GET",
@@ -141,7 +144,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status)) reject("Error status: " + response.status);
@@ -160,7 +164,8 @@ class EventService {
     }
 
 
-    getPerformance(id: number): Promise<any> {
+    getPerformance(userId: number, id: number): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
             fetch("/api/performance/" + id, {
                 method: "GET",
@@ -168,7 +173,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status)) reject("Error status: " + response.status);
@@ -187,7 +193,8 @@ class EventService {
     }
 
 
-    getAllRiders(eventId: number) :Promise<any> {
+    getAllRiders(userId: number, eventId: number): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/rider", {
                 method: "GET",
@@ -195,7 +202,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status)) reject("Error status: " + response.status);
@@ -214,7 +222,8 @@ class EventService {
     }
 
 
-    getContract(eventId: number, artistId: number): Promise<any> {
+    getContract(userId: number, eventId: number, artistId: number): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/user/" + artistId + "/contract", {
                 method: "GET",
@@ -222,7 +231,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status)) reject("Error status: " + response.status);
@@ -241,7 +251,8 @@ class EventService {
     }
 
 
-    getEventContracts(eventId: number): Promise<any> {
+    getEventContracts(userId: number, eventId: number): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/contracts", {
                 method: "GET",
@@ -249,7 +260,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status)) reject("Error status: " + response.status);
@@ -268,7 +280,8 @@ class EventService {
     }
 
 
-    getEventTickets(eventId: number): Promise<any> {
+    getEventTickets(userId: number, eventId: number): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/tickets", {
                 method: "GET",
@@ -276,7 +289,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status)) reject("Error status: " + response.status);
@@ -295,7 +309,8 @@ class EventService {
     }
 
 
-    getPerformanceRiders(eventId: number, performanceId: number): Promise<any> {
+    getPerformanceRiders(userId: number, eventId: number, performanceId: number): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
             fetch("/api/user/event/" + eventId + "/" + performanceId, {
                 method: "GET",
@@ -303,7 +318,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status)) reject("Error status: " + response.status);
@@ -323,6 +339,7 @@ class EventService {
 
 
     getUsersEvents(userId: number, active: number): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
             fetch("/api/user/" + userId + "/event/" + active, {
                 method: "GET",
@@ -330,7 +347,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status)) reject("Error status: " + response.status);
@@ -349,7 +367,8 @@ class EventService {
     }
 
 
-    getCrew(eventId: number): Promise<any> {
+    getCrew(userId: number, eventId: number): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/crew", {
                 method: "GET",
@@ -357,7 +376,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status)) reject("Error status: " + response.status);
@@ -377,8 +397,9 @@ class EventService {
 
 
     //POST
-    createEvent(name: string, hostId: number, active: number, location: string, description: string, startTime: string, endTime: string): Promise<any> {
+    createEvent(userId: number, name: string, hostId: number, active: number, location: string, description: string, startTime: string, endTime: string): Promise<any> {
         let data = {
+            userId: userId,
             name: name,
             hostId: hostId,
             active: active,
@@ -409,8 +430,15 @@ class EventService {
         })
     }
 
-    createTicket(name: string, eventId: number, price: number, amount: number, description: string): Promise<any> {
-        let data = {name: name, eventId: eventId, price: price, amount: amount, description: description};
+    createTicket(userId: number, name: string, eventId: number, price: number, amount: number, description: string): Promise<any> {
+        let data = {
+            userId: userId,
+            name: name,
+            eventId: eventId,
+            price: price,
+            amount: amount,
+            description: description
+        };
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/ticket", {
                 method: "POST",
@@ -449,7 +477,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status)) reject("Error status: " + response.status);
@@ -464,8 +493,8 @@ class EventService {
         })
     }
 
-    createRider(performanceId: number, name: string, amount: number): Promise<any> {
-        let data = {name: name, amount: amount};
+    createRider(userId: number, performanceId: number, name: string, amount: number): Promise<any> {
+        let data = {userId: userId, name: name, amount: amount};
         return new Promise((resolve, reject) => {
             fetch("/api/performance/" + performanceId + "/rider", {
                 method: "POST",
@@ -489,8 +518,8 @@ class EventService {
         })
     }
 
-    createCrew(eventId: number, profession: string, name: string, contactInfo: string): Promise<any> {
-        let data = {profession: profession, name: name, contactInfo: contactInfo};
+    createCrew(userId: number, eventId: number, profession: string, name: string, contactInfo: string): Promise<any> {
+        let data = {userId: userId, profession: profession, name: name, contactInfo: contactInfo};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/crew", {
                 method: "POST",
@@ -516,8 +545,8 @@ class EventService {
 
 
     //DELETE
-    deleteRider(eventId: number, performanceId: number, name: string): Promise<any> {
-        let data = {performanceId: performanceId, name: name};
+    deleteRider(userId: number, eventId: number, performanceId: number, name: string): Promise<any> {
+        let data = {userId: userId, performanceId: performanceId, name: name};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/rider", {
                 method: "DELETE",
@@ -541,7 +570,8 @@ class EventService {
         })
     }
 
-    deleteEvent(eventId: number): Promise<any> {
+    deleteEvent(userId: number, eventId: number): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId, {
                 method: "DELETE",
@@ -549,7 +579,8 @@ class EventService {
                     'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status)) reject("Error status: " + response.status);
@@ -565,8 +596,15 @@ class EventService {
     }
 
     //PUT
-    updateTicket(name: string, eventId: number, price: number, amount: number, description: string): Promise<any> {
-        let data = {name: name, eventId: eventId, price: price, amount: amount, description: description};
+    updateTicket(userId: number, name: string, eventId: number, price: number, amount: number, description: string): Promise<any> {
+        let data = {
+            userId: userId,
+            name: name,
+            eventId: eventId,
+            price: price,
+            amount: amount,
+            description: description
+        };
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/ticket", {
                 method: "PUT",
@@ -590,8 +628,8 @@ class EventService {
         })
     }
 
-    updateRider(eventId: number, riderId: number, name: string, amount: number): Promise<any> {
-        let data = {riderId: riderId, name: name, amount: amount};
+    updateRider(userId: number, eventId: number, riderId: number, name: string, amount: number): Promise<any> {
+        let data = {userId: userId, riderId: riderId, name: name, amount: amount};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/rider", {
                 method: "PUT",
@@ -615,8 +653,9 @@ class EventService {
         })
     }
 
-    updateEvent(eventId: number, name: string, hostId: number, active: number, location: string, description: string, startTime: string, endTime: string): Promise<any> {
+    updateEvent(userId: number, eventId: number, name: string, hostId: number, active: number, location: string, description: string, startTime: string, endTime: string): Promise<any> {
         let data = {
+            userId: userId,
             eventId: eventId,
             name: name,
             hostId: hostId,
@@ -649,8 +688,8 @@ class EventService {
         })
     }
 
-    updateContract(eventId: number, contract: string): Promise<any> {
-        let data = {eventId: eventId, contract: contract};
+    updateContract(userId: number, eventId: number, contract: string): Promise<any> {
+        let data = {userId: userId, eventId: eventId, contract: contract};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/contract", {
                 method: "PUT",
@@ -673,10 +712,10 @@ class EventService {
         })
     }
 
-    updatePerformance(performanceId: number, userId: number, eventId: number, startTime: string, endTime: string, contract: string): Promise<any> {
+    updatePerformance(userId: number, performanceId: number, eventId: number, startTime: string, endTime: string, contract: string): Promise<any> {
         let data = {
-            performanceId: performanceId,
             userId: userId,
+            performanceId: performanceId,
             eventId: eventId,
             startTime: startTime,
             endTime: endTime,
@@ -704,8 +743,8 @@ class EventService {
         })
     }
 
-    updateCrew(eventId: number, crewId: number, profession: string, name: string, contactInfo: string): Promise<any> {
-        let data = {profession: profession, name: name, contactInfo: contactInfo, crewId: crewId};
+    updateCrew(userId: number, eventId: number, crewId: number, profession: string, name: string, contactInfo: string): Promise<any> {
+        let data = {userId: userId, profession: profession, name: name, contactInfo: contactInfo, crewId: crewId};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/crew/" + crewId, {
                 method: "PUT",
@@ -728,8 +767,8 @@ class EventService {
         })
     }
 
-    deleteTicket(name: string, eventId: number): Promise<any> {
-        let data = {name: name, eventId: eventId};
+    deleteTicket(userId: number, name: string, eventId: number): Promise<any> {
+        let data = {userId: userId, name: name, eventId: eventId};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/ticket", {
                 method: "DELETE",
@@ -752,8 +791,8 @@ class EventService {
         })
     }
 
-    deletePerformance(eventId: number, artistId: number): Promise<any> {
-        let data = {artistId: artistId};
+    deletePerformance(userId: number, eventId: number, artistId: number): Promise<any> {
+        let data = {userId: userId, artistId: artistId};
         return new Promise((resolve, reject) => {
             fetch("/api/event/" + eventId + "/performance", {
                 method: "DELETE",
@@ -780,15 +819,17 @@ class EventService {
 
 class UserService {
     //GET
-    getUser(id: number): Promise<any> {
+    getUser(userId: number): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
-                fetch("/api/user/" + id, {
+                fetch("/api/user/" + userId, {
                     method: "GET",
                     headers: {
                         'x-access-token': window.sessionStorage.getItem("jwt"),
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
-                    }
+                    },
+                    body: JSON.stringify(data)
                 })
                     .then(response => {
                         if (isErrorStatus(response.status)) reject("Error status: " + response.status);
@@ -796,18 +837,19 @@ class UserService {
                     })
                     .then(json => {
                         refreshToken(json.jwt);
-                        resolve(this.handleGetUserResponse(json.data[0]));
+                        resolve(handleGetUserResponse(json.data[0]));
                     })
                     .catch(error => console.error("Error: ", error));
             }
-        )
+        );
+
+        function handleGetUserResponse(json: *) {
+            return new User(json.user_id, json.username, json.email, json.phone, json.first_name, json.surname);
+        }
     }
 
-    handleGetUserResponse(json: *) {
-        return new User(json.user_id, json.username, json.email, json.phone, json.first_name, json.surname);
-    }
-
-    getAllUsers(): Promise<any> {
+    getAllUsers(userId: number): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
             fetch("/api/users", {
                 method: "GET",
@@ -815,7 +857,8 @@ class UserService {
                     'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status)) reject("Error status: " + response.status);
@@ -823,18 +866,19 @@ class UserService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    resolve(this.handleGetAllUsersResponse(json));
+                    resolve(handleGetAllUsersResponse(json));
                 })
                 .catch(error => console.error("Error: ", error));
-        })
-    }
+        });
 
-    handleGetAllUsersResponse(json: *) {
-        return json.map(data => new User(data.user_id, data.username, data.email, data.phone, data.first_name, data.surname));
+        function handleGetAllUsersResponse(json: *) {
+            return json.map(data => new User(data.user_id, data.username, data.email, data.phone, data.first_name, data.surname));
+        }
     }
 
     //DELETE
     deleteUser(userId: number): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
             fetch("api/user/" + userId, {
                 method: "DELETE",
@@ -842,7 +886,8 @@ class UserService {
                     'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status)) reject("Error status: " + response.status);
@@ -888,15 +933,17 @@ class UserService {
         })
     }
 
-    updatePassword(usermail: string): Promise<any> {
+    updatePassword(userId: number, userMail: string): Promise<any> {
+        let data = {userId: userId};
         return new Promise((resolve, reject) => {
-            fetch("api/user/" + usermail, {
+            fetch("api/user/" + userMail, {
                 method: "PUT",
                 headers: {
                     'x-access-token': window.sessionStorage.getItem("jwt"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status)) reject("Error status: " + response.status);
