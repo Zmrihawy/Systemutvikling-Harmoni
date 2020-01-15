@@ -23,6 +23,7 @@ export default class Main extends Component {
                     component={CreateEvent}
                 />
                 <Route exact path="/user/:id" component={ViewProfile} />
+                <Route exact path="/arrangement/user/id/rider" component={DisplayRider} />
             </HashRouter>
         );
     }

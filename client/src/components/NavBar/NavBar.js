@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import classes from './NavBar.module.scss';
 
-import { createHashHistory } from 'history';
-const history = createHashHistory();
+import { history } from '../../containers/App';
 
 export default class NavBar extends Component {
     constructor(props) {
@@ -73,7 +72,7 @@ export default class NavBar extends Component {
                         history.push('/registrerarrangement');
                         break;
                     case 'eventLink':
-                        history.push('/arrangement/id');
+                        history.push('/arrangement/1');
                         break;
                     case 'logLink':
                         history.push('/');
