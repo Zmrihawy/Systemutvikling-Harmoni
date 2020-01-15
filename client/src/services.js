@@ -652,12 +652,11 @@ class EventService {
         })
     }
 
-    updateEvent(userId: number, eventId: number, name: string, hostId: number, active: number, location: string, description: string, startTime: string, endTime: string): Promise<any> {
+    updateEvent(userId: number, eventId: number, name: string, active: number, location: string, description: string, startTime: string, endTime: string): Promise<any> {
         let data = {
             userId: userId,
             eventId: eventId,
             name: name,
-            hostId: hostId,
             active: active,
             location: location,
             description: description,
