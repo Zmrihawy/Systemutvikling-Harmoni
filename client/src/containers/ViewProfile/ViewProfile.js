@@ -6,7 +6,7 @@ export default class ViewProfile extends Component{
     constructor(props){
         super(props);
         this.state = {
-            id: 1,
+            id: null,
             username: null,
             email: null,
             phone: null,
@@ -15,7 +15,11 @@ export default class ViewProfile extends Component{
         };
     }
     componentDidMount() {
-       userService.getUser(this.state.id)
+
+
+        var intId = parseInt(this.props.match.params.id, 10);
+        this.setState({id:intId});
+        userService.getUser(this.state.id)
            .then(userData => {
                 this.setState(userData);
             })
@@ -36,7 +40,7 @@ export default class ViewProfile extends Component{
                                     <div className={classes.column}>
                                         <label id={"imgLabel"}><b>Skrive inn link</b></label>
                                         <input type="text" id="imgInput" placeholder="eks: 123bilde.jpg"/>
-                                        <button type="submit" className={classes.button} id={"imgBtn"} onClick={this.changePic}>Send
+                                        <button type="submit" className={classes.imgBtn} id={"imgBtn"} onClick={this.changePic}>Send
                                         </button>
                                     </div>
                                 </div>

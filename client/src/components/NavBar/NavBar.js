@@ -29,9 +29,9 @@ export default class NavBar extends Component {
                 document.getElementById(id).className = "" + classes.activeLink + "";
 
                 switch(id){
-                    case 'profileLink': history.push('/user/id'); break;
+                    case 'profileLink': history.push('/user/'+window.sessionStorage.getItem("user")); break;
                     case 'createLink': history.push('/registrerarrangement'); break;
-                    case 'eventLink': history.push('/arrangement/id'); break;
+                    case 'eventLink': history.push('/arrangement/'+window.sessionStorage.getItem("user")); break;
                     case 'logLink': history.push('/'); break;
                 }
             }

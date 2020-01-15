@@ -2,21 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d564113e-d503-4011-a1d8-11e1e28f4b09" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitlab-ci.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/.babelrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/.flowconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/containers/Login/Login.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/containers/Registration/Registration.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Login.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/Login/Login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Login.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Registration.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/containers/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/containers/Main/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/Main/Main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/NavBar/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/NavBar/NavBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/containers/ViewProfile/ViewProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/ViewProfile/ViewProfile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/containers/ViewProfile/ViewProfile.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/ViewProfile/ViewProfile.module.scss" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
