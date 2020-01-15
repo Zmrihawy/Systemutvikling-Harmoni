@@ -1,5 +1,4 @@
 //@flow
-
 export class Event {
     constructor(
         id,
@@ -365,7 +364,7 @@ class EventService {
             fetch('/api/user/' + userId + '/event/' + active, {
                 method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': 'MASTER',
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
@@ -377,22 +376,23 @@ class EventService {
                 })
                 .then(json => {
                     refreshToken(json.jwt);
-                    resolve(handleGetUsersEventsResponse(json));
+                    resolve(handleGetUsersEventsResponse(json.data));
                 })
                 .catch(error => console.error('Error: ', error));
         });
 
         function handleGetUsersEventsResponse(json) {
             return json.map(
-                data =>
+                data => 
                     new Event(
                         data.event_id,
                         data.name,
-                        data.host_id,
-                        data.active,
+                        '', 
+                        '',
                         data.location,
-                        data.startTime,
-                        data.endTime
+                        '',
+                        data.start_time, 
+                        ''
                     )
             );
         }

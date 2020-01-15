@@ -22,6 +22,7 @@
 .text h3 {
     text-align: center;
 }
+
 .text > button {
     background: gray;
     border: 0;
@@ -29,7 +30,7 @@
     padding: 10px;
     width: 80%;
     display: block;
-    margin: auto;
+    margin: 10px auto 0px auto;
     cursor: pointer;
     border-bottom-right-radius: 20px;
     border-top-left-radius: 20px;
@@ -41,5 +42,5 @@
 
 .container {
     width: 80%;
-    margin: 200px auto;
+    margin: 75px auto;
 }

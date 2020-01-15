@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import EventInfo from '../../components/EventInfo/EventInfo';
+
 import {
     Event,
     Ticket,

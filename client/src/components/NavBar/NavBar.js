@@ -72,7 +72,7 @@ export default class NavBar extends Component {
                         history.push('/registrerarrangement');
                         break;
                     case 'eventLink':
-                        history.push('/arrangement/1');
+                        history.push('/arrangement');
                         break;
                     case 'logLink':
                         history.push('/');
