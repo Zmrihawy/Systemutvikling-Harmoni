@@ -634,12 +634,6 @@ app.put("/user/:usermail", (req, res) => {
         return res.json({error : "given mail is not a valid mail"});
     }
 
-    if(checkMail(req.body.usermail)){
-        res.status(400);
-        return res.json({eror : "parameter usermail must be an actual email adress"});
-    }
-    
-
     userDao.getUser(req.params.usermail, (status, data) => {
 
         if (data[0].salt) {
