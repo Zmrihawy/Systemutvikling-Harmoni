@@ -803,7 +803,7 @@ class UserService {
         )
     }
 
-    handleGetUserResponse(json) {
+    handleGetUserResponse(json: *) {
         return new User(json.user_id, json.username, json.email, json.phone, json.first_name, json.surname);
     }
 
@@ -829,7 +829,7 @@ class UserService {
         })
     }
 
-    handleGetAllUsersResponse(json) {
+    handleGetAllUsersResponse(json: *) {
         return json.map(data => new User(data.user_id, data.username, data.email, data.phone, data.first_name, data.surname));
     }
 
@@ -993,10 +993,9 @@ function refreshToken(jwt: string) {
     window.sessionStorage.setItem("jwt", jwt);
 }
 
-function setUser(userId: number) {
+function setUser(userId: number | Promise<any>) {
     window.sessionStorage.setItem("user", userId);
 }
 
-export let user = new User();
 export let userService = new UserService();
 export let eventService = new EventService();
