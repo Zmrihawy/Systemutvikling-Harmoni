@@ -112,7 +112,8 @@ export class Crew {
 class EventService {
     //GET
     getEvent(userId: number, id: number): Promise<any> {
-        let data = { userId: userId };
+        let data = {userId: userId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + id, {
                 method: 'GET',
@@ -124,11 +125,11 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     refreshToken(json.jwt);
                     resolve(handleGetEventResponse(json.data[0]));
                 })
@@ -150,7 +151,8 @@ class EventService {
     }
 
     getAllEvents(userId: number): Promise<any> {
-        let data = { userId: userId };
+        let data = {userId: userId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/events/', {
                 method: 'GET',
@@ -162,12 +164,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     resolve(handleGetAllEventsResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -191,7 +193,8 @@ class EventService {
     }
 
     getPerformance(userId: number, id: number): Promise<any> {
-        let data = { userId: userId };
+        let data = {userId: userId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/performance/' + id, {
                 method: 'GET',
@@ -203,12 +206,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     resolve(handleGetPerformanceResponse(json.data[0]));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -226,7 +229,8 @@ class EventService {
     }
 
     getAllRiders(userId: number, eventId: number): Promise<any> {
-        let data = { userId: userId };
+        let data = {userId: userId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/rider', {
                 method: 'GET',
@@ -238,12 +242,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     resolve(handleGetAllRidersResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -256,12 +260,10 @@ class EventService {
         }
     }
 
-    getContract(
-        userId: number,
-        eventId: number,
-        artistId: number
-    ): Promise<any> {
-        let data = { userId: userId };
+
+    getContract(userId: number, eventId: number, artistId: number): Promise<any> {
+        let data = {userId: userId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/user/' + artistId + '/contract', {
                 method: 'GET',
@@ -273,12 +275,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     resolve(handleGetContractResponse(json.data[0]));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -290,7 +292,8 @@ class EventService {
     }
 
     getEventContracts(userId: number, eventId: number): Promise<any> {
-        let data = { userId: userId };
+        let data = {userId: userId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/contracts', {
                 method: 'GET',
@@ -302,12 +305,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     resolve(handleGetEventContractsResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -319,7 +322,8 @@ class EventService {
     }
 
     getEventTickets(userId: number, eventId: number): Promise<any> {
-        let data = { userId: userId };
+        let data = {userId: userId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/tickets', {
                 method: 'GET',
@@ -331,12 +335,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     resolve(handleGetEventTicketsResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -356,12 +360,10 @@ class EventService {
         }
     }
 
-    getPerformanceRiders(
-        userId: number,
-        eventId: number,
-        performanceId: number
-    ): Promise<any> {
-        let data = { userId: userId };
+
+    getPerformanceRiders(userId: number, eventId: number, performanceId: number): Promise<any> {
+        let data = {userId: userId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/user/event/' + eventId + '/' + performanceId, {
                 method: 'GET',
@@ -373,12 +375,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     resolve(handleGetPerformanceRidersResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -392,7 +394,8 @@ class EventService {
     }
 
     getUsersEvents(userId: number, active: number): Promise<any> {
-        let data = { userId: userId };
+        let data = {userId: userId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/user/' + userId + '/event/' + active, {
                 method: 'GET',
@@ -404,12 +407,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     resolve(handleGetUsersEventsResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -433,7 +436,8 @@ class EventService {
     }
 
     getCrew(userId: number, eventId: number): Promise<any> {
-        let data = { userId: userId };
+        let data = {userId: userId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/crew', {
                 method: 'GET',
@@ -445,12 +449,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     resolve(handleGetCrewResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -489,6 +493,7 @@ class EventService {
             startTime: startTime,
             endTime: endTime
         };
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event', {
                 method: 'POST',
@@ -500,11 +505,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
+                    refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -528,6 +534,7 @@ class EventService {
             amount: amount,
             description: description
         };
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/ticket', {
                 method: 'POST',
@@ -539,12 +546,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -566,11 +573,10 @@ class EventService {
             endTime: endTime,
             contract: contract
         };
-        console.log('Data:');
-        console.log(data);
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
-            fetch('/api/event/' + eventId + '/user', {
-                method: 'POST',
+            fetch("/api/event/" + eventId + "/performance", {
+                method: "POST",
                 headers: {
                     'x-access-token': 'MASTER',
                     Accept: 'application/json',
@@ -579,12 +585,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -592,13 +598,9 @@ class EventService {
         });
     }
 
-    createRider(
-        userId: number,
-        performanceId: number,
-        name: string,
-        amount: number
-    ): Promise<any> {
-        let data = { userId: userId, name: name, amount: amount };
+    createRider(userId: number, performanceId: number, name: string, amount: number): Promise<any> {
+        let data = {userId: userId, name: name, amount: amount};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/performance/' + performanceId + '/rider', {
                 method: 'POST',
@@ -610,12 +612,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -623,19 +625,9 @@ class EventService {
         });
     }
 
-    createCrew(
-        userId: number,
-        eventId: number,
-        profession: string,
-        name: string,
-        contactInfo: string
-    ): Promise<any> {
-        let data = {
-            userId: userId,
-            profession: profession,
-            name: name,
-            contactInfo: contactInfo
-        };
+    createCrew(userId: number, eventId: number, profession: string, name: string, contactInfo: string): Promise<any> {
+        let data = {userId: userId, profession: profession, name: name, contactInfo: contactInfo};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/crew', {
                 method: 'POST',
@@ -647,12 +639,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -661,13 +653,9 @@ class EventService {
     }
 
     //DELETE
-    deleteRider(
-        userId: number,
-        eventId: number,
-        performanceId: number,
-        name: string
-    ): Promise<any> {
-        let data = { userId: userId, performanceId: performanceId, name: name };
+    deleteRider(userId: number, eventId: number, performanceId: number, name: string): Promise<any> {
+        let data = {userId: userId, performanceId: performanceId, name: name};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/rider', {
                 method: 'DELETE',
@@ -679,12 +667,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -693,7 +681,8 @@ class EventService {
     }
 
     deleteEvent(userId: number, eventId: number): Promise<any> {
-        let data = { userId: userId };
+        let data = {userId: userId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId, {
                 method: 'DELETE',
@@ -705,12 +694,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -735,6 +724,7 @@ class EventService {
             amount: amount,
             description: description
         };
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/ticket', {
                 method: 'PUT',
@@ -746,12 +736,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -759,19 +749,9 @@ class EventService {
         });
     }
 
-    updateRider(
-        userId: number,
-        eventId: number,
-        riderId: number,
-        name: string,
-        amount: number
-    ): Promise<any> {
-        let data = {
-            userId: userId,
-            riderId: riderId,
-            name: name,
-            amount: amount
-        };
+    updateRider(userId: number, eventId: number, riderId: number, name: string, amount: number): Promise<any> {
+        let data = {userId: userId, riderId: riderId, name: name, amount: amount};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/rider', {
                 method: 'PUT',
@@ -783,12 +763,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -816,6 +796,7 @@ class EventService {
             startTime: startTime,
             endTime: endTime
         };
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId, {
                 method: 'PUT',
@@ -827,12 +808,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -840,12 +821,9 @@ class EventService {
         });
     }
 
-    updateContract(
-        userId: number,
-        eventId: number,
-        contract: string
-    ): Promise<any> {
-        let data = { userId: userId, eventId: eventId, contract: contract };
+    updateContract(userId: number, eventId: number, contract: string): Promise<any> {
+        let data = {userId: userId, eventId: eventId, contract: contract};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/contract', {
                 method: 'PUT',
@@ -857,11 +835,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
+                    refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -885,6 +864,7 @@ class EventService {
             endTime: endTime,
             contract: contract
         };
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/performance', {
                 method: 'PUT',
@@ -896,11 +876,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
+                    refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -908,21 +889,9 @@ class EventService {
         });
     }
 
-    updateCrew(
-        userId: number,
-        eventId: number,
-        crewId: number,
-        profession: string,
-        name: string,
-        contactInfo: string
-    ): Promise<any> {
-        let data = {
-            userId: userId,
-            profession: profession,
-            name: name,
-            contactInfo: contactInfo,
-            crewId: crewId
-        };
+    updateCrew(userId: number, eventId: number, crewId: number, profession: string, name: string, contactInfo: string): Promise<any> {
+        let data = {userId: userId, profession: profession, name: name, contactInfo: contactInfo, crewId: crewId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/crew/' + crewId, {
                 method: 'PUT',
@@ -934,11 +903,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
+                    refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -947,7 +917,8 @@ class EventService {
     }
 
     deleteTicket(userId: number, name: string, eventId: number): Promise<any> {
-        let data = { userId: userId, name: name, eventId: eventId };
+        let data = {userId: userId, name: name, eventId: eventId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/ticket', {
                 method: 'DELETE',
@@ -959,11 +930,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
+                    refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -971,12 +943,9 @@ class EventService {
         });
     }
 
-    deletePerformance(
-        userId: number,
-        eventId: number,
-        artistId: number
-    ): Promise<any> {
-        let data = { userId: userId, artistId: artistId };
+    deletePerformance(userId: number, eventId: number, artistId: number): Promise<any> {
+        let data = {userId: userId, artistId: artistId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/performance', {
                 method: 'DELETE',
@@ -988,11 +957,12 @@ class EventService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
+                    refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -1004,28 +974,30 @@ class EventService {
 class UserService {
     //GET
     getUser(userId: number): Promise<any> {
-        let data = { userId: userId };
+        let data = {userId: userId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
-            fetch('/api/user/' + userId, {
-                method: 'GET',
-                headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-                .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
-                    return response.json();
+                fetch("/api/user/" + userId, {
+                    method: "GET",
+                    headers: {
+                        'x-access-token': window.sessionStorage.getItem("jwt"),
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
                 })
-                .then(json => {
-                    refreshToken(json.jwt);
-                    resolve(handleGetUserResponse(json.data[0]));
-                })
-                .catch(error => console.error('Error: ', error));
-        });
+                    .then(response => {
+                        isError = isErrorStatus(response.status);
+                        return response.json();
+                    })
+                    .then(json => {
+                        refreshToken(json.jwt);
+                        if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                        resolve(handleGetUserResponse(json.data[0]));
+                    })
+                    .catch(error => console.error("Error: ", error));
+            }
+        );
 
         function handleGetUserResponse(json: *) {
             return new User(
@@ -1040,7 +1012,8 @@ class UserService {
     }
 
     getAllUsers(userId: number): Promise<any> {
-        let data = { userId: userId };
+        let data = {userId: userId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/users', {
                 method: 'GET',
@@ -1052,12 +1025,12 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
                     refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     resolve(handleGetAllUsersResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -1080,7 +1053,8 @@ class UserService {
 
     //DELETE
     deleteUser(userId: number): Promise<any> {
-        let data = { userId: userId };
+        let data = {userId: userId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('api/user/' + userId, {
                 method: 'DELETE',
@@ -1092,11 +1066,11 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -1121,6 +1095,7 @@ class UserService {
             lastName: lastName,
             userId: userId
         };
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('api/user/' + userId, {
                 method: 'PUT',
@@ -1132,11 +1107,12 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
+                    refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -1145,7 +1121,8 @@ class UserService {
     }
 
     updatePassword(userId: number, userMail: string): Promise<any> {
-        let data = { userId: userId };
+        let data = {userId: userId};
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('api/user/' + userMail, {
                 method: 'PUT',
@@ -1157,11 +1134,12 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
+                    refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     console.log(json);
                     resolve(json);
                 })
@@ -1186,6 +1164,7 @@ class UserService {
             firstName: firstName,
             lastName: lastName
         };
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/user', {
                 method: 'POST',
@@ -1196,16 +1175,16 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
-                    console.log(json);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
+                    console.log("services"+json);
                     resolve(json);
                 })
-                .catch(error => console.error('Error: ', error));
-        });
+                .catch(error => console.log(error));
+        })
     }
 
     loginUser(username: string, password: string, email: string): Promise<any> {
@@ -1214,6 +1193,7 @@ class UserService {
             password: password,
             email: email
         };
+        let isError:Boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/login', {
                 method: 'POST',
@@ -1225,12 +1205,11 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    if (isErrorStatus(response.status))
-                        reject('Error status: ' + response.status);
+                    isError = isErrorStatus(response.status);
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
+                    if (isError) return reject({error : json.errno, sqlMessage : json.sqlMessage});
                     setUser(this.getUser(json.userId));
                     resolve(json);
                 })
