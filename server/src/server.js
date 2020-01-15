@@ -847,9 +847,9 @@ app.post("/api/event/:event_id/ticket", (req, res) => {
 
 
 //post a performance
-app.post("api/event/:event_id/performance", (req, res) => {
+app.post("/api/event/:event_id/performance", (req, res) => {
     console.log("Fikk POST-request fra klienten");
-    if (req.body.artistId === undefined) {
+    if (req.body.userId === undefined) {
         res.status(400);
         return res.json({error: "bad request : missing artist parameter"});
         }
@@ -867,13 +867,13 @@ app.post("api/event/:event_id/performance", (req, res) => {
         return res.json({error : "url parameter event_id must be a number"});
     }
 
-    if(numberError([req.body.artistId])){
+    if(numberError([req.body.userId])){
         res.status(400);
         return res.json({error : "number field is a string"});
     }
 
     eventDao.createPerformance({
-        artistId: req.body.artistId,
+        artistId: req.body.userId,
         eventId: req.params.event_id,
         startTime: req.body.startTime,
         endTime: req.body.endTime,

@@ -39,7 +39,7 @@ module.exports = class ServerDao extends Dao {
     }
 
     getUsersEvents(sql: { userId: string | number, active: string | number }, callback: (status: number, data: *) => void) {
-        super.query(`SELECT ${CONSTANTS.EVENT_NAME},${CONSTANTS.EVENT_HOST_ID},${CONSTANTS.EVENT_START_TIME},${CONSTANTS.EVENT_END_TIME},${CONSTANTS.EVENT_LOCATION} FROM 
+        super.query(`SELECT ${CONSTANTS.EVENT_NAME}, ${CONSTANTS.EVENT_ID},${CONSTANTS.EVENT_HOST_ID},${CONSTANTS.EVENT_START_TIME},${CONSTANTS.EVENT_END_TIME},${CONSTANTS.EVENT_LOCATION} FROM 
         ${CONSTANTS.EVENT_TABLE} a JOIN ${CONSTANTS.USER_TABLE} b ON a.${CONSTANTS.EVENT_HOST_ID} = b.${CONSTANTS.USER_ID} WHERE b.${CONSTANTS.USER_ID} = ? AND ${CONSTANTS.EVENT_ACTIVE} = ?`, [sql.userId, sql.active], callback);
     }
 
@@ -77,7 +77,7 @@ module.exports = class ServerDao extends Dao {
             [sql.performanceId, sql.name, sql.amount], callback);
     }
 
-    createCrew(sql: { profession: string, name: string, contactInfo: string | number , eventId: string | number}, callback: (status: number, data: *) => void) {
+    createCrew(sql: { profession: string, name: string, contactInfo: string | number, eventId: string | number }, callback: (status: number, data: *) => void) {
         super.query(`INSERT INTO ${CONSTANTS.CREW_TABLE} (${CONSTANTS.CREW_PROFESSION},${CONSTANTS.CREW_NAME},${CONSTANTS.CREW_CONTACT_INFO},${CONSTANTS.CREW_EVENT_ID}) 
                     VALUES (?,?,?,?) `, [sql.profession, sql.name, sql.contactInfo, sql.eventId], callback);
     }
