@@ -87,6 +87,7 @@ export default class CreateEvent extends Component {
     };
 
     handleSaveStaff = input => {
+        console.log('staffd');
         this.handleSave(input, 'staff', '');
         this.handleToggleBackdrop();
     };
