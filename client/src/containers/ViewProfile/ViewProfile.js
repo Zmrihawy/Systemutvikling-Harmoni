@@ -27,13 +27,26 @@ export default class ViewProfile extends Component{
             <div className={classes.viewProfile}>
                 <div className={classes.showLayer}>
                     <div className={classes.row}>
-                        <div className={classes.column}>
+                        <div className={classes.column} id={"imageColumn"}>
                             <div className={classes.imgContainer}>
-                                <img className={classes.profile} src="https://images.assetsdelivery.com/compings_v2/apoev/apoev1806/apoev180600175.jpg" alt="Profile picture"/>
+                                <img className={classes.profile} id={"profileImg"} src="https://images.assetsdelivery.com/compings_v2/apoev/apoev1806/apoev180600175.jpg" alt="Profile picture"/>
                                 <div className={classes.overlay}>
                                     <a href="#" className={classes.icon} title="User Profile">
                                         <i className={classes.fadeUser}></i>
                                     </a>
+                                </div>
+                            </div>
+                            <div className="image-form" id="myForm">
+                                <h1>Rediger profilbilde</h1>
+                                <div className={classes.row}>
+                                    <div className={classes.column}>
+                                        <label id={"imgLabel"}><b>Skrive inn link</b></label>
+                                        <input type="text" placeholder="eks: 123bilde.jpg"/>
+                                    </div>
+                                    <div className={classes.column}>
+                                        <button type="submit" id={"imgBtn"} onClick={this.changePic(document.getElementById("imgBtn"))}>Send
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -51,14 +64,22 @@ export default class ViewProfile extends Component{
                                 <h4><b>Rediger Info</b></h4>
                                 <div className={classes.row}>
                                     <div className={classes.column}>
-                                        <input id={"nameInp"} className={classes.input} type='text' placeholder="brukernavn"/>
+                                        <div className={classes.editTitle}>Brukernavn</div>
+                                        <input id={"nameInp"} className={classes.input} type='text' placeholder={this.state.username}/>
                                         <b/>
-                                        <input id={"emailInp"} className={classes.input} type='text' placeholder="epost"/>
+                                        <div className={classes.editTitle}>Epost</div>
+                                        <input id={"emailInp"} className={classes.input} type='text' placeholder={this.state.email}/>
                                         <b/>
-                                        <input id={"telephoneInp"} className={classes.input} type='text' placeholder="telefon"/>
+                                        <div className={classes.editTitle}>Telefon</div>
+                                        <input id={"telephoneInp"} className={classes.input} type='text' placeholder={this.state.phone}/>
                                     </div>
                                     <div className={classes.column}>
-                                        <input id={"passwordInp"} className={classes.input} type='password' placeholder="passord"/>
+                                        <div className={classes.editTitle}>Fornavn</div>
+                                        <input id={"firstNameInp"} className={classes.input} type='text' placeholder={this.state.firstName}/>
+                                        <b/>
+                                        <div className={classes.editTitle}>Etternavn</div>
+                                        <input id={"surnameInp"} className={classes.input} type='text' placeholder={this.state.surname}/>
+                                        <b/>
                                         <b/>
                                         <button className={classes.button} onClick={event => (this.eventHandler())}>
                                             ✓
@@ -76,6 +97,8 @@ export default class ViewProfile extends Component{
         let newName = this.state.username;
         let newEmail = this.state.email;
         let newTelephone = this.state.phone;
+        let newFirstName = this.state.firstName;
+        let newSurname = this.state.surname;
         if((document.getElementById('nameInp') !== null) &&
             (document.getElementById('nameInp').value !== '')){
             newName = document.getElementById('nameInp').value;
@@ -88,15 +111,34 @@ export default class ViewProfile extends Component{
             (document.getElementById('telephoneInp').value !== '')){
             newTelephone = document.getElementById('telephoneInp').value;
         }
+        if((document.getElementById('firstNameInp') !== null) &&
+            (document.getElementById('firstNameInp').value !== '')){
+            newFirstName = document.getElementById('firstNameInp').value;
+        }
+        if((document.getElementById('surnameInp') !== null) &&
+            (document.getElementById('surnameInp').value !== '')){
+            newSurname = document.getElementById('surnameInp').value;
+        }
         this.setState({
             username: newName,
             email: newEmail,
-            phone: newTelephone
+            phone: newTelephone,
+            firstName: newFirstName,
+            surname: newSurname
         }, () => this.setUser());
     }
     setUser(){
-        console.log(this.state.username);
         userService.updateUser(this.state.id,this.state.username,this.state.email,this.state.phone,this.state.firstName,this.state.surname)
             .catch((error: Error) => console.log(error.message));
+    }
+    changePic(input){
+        if(input !== null && input.value !== null){
+            if((input.value).match(/\.(jpg|gif|png)$/)!= null){
+                document.getElementsByClassName("profileImg").src = "" + input.value + "";
+            }
+            else{
+                document.getElementById("imgLabel").innerHTML = "Du må skrive inn et gyldig bildelink!"
+            }
+        }
     }
 }
