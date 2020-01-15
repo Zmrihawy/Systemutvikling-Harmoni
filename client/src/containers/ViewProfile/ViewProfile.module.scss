@@ -82,6 +82,7 @@ input[type=text]{
 .button {
   background-color: #333333;
   border: none;
+  border-radius: 20px;
   color: whitesmoke;
   padding: 7.5px 16px;
   text-align: center;
@@ -109,4 +110,9 @@ input[type=text]{
   content: "";
   display: table;
   clear: both;
+}
+.imageForm {
+  visibility: hidden;
+  font-family: "Agency FB";
+  font-size: large;
 }

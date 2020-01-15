@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import classes from './ViewProfile.module.scss';
-import NavBar from "../../components/NavBar/NavBar";
 import {userService} from "../../services";
 
 export default class ViewProfile extends Component{
@@ -28,23 +27,20 @@ export default class ViewProfile extends Component{
                 <div className={classes.showLayer}>
                     <div className={classes.row}>
                         <div className={classes.column} id={"imageColumn"}>
-                            <div className={classes.imgContainer}>
-                                <img className={classes.profile} id={"profileImg"} src="https://images.assetsdelivery.com/compings_v2/apoev/apoev1806/apoev180600175.jpg" onError={this.imageError()}alt="Profile picture"/>
+                            <div className={classes.imgContainer} onClick={this.showImageForm}>
+                                <img className={classes.profile} id={"profileImg"} src="https://images.assetsdelivery.com/compings_v2/apoev/apoev1806/apoev180600175.jpg" alt="Profile picture"/>
                                 <div className={classes.overlay}>
                                     <a href="#" className={classes.icon} title="User Profile">
                                         <i className={classes.fadeUser}></i>
                                     </a>
                                 </div>
                             </div>
-                            <div className="image-form" id="myForm">
-                                <h1>Rediger profilbilde</h1>
+                            <div className={classes.imageForm} id={"imageFormId"}>
                                 <div className={classes.row}>
                                     <div className={classes.column}>
                                         <label id={"imgLabel"}><b>Skrive inn link</b></label>
                                         <input type="text" id="imgInput" placeholder="eks: 123bilde.jpg"/>
-                                    </div>
-                                    <div className={classes.column}>
-                                        <button type="submit" id={"imgBtn"} onClick={this.changePic}>Send
+                                        <button type="submit" className={classes.button} id={"imgBtn"} onClick={this.changePic}>Send
                                         </button>
                                     </div>
                                 </div>
@@ -136,18 +132,28 @@ export default class ViewProfile extends Component{
         if(document.getElementById("imgInput") !== null && document.getElementById("imgInput") !== null
             && document.getElementById("imgInput").value !== null){
                 console.log("helsikke2")
-                if(document.getElementById("profileImg") !== null){
+                if(document.getElementById("profileImg") !== null &&
+                    (document.getElementById("imgInput").value.match(/\.(jpg|gif|png)$/)!= null)){
                     console.log("helsikke3");
                     document.getElementById("profileImg").src = document.getElementById("imgInput").value;
+                    document.getElementById("imageFormId").style.visibility = 'hidden';
                 }
-        }
-    }
-    imageError(){
-        if(document.getElementById("profileImg") !== null && document.getElementById("imgLabel") !== null &&
-            document.getElementById("imgLabel").innerHTML !== null){
+            else{
+                if(document.getElementById("profileImg") !== null && document.getElementById("imgLabel") !== null &&
+                    document.getElementById("imgLabel").innerHTML !== null) {
+                        document.getElementById("profileImg").src = "https://images.assetsdelivery.com/compings_v2/apoev/apoev1806/apoev180600175.jpg";
+                        document.getElementById("imgLabel").innerHTML = "Du må skrive inn gyldig bildeLink!";
+                }
+            }
 
-            document.getElementById("profileImg").src = "https://images.assetsdelivery.com/compings_v2/apoev/apoev1806/apoev180600175.jpg";
-            document.getElementById("imgLabel").innerHTML = "Du må skrive inn gyldig bildeLink!";
         }
     }
+    showImageForm(){
+        console.log("heinrich");
+        if(document.getElementById("imageFormId") !== null){
+            document.getElementById("imageFormId").style.visibility = 'visible';
+            document.getElementById("imgLabel").innerHTML = "Link: ";
+        }
+    }
+
 }
