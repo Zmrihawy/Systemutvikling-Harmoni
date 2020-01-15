@@ -21,9 +21,18 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "flow": "flow"
+  },
+  "flow-coverage-report": {
+    "includeGlob": [
+      "src/services.js"
+    ],
+    "type": [
+      "text",
+      "html",
+      "json"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
