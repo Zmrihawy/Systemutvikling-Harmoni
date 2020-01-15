@@ -25,17 +25,6 @@
     "eject": "react-scripts eject",
     "flow": "flow"
   },
-  "flow-coverage-report": {
-    "includeGlob": [
-      "src/*.js",
-      "src/**/*.js"
-    ],
-    "type": [
-      "text",
-      "html",
-      "json"
-    ]
-  },
   "eslintConfig": {
     "extends": "react-app"
   },
