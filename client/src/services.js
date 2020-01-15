@@ -474,7 +474,6 @@ class EventService {
     createEvent(
         userId: number,
         name: string,
-        hostId: number,
         active: number,
         location: string,
         description: string,
@@ -484,7 +483,6 @@ class EventService {
         let data = {
             userId: userId,
             name: name,
-            hostId: hostId,
             active: active,
             location: location,
             description: description,
@@ -800,7 +798,6 @@ class EventService {
         userId: number,
         eventId: number,
         name: string,
-        hostId: number,
         active: number,
         location: string,
         description: string,
@@ -811,7 +808,6 @@ class EventService {
             userId: userId,
             eventId: eventId,
             name: name,
-            hostId: hostId,
             active: active,
             location: location,
             description: description,
@@ -1188,7 +1184,6 @@ class UserService {
             firstName: firstName,
             lastName: lastName
         };
-        console.log(data);
         return new Promise((resolve, reject) => {
             fetch('/user', {
                 method: 'POST',
