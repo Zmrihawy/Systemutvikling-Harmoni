@@ -487,11 +487,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/ticket', {
                 method: 'POST',
                 headers: {
-<<<<<<< HEAD
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
-=======
                     'x-access-token': 'MASTER',
->>>>>>> a5e131f90be197a59b788975d97ba5294555e0e1
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
@@ -523,7 +519,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/user', {
                 method: 'POST',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': 'MASTER',
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
@@ -548,7 +544,7 @@ class EventService {
             fetch('/api/performance/' + performanceId + '/rider', {
                 method: 'POST',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': 'MASTER',
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
@@ -570,6 +566,7 @@ class EventService {
 
     createCrew(eventId, profession, name, contactInfo) {
         let data = {
+            eventId: eventId,
             profession: profession,
             name: name,
             contactInfo: contactInfo
@@ -578,7 +575,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/crew', {
                 method: 'POST',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': 'MASTER',
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },

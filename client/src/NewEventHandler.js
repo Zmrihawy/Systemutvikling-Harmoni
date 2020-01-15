@@ -59,8 +59,20 @@ class NewEventHandler {
         return ticketsID.length > 0;
     };
 
+    saveCrew = async (staff, eventID) => {
+        const staffID = staff.map(async staff => {
+            return await eventService.createCrew(
+                eventID,
+                staff.profession,
+                staff.name,
+                staff.contact
+            );
+        });
+    };
+
     savePerformance = async (artists, eventID, startTime, endTime) => {
         const performanceIDs = artists.map(async artist => {
+            console.log(artist.name);
             return await eventService.createPerformance(
                 1,
                 eventID,
@@ -69,7 +81,7 @@ class NewEventHandler {
                 artist.name
             );
         });
-
+        //console.log(performanceIDs.insertId);
         return performanceIDs.map(performanceIDs => performanceIDs.insertId);
     };
 
@@ -86,8 +98,6 @@ class NewEventHandler {
 
         return riderIDs.length > 0;
     };
-
-    saveCrew = async () => {};
 }
 
 export default new NewEventHandler();
