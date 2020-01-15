@@ -1093,7 +1093,7 @@ class UserService {
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSOify(data)
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (isErrorStatus(response.status))
