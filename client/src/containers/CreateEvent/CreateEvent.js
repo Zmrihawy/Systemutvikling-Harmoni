@@ -8,6 +8,7 @@ import ArtistAdder from '../eventCreation/ArtistAdder/ArtistAdder';
 import StaffAdder from '../eventCreation/StaffAdder/StaffAdder';
 import TicketAdder from '../eventCreation/TicketAdder/TicketAdder';
 import RiderAdder from '../eventCreation/RiderAdder/RiderAdder';
+import ContractAdder from '../../containers/eventCreation/ContractAdder/ContractAdder';
 
 import classes from './CreateEvent.module.scss';
 import vectorSVG from '../../assets/images/undraw_filing_system_b5d2.svg';
@@ -251,6 +252,31 @@ export default class CreateEvent extends Component {
                 break;
 
             case 6:
+                if (this.state.newEvent.artists.length > 0) {
+                    current = (
+                        <>
+                            <ContractAdder />;
+                            <button onClick={this.handlePrevious}>
+                                Forrige
+                            </button>
+                            <button onClick={this.handleNext}>Videre</button>
+                        </>
+                    );
+                } else {
+                    current = (
+                        <>
+                            <p>Ingen artister har blitt lagt til</p>
+                            <button onClick={this.handlePrevious}>
+                                Forrige
+                            </button>
+                            <button onClick={this.handleNext}>Videre</button>
+                        </>
+                    );
+                }
+
+                break;
+
+            case 7:
                 current = (
                     <TicketAdder
                         tickets={this.state.newEvent.tickets}
@@ -260,7 +286,7 @@ export default class CreateEvent extends Component {
                 );
                 break;
 
-            case 7:
+            case 8:
                 current = (
                     <>
                         <Modal
@@ -277,6 +303,7 @@ export default class CreateEvent extends Component {
                                 </button>
                             </div>
                         </Modal>
+                        Legg til personell
                         <StaffAdder
                             staff={this.state.newEvent.staff}
                             finished={this.handleSaveStaff}
