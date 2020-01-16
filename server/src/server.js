@@ -81,20 +81,11 @@ app.use("/api", (req, res, next) => {
 app.post("/login", (req, res) => {
     console.log("user trying to log in");
 
-    if (req.body.email == undefined) {
-        res.status(400);
-        return res.json({error: "bad request : missing email parameter"});
-    }
+    if (req.body.email == undefined) return res.status(400).json({error: "bad request : missing email parameter"})
 
-    if (req.body.password == undefined) {
-        res.status(400);
-        return res.json({error: " bad request : mssing password parameter"});
-    }
+    if (req.body.password == undefined) return res.status(400).json({error: " bad request : mssing password parameter"});
 
-    if (!sjekkMail(req.body.email)) {
-        res.status(400);
-        return res.json({error: "parameter email is not a valid email"})
-    }
+    if (!sjekkMail(req.body.email)) return res.status(400).json({error: "parameter email is not a valid email"})
 
     loginOk(req.body.email, req.body.password).then(data => {
         let log: number = data;
@@ -610,6 +601,22 @@ app.put("/user/:usermail", (req, res) => {
         }
     });
 });
+
+//Update password
+
+app.put("/api/user/:user_id/password", (req, res) => {
+    console.log("Fikk put-request om å oppdatere passord");
+
+    if(numberError([req.params.user_id])) return res.status(400).res.json({error : "number field cannot be string"});
+
+    if(req.params.user_id != req.userId) return res.status(401).json({error : "cannot change password of another user"});
+
+    userDao.getPassword(req.email, (status, data) => {
+        if(data.length === 0) return res.status(500).json({error : "user already deleted"})
+    })
+
+    
+})
 
 //Update an event
 app.put("/api/event/:event_id", (req, res) => {
