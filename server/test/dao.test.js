@@ -4,6 +4,7 @@ const EventDao = require("../src/dao/eventDao.js");
 const runSQL = require("./runSQL.js");
 
 // GitLab CI Pool
+
 /*
 let pool = mysql.createPool({
     connectionLimit: 2,
@@ -296,10 +297,12 @@ test("get all riders for one specific performance", done => {
 test("add an event to database", done => {
     eventDao.createEvent(
         {
-            name: "Nytt event",
+            name: "Vors hos Kristian",
             userId: 2,
-            description: "Festival",
+            description: "Fest",
             location: "Trondheim",
+            long : 63.4090508,
+            lat: 10.4528865,
             startTime: "2020-12-05 22:30:00",
             endTime: "2020-12-05 23:30:00"
         },
@@ -472,6 +475,8 @@ test("update event in database", done => {
         eventName: "Endret navn",
         active: 0,
         description: "Ny kategoi",
+        long : 0,
+        lat: 0,
         location: "Ny lokasjon",
         startTime: "2020-12-05 22:30:00",
         endTime: "2020-12-05 22:30:00",

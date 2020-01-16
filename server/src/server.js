@@ -77,13 +77,11 @@ app.post("/login", (req, res) => {
 
     if (req.body.email == undefined) return res.status(400).json({error: "bad request : missing email parameter"});
     else if (req.body.password == undefined) return res.status(400).json({error: " bad request : mssing password parameter"});
-    else if (!sjekkMail(req.body.email)) return res.status(400).json({error: "parameter email is not a valid email"})
+    else if (!sjekkMail(req.body.email)) return res.status(400).json({error: "parameter email is not a valid email"});
 
     userDao.getPassword(req.body.email, (status, data) => {
 
-        if (data[0] === undefined) return reject("user not registered");
-
-        let login = -1;
+        if (data[0] == undefined) return res.status(401).json({error : "wrong email"});
 
         let hashPW = crypto.createHmac('sha512', data[0].salt);
         let pass: string = req.body.password;
@@ -91,24 +89,18 @@ app.post("/login", (req, res) => {
         hashPW.update(pass);
         pass = hashPW.digest('hex');
 
-        if (pass.toUpperCase() === data[0].password.toString()) login = data[0].user_id;
-        return login;
-    })
-    .then((login: number) => {
-        console.log("User ID", login);
+        let login = data[0].userId;
 
-        if (login > 0) {
-            console.log("username & passord ok");
-            let token = jwt.sign({email: req.body.email, userId: login}, privateKey, {
-                expiresIn: 50000
-            });
-            res.json({jwt: token, userId: login});
-        } else {
-            console.log("brukernavn & passord IKKE ok");
-            res.status(401).json({error: "Not authorized"});
-        }
+        if (pass.toUpperCase() !== data[0].password.toString()) return res.status(401).json({error : "wrong password"});
+
+        console.log("User ID:", login);
+        console.log("username & passord ok");
+
+        let token = jwt.sign({email: req.body.email, userId: login}, privateKey, {
+            expiresIn: 50000
+        });
+        res.json({jwt: token, userId: login});
     })
-    .catch(error => console.log(error));
 });
 
 function thisFunctionCreatesNewToken(passedMail: string, userId: number): { jwt: string } {
@@ -543,12 +535,14 @@ app.put("/api/event/:event_id", (req, res) => {
 
     if (numberError([req.params.event_id])) return res.status(400).json({error: "url parameter event_id must be a number"})
     else if (numberError([req.body.active])) return res.status(400).json({error: "number field is a string"});
-    else if (req.body.eventName === undefined) return res.status(400).json({error: "bad request : missing eventName parameter"});
-    else if (req.body.startTime === undefined) return res.status(400).json({error: "bad request : missing startTime parameter"});
-    else if (req.body.userId === undefined) return res.status(400).json({error: "bad request : missing userId parameter"});
-    else if (req.body.location === undefined) return res.status(400).json({error: "bad request : mssing location parameter"});
+    else if (req.body.eventName == undefined) return res.status(400).json({error: "bad request : missing eventName parameter"});
+    else if (req.body.startTime == undefined) return res.status(400).json({error: "bad request : missing startTime parameter"});
+    else if (req.body.userId == undefined) return res.status(400).json({error: "bad request : missing userId parameter"});
+    else if (req.body.location == undefined) return res.status(400).json({error: "bad request : missing location parameter"});
+    else if (req.body.long == undefined) return res.status(400).json({error: "bad request : missing long parameter"});
+    else if (req.body.lat == undefined) return res.status(400).json({error: "bad request : missing lat parameter"});
     
-    if (req.body.active === undefined) req.body.active = 1;
+    if (req.body.active == undefined) req.body.active = 1;
 
     let description = req.body.description;
     if (description == undefined) description = "";
@@ -557,6 +551,8 @@ app.put("/api/event/:event_id", (req, res) => {
                             hostId: req.body.userId,
                             active: req.body.active,
                             location: req.body.location,
+                            long: req.body.long,
+                            lat : req.body.lat,
                             description: description,
                             startTime: req.body.startTime,
                             endTime: req.body.endTime,
@@ -614,11 +610,20 @@ app.post("/api/event", (req, res) => {
     console.log("Fikk POST-request fra klienten");
     
     if (req.body.name == undefined) return res.status(400).json({error: "request missing event-name"});
-    else if (req.body.userId == undefined) return res.status(400).json({error: "request missing event-host user Id"});
+    else if (numberError([req.body.active])) return res.status(400).json({error: "number field is a string"});
+    else if (req.body.eventName == undefined) return res.status(400).json({error: "bad request : missing eventName parameter"});
+    else if (req.body.startTime == undefined) return res.status(400).json({error: "bad request : missing startTime parameter"});
+    else if (req.body.userId == undefined) return res.status(400).json({error: "bad request : missing userId parameter"});
+    else if (req.body.location == undefined) return res.status(400).json({error: "bad request : missing location parameter"});
+    else if (req.body.long == undefined) return res.status(400).json({error: "bad request : missing long parameter"});
+    else if (req.body.lat == undefined) return res.status(400).json({error: "bad request : missing lat parameter"});
+    
 
-    eventDao.createEvent({name: req.body.name,
+    eventDao.createEvent({eventName: req.body.eventName,
                             userId: req.body.userId,
                             location: req.body.location,
+                            long: req.body.long,
+                            lat : req.body.lat,
                             description: req.body.description,
                             startTime: req.body.startTime,
                             endTime: req.body.endTime}, 
