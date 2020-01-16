@@ -56,7 +56,7 @@ let privateKey = (publicKey = "arbeiderklassenrusteropptilvepnetrevolusjon");
 app.use("/api", (req, res, next) => {
     var token = req.headers["x-access-token"];
 
-    if (token === undefined) return res.status(400).json({error: "missing access token header"});
+    if (token == undefined) return res.status(400).json({error: "missing access token header"});
 
     jwt.verify(token, publicKey, (err, decoded) => {
         if (err){
@@ -310,7 +310,7 @@ app.delete("/api/user/:user_id", (req, res) => {
     console.log("Fikk DELETE-request fra klienten");
 
     if (numberError([req.params.user_id])) return res.status(400).json({error: "url parameter user_id must be a number"});
-    else if (req.body.password === undefined) return res.status(400).json({error: "request missing password"});
+    else if (req.body.password == undefined) return res.status(400).json({error: "request missing password"});
 
     userDao.getPassword(req.params.user_id, (status, data) => {
 
@@ -431,8 +431,8 @@ app.put("/api/event/:event_id/ticket", (req, res) => {
     console.log("Fikk PUT-request fra klienten");
 
     if (req.body.price == undefined) return res.status(400).json({error: "request missing ticket - price"});
-    else if (req.body.amount === undefined) return res.status(400).json({error: "request missing number of tickets"});
-    else if (req.body.name === undefined) return res.status(400).json({error: "request missing ticket-name"});
+    else if (req.body.amount == undefined) return res.status(400).json({error: "request missing number of tickets"});
+    else if (req.body.name == undefined) return res.status(400).json({error: "request missing ticket-name"});
     else if (numberError([req.params.event_id, req.body.price, req.body.amount])) return res.status(400).json({error: "number field is a string"})
 
     eventDao.updateTicket({description: req.body.description,
@@ -451,9 +451,9 @@ app.put("/api/event/:event_id/ticket", (req, res) => {
 app.put("/api/performance/:performance_id/rider", (req, res) => {
     console.log("Fikk PUT-request fra klienten");
 
-    if (req.body.name === undefined) return res.status(400).json({error: "bad request : missing name"});
-    else if (req.body.amount === undefined) return res.status(400).json({error: "bad request : missing amount of tickets"});
-    else if (req.body.oldName === undefined) return res.status(400).json({error: "bad request : missing old name - parameter"});
+    if (req.body.name == undefined) return res.status(400).json({error: "bad request : missing name"});
+    else if (req.body.amount == undefined) return res.status(400).json({error: "bad request : missing amount of tickets"});
+    else if (req.body.oldName == undefined) return res.status(400).json({error: "bad request : missing old name - parameter"});
     else if (numberError([req.params.performance_id])) return res.status(400).json({error: "url parameter performance_id must be a number"});
     else if (numberError([req.body.amount])) return res.status(400).json({error: "number field is a string"});
 
@@ -682,13 +682,13 @@ app.post("/api/event/:event_id/ticket", (req, res) => {
 app.post("/api/event/:event_id/performance", (req, res) => {
     console.log("Fikk POST-request fra klienten");
     
-    if (req.body.userId === undefined) return res.status(400).json({error: "bad request : missing artist parameter"});
-    else if (req.body.startTime === undefined) return res.status(400).json({error: "bad requst : missing startTime parameter"});
-    else if (req.body.endTime === undefined) return res.status(400).json({error: "bad request : missing endTime parameter"});
+    if (req.body.userId == undefined) return res.status(400).json({error: "bad request : missing artist parameter"});
+    else if (req.body.startTime == undefined) return res.status(400).json({error: "bad requst : missing startTime parameter"});
+    else if (req.body.endTime == undefined) return res.status(400).json({error: "bad request : missing endTime parameter"});
     else if (numberError([req.params.event_id])) return res.status(400).json({error: "url parameter event_id must be a number"});
     else if (numberError([req.body.userId])) return res.status(400).json({error: "number field is a string"});
     
-    if (req.body.contract === undefined) req.body.contract = "";
+    if (req.body.contract == undefined) req.body.contract = "";
 
     eventDao.createPerformance({artistId: req.body.userId,
                                 eventId: req.params.event_id,
@@ -706,7 +706,7 @@ app.post("/api/event/:event_id/performance", (req, res) => {
 app.post("/api/performance/:performance_id/rider", (req, res) => {
     console.log("Fikk POST-request fra klienten");
 
-    if (req.body.amount === undefined) return res.json({error: "bad request : missing amount parameter"});
+    if (req.body.amount == undefined) return res.json({error: "bad request : missing amount parameter"});
     else if (numberError([req.params.performance_id])) return res.status(400).json({error: "paramenter performance_id must be a number"});
     else if (numberError([req.body.amount])) return res.status(400).json({error: "number field is a string"});
 
