@@ -116,7 +116,7 @@ class EventService {
             fetch('/api/event/' + id, {
                 method: 'GET',
                 headers: {
-                    'x-access-token': 'MASTER',
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -154,7 +154,7 @@ class EventService {
             fetch('/api/events/', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -195,7 +195,7 @@ class EventService {
             fetch('/api/performance/' + id, {
                 method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -230,7 +230,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/rider', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -265,7 +265,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/user/' + artistId + '/contract', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -294,7 +294,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/contracts', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -323,7 +323,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/tickets', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': 'MASTER',
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -365,7 +365,7 @@ class EventService {
             fetch('/api/user/event/' + eventId + '/' + performanceId, {
                 method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -396,7 +396,7 @@ class EventService {
             fetch('/api/user/' + userId + '/event/' + active, {
                 method: 'GET',
                 headers: {
-                    'x-access-token': 'MASTER',
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -437,7 +437,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/crew', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': 'MASTER',
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -493,7 +493,7 @@ class EventService {
             fetch('/api/event', {
                 method: 'POST',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -534,7 +534,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/ticket', {
                 method: 'POST',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -574,7 +574,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/performance', {
                 method: 'POST',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -607,7 +607,7 @@ class EventService {
             fetch('/api/performance/' + performanceId + '/rider', {
                 method: 'POST',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -646,7 +646,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/crew', {
                 method: 'POST',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -680,7 +680,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/rider', {
                 method: 'DELETE',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -708,7 +708,7 @@ class EventService {
             fetch('/api/event/' + eventId, {
                 method: 'DELETE',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -751,7 +751,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/ticket', {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -790,7 +790,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/rider', {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -815,6 +815,7 @@ class EventService {
         userId: number,
         eventId: number,
         name: string,
+        hostId: number,
         active: number,
         location: string,
         description: string,
@@ -839,7 +840,7 @@ class EventService {
             fetch('/api/event/' + eventId, {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': 'MASTER',
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -871,7 +872,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/contract', {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -913,7 +914,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/performance', {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -954,7 +955,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/crew/' + crewId, {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -982,7 +983,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/ticket', {
                 method: 'DELETE',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -1014,7 +1015,7 @@ class EventService {
             fetch('/api/event/' + eventId + '/performance', {
                 method: 'DELETE',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -1045,10 +1046,9 @@ class UserService {
             fetch('/api/user/' + userId, {
                 method: 'GET',
                 headers: {
-                    'x-access-token': 'MASTER',
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': userId,
+                    "Accept": 'application/json',
+                    'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
@@ -1081,7 +1081,7 @@ class UserService {
             fetch('/api/users', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -1123,7 +1123,7 @@ class UserService {
             fetch('api/user/' + userId, {
                 method: 'DELETE',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -1165,7 +1165,7 @@ class UserService {
             fetch('api/user/' + userId, {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': 'MASTER',
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId
@@ -1194,7 +1194,7 @@ class UserService {
             fetch('api/user/' + userMail, {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'x-access-token': userId,
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     userId: userId

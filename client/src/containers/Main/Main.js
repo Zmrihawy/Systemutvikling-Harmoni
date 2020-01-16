@@ -4,8 +4,8 @@ import { HashRouter, Route } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
 
 import DisplayEventOverview from '../DisplayEventOverview/DisplayEventOverview';
-import Login from '../../Login';
-import Registration from '../../Registration';
+import Login from '../Login/Login';
+import Registration from '../Registration/Registration';
 import CreateEvent from '../CreateEvent/CreateEvent';
 import DisplayEvent from '../DisplayEvent/DisplayEvent';
 import DisplayRider from '../DisplayRider/DisplayRider';

@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import classes from './NavBar.module.scss';
 
-<<<<<<< HEAD
-import { createHashHistory } from 'history';
-export const history = createHashHistory();
-=======
 import { history } from '../../containers/App';
->>>>>>> origin/eventViewServices
 
 export default class NavBar extends Component {
     constructor(props) {
@@ -80,8 +75,7 @@ export default class NavBar extends Component {
                         break;
                     case 'eventLink':
                         history.push(
-                            '/arrangement/' +
-                                window.sessionStorage.getItem('user')
+                            '/arrangement'
                         );
                         break;
                     case 'logLink':

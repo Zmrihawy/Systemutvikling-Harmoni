@@ -15,14 +15,14 @@ export default class OverviewPage extends Component {
 
                             <div className={classes.text}>
                                 <h3>{event.name}</h3>
-                                <p>Location: {event.location} </p>
+                                <p>Sted: {event.location} </p>
                                 <p>
-                                    Date:{' '}
+                                    Dato:{' '}
                                     {new Date(event.startTime)
                                         .toUTCString()
                                         .slice(0, -7)}{' '}
                                 </p>
-                                <button onClick={() => this.props.handleButtonClick(event.id)}>More details</button>
+                                <button onClick={() => this.props.handleButtonClick(event.id)}>Les mer</button>
                             </div>
                         </div>
                     ))}

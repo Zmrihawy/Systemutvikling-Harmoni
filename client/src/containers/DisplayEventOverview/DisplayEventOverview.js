@@ -18,13 +18,13 @@ export default class DisplayEventOverview extends Component {
         events: []
     };
 
-    handleButtonClick = (id) => {
-        history.push('/arrangement/' + id); 
-    }
+    handleButtonClick = id => {
+        history.push('/arrangement/' + id);
+    };
 
     async componentDidMount() {
         eventService
-        //TODO Hardkoda window.sessionStorage.getItem('user')
+            //TODO Hardkoda
             .getUsersEvents(1, 1)
             .then(serverEvents => {
                 this.setState({ events: serverEvents });
@@ -33,8 +33,11 @@ export default class DisplayEventOverview extends Component {
     }
 
     render() {
-        return <EventOverview 
-        events={this.state.events} 
-        handleButtonClick={this.handleButtonClick}/>;
+        return (
+            <EventOverview
+                events={this.state.events}
+                handleButtonClick={this.handleButtonClick}
+            />
+        );
     }
 }

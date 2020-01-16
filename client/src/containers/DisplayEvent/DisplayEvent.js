@@ -50,8 +50,9 @@ export default class DisplayEvent extends Component {
 
     async componentDidMount() {
         let eventId = this.props.match.params.id;
+        console.log(eventId);
         eventService
-            .getEvent(eventId)
+            .getEvent(1, eventId)
             .then(recivedEvent => {
                 this.setState({
                     title: recivedEvent.name,
@@ -64,14 +65,14 @@ export default class DisplayEvent extends Component {
                         .slice(0, -7)
                 });
             })
-            .catch((error: Error) => console.log('Error event'));
+            .catch((error: Error) => console.log(error));
 
         const getTickets = tickets => {
             Promise.all(tickets.map(ticketConvert));
         };
 
         eventService
-            .getEventTickets(eventId)
+            .getEventTickets(1, eventId)
             .then(ticket_array => {
                 this.setState({ tickets: ticket_array.map(ticketConvert) });
                 let ticketCount = ticketcounter(ticket_array);
@@ -109,7 +110,7 @@ export default class DisplayEvent extends Component {
         }
 
         eventService
-            .getCrew(eventId)
+            .getCrew(1, eventId)
             .then(staff_array => {
                 this.setState({ staff: staff_array.map(staffConvert) });
             })
