@@ -423,8 +423,7 @@ app.put("/api/user/:user_id", (req, res) => {
     if(req.body.phone == undefined) return res.status(400).json({error : "Missing parameter phone"});
     if(req.body.firstName == undefined) return res.status(400).json({error : "Missing parameter firstName"});
     if(req.body.lastName == undefined) return res.status(400).json({error: "Missing parameter lastName"});
-    if(req.params.user_id !== req.userId)  return res.status(401).json({error: "Not authorized -ur not master"});
-    if (!sjekkMail(req.body.email)) return res.status(400).json({error: "inc mail is not valid"});
+    if(!sjekkMail(req.body.email)) return res.status(400).json({error: "inc mail is not valid"});
 
     let params = {
         username: req.body.username,
