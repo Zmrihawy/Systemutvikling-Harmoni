@@ -51,15 +51,36 @@ export default class TicketAdder extends Component {
         }));
     };
 
+    /* handleInputChange = event => {
+        let inputValue = [...this.state.inputValue];
+        event.target.name = event.target.value;
+
+        this.setState({ inputValue });
+    }; */
+
     render() {
         return (
             <>
-                <button
-                    className="Button Button--add"
-                    onClick={this.handleNewTicket}
-                >
-                    Legg til
+                <button onClick={this.handleNewTicket}>
+                    Legg til ny billett
                 </button>
+
+                <Modal
+                    show={this.state.showModal}
+                    closed={this.handleToggleModal}
+                >
+                    <input
+                        type="text"
+                        name="ticketInput"
+                        onChange={this.handleChange}
+                        value={this.state.ticketInput}
+                        className="Input"
+                        required
+                    />
+                    <button onClick={this.handleCustomTicketOption}>
+                        Opprett ny billettype
+                    </button>
+                </Modal>
                 <div>
                     <p> Billettype Antall Pris </p>
                 </div>
@@ -82,32 +103,31 @@ export default class TicketAdder extends Component {
                         </div>
                     );
                 })}
-                <div>
-                    <button
-                        className="Button Button--inverse"
-                        onClick={() =>
-                            this.props.save(
-                                this.state.tickets,
-                                'tickets',
-                                'previous'
-                            )
-                        }
-                    >
-                        &larr; Tilbake
-                    </button>
-                    <button
-                        className="Button"
-                        onClick={() =>
-                            this.props.save(
-                                this.state.tickets,
-                                'tickets',
-                                'next'
-                            )
-                        }
-                    >
-                        Neste &rarr;
-                    </button>
-                </div>
+                <button onClick={this.handleToggleModal}>
+                    Opprett billettype
+                </button>
+                <button
+                    onClick={() =>
+                        this.props.save(
+                            [this.state.tickets, this.state.ticketOptions],
+                            'tickets',
+                            'previous'
+                        )
+                    }
+                >
+                    Forrige
+                </button>
+                <button
+                    onClick={() =>
+                        this.props.save(
+                            [this.state.tickets, this.state.ticketOptions],
+                            'tickets',
+                            'next'
+                        )
+                    }
+                >
+                    Videre
+                </button>
             </>
         );
     }
