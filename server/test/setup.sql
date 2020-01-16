@@ -46,9 +46,9 @@ CREATE TABLE performance (
   performance_id int(11) NOT NULL AUTO_INCREMENT,
   user_id int(11) NOT NULL,
   event_id int(11) NOT NULL,
-  start_time datetime NOT NULL,
-  end_time datetime NOT NULL,
-  contract varchar(300) NOT NULL,
+  start_time datetime,
+  end_time datetime,
+  contract varchar(300),
   PRIMARY KEY (performance_id),
   FOREIGN KEY (event_id) REFERENCES event(event_id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES user(user_id)

@@ -20,8 +20,6 @@ import UserDao from './dao/userDao.js';
 
 import EventDao from './dao/eventDao.js';
 
-const MASTER_TOKEN: string = "MASTER"; //TODO DELEEEEEETE
-
 var apiRoutes = express.Router();
 
 var app = express();
