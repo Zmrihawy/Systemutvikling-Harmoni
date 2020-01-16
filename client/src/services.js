@@ -490,7 +490,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })

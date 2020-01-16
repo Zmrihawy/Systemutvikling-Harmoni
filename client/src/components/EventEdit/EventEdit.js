@@ -56,6 +56,12 @@ const eventEdit = props => {
                 type="submit"
                 value="Endre arrangement"
             />
+
+            <input
+                className={classes.button__delete}
+                type="button"
+                value="Slett arrangement"
+            />
         </form>
     );
 };
