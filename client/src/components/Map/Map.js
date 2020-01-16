@@ -16,6 +16,7 @@ const map = props => {
                 width: '100%'
             }}
             center={[props.longitude, props.latitude]}
+            onClick={(props.handleMapClick)}
         >
             <Popup coordinates={[props.longitude, props.latitude]}>
                 <h1>{props.location}</h1>
