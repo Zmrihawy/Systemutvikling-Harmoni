@@ -159,8 +159,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     resolve(handleGetAllEventsResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -199,8 +199,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     resolve(handleGetPerformanceResponse(json.data[0]));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -234,8 +234,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     resolve(handleGetAllRidersResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -267,8 +267,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     resolve(handleGetContractResponse(json.data[0]));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -295,8 +295,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     resolve(handleGetEventContractsResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -323,8 +323,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     resolve(handleGetEventTicketsResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -363,8 +363,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     resolve(handleGetPerformanceRidersResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -393,8 +393,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     resolve(handleGetUsersEventsResponse(json.data));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -433,8 +433,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     resolve(handleGetCrewResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -489,8 +489,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -528,8 +528,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -567,8 +567,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -598,8 +598,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -634,8 +634,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -666,8 +666,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -691,8 +691,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -731,8 +731,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -767,8 +767,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -813,8 +813,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -843,8 +843,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -884,8 +884,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -922,8 +922,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -949,8 +949,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -979,8 +979,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -1007,8 +1007,8 @@ class UserService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     resolve(handleGetUserResponse(json.data[0]));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -1042,8 +1042,8 @@ class UserService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     resolve(handleGetAllUsersResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -1123,8 +1123,8 @@ class UserService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -1153,8 +1153,8 @@ class UserService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
