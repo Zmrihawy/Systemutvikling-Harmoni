@@ -9,12 +9,13 @@ const ticketLine = props => {
                 value={props.description}
                 name="description"
             >
-                <option>Velg billett</option>
-                <option>Early Bird</option>
-                <option>Student</option>
-                <option>Junior</option>
-                <option>Honnør</option>
-                <option>VIP</option>
+                {props.options.map((option, i) => {
+                    return (
+                        <option key={i} value={option}>
+                            {option}
+                        </option>
+                    );
+                })}
             </select>
             <input
                 type="text"

@@ -27,7 +27,15 @@ export default class CreateEvent extends Component {
             artists: [],
             tickets: [],
             staff: []
-        }
+        },
+        ticketOptions: [
+            'Early Bird',
+            'Junior',
+            'Student',
+            'Voksen',
+            'Honnør',
+            'VIP'
+        ]
     };
 
     handleToggleBackdrop = () => {
@@ -106,7 +114,9 @@ export default class CreateEvent extends Component {
                     el.contact.trim() !== ''
             );
         } else if (select === 'tickets') {
-            result = input;
+            this.setState({ ticketOptions: input[1] });
+
+            result = input[0];
         } else if (select === 'riders') {
             input.forEach(el => {
                 el.riders = el.riders.filter(element => {
@@ -245,6 +255,7 @@ export default class CreateEvent extends Component {
                     <TicketAdder
                         tickets={this.state.newEvent.tickets}
                         save={this.handleSave}
+                        ticketOptions={this.state.ticketOptions}
                     />
                 );
                 break;
