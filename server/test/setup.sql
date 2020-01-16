@@ -44,10 +44,11 @@ CREATE TABLE ticket (
 
 CREATE TABLE performance (
   performance_id int(11) NOT NULL AUTO_INCREMENT,
-  user_id int(11) NOT NULL,
+  user_id int(11),
   event_id int(11) NOT NULL,
   start_time datetime,
   end_time datetime,
+  name varchar(100),
   contract varchar(300),
   PRIMARY KEY (performance_id),
   FOREIGN KEY (event_id) REFERENCES event(event_id) ON DELETE CASCADE,
