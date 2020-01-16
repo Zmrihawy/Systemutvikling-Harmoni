@@ -1132,15 +1132,14 @@ class UserService {
         });
     }
 
-    updatePassword(userMail: string, oldPassword: string, newPassword: string): Promise<any> {
+    updatePassword(userId: string, oldPassword: string, newPassword: string): Promise<any> {
         let data = {
-            email: userMail,
             oldPassword: oldPassword,
             newPassword: newPassword
         };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
-            fetch('/api/user/' + userMail, {
+            fetch('/api/user/' + userId + '/password', {
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),

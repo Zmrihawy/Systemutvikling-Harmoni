@@ -1,16 +1,17 @@
 .container {
     display: grid;
     grid-template-areas:
-        'title'
-        'input__name'
-        'input__location'
-        'input__end__time'
-        'input__start__time'
-        'input__description'
-        'button__submit';
-    grid-gap: 10px;
+        'title              title'
+        'input__name        input__name'
+        'calendar           map'
+        'calendar           input__location'
+        'input__description input__description'
+        'button__submit     button__submit';
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
     margin: 50px auto;
     place-items: center center;
+    width: 60%;
 }
 
 .title {
@@ -27,12 +28,22 @@
     grid-area: input__location;
 }
 
-.input__start_time {
-    grid-area: input__start_time;
+.calendar {
+    grid-area: calendar;
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
 }
 
-.input__end__time {
-    grid-area: input__end__time;
+.map {
+    grid-area: map;
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    border-radius: 20px;
+    -webkit-box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.2);
 }
 
 .input__description {
@@ -40,20 +51,16 @@
     height: 500px;
 }
 
-/* input {
-    padding: 15px;
-    font-size: 1.4em;
-    width: 60%;
-    background-color: #fdfdfd;
-    border-radius: 15px;
-    border: 1px solid lightgray;
-} */
+.button__submit {
+    grid-area: button__submit;
+}
 
-textarea {
+.container > input,
+.container > textarea {
     padding: 15px;
     font-size: 1.4em;
-    width: 60%;
     background-color: #fdfdfd;
     border-radius: 15px;
     border: 1px solid lightgray;
+    width: 100%;
 }

@@ -78,6 +78,7 @@ const eventInfo = props => {
                     longitude={props.longitude}
                     latitude={props.latitude}
                     location={props.location}
+                    handleMapClick={props.handleMapClick}
                 />
             </div>
 
