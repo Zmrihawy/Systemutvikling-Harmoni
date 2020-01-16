@@ -59,13 +59,30 @@ let privateKey = (publicKey = "arbeiderklassenrusteropptilvepnetrevolusjon");
 
 app.use("/api", (req, res, next) => {
 
-    if (req.headers['x-access-token'] === undefined) return res.json({error: "missing access token header"});
+    req.userId = Number(req.headers['x-access-token']);
 
+    console.log("SVEIN " + req.headers['x-access-token'] + " " + req.userId);
+
+    userDao.getUser(req.userId, (status, data) => {
+        if (data[0]) {
+            console.log("found data");
+            req.email = data[0].email;
+            next();
+        } else {
+            console.log("no data");
+        }
+    });
+
+    /*
     var token = req.headers["x-access-token"];
 
+    if (token === undefined) {
+        res.status(400);
+        return res.json({error: "missing access token header"});}
+
     if (token === MASTER_TOKEN) {
-        req.email = req.body.email;
-        req.userId = req.body.userId;
+        //req.email = req.header.email;
+        //req.userId = req.header.userId;
         next();
     } else {
         jwt.verify(token, publicKey, (err, decoded) => {
@@ -74,7 +91,7 @@ app.use("/api", (req, res, next) => {
                 res.status(401);
                 res.json({error: "Not authorized -> Token Expired"});
             } else {
-                userDao.getUser(req.body.userId, (status, data) => {
+                userDao.getUserByEmail(decoded.email, (status, data) => {
                     console.log(decoded);
                     console.log(data);
                     if (data.length === 0) {
@@ -82,7 +99,7 @@ app.use("/api", (req, res, next) => {
                         res.json({error: "Not authorized -> Invalid Token"});
                     } else if (data[0].email === decoded.email) {
                         req.email = decoded.email;
-                        req.userId = data[0].userId;
+                        req.userId = data[0].user_id;
                         next();
                     } else {
                         res.status(401);
@@ -91,7 +108,8 @@ app.use("/api", (req, res, next) => {
                 });
             }
         });
-    }
+    }*/
+
 });
 
 // Handles login and returns JWT-token as JSON
@@ -181,6 +199,24 @@ app.get("/api/user/:id", (req, res) => {
         res.json({data, jwt: token});
     });
 });
+
+// Get performance
+
+app.get("/api/performance/:performance_id", (req, res) => {
+    console.log("Fikk get-request fra klient");
+
+    if (numberError([req.params.performance_id])) {
+        res.status(400);
+        return res.json({error: "Url parameter performance_id must be a number"});
+    }
+
+    eventDao.getPerformance(req.params.performance_id, (status, data) => {
+        res.status(status);
+        let token = thisFunctionCreatesNewToken(req.email);
+        res.json({data, jwt: token});
+    })
+
+})
 
 
 //Get one event
@@ -472,7 +508,7 @@ app.put("/api/user/:user_id", (req, res) => {
         (req.body.lastName === undefined || req.body.lastName === null)) {
         res.status(400);
         return res.json({error: "Wrong parameter"})
-    } else if (Number(req.params.user_id) !== Number(req.userId)) {
+    } else if (req.params.user_id !== req.userId) {
         res.status(401);
         return res.json({error: "Not authorized -ur not master"});
     }
@@ -726,7 +762,7 @@ app.put("/api/event/:event_id", (req, res) => {
         return res.json({error: "bad request : mssing location parameter"});
     }
 
-    let cat = req.body.category;
+    let cat = req.body.description;
     if (cat == undefined) cat = "";
 
     eventDao.updateEvent({
@@ -737,8 +773,7 @@ app.put("/api/event/:event_id", (req, res) => {
         description: req.body.description,
         startTime: req.body.startTime,
         endTime: req.body.endTime,
-        eventId: req.params.event_id,
-        category: cat
+        eventId: req.params.event_id
     }, (status, data) => {
         res.status(status);
         let token = thisFunctionCreatesNewToken(req.email);
@@ -823,7 +858,7 @@ app.post("/api/event", (req, res) => {
         name: req.body.name,
         userId: req.body.userId,
         location: req.body.location,
-        category: req.body.category,
+        description: req.body.description,
         startTime: req.body.startTime,
         endTime: req.body.endTime
     }, (status, data) => {
@@ -991,8 +1026,8 @@ app.post("/token", (req, res) => {
 function numberError(nums: Array<mixed>): boolean {
     for (let i = 0; i < nums.length; i++) {
         if (isNaN(nums[i])) return true;
-        if(typeof nums[i] === 'string'){
-            if(nums[i].trim() === '') return true;
+        if (typeof nums[i] === 'string') {
+            if (nums[i].trim() === '') return true;
         }
     }
     return false;
