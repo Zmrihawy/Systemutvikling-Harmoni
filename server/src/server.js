@@ -525,7 +525,29 @@ app.put("/api/user/:user_id/password", (req, res) => {
     else if(req.params.user_id != req.userId) return res.status(401).json({error : "cannot change password of another user"});
 
     userDao.getPassword(req.email, (status, data) => {
-        if(data.length === 0) return res.status(500).json({error : "user already deleted"})
+        if(data.length === 0 || data.length > 1) return res.status(500).json({error : "token error"});
+
+        if (data[0] == undefined) return res.status(401).json({error : "wrong email"});
+
+        let hashPW = crypto.createHmac('sha512', data[0].salt);
+        let pass: string = req.body.oldPassword;
+
+        hashPW.update(pass);
+        pass = hashPW.digest('hex');
+
+        let login = data[0].userId;
+
+        if (pass.toUpperCase() !== data[0].password.toString()) return res.status(401).json({error : "wrong password"});
+
+        let pw = req.body.newPassword;
+        hashPW.update(pw);
+        pw = hashPW.digest('hex');
+
+        userDao.updatePassword({userId : req.userId, password: pw}, (status, data) => {
+            res.status(status);
+            let token = thisFunctionCreatesNewToken(req.mail, req.userId);
+            res.json({data, jwt : token});
+        })
     });
 });
 
