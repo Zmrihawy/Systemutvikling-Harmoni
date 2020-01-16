@@ -1,15 +1,15 @@
 //@flow
 export class Event {
-    constructor(
-        id,
-        name,
-        hostId,
-        active,
-        location,
-        description,
-        startTime,
-        endTime
-    ) {
+    id: number;
+    name: string;
+    hostId: number;
+    active: number;
+    location: string;
+    description: string;
+    startTime: string;
+    endTime: string;
+
+    constructor(id: number, name: string, hostId: number, active: number, location: string, description: string, startTime: string, endTime: string) {
         this.id = id;
         this.name = name;
         this.hostId = hostId;
@@ -19,16 +19,17 @@ export class Event {
         this.startTime = startTime;
         this.endTime = endTime;
     }
+
 }
 
 export class Ticket {
-    name;
-    eventId;
-    price;
-    amount;
-    description;
+    name: string;
+    eventId: number;
+    price: number;
+    amount: number;
+    description: string;
 
-    constructor(name, eventId, price, amount, description) {
+    constructor(name: string, eventId: number, price: number, amount: number, description: string) {
         this.name = name;
         this.eventId = eventId;
         this.price = price;
@@ -38,11 +39,11 @@ export class Ticket {
 }
 
 export class Rider {
-    id;
-    name;
-    amount;
+    id: number;
+    name: string;
+    amount: number;
 
-    constructor(id, name, amount) {
+    constructor(id: number, name: string, amount: number) {
         this.id = id;
         this.name = name;
         this.amount = amount;
@@ -57,14 +58,7 @@ export class Performance {
     endTime: string;
     contract: string;
 
-    constructor(
-        id: number,
-        userId: number,
-        eventId: number,
-        startTime: string,
-        endTime: string,
-        contract: string
-    ) {
+    constructor(id: number, userId: number, eventId: number, startTime: string, endTime: string, contract: string) {
         this.id = id;
         this.userId = userId;
         this.eventId = eventId;
@@ -75,14 +69,14 @@ export class Performance {
 }
 
 export class User {
-    id;
-    username;
-    email;
-    phone;
-    firstName;
-    surname;
+    id: number;
+    username: string;
+    email: string;
+    phone: string;
+    firstName: string;
+    surname: string;
 
-    constructor(id, username, email, phone, firstName, surname) {
+    constructor(id: number, username: string, email: string, phone: string, firstName: string, surname: string) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -93,13 +87,13 @@ export class User {
 }
 
 export class Crew {
-    id;
-    profession;
-    name;
-    contactInfo;
-    eventId;
+    id: number;
+    profession: string;
+    name: string;
+    contactInfo: string;
+    eventId: number;
 
-    constructor(id, profession, name, contactInfo, eventId) {
+    constructor(id: number, profession: string, name: string, contactInfo: string, eventId: number) {
         this.id = id;
         this.profession = profession;
         this.name = name;
@@ -108,18 +102,19 @@ export class Crew {
     }
 }
 
+
+
 class EventService {
     //GET
-    getEvent(userId: number, id: number): Promise<any> {
+    getEvent(id: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + id, {
                 method: 'GET',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
@@ -148,16 +143,15 @@ class EventService {
         }
     }
 
-    getAllEvents(userId: number): Promise<any> {
+    getAllEvents(): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/events/', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
@@ -189,16 +183,15 @@ class EventService {
         }
     }
 
-    getPerformance(userId: number, id: number): Promise<any> {
+    getPerformance(id: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/performance/' + id, {
                 method: 'GET',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
@@ -219,21 +212,21 @@ class EventService {
                 json.user_id,
                 json.event_id,
                 json.start_time,
-                json.end_time
+                json.end_time,
+                json.contract
             );
         }
     }
 
-    getAllRiders(userId: number, eventId: number): Promise<any> {
+    getAllRiders(eventId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/rider', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
@@ -256,7 +249,6 @@ class EventService {
     }
 
     getContract(
-        userId: number,
         eventId: number,
         artistId: number
     ): Promise<any> {
@@ -265,10 +257,9 @@ class EventService {
             fetch('/api/event/' + eventId + '/user/' + artistId + '/contract', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
@@ -288,16 +279,15 @@ class EventService {
         }
     }
 
-    getEventContracts(userId: number, eventId: number): Promise<any> {
+    getEventContracts(eventId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/contracts', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
@@ -317,16 +307,15 @@ class EventService {
         }
     }
 
-    getEventTickets(userId: number, eventId: number): Promise<any> {
+    getEventTickets(eventId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/tickets', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
@@ -356,7 +345,6 @@ class EventService {
     }
 
     getPerformanceRiders(
-        userId: number,
         eventId: number,
         performanceId: number
     ): Promise<any> {
@@ -365,10 +353,9 @@ class EventService {
             fetch('/api/user/event/' + eventId + '/' + performanceId, {
                 method: 'GET',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
@@ -396,10 +383,9 @@ class EventService {
             fetch('/api/user/' + userId + '/event/' + active, {
                 method: 'GET',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
@@ -420,8 +406,8 @@ class EventService {
                     new Event(
                         data.event_id,
                         data.name,
-                        '',
-                        '',
+                        userId,
+                        active,
                         data.location,
                         '',
                         data.start_time,
@@ -431,16 +417,15 @@ class EventService {
         }
     }
 
-    getCrew(userId: number, eventId: number): Promise<any> {
+    getCrew(eventId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/crew', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
@@ -472,7 +457,7 @@ class EventService {
     //POST
     createEvent(
         userId: number,
-        name: string,
+        eventName: string,
         active: number,
         location: string,
         description: string,
@@ -481,7 +466,7 @@ class EventService {
     ): Promise<any> {
         let data = {
             userId: userId,
-            name: name,
+            eventName: eventName,
             active: active,
             location: location,
             description: description,
@@ -493,10 +478,9 @@ class EventService {
             fetch('/api/event', {
                 method: 'POST',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
@@ -515,7 +499,6 @@ class EventService {
     }
 
     createTicket(
-        userId: number,
         name: string,
         eventId: number,
         price: number,
@@ -534,10 +517,9 @@ class EventService {
             fetch('/api/event/' + eventId + '/ticket', {
                 method: 'POST',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
@@ -574,10 +556,9 @@ class EventService {
             fetch('/api/event/' + eventId + '/performance', {
                 method: 'POST',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
@@ -596,21 +577,19 @@ class EventService {
     }
 
     createRider(
-        userId: number,
         performanceId: number,
         name: string,
         amount: number
     ): Promise<any> {
-        let data = { userId: userId, name: name, amount: amount };
+        let data = {name: name, amount: amount};
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/performance/' + performanceId + '/rider', {
                 method: 'POST',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
@@ -629,14 +608,12 @@ class EventService {
     }
 
     createCrew(
-        userId: number,
         eventId: number,
         profession: string,
         name: string,
         contactInfo: string
     ): Promise<any> {
         let data = {
-            userId: userId,
             profession: profession,
             name: name,
             contactInfo: contactInfo
@@ -646,10 +623,9 @@ class EventService {
             fetch('/api/event/' + eventId + '/crew', {
                 method: 'POST',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
@@ -669,21 +645,19 @@ class EventService {
 
     //DELETE
     deleteRider(
-        userId: number,
         eventId: number,
         performanceId: number,
         name: string
     ): Promise<any> {
-        let data = { performanceId: performanceId, name: name };
+        let data = {performanceId: performanceId, name: name};
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/rider', {
                 method: 'DELETE',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
@@ -701,19 +675,16 @@ class EventService {
         });
     }
 
-    deleteEvent(userId: number, eventId: number): Promise<any> {
-        let data = { userId: userId };
+    deleteEvent(eventId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId, {
                 method: 'DELETE',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
-                },
-                body: JSON.stringify(data)
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             })
                 .then(response => {
                     isError = isErrorStatus(response.status);
@@ -731,16 +702,14 @@ class EventService {
 
     //PUT
     updateTicket(
-        userId: number,
-        name: string,
+        eventName: string,
         eventId: number,
         price: number,
         amount: number,
         description: string
     ): Promise<any> {
         let data = {
-            userId: userId,
-            name: name,
+            eventName: eventName,
             eventId: eventId,
             price: price,
             amount: amount,
@@ -751,10 +720,9 @@ class EventService {
             fetch('/api/event/' + eventId + '/ticket', {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
@@ -773,14 +741,12 @@ class EventService {
     }
 
     updateRider(
-        userId: number,
         eventId: number,
         riderId: number,
         name: string,
         amount: number
     ): Promise<any> {
         let data = {
-            userId: userId,
             riderId: riderId,
             name: name,
             amount: amount
@@ -790,10 +756,9 @@ class EventService {
             fetch('/api/event/' + eventId + '/rider', {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
@@ -812,7 +777,6 @@ class EventService {
     }
 
     updateEvent(
-        userId: number,
         eventId: number,
         name: string,
         hostId: number,
@@ -823,11 +787,9 @@ class EventService {
         endTime: string
     ): Promise<any> {
         let data = {
-            userId: userId,
             eventId: eventId,
             eventName: name,
             hostId: hostId,
-            userId: 1,
             active: active,
             location: location,
             description: description,
@@ -840,10 +802,9 @@ class EventService {
             fetch('/api/event/' + eventId, {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
@@ -862,20 +823,18 @@ class EventService {
     }
 
     updateContract(
-        userId: number,
         eventId: number,
         contract: string
     ): Promise<any> {
-        let data = { userId: userId, eventId: eventId, contract: contract };
+        let data = {eventId: eventId, contract: contract};
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/contract', {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
@@ -914,10 +873,9 @@ class EventService {
             fetch('/api/event/' + eventId + '/performance', {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
@@ -936,7 +894,6 @@ class EventService {
     }
 
     updateCrew(
-        userId: number,
         eventId: number,
         crewId: number,
         profession: string,
@@ -944,7 +901,6 @@ class EventService {
         contactInfo: string
     ): Promise<any> {
         let data = {
-            userId: userId,
             profession: profession,
             name: name,
             contactInfo: contactInfo,
@@ -955,10 +911,9 @@ class EventService {
             fetch('/api/event/' + eventId + '/crew/' + crewId, {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
@@ -976,17 +931,16 @@ class EventService {
         });
     }
 
-    deleteTicket(userId: number, name: string, eventId: number): Promise<any> {
-        let data = { userId: userId, name: name, eventId: eventId };
+    deleteTicket(name: string, eventId: number): Promise<any> {
+        let data = {name: name, eventId: eventId};
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/ticket', {
                 method: 'DELETE',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
@@ -1005,20 +959,18 @@ class EventService {
     }
 
     deletePerformance(
-        userId: number,
         eventId: number,
         artistId: number
     ): Promise<any> {
-        let data = { userId: userId, artistId: artistId };
+        let data = {artistId: artistId};
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/performance', {
                 method: 'DELETE',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
@@ -1040,14 +992,13 @@ class EventService {
 class UserService {
     //GET
     getUser(userId: number): Promise<any> {
-        let data = { userId: userId };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/user/' + userId, {
                 method: 'GET',
                 headers: {
-                    'x-access-token': userId,
-                    "Accept": 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -1062,6 +1013,7 @@ class UserService {
                 })
                 .catch(error => console.error('Error: ', error));
         });
+
         function handleGetUserResponse(json: *) {
             return new User(
                 json.user_id,
@@ -1074,19 +1026,16 @@ class UserService {
         }
     }
 
-    getAllUsers(userId: number): Promise<any> {
-        let data = { userId: userId };
+    getAllUsers(): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/users', {
                 method: 'GET',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
-                },
-                body: JSON.stringify(data)
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             })
                 .then(response => {
                     isError = isErrorStatus(response.status);
@@ -1117,18 +1066,15 @@ class UserService {
 
     //DELETE
     deleteUser(userId: number): Promise<any> {
-        let data = { userId: userId };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
-            fetch('api/user/' + userId, {
+            fetch('/api/user/' + userId, {
                 method: 'DELETE',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
-                },
-                body: JSON.stringify(data)
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             })
                 .then(response => {
                     isError = isErrorStatus(response.status);
@@ -1162,13 +1108,12 @@ class UserService {
         };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
-            fetch('api/user/' + userId, {
+            fetch('/api/user/' + userId, {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
@@ -1187,17 +1132,20 @@ class UserService {
         });
     }
 
-    updatePassword(userId: number, userMail: string): Promise<any> {
-        let data = { userId: userId };
+    updatePassword(userMail: string, oldPassword: string, newPassword: string): Promise<any> {
+        let data = {
+            email: userMail,
+            oldPassword: oldPassword,
+            newPassword: newPassword
+        };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
-            fetch('api/user/' + userMail, {
+            fetch('/api/user/' + userMail, {
                 method: 'PUT',
                 headers: {
-                    'x-access-token': userId,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    userId: userId
+                    'x-access-token': window.sessionStorage.getItem('jwt'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
@@ -1237,7 +1185,7 @@ class UserService {
             fetch('/user', {
                 method: 'POST',
                 headers: {
-                    Accept: 'application/json',
+                    'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1255,6 +1203,8 @@ class UserService {
                     refreshToken(json.jwt);
                     console.log('services' + json);
                     resolve(json);
+
+                    this.loginUser(password, email);
                 })
                 .catch(error => console.log(error));
         });
@@ -1274,7 +1224,7 @@ class UserService {
             fetch('/login', {
                 method: 'POST',
                 headers: {
-                    Accept: 'application/json',
+                    'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
