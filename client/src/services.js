@@ -457,7 +457,7 @@ class EventService {
     //POST
     createEvent(
         userId: number,
-        name: string,
+        eventName: string,
         active: number,
         location: string,
         description: string,
@@ -466,7 +466,7 @@ class EventService {
     ): Promise<any> {
         let data = {
             userId: userId,
-            name: name,
+            eventName: eventName,
             active: active,
             location: location,
             description: description,
@@ -702,14 +702,14 @@ class EventService {
 
     //PUT
     updateTicket(
-        name: string,
+        eventName: string,
         eventId: number,
         price: number,
         amount: number,
         description: string
     ): Promise<any> {
         let data = {
-            name: name,
+            eventName: eventName,
             eventId: eventId,
             price: price,
             amount: amount,
