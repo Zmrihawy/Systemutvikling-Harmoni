@@ -1202,8 +1202,6 @@ class UserService {
                     refreshToken(json.jwt);
                     console.log('services' + json);
                     resolve(json);
-
-                    this.loginUser(password, email);
                 })
                 .catch(error => console.log(error));
         });

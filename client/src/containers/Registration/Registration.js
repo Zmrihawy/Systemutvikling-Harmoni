@@ -101,6 +101,7 @@ export default class Registration extends Component {
             )
             .then(() =>
                 userService.loginUser(this.state.password, this.state.email)
+                .then(() => history.push('/user/' + window.sessionStorage.getItem('user')))
             )
             .catch(data => {
                 let s = data.sqlMessage.slice(data.sqlMessage.indexOf('key'));
@@ -121,7 +122,6 @@ export default class Registration extends Component {
                     console.log('mail i bruk');
                 }
             });
-        history.push('/user/' + window.sessionStorage.getItem('user'));
     };
 
     onChange = event => {
