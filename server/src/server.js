@@ -339,7 +339,7 @@ app.delete("/api/event/:event_id/ticket", (req, res) => {
 app.delete("/api/performance/:performance_id", (req, res) => {
 
     if (numberError([req.params.performance_id])) return res.status(400).json({error: "url parameter performance_id must be a number"});
-    
+
     eventDao.deletePerformance(req.params.performance_id, (status, data) => {
         res.status(status);
         let token = thisFunctionCreatesNewToken(req.email, req.userId);
@@ -417,7 +417,7 @@ app.put("/api/user/:user_id", (req, res) => {
     console.log("Fikk PUT-request fra klienten");
 
     if(numberError([req.params.user_id, req.body.phone])) return res.status(400).json({error: "number field cannot be a string"});
-    if(req.userId !== req.params.user_id) return res.status(401).json({error : "Cannot edit other users"})
+    if(req.userId != req.params.user_id) return res.status(401).json({error : "Cannot edit other users"})
     if(req.body.username == undefined) res.status(400).json({error : "Missing parameter username"});
     if(req.body.email == undefined) return res.status(400).json({error : "Missing parameter email"});
     if(req.body.phone == undefined) return res.status(400).json({error : "Missing parameter phone"});
