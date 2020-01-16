@@ -11,6 +11,8 @@ import {
     userService
 } from '../../services';
 
+//Hei hawkis
+
 import { faCommentDollar } from '@fortawesome/free-solid-svg-icons';
 
 import { history } from '../App';
