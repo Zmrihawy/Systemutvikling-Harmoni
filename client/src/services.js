@@ -489,8 +489,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    refreshToken(json.jwt);
                     if (isError) return reject(json);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })

@@ -52,9 +52,8 @@ export default class DisplayEvent extends Component {
 
     async componentDidMount() {
         let eventId = this.props.match.params.id;
-        console.log(eventId);
         eventService
-            .getEvent(1, eventId)
+            .getEvent(eventId)
             .then(recivedEvent => {
                 this.setState({
                     title: recivedEvent.name,
@@ -74,7 +73,7 @@ export default class DisplayEvent extends Component {
         };
 
         eventService
-            .getEventTickets(1, eventId)
+            .getEventTickets(eventId)
             .then(ticket_array => {
                 this.setState({ tickets: ticket_array.map(ticketConvert) });
                 let ticketCount = ticketcounter(ticket_array);
@@ -112,7 +111,7 @@ export default class DisplayEvent extends Component {
         }
 
         eventService
-            .getCrew(1, eventId)
+            .getCrew(eventId)
             .then(staff_array => {
                 this.setState({ staff: staff_array.map(staffConvert) });
             })
