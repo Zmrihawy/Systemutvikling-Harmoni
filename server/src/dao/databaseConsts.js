@@ -30,6 +30,7 @@ USER_EMAIL :string;
 USER_PHONE :string;
 USER_FIRST_NAME :string;
 USER_LAST_NAME :string;
+USER_PICTURE :string;
 
 PERFORMANCE_TABLE :string;
 PERFORMANCE_ID :string;
@@ -38,6 +39,7 @@ PERFORMANCE_EVENT_ID :string;
 PERFORMANCE_START_TIME :string;
 PERFORMANCE_END_TIME :string;
 PERFORMANCE_CONTRACT :string;
+PERFORMANCE_NAME :string;
 
 RIDER_TABLE :string;
 RIDER_PERFORMANCE_ID :string;
@@ -80,6 +82,7 @@ CREW_EVENT_ID :string;
         this.USER_PHONE = "phone";
         this.USER_FIRST_NAME = "first_name";
         this.USER_LAST_NAME = "surname";
+        this.USER_PICTURE = "picture";
 
         this.PERFORMANCE_TABLE = "performance";
         this.PERFORMANCE_ID = "performance_id";
@@ -88,6 +91,7 @@ CREW_EVENT_ID :string;
         this.PERFORMANCE_START_TIME = "start_time";
         this.PERFORMANCE_END_TIME = "end_time";
         this.PERFORMANCE_CONTRACT = "contract";
+        this.PERFORMANCE_NAME = "name";
 
         this.RIDER_TABLE = "rider";
         this.RIDER_PERFORMANCE_ID = "performance_id";

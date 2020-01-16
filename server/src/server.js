@@ -130,20 +130,6 @@ app.get("/api/user/:id", (req, res) => {
     });
 });
 
-// Get performance
-app.get("/api/performance/:performance_id", (req, res) => {
-    console.log("Fikk get-request fra klient");
-
-    if (numberError([req.params.performance_id])) return res.status(400).json({error: "Url parameter performance_id must be a number"});
-
-    eventDao.getPerformance(req.params.performance_id, (status, data) => {
-        res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
-        res.json({data, jwt: token});
-    });
-});
-
-
 //Get one event
 app.get("/api/event/:event_id", (req, res) => {
     console.log("/event/:event_id fikk request fra klient");
@@ -179,16 +165,27 @@ app.get("/api/events", (req, res) => {
     });
 });
 
-//Get all contracts for an event
-app.get("/api/event/:event_id/contract", (req, res) => {
+//Get all performances for an event
+app.get("/api/event/:event_id/performances", (req, res) => {
     console.log("Fikk request fra klienten");
 
     if (numberError([req.params.event_id])) return res.status(400).json({error: "parameter event_id must be a number"});
 
-    eventDao.getEventContracts(req.params.event_id, (status, data) => {
-        res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
-        res.json({data, jwt: token});
+    eventDao.getEvent(req.params.event_id, (status, data) => {
+        if(data[0].host_id == req.user_id){
+            eventDao.getEventPerformancesHost(req.userId, (status, data) => {
+                res.status(status);
+                let token = thisFunctionCreatesNewToken(req.email, req.userId);
+                res.json({data, jwt: token});
+            })
+        }
+        else {       
+            eventDao.getEventPerformancesArtist({eventId: req.params.event_id, userId: req.userId}, (status, data) => {
+                res.status(status);
+                let token = thisFunctionCreatesNewToken(req.email, req.userId);
+                res.json({data, jwt: token});
+            });    
+        }
     });
 });
 
@@ -205,26 +202,13 @@ app.get("/api/event/:event_id/tickets", (req, res) => {
     });
 });
 
-//Get all riders for each artist in a specific event
-/*app.get("/api/event/:event_id/rider", (req, res) => {
-    console.log("Fikk request fra klienten");
-
-    if (numberError([req.params.event_id])) return res.status(400).json({error: "url parameter event_id must be a number"});
-
-    eventDao.getAllRiders(req.params.event_id, (status, data) => {
-        res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
-        res.json({data, jwt: token});
-    });
-});*/
-
 //Get all raiders for one user
 app.get("/api/user/event/:event_id/:performance_id", (req, res) => {
     console.log("/user/:user_id/:active: fikk request fra klient");
 
-    if(numberError([req.params.event_id, req.params.performance_id])) return res.status(400).json({error : "number field cannot be string"})
+    if(numberError([req.params.performance_id])) return res.status(400).json({error : "number field cannot be string"})
 
-    eventDao.getRiders(req.params.perfromanceId, (status, data) => {
+    eventDao.getRiders(req.params.performanceId, (status, data) => {
         res.status(status);
         let token = thisFunctionCreatesNewToken(req.email, req.userId);
         res.json({data, jwt: token});
@@ -622,7 +606,6 @@ app.post("/user", (req, res) => {
                         firstName: user.firstName,
                         lastName: user.lastName}, 
                         (status, data) => {
-        userDao.getUserByEmail()
         let token = thisFunctionCreatesNewToken(user.mail, 0);
         res.status(status).json({data, jwt : token});
     });
@@ -646,8 +629,8 @@ app.post("/api/event", (req, res) => {
     eventDao.createEvent({eventName: req.body.eventName,
                             userId: req.body.userId,
                             location: req.body.location,
-                            long: req.body.long,
-                            lat : req.body.lat,
+                            longitude: req.body.long,
+                            latitude : req.body.lat,
                             description: req.body.description,
                             startTime: req.body.startTime,
                             endTime: req.body.endTime}, 

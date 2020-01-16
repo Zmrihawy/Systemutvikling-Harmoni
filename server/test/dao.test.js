@@ -6,18 +6,18 @@ const runSQL = require("./runSQL.js");
 // GitLab CI Pool
 
 
-// let pool = mysql.createPool({
-//     connectionLimit: 2,
-//     host: "mysql-ait.stud.idi.ntnu.no",
-//     user: "kwgulake",
-//     password: "qra2ZQqh",
-//     database: "kwgulake",
-//     debug: false,
-//     multipleStatements: true
-// });
+ let pool = mysql.createPool({
+     connectionLimit: 2,
+     host: "mysql-ait.stud.idi.ntnu.no",
+     user: "kwgulake",
+     password: "qra2ZQqh",
+     database: "kwgulake",
+     debug: false,
+     multipleStatements: true
+});
 
 
-var pool = mysql.createPool({
+/*var pool = mysql.createPool({
     connectionLimit: 1,
     host: "mysql",
     user: "root",
@@ -25,7 +25,7 @@ var pool = mysql.createPool({
     database: "School",
     debug: false,
     multipleStatements: true
-  });
+  });*/
 
 
 // test
@@ -260,23 +260,6 @@ test("get all events from database", done => {
     });
 });
 
-test("get one performance from database", done => {
-    eventDao.getPerformance(1, (status, data) => {
-        expect(data.length).toBe(1);
-        expect(data[0].user_id).toBe(1);
-        done();
-    });
-});
-
-test("get one contract from database", done => {
-    eventDao.getContract({eventId: 2, artistId: 1}, (status, data) => {
-        expect(data.length).toBe(1);
-        expect(data[0].contract).toBe("Dette er kontrakt 1");
-        done();
-    });
-});
-
-
 test("get all tickets involved in a specific event", done => {
     eventDao.getTickets(2, (status, data) => {
         expect(data.length).toBe(2);
@@ -445,24 +428,6 @@ test("update rider in database", done => {
         eventDao.getRiders(2, (status, data) => {
             expect(data[0].name).toBe("Oppdatert rider");
             expect(data[0].amount).toBe(3);
-            done();
-        });
-    });
-});
-
-test("update performance in database", done => {
-
-    let param = {
-        startTime: "2020-12-05 22:30:00",
-        endTime: "2020-12-05 22:35:00",
-        contract: "Oppdatert kontrakt",
-        performanceId: 3,
-    };
-
-    eventDao.updatePerformance(param, () => {
-        eventDao.getPerformance(2, (status, data) => {
-            // expect(data[0].start_time).toBe("2020-12-05 22:30:00");
-            expect(data[0].contract).toBe("Oppdatert kontrakt");
             done();
         });
     });

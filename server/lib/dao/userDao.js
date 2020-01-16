@@ -47,6 +47,11 @@ function (_Dao) {
       _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT ".concat(CONSTANTS.USER_ID, ", ").concat(CONSTANTS.USER_USERNAME, ", ").concat(CONSTANTS.USER_EMAIL, ", ").concat(CONSTANTS.USER_PHONE, ", ").concat(CONSTANTS.USER_FIRST_NAME, ", ").concat(CONSTANTS.USER_LAST_NAME, " \n                    FROM ").concat(CONSTANTS.USER_TABLE, " WHERE ").concat(CONSTANTS.USER_ID, " = ?"), [sql], callback);
     }
   }, {
+    key: "getUserByEmail",
+    value: function getUserByEmail(sql, callback) {
+      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT ".concat(CONSTANTS.USER_ID, ", ").concat(CONSTANTS.USER_USERNAME, ", ").concat(CONSTANTS.USER_EMAIL, ", ").concat(CONSTANTS.USER_PHONE, ", ").concat(CONSTANTS.USER_FIRST_NAME, ", ").concat(CONSTANTS.USER_LAST_NAME, " \n                    FROM ").concat(CONSTANTS.USER_TABLE, " WHERE ").concat(CONSTANTS.USER_EMAIL, " = ?"), [sql], callback);
+    }
+  }, {
     key: "getPassword",
     value: function getPassword(sql, callback) {
       _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT ".concat(CONSTANTS.USER_ID, ", HEX(").concat(CONSTANTS.USER_PASSWORD, ") as ").concat(CONSTANTS.USER_PASSWORD, " , HEX(").concat(CONSTANTS.USER_SALT, ") as ").concat(CONSTANTS.USER_SALT, " FROM ").concat(CONSTANTS.USER_TABLE, " WHERE ").concat(CONSTANTS.USER_EMAIL, " = ?"), [sql], callback);
