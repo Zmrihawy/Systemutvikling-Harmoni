@@ -10,7 +10,9 @@ export default class DisplayEventEdit extends Component {
         event: {
             id: null,
             startTime: '2020-02-01 00:00:00.000',
-            endTime: '2020-02-10 00:00:00.000'
+            endTime: '2020-02-10 00:00:00.000', 
+            longitude: '10.421906',
+            latitude: '63.446827'
         }
     };
 
@@ -39,7 +41,7 @@ export default class DisplayEventEdit extends Component {
         console.log(startTime);
         console.log(endTime);
 
-        this.setState({ event } );
+        this.setState({ event });
     };
 
     formatDate(date) {
@@ -54,6 +56,20 @@ export default class DisplayEventEdit extends Component {
         return [year, month, day].join('-');
     }
 
+    handleMapClick = (map, e) => {
+        let longitude = e.lngLat.lng; 
+        let latitude = e.lngLat.lat; 
+
+        let event = {
+            ...this.state.event
+        };
+
+        event.latitude = latitude; 
+        event.longitude = longitude; 
+
+        this.setState({ event: event })
+    }
+
     async componentDidMount() {
         eventService
             .getEvent(this.props.match.params.id)
@@ -65,7 +81,6 @@ export default class DisplayEventEdit extends Component {
                     .replace('Z', '')
                     .replace('T', ' ');
                 this.setState({ event });
-                console.log(this.state);
             })
             .catch(error => console.error(error));
     }
@@ -96,6 +111,9 @@ export default class DisplayEventEdit extends Component {
                 handleButtonClick={this.handleButtonClick}
                 handleDateChange={this.handleDateChange}
                 handleChange={this.handleChange}
+                longitude={this.state.event.longitude}
+                latitude={this.state.event.latitude}
+                handleMapClick={this.handleMapClick}
             />
         );
     }

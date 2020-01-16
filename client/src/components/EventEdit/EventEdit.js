@@ -2,11 +2,11 @@ import React from 'react';
 
 import classes from '../EventEdit/EventEdit.module.scss';
 
-import DatePicker from '../../containers/DatePicker/DatePicker'; 
+import DatePicker from '../../containers/DatePicker/DatePicker';
 import Calendar from 'react-calendar';
+import Map from '../Map/Map';
 
 const eventEdit = props => {
-    console.log(props.event);
     return (
         <form className={classes.container} onSubmit={props.handleButtonClick}>
             <h1 className={classes.title}>Rediger arrangement</h1>
@@ -26,14 +26,24 @@ const eventEdit = props => {
                 onChange={props.handleChange}
             />
             <Calendar
-                    selectRange={true}
-                    minDate={new Date()}
-                    value={[
-                        new Date(props.startTime.replace(/-/g, '/')),
-                        new Date(props.endTime.replace(/-/g, '/'))
-                    ]}
-                    onChange={props.handleDateChange}
+                className={classes.calendar}
+                selectRange={true}
+                minDate={new Date()}
+                value={[
+                    new Date(props.startTime.replace(/-/g, '/')),
+                    new Date(props.endTime.replace(/-/g, '/'))
+                ]}
+                onChange={props.handleDateChange}
+            />
+
+            <div className={classes.map}>
+                <Map
+                    longitude={props.longitude}
+                    latitude={props.latitude}
+                    location={props.location}
+                    handleMapClick={props.handleMapClick}
                 />
+            </div>
             <textarea
                 className={classes.input__description}
                 name="description"
