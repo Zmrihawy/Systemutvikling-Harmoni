@@ -89,7 +89,7 @@ app.post("/login", (req, res) => {
         hashPW.update(pass);
         pass = hashPW.digest('hex');
 
-        let login = data[0].userId;
+        let login = data[0].user_id;
 
         if (pass.toUpperCase() !== data[0].password.toString()) return res.status(401).json({error : "wrong password"});
 
@@ -491,7 +491,7 @@ app.put("/user/:usermail", (req, res) => {
             pw = hashPW.digest('hex');
 
             //#TODO
-            userDao.updatePassword({userId: data[0].userId, password: pw}, (stat, dat) => {
+            userDao.updatePassword({userId: data[0].user_id, password: pw}, (stat, dat) => {
 
                 let mailOptions = {
                     from: 'noreply.harmoni.123@gmail.com',
@@ -535,7 +535,7 @@ app.put("/api/user/:user_id/password", (req, res) => {
         hashPW.update(pass);
         pass = hashPW.digest('hex');
 
-        let login = data[0].userId;
+        let login = data[0].user_id;
 
         if (pass.toUpperCase() !== data[0].password.toString()) return res.status(401).json({error : "wrong password"});
 
@@ -622,7 +622,9 @@ app.post("/user", (req, res) => {
                         firstName: user.firstName,
                         lastName: user.lastName}, 
                         (status, data) => {
-        res.status(status).json(data);
+        userDao.getUserByEmail()
+        let token = thisFunctionCreatesNewToken(user.mail, 0);
+        res.status(status).json({data, jwt : token});
     });
 });
 
