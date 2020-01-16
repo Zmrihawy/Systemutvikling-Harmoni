@@ -25,8 +25,8 @@ CREATE TABLE `event` (
   host_id int(11) NOT NULL,
   active tinyint(1) NOT NULL DEFAULT '1',
   location varchar(200) DEFAULT NULL,
-  long float(3,15) DEFAULT NULL, 
-  lat float(3,15) DEFUALT NULL,
+  longitude decimal(11,8) DEFAULT NULL,
+  latitude decimal(11,8) DEFAULT NULL,
   description varchar(150) DEFAULT NULL,
   start_time datetime NOT NULL,
   end_time datetime NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE crew(
 
 INSERT INTO user (username, password, salt, email, phone, first_name, surname, picture)
 VALUES("testbruker", UNHEX("2955d5f4a8980763b5a1ec72c69b983a5772697e6504879711d8bcc2119cbf881d137f4190976c1af4503e2614649190c3a8e04a78f560d3e6f592240a7f3660"), UNHEX("62ca87a099fa85a1"), "testemail", "999999", "test", "bruker", "bildelink");
- 
+
 INSERT INTO user (username, password, salt, email, phone, first_name, surname, picture)
 VALUES("thomasbjerke", UNHEX("28ae51d656ead70e127d63f5bc16c2b7ef381f95f8d0184dea2eb9d37f9a93b169f0efd3a5ecb2502784f82ce00c2df984a4b189d4fc586f8ba03b0cb03f84ed"), UNHEX("ff2b807e70549309"), "thomas@email.com", "90592427", "thomas", "bjerke", "thomasbildelink");
 
@@ -87,16 +87,16 @@ VALUES("kåreandersen", UNHEX("949c083c8eeceaca63ac5da7db9b129fef1d757b0100f16d8
 INSERT INTO user (username, password, salt, email, phone, first_name, surname, picture)
 VALUES("torstein", UNHEX("83176d4c3b58a50f9c024e9ef57ec3b01398a591f3ad3b5243aa25e311a2eaab6c78208f5ffa8421eff6d3db96c3f6b79ca4cc1fa4f3c02e44d1824ebe8d11e1"), UNHEX("f3734ea50ad945e9"), "tormail", "5555555", "tor", "stein", "torbildelink");
 
-INSERT INTO event (name, host_id, active, location, long, lat,  description, start_time, end_time)
+INSERT INTO event (name, host_id, active, location, longitude, latitude,  description, start_time, end_time)
 VALUES("testEvent", 4, 1, "Trondheim", 63.4156747,10.4061419,"Festival", "2020-12-05 13:45:00", "2020-12-05 14:00:00");
 
-INSERT INTO event (name, host_id, active, location, long, lat , description, start_time, end_time)
+INSERT INTO event (name, host_id, active, location, longitude, latitude , description, start_time, end_time)
 VALUES("party", 1, 1, "Oslo", 59.9543936,10.7668334,"Fest", "2020-12-05 22:30:00", "2020-12-06 14:00:00");
 
-INSERT INTO event (name, host_id, active, location, long, lat,description, start_time, end_time)
+INSERT INTO event (name, host_id, active, location, longitude, latitude,description, start_time, end_time)
 VALUES("konsert", 2, 0, "Tromsø", 69.6565335,18.9613271,"Konsert", "2020-05-05 20:45:00", "2020-05-05 22:00:00");
 
-INSERT INTO event (name, host_id, active, location, long, lat, description, start_time, end_time)
+INSERT INTO event (name, host_id, active, location, longitude, latitude, description, start_time, end_time)
 VALUES("kino", 3, 1, "Trondheim", 63.427057,10.3903364,"Festival", "2021-12-05 13:45:00", "2021-12-05 14:00:00");
 
 INSERT INTO ticket(name, event_id, price, amount, description)

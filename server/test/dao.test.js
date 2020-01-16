@@ -5,7 +5,7 @@ const runSQL = require("./runSQL.js");
 
 // GitLab CI Pool
 
-/*
+
 let pool = mysql.createPool({
     connectionLimit: 2,
     host: "mysql-ait.stud.idi.ntnu.no",
@@ -15,17 +15,17 @@ let pool = mysql.createPool({
     debug: false,
     multipleStatements: true
 });
-*/
 
-var pool = mysql.createPool({
-    connectionLimit: 1,
-    host: "mysql",
-    user: "root",
-    password: "",
-    database: "School",
-    debug: false,
-    multipleStatements: true
-  });
+
+// var pool = mysql.createPool({
+//     connectionLimit: 1,
+//     host: "mysql",
+//     user: "root",
+//     password: "",
+//     database: "School",
+//     debug: false,
+//     multipleStatements: true
+//   });
 
 
 // test
@@ -297,14 +297,14 @@ test("get all riders for one specific performance", done => {
 test("add an event to database", done => {
     eventDao.createEvent(
         {
-            name: "Vors hos Kristian",
+            eventName: "Vors hos Kristian",
             userId: 2,
             description: "Fest",
             location: "Trondheim",
-            long : 63.4090508,
-            lat: 10.4528865,
-            startTime: "2020-12-05 22:30:00",
-            endTime: "2020-12-05 23:30:00"
+            longitude : 63.4090508,
+            latitude: 10.4528865,
+            startTime: "2020-12-05 19:00:00",
+            endTime: "2020-12-06 00:00:00"
         },
         callback
     );
