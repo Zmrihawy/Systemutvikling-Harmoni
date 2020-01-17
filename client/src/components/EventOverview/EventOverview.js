@@ -4,11 +4,11 @@ import classes from './EventOverview.module.scss';
 const eventOverview = props => {
     return (
         <div className={classes.container}>
-                <form className={classes.search__container} onSubmit={props.handleSearch}>
+                <form className={classes.search__container} onChange={props.handleSearch}>
                 <input
                     className={classes.input__search}
                     type="text"
-                    name="searcg"
+                    name="search"
                     placeholder="Søk"
                 />
 
