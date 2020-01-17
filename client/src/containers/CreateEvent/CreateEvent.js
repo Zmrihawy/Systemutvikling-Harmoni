@@ -255,11 +255,10 @@ export default class CreateEvent extends Component {
                 if (this.state.newEvent.artists.length > 0) {
                     current = (
                         <>
-                            <ContractAdder />;
-                            <button onClick={this.handlePrevious}>
-                                Forrige
-                            </button>
-                            <button onClick={this.handleNext}>Videre</button>
+                            <ContractAdder
+                                artists={this.state.newEvent.artists}
+                                save={this.handleSave}
+                            />
                         </>
                     );
                 } else {
