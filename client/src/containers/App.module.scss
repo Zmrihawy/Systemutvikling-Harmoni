@@ -7,36 +7,37 @@
 :global {
     .Button {
         box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.4);
-        border-radius: 0.5rem;
+        border-radius: 0.6rem;
         background: linear-gradient(
             to left,
-            #fff 50%,
+            #ff9f43 50%,
             rgba(0, 0, 0, 0.795) 50%
         );
         border: none;
         background-position: right bottom;
         background-size: 200% 100%;
-        margin-top: 3rem;
+        margin-top: 2.6rem;
         font-family: 'Lato', sans-serif;
-        font-size: 2.2rem;
-        padding: 1rem 5rem;
+        font-size: 2rem;
+        padding: 1rem 4.5rem;
         transition: background-position 0.5s ease-in-out, transform 0.4s,
             box-shadow 0.4s, color 0.4s;
         cursor: pointer;
 
         &:hover,
         &:active {
-            color: white;
+            color: #ff9f43;
             background-position: left bottom;
-            transform: translateY(-0.8rem) scale(1.03);
+            transform: translateY(-0.6rem) scale(1.03);
             box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.45);
         }
 
         &--inverse {
+            margin-right: 2rem;
             background: linear-gradient(
                 to left,
                 rgba(0, 0, 0, 0.795) 50%,
-                #fff 50%
+                #ff9f43 50%
             );
             background-position: left bottom;
             background-size: 200% 100%;
@@ -54,6 +55,9 @@
         }
 
         &--add {
+            margin-top: 1rem;
+            padding: 0.6rem 2.5rem;
+            font-size: 1.6rem;
             background: linear-gradient(
                 to right bottom,
                 #2ecc71 30%,
@@ -63,7 +67,7 @@
 
             &:hover,
             &:active {
-                transform: scale(1.03);
+                transform: scale(1.02);
                 color: #fff;
             }
         }
@@ -105,7 +109,7 @@
         transition: all 0.3s;
 
         &:hover {
-            transform: translateX(0.6rem);
+            transform: translateX(-0.4rem);
         }
     }
 }

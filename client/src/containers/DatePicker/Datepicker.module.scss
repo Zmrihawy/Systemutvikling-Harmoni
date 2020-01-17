@@ -10,6 +10,18 @@
     &__buttons {
         align-self: stretch;
         display: flex;
-        justify-content: space-around;
+        justify-content: start;
+
+        & button {
+            margin-right: 3rem;
+        }
+    }
+
+    &__options {
+        display: flex;
+    }
+
+    &__times {
+        margin-left: 2rem;
     }
 }

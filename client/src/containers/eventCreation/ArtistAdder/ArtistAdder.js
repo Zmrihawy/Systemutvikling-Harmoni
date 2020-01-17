@@ -39,25 +39,27 @@ export default class ArtistAdder extends Component {
                 >
                     Legg til
                 </button>
-                {this.state.artists.map((el, i) => {
-                    return (
-                        <div key={i} id={i}>
-                            <input
-                                type="text"
-                                placeholder="Navn"
-                                onChange={this.handleChange}
-                                value={el.name}
-                                className="Input Input--small"
-                            />
-                            <div
-                                onClick={this.handleDeleteArtist}
-                                className="Deleter"
-                            >
-                                &#10005;
+                <div className={classes.ArtistAdder__fields}>
+                    {this.state.artists.map((el, i) => {
+                        return (
+                            <div key={i} id={i}>
+                                <input
+                                    type="text"
+                                    placeholder="Navn"
+                                    onChange={this.handleChange}
+                                    value={el.name}
+                                    className="Input Input--small"
+                                />
+                                <div
+                                    onClick={this.handleDeleteArtist}
+                                    className="Deleter"
+                                >
+                                    &#10005;
+                                </div>
                             </div>
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+                </div>
                 <div className={classes.ArtistAdder__buttons}>
                     <button
                         className="Button Button--inverse"
@@ -69,7 +71,7 @@ export default class ArtistAdder extends Component {
                             )
                         }
                     >
-                        Forrige
+                        &larr; Tilbake
                     </button>
                     <button
                         className="Button"
@@ -81,7 +83,7 @@ export default class ArtistAdder extends Component {
                             )
                         }
                     >
-                        Videre
+                        Neste &rarr;
                     </button>
                 </div>
             </>

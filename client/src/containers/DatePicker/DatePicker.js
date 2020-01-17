@@ -5,6 +5,7 @@ import 'rc-time-picker/assets/index.css';
 import moment from 'moment';
 
 import classes from './Datepicker.module.scss';
+import Type from '../../components/UI/Type/Type';
 
 export default class DatePicker extends Component {
     state = {
@@ -55,44 +56,54 @@ export default class DatePicker extends Component {
         return (
             <>
                 <div className="MediumTitle" style={{ marginBottom: '3rem' }}>
-                    Når skal arrangementet være?
+                    <Type
+                        strings="Når skal arrangementet være?"
+                        loop={false}
+                        speed={50}
+                    />
                 </div>
-                <Calendar
-                    selectRange={true}
-                    minDate={new Date()}
-                    value={[
-                        new Date(this.state.timeFrom.replace(/-/g, '/')),
-                        new Date(this.state.timeTo.replace(/-/g, '/'))
-                    ]}
-                    onChange={this.handleDateChange}
-                />
-                <div>Fra &nbsp;||&nbsp; Til</div>
-                <div className={classes.DatePicker__times}>
-                    <TimePicker
-                        allowEmpty={false}
-                        minuteStep={5}
-                        id="timeFrom"
-                        style={{ width: 80 }}
-                        showSecond={false}
-                        className={classes.TimePicker}
-                        defaultValue={moment(this.state.timeFrom)}
-                        onChange={(value, id = 'timeFrom') =>
-                            this.handleTimeChange(value, id)
-                        }
+                <div className={classes.DatePicker__options}>
+                    <Calendar
+                        selectRange={true}
+                        minDate={new Date()}
+                        value={[
+                            new Date(this.state.timeFrom.replace(/-/g, '/')),
+                            new Date(this.state.timeTo.replace(/-/g, '/'))
+                        ]}
+                        onChange={this.handleDateChange}
                     />
+                    <div className={classes.DatePicker__times}>
+                        <div>
+                            Klokkeslett <i>til/fra</i>
+                        </div>
+                        <div>
+                            <TimePicker
+                                allowEmpty={false}
+                                minuteStep={5}
+                                id="timeFrom"
+                                style={{ width: 80 }}
+                                showSecond={false}
+                                className={classes.TimePicker}
+                                defaultValue={moment(this.state.timeFrom)}
+                                onChange={(value, id = 'timeFrom') =>
+                                    this.handleTimeChange(value, id)
+                                }
+                            />
 
-                    <TimePicker
-                        allowEmpty={false}
-                        minuteStep={5}
-                        id="timeTo"
-                        style={{ width: 80 }}
-                        showSecond={false}
-                        className={classes.TimePicker}
-                        defaultValue={moment(this.state.timeTo)}
-                        onChange={(value, id = 'timeTo') =>
-                            this.handleTimeChange(value, id)
-                        }
-                    />
+                            <TimePicker
+                                allowEmpty={false}
+                                minuteStep={5}
+                                id="timeTo"
+                                style={{ width: 80 }}
+                                showSecond={false}
+                                className={classes.TimePicker}
+                                defaultValue={moment(this.state.timeTo)}
+                                onChange={(value, id = 'timeTo') =>
+                                    this.handleTimeChange(value, id)
+                                }
+                            />
+                        </div>
+                    </div>
                 </div>
 
                 <div className={classes.DatePicker__buttons}>
@@ -106,7 +117,7 @@ export default class DatePicker extends Component {
                             )
                         }
                     >
-                        Forrige
+                        &larr; Tilbake
                     </button>
                     <button
                         className="Button"
@@ -118,7 +129,7 @@ export default class DatePicker extends Component {
                             )
                         }
                     >
-                        Videre
+                        Neste &rarr;
                     </button>
                 </div>
             </>

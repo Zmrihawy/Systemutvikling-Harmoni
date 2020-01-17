@@ -2,11 +2,10 @@
     width: 50%;
 
     &__title {
-        font-size: 3rem;
+        font-size: 3.5rem;
     }
 
-    &__buttons {
-        display: flex;
-        justify-content: space-around;
+    &__buttons button {
+        margin-right: 5rem;
     }
 }

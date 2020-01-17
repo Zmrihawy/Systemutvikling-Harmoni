@@ -1,22 +1,32 @@
-.CreateEvent {
-    background: rgb(255, 159, 67);
-    background: linear-gradient(
-        90deg,
-        rgba(255, 159, 67, 1) 0%,
-        rgba(254, 191, 53, 1) 100%
-    );
+.CreateEvent__container {
+    background: linear-gradient(to right, #ff9f43, #ffb065);
+    clip-path: polygon(0 88%, 100% 54%, 100% 100%, 0% 100%);
+    position: absolute;
+    width: 100%;
     height: calc(100vh - 5.1rem);
+}
 
+.CreateEvent {
+    height: calc(100vh - 5.1rem);
     font-size: 2rem;
     width: 100%;
     padding: 5rem;
 
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
+    position: relative;
 
     & > form {
         display: flex;
         flex-direction: column;
+    }
+
+    &__image {
+        height: 50%;
+        width: auto;
+        position: absolute;
+        right: 5%;
+        top: 30%;
     }
 }

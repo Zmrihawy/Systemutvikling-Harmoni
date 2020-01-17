@@ -8,7 +8,7 @@ export default class TicketAdder extends Component {
 
     handleNewTicket = () => {
         let tickets = [...this.state.tickets];
-        tickets.push({ description: 'Velg billett', amount: 0, price: 0 });
+        tickets.push({ description: 'Velg billett', amount: '', price: '' });
 
         this.setState({ tickets });
     };
@@ -31,7 +31,12 @@ export default class TicketAdder extends Component {
     render() {
         return (
             <>
-                <button onClick={this.handleNewTicket}>Legg til</button>
+                <button
+                    className="Button Button--add"
+                    onClick={this.handleNewTicket}
+                >
+                    Legg til
+                </button>
                 <div>
                     <p> Billettype Antall Pris </p>
                 </div>
@@ -53,24 +58,32 @@ export default class TicketAdder extends Component {
                         </div>
                     );
                 })}
-                <button
-                    onClick={() =>
-                        this.props.save(
-                            this.state.tickets,
-                            'tickets',
-                            'previous'
-                        )
-                    }
-                >
-                    Forrige
-                </button>
-                <button
-                    onClick={() =>
-                        this.props.save(this.state.tickets, 'tickets', 'next')
-                    }
-                >
-                    Videre
-                </button>
+                <div>
+                    <button
+                        className="Button Button--inverse"
+                        onClick={() =>
+                            this.props.save(
+                                this.state.tickets,
+                                'tickets',
+                                'previous'
+                            )
+                        }
+                    >
+                        &larr; Tilbake
+                    </button>
+                    <button
+                        className="Button"
+                        onClick={() =>
+                            this.props.save(
+                                this.state.tickets,
+                                'tickets',
+                                'next'
+                            )
+                        }
+                    >
+                        Neste &rarr;
+                    </button>
+                </div>
             </>
         );
     }

@@ -1,0 +1,22 @@
+.ArtistAdder {
+    &__fields {
+        direction: rtl;
+        overflow-x: visible;
+        overflow-y: auto;
+        max-height: 40vh;
+
+        & div {
+            direction: ltr;
+
+            & input {
+                margin-top: 1rem;
+                font-size: 1.6rem;
+
+                &:hover,
+                &:focus {
+                    transform: none;
+                }
+            }
+        }
+    }
+}

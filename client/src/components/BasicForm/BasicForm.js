@@ -1,11 +1,14 @@
 import React from 'react';
+import Type from '../UI/Type/Type';
 
 import classes from './BasicForm.module.scss';
 
 const basicForm = props => {
     return (
         <>
-            <div className={classes.BasicForm__title}>{props.title}</div>
+            <div className={classes.BasicForm__title}>
+                <Type strings={props.title} speed={50} />
+            </div>
             <form className={classes.BasicForm} onSubmit={props.next}>
                 <input
                     type={props.inputType}
@@ -21,11 +24,15 @@ const basicForm = props => {
                             className="Button Button--inverse"
                             onClick={props.previous}
                         >
-                            Forrige
+                            &larr; Tilbake
                         </button>
                     ) : null}
 
-                    <input type="submit" className="Button" value="Videre" />
+                    <input
+                        type="submit"
+                        className="Button"
+                        value="Neste &rarr;"
+                    />
                 </div>
             </form>
         </>

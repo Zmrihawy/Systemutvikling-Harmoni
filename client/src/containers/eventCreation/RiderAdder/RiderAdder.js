@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import classes from './RiderAdder.module.scss';
+
 export default class RiderAdder extends Component {
     state = {
         artists: this.props.artists
@@ -79,6 +81,7 @@ export default class RiderAdder extends Component {
                 <div className="MediumTitle">Har artistene riders?</div>
                 {artists}
                 <button
+                    className="Button"
                     onClick={() =>
                         this.props.save(
                             this.state.artists,
@@ -87,14 +90,15 @@ export default class RiderAdder extends Component {
                         )
                     }
                 >
-                    Forrige
+                    Tilbake
                 </button>
                 <button
+                    className="Button"
                     onClick={() =>
                         this.props.save(this.state.artists, 'riders', 'next')
                     }
                 >
-                    Videre
+                    Neste
                 </button>
             </>
         );

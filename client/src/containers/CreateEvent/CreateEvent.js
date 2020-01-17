@@ -10,11 +10,12 @@ import TicketAdder from '../eventCreation/TicketAdder/TicketAdder';
 import RiderAdder from '../eventCreation/RiderAdder/RiderAdder';
 
 import classes from './CreateEvent.module.scss';
+import vectorSVG from '../../assets/images/undraw_filing_system_b5d2.svg';
 
 export default class CreateEvent extends Component {
     state = {
         showBackdrop: false,
-        currentPage: 0,
+        currentPage: 4,
         newEvent: {
             title: '',
             category: '',
@@ -139,6 +140,7 @@ export default class CreateEvent extends Component {
             case 0:
                 current = (
                     <BasicForm
+                        key={this.state.currentPage}
                         title="Hva skal arrangementet hete?"
                         inputType="text"
                         value={this.state.newEvent.title}
@@ -153,6 +155,7 @@ export default class CreateEvent extends Component {
                 current = (
                     <>
                         <BasicForm
+                            key={this.state.currentPage}
                             title="Hvilken type arrangement er det?"
                             inputType="text"
                             value={this.state.newEvent.category}
@@ -170,6 +173,7 @@ export default class CreateEvent extends Component {
                 current = (
                     <>
                         <BasicForm
+                            key={this.state.currentPage}
                             title="Hvor skal arrangementet være?"
                             inputType="text"
                             value={this.state.newEvent.location}
@@ -212,11 +216,25 @@ export default class CreateEvent extends Component {
                 } else {
                     current = (
                         <>
-                            <p>Ingen artister har blitt lagt til</p>
-                            <button onClick={this.handlePrevious}>
-                                Forrige
-                            </button>
-                            <button onClick={this.handleNext}>Videre</button>
+                            <div className="MediumTitle">Riders</div>
+                            <p>
+                                Ingen artister har blitt lagt til, gå tilbake
+                                for å endre.
+                            </p>
+                            <div>
+                                <button
+                                    className="Button Button--inverse"
+                                    onClick={this.handlePrevious}
+                                >
+                                    &larr; Tilbake
+                                </button>
+                                <button
+                                    className="Button"
+                                    onClick={this.handleNext}
+                                >
+                                    Neste &rarr;
+                                </button>
+                            </div>
                         </>
                     );
                 }
@@ -266,6 +284,17 @@ export default class CreateEvent extends Component {
     render() {
         let current = this.getCurrentPage();
 
-        return <div className={classes.CreateEvent}>{current}</div>;
+        return (
+            <>
+                <div className={classes.CreateEvent__container}></div>
+                {
+                    <img
+                        className={classes.CreateEvent__image}
+                        src={vectorSVG}
+                    ></img>
+                }
+                <div className={classes.CreateEvent}>{current}</div>
+            </>
+        );
     }
 }

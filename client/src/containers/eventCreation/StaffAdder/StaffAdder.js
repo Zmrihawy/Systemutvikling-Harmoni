@@ -73,7 +73,7 @@ export default class StaffAdder extends Component {
                         this.props.save(this.state.staff, 'staff', 'previous')
                     }
                 >
-                    Forrige
+                    Tilbake
                 </button>
                 <button
                     onClick={() => {
