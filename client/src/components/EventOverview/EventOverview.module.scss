@@ -1,7 +1,7 @@
 .container {
     display: grid;
     grid-template-areas:
-        'search__container'
+        'input__search'
         'active__events'
         'archived__events';
     width: 80%;
@@ -9,26 +9,13 @@
     grid-gap: 20px 0px;
 }
 
-.search__container{
-    display: grid;
-    grid-template-areas: 
-    'input__search input__button';
-    grid-template-columns: 1fr 50px;
-    margin: 0px 100px;
-    grid-gap: 5px;
-}
-
 .input__search  {
     grid-area: input__search;
     border-radius: 10px;
     padding: 10px;
     border: 1px solid lightgray;
-}
-
-.input__button {
-    grid-area: input__button;
-    border-radius: 10px;
-    border: 1px solid lightgray;
+    margin: 0px 200px;
+    font-size: 1.5em;
 }
 
 .active__events {

@@ -4,20 +4,14 @@ import classes from './EventOverview.module.scss';
 const eventOverview = props => {
     return (
         <div className={classes.container}>
-                <form className={classes.search__container} onChange={props.handleSearch}>
                 <input
                     className={classes.input__search}
                     type="text"
                     name="search"
                     placeholder="Søk"
+                    onChange={props.handleSearch}
                 />
 
-                <input
-                    className={classes.input__button}
-                    type="submit"
-                    value="Søk"
-                />
-</form>
             <div className={classes.active__events}>
                 <h1 className={`${classes.title__active} ${classes.title}`}>
                     Aktive arrangementer

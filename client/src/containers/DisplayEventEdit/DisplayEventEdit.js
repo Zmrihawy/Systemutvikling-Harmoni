@@ -16,6 +16,22 @@ export default class DisplayEventEdit extends Component {
         }
     };
 
+    async componentDidMount() {
+        eventService
+            .getEvent(this.props.match.params.id)
+            .then(event => {
+                event.startTime = event.startTime
+                    .replace('Z', '')
+                    .replace('T', ' ');
+                event.endTime = event.endTime
+                    .replace('Z', '')
+                    .replace('T', ' ');
+
+                this.setState({ event });
+            })
+            .catch(error => console.error(error));
+    }
+
     handleChange = e => {
         const event = {
             ...this.state.event,
@@ -67,22 +83,6 @@ export default class DisplayEventEdit extends Component {
         this.setState({ event: event });
     };
 
-    async componentDidMount() {
-        eventService
-            .getEvent(this.props.match.params.id)
-            .then(event => {
-                event.startTime = event.startTime
-                    .replace('Z', '')
-                    .replace('T', ' ');
-                event.endTime = event.endTime
-                    .replace('Z', '')
-                    .replace('T', ' ');
-
-                this.setState({ event });
-            })
-            .catch(error => console.error(error));
-    }
-
     handleButtonSubmitClick = e => {
         e.preventDefault();
         eventService
@@ -106,7 +106,9 @@ export default class DisplayEventEdit extends Component {
 
     handleButtonDeleteClick = e => {
         e.preventDefault();
-        console.log('bleie');
+        eventService.deleteEvent(this.state.event.id)
+        .then(responce => history.push('/arrangement'))
+        .catch(error => console.error(error));
     };
 
     render() {
