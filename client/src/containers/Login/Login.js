@@ -13,14 +13,8 @@ export default class Login extends Component {
             <div className="login-page">
                 <div className="form" onSubmit={this.login}>
                     <form className="login-form" onSubmit={this.login}>
-                        <input
-                            type="email"
-                            required
-                            name="email"
-                            value={this.state.email}
-                            placeholder="E-post"
-                            onChange={this.onChange}
-                        />
+                    <p id = "error"></p><br/>
+                        <input type="email" required name="email" value={this.state.email} placeholder="E-post" onChange={this.onChange} />
                         <input
                             type="password" 
                             required
@@ -34,11 +28,18 @@ export default class Login extends Component {
                             Ikke registrert?{' '}
                             <a onClick={this.handleClick}>Lag en bruker</a>
                         </p>
+                        <p className="message">
+                        <a onClick={this.glemt} > Glemt Passord? </a></p>
                     </form>
                 </div>
             </div>
         );
     }
+
+    glemt(){
+        history.push('/glemt');
+    }
+
     handleClick() {
         history.push('/registrer');
     }
@@ -60,10 +61,7 @@ export default class Login extends Component {
 
             })
             .catch(data => {
-                console.log('OTNAEOINONAEIRNEAR');
-                let p = document.createElement('p');
-                p.innerHTML = data.error;
-                document.querySelector('.login-form').appendChild(p);
+                document.querySelector("#error").innerHTML = 'Wrong e-mail or password';
             });
     };
 }

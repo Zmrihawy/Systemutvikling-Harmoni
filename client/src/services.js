@@ -1132,6 +1132,30 @@ refreshToken(json.jwt);
         });
     }
 
+    forgotPassword(email : string): Promise<any>{
+        let isError: boolean = false;
+
+            return new Promise((resolve, reject) => {
+            fetch('/user/' + email, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    isError = isErrorStatus(response.status);
+                    return response.json();
+                })
+                .then(json => {
+                    console.log(json);
+                    if (isError) return reject(json);
+                    resolve(json);
+                })
+                .catch(error => console.error('Error: ', error));
+        });
+    }
+
     updatePassword(userId: string, oldPassword: string, newPassword: string): Promise<any> {
         let data = {
             oldPassword: oldPassword,
@@ -1154,7 +1178,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })

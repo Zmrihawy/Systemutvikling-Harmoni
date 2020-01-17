@@ -12,6 +12,7 @@ import DisplayRider from '../DisplayRider/DisplayRider';
 import ViewProfile from '../ViewProfile/ViewProfile';
 import DisplayEventEdit from '../DisplayEventEdit/DisplayEventEdit';
 import Header from '../../components/Header/Header';
+import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
 export default class Main extends Component {
     render() {
@@ -20,6 +21,7 @@ export default class Main extends Component {
                 <Route path="/" component={NavBar} />
                 <Route exact path="/" component={Login} />
                 <Route exact path="/registrer" component={Registration} />
+                <Route exact path="/glemt" component={ForgotPassword} />
                 <Route
                     exact
                     path="/arrangement"
