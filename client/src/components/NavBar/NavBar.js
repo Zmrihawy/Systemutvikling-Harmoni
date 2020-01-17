@@ -9,6 +9,7 @@ export default class NavBar extends Component {
         this.state = {};
     }
     render() {
+        if(window.sessionStorage.getItem('jwt') == undefined) return null;
         return (
             <>
                 <div className={classes.navBar}>
