@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classes from './ViewProfile.module.scss';
 import { userService } from '../../services';
-
+import {ProfileHolder} from './ProfilePlaceholder.js';
 export default class ViewProfile extends Component {
     constructor(props) {
         super(props);
@@ -33,7 +33,7 @@ export default class ViewProfile extends Component {
                                 <img
                                     className={classes.profile}
                                     id={'profileImg'}
-                                    src="https://images.assetsdelivery.com/compings_v2/apoev/apoev1806/apoev180600175.jpg"
+                                    src={ProfileHolder}
                                     alt="Profile picture"
                                 />
                             </div>
@@ -279,6 +279,16 @@ export default class ViewProfile extends Component {
                 this.state.surname
             )
             .catch((error: Error) => console.log(error.message));
+        if(document.getElementById("editLayer") !== null){
+            document.getElementById("editLayer").style.visibility = 'hidden';
+            document.getElementById("editLayer").style.pointerEvents = 'none';
+        }
+        if(document.getElementById("redigerBrukerBtn") !== null){
+            document.getElementById("redigerBrukerBtn").style.visibility = 'visible';
+            document.getElementById("redigerBrukerBtn").style.pointerEvents = 'all' +
+                '';
+
+        }
     }
     changePic() {
         console.log('helsikke');
