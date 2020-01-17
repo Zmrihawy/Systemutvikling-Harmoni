@@ -11,15 +11,17 @@ import RiderAdder from '../eventCreation/RiderAdder/RiderAdder';
 import ContractAdder from '../../containers/eventCreation/ContractAdder/ContractAdder';
 import pdfReader from '../../components/PdfView/PdfViewPc';
 import CreateEventSummary from './CreateEventSummary/CreateEventSummary';
+import Type from '../../components/UI/Type/Type';
 
 import classes from './CreateEvent.module.scss';
-import vectorSVG from '../../assets/images/undraw_filing_system_b5d2.svg';
-import Type from '../../components/UI/Type/Type';
+
+import manWithFiles from '../../assets/images/manWithFiles.svg';
+import engineer from '../../assets/images/engineer.svg';
 
 export default class CreateEvent extends Component {
     state = {
         showBackdrop: false,
-        currentPage: 0,
+        currentPage: 7,
         newEvent: {
             title: '',
             category: '',
@@ -349,16 +351,15 @@ export default class CreateEvent extends Component {
 
     render() {
         let current = this.getCurrentPage();
+        let image;
+        this.state.currentPage < 8
+            ? (image = manWithFiles)
+            : (image = engineer);
 
         return (
             <>
                 <div className={classes.CreateEvent__container}></div>
-                {
-                    <img
-                        className={classes.CreateEvent__image}
-                        src={vectorSVG}
-                    ></img>
-                }
+                {<img className={classes.CreateEvent__image} src={image}></img>}
                 <div className={classes.CreateEvent}>{current}</div>
             </>
         );
