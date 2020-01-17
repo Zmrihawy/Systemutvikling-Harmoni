@@ -17,13 +17,11 @@ export default class DisplayEventOverview extends Component {
     state = {
         activeEvents: [],
         archivedEvents: [],
-     keyword: ""
+        keyword: ""
     };
     
     handleSearch = e => {
-        console.log(e.target.value);
-
-        this.state.keyword = e.target.value;
+        this.setState({ keyword: e.target.value });
     };
 
 
