@@ -127,7 +127,7 @@ module.exports = class ServerDao extends Dao {
             [contract, performanceId], callback);
     }
     
-    downloadContract(performanceId: string | number}, callback: (status: number, data: *) => void) {
+    downloadContract(performanceId: string | number, callback: (status: number, data: *) => void) {
         super.query(`SELECT ${CONSTANTS.PERFORMANCE_CONTRACT} FROM CONSTANTS.PERFORMANCE_TABLE} WHERE performanceId = ?`, [performanceId], callback);
     }
 };
