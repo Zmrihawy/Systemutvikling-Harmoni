@@ -40,7 +40,7 @@ export default class ViewProfile extends Component {
                                 className={classes.redigerBtn} id={"redigerBtn"}
                                 onClick={this.showImageForm}
                             >
-                                Endre
+                                ✎
                             </button>
                             <div
                                 className={classes.imageForm}
@@ -87,7 +87,6 @@ export default class ViewProfile extends Component {
                                 <div className={classes.p} id={'telephoneP'}>
                                     Telefonnummer: {this.state.phone}
                                 </div>
-                                <br/>
                                 <button className={classes.redigerBrukerBtn} id={"redigerBrukerBtn"} onClick={this.showEditForm}>Rediger bruker</button>
                             </div>
                             <div className={classes.editLayer} id={"editLayer"}>
@@ -284,8 +283,11 @@ export default class ViewProfile extends Component {
             document.getElementById("redigerBrukerBtn").style.visibility = 'visible';
             document.getElementById("redigerBrukerBtn").style.pointerEvents = 'all' +
                 '';
-
         }
+        document.getElementById('oldPasswordInp').value = '';
+        document.getElementById('repeatPasswordInp').value = '';
+        document.getElementById('passwordInp').value = '';
+
     }
     changePic() {
         if (
