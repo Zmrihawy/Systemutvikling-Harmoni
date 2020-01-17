@@ -21,7 +21,7 @@ module.exports = class ServerDao extends Dao {
     }
 
     getUsersEvents(sql: { userId: string | number, active: string | number }, callback: (status: number, data: *) => void) {
-        super.query(`SELECT ${CONSTANTS.EVENT_NAME}, ${CONSTANTS.EVENT_ID},${CONSTANTS.EVENT_START_TIME},${CONSTANTS.EVENT_LOCATION} FROM 
+        super.query(`SELECT ${CONSTANTS.EVENT_NAME}, ${CONSTANTS.EVENT_ID},${CONSTANTS.EVENT_START_TIME},${CONSTANTS.EVENT_LOCATION} FROM
         ${CONSTANTS.EVENT_TABLE} a JOIN ${CONSTANTS.USER_TABLE} b ON a.${CONSTANTS.EVENT_HOST_ID} = b.${CONSTANTS.USER_ID} WHERE b.${CONSTANTS.USER_ID} = ? AND ${CONSTANTS.EVENT_ACTIVE} = ?`, [sql.userId, sql.active], callback);
     }
 
@@ -125,5 +125,9 @@ module.exports = class ServerDao extends Dao {
     uploadContract(performanceId: string | number, contract: any, callback: (status: number, data: *) => void) {
         super.query(`UPDATE ${CONSTANTS.PERFORMANCE_TABLE} SET ${CONSTANTS.PERFORMANCE_CONTRACT} = ? WHERE ${CONSTANTS.PERFORMANCE_ID} = ?`,
             [contract, performanceId], callback);
+    }
+    
+    downloadContract(performanceId: string | number}, callback: (status: number, data: *) => void) {
+        super.query(`SELECT ${CONSTANTS.PERFORMANCE_CONTRACT} FROM CONSTANTS.PERFORMANCE_TABLE} WHERE performanceId = ?`, [performanceId], callback);
     }
 };
