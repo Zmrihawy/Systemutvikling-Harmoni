@@ -811,6 +811,16 @@ app.post('/api/event/:event_id/crew', (req, res) => {
 // app.post('/user/:user_id/picture', upload);
 app.post('/upload', upload);
 
+app.get('/download', (req, res) => {
+    console.log('Fikk get-request fra klient');
+
+    eventDao.downloadContract(1, (status, data) => {
+        res.status(status);
+        //let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        res.json(data);
+    });
+});
+
 /*
 app.post("/token", (req, res) => {
     var token = req.headers["x-access-token"];
