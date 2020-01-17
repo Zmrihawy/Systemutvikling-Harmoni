@@ -20,6 +20,7 @@ export default class Main extends Component {
             <HashRouter>
                 <Route path="/" component={NavBar} />
                 <Route exact path="/" component={Login} />
+                <Route exact path="/login" component={Login} />
                 <Route exact path="/registrer" component={Registration} />
                 <Route exact path="/glemt" component={ForgotPassword} />
                 <Route

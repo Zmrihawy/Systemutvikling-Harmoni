@@ -11,7 +11,7 @@ export default class ForgotPassword extends Component {
     render() {
         return (
             <div className="login-page">
-                <div className="form" onSubmit={this.login}>
+                <div className="form" onSubmit={this.newPw}>
                     <form className="login-form" onSubmit={this.login}>
                     <p id = "error"></p><br/>
                         <input type="email" required name="email" value={this.state.email} placeholder="E-post" onChange={this.onChange} />
@@ -19,6 +19,9 @@ export default class ForgotPassword extends Component {
                         <p className="message">
                             Ikke registrert?{' '}
                             <a onClick={() => history.push('/registrer')}>Lag en bruker</a>
+                        </p>
+                        <p className="message">
+                            Allerede registrert? <a href="#">Logg inn</a>
                         </p>
                     </form>
                 </div>
@@ -36,21 +39,17 @@ export default class ForgotPassword extends Component {
         });
     };
 
-    login = event => {
+    newPw = event => {
         event.preventDefault();
+
+        console.log(this.state.email);
 
         userService
             .forgotPassword(this.state.email)
-            .then(none => {
-              history.push('/');
-            })
+            .then(() => history.push('/login'))
             .catch(data => {
                 console.log(data);
                 document.querySelector("#error").innerHTML = 'E-mail ikke registrert';
             });
     };
 }
-
-
-
-
