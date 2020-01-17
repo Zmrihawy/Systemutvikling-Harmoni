@@ -1,10 +1,22 @@
+body{
+    background-image: url("../../pictures/profileBackground.svg");
+    background-size: 100% auto;
+    background-position-y: 250px;
+}
 .viewProfile {
 }
 .showLayer {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
 }
+.showLayer:hover{
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
 .editLayer {
+    position: absolute;
+    background-color: white;
+    border: 3px solid #ff9f43;
+    border-radius: 30px;
     pointer-events: none;
     visibility: hidden;
     color: #333333;
@@ -15,8 +27,22 @@
     text-align: center;
     padding: 5px 30px;
 }
+.bioLayer{
+    top: 150px;
+    position: absolute;
+    background-color: white;
+    border: 3px solid #ff9f43;
+    border-radius: 30px;
+    color: #333333;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    font-size: 20px;
+    width: 30vw;
+    text-align: center;
+    padding: 5px 30px;
+}
 .redigerBrukerBtn{
-    top:300px;
+    top:400px;
     left:645px;
     position: absolute;
     background-color: #333333;
@@ -69,7 +95,8 @@ input:focus {
 .profile {
     width: 300px;
     height: 300px;
-    border-radius: 30px;
+    border-radius: 50%;
+    border: 3px solid #ff9f43;
 }
 .h1 {
     font-family: 'Agency FB';
@@ -119,10 +146,11 @@ input:focus {
 .redigerBtn {
     position: absolute;
     top: 400px;
-    width: 90px;
+    width: 65px;
+    height: 65px;
     background-color: #333333;
     border: none;
-    border-radius: 20px;
+    border-radius: 50%;
     color: whitesmoke;
     padding: 7.5px 16px;
     text-align: center;

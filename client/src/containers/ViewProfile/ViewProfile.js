@@ -26,7 +26,6 @@ export default class ViewProfile extends Component {
     render() {
         return (
             <div className={classes.viewProfile}>
-                <div className={classes.showLayer}>
                     <div className={classes.row}>
                         <div className={classes.column} id={'imageColumn'}>
                             <div className={classes.imgContainer}>
@@ -41,7 +40,7 @@ export default class ViewProfile extends Component {
                                 className={classes.redigerBtn} id={"redigerBtn"}
                                 onClick={this.showImageForm}
                             >
-                                Rediger profilbilde
+                                Endre
                             </button>
                             <div
                                 className={classes.imageForm}
@@ -67,7 +66,6 @@ export default class ViewProfile extends Component {
                                     </div>
                             </div>
                         </div>
-                        <button className={classes.redigerBrukerBtn} id={"redigerBrukerBtn"} onClick={this.showEditForm}>Rediger bruker</button>
                         <div className={classes.column}>
                             <div className={classes.bioLayer}>
                                 <h1 className={classes.h1} id={'nameP'}>
@@ -89,6 +87,8 @@ export default class ViewProfile extends Component {
                                 <div className={classes.p} id={'telephoneP'}>
                                     Telefonnummer: {this.state.phone}
                                 </div>
+                                <br/>
+                                <button className={classes.redigerBrukerBtn} id={"redigerBrukerBtn"} onClick={this.showEditForm}>Rediger bruker</button>
                             </div>
                             <div className={classes.editLayer} id={"editLayer"}>
                                 <h4 className={classes.editHeader}>
@@ -190,7 +190,6 @@ export default class ViewProfile extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         );
     }
