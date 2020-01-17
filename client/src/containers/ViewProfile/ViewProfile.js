@@ -69,7 +69,7 @@ export default class ViewProfile extends Component {
                                 </div>
                             </div>
                         </div>
-                        <button className={classes.redigerBrukerBtn} id={"redigerBrukerBtn"}>Rediger bruker</button>
+                        <button className={classes.redigerBrukerBtn} id={"redigerBrukerBtn"} onClick={this.showEditForm}>Rediger bruker</button>
                         <div className={classes.column}>
                             <div className={classes.bioLayer}>
                                 <h1 className={classes.h1} id={'nameP'}>
@@ -92,7 +92,7 @@ export default class ViewProfile extends Component {
                                     Telefonnummer: {this.state.phone}
                                 </div>
                             </div>
-                            <div className={classes.editLayer}>
+                            <div className={classes.editLayer} id={"editLayer"}>
                                 <h4 className={classes.editHeader}>
                                     <b>Rediger Info</b>
                                 </h4>
@@ -315,10 +315,20 @@ export default class ViewProfile extends Component {
         }
     }
     showImageForm() {
-        console.log('heinrich');
         if (document.getElementById('imageFormId') !== null) {
             document.getElementById('imageFormId').style.visibility = 'visible';
             document.getElementById('imgLabel').innerHTML = 'Link: ';
+        }
+    }
+    showEditForm() {
+        if(document.getElementById("editLayer") !== null){
+            document.getElementById("editLayer").style.visibility = 'visible';
+            document.getElementById("editLayer").style.pointerEvents = 'all';
+        }
+        if(document.getElementById("redigerBrukerBtn") !== null){
+            document.getElementById("redigerBrukerBtn").style.visibility = 'hidden';
+            document.getElementById("redigerBrukerBtn").style.pointerEvents = 'none';
+
         }
     }
 }
