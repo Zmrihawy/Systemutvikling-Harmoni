@@ -20,9 +20,7 @@ import UserDao from './dao/userDao.js';
 
 import EventDao from './dao/eventDao.js';
 
-// import Upload from '';
-//
-// const upload = require('./upload');
+import upload from './upload';
 
 const apiRoutes = express.Router();
 
@@ -32,6 +30,8 @@ const corsOptions = {
     origin: '*',
     optionsSuccessStatus: 200,
 };
+
+app.use(cors(corsOptions));
 
 app.use(cors(corsOptions));
 
@@ -608,11 +608,11 @@ app.post("/user", (req, res) => {
     else if (!sjekkMail(req.body.email)) return res.status(400).json({error: "parameter email is not a valid email"});
     else if (numberError([req.body.phone])) return res.status(400).json({error: "number field is a string"});
 
-    userDao.checkCred({username:req.body.username, email : req.body.emai}, (status, data) => {
-        if(data.length > 0){
-            if(data[0].username === req.body.username && data[0].email === req.body.email) return res.status(400).json({error : "mail and username"});
-            else if(data[0].username === req.body.username) return res.status(400).json({error: "username"});
-            else return res.status(400).json({error : "mail"});
+    userDao.checkCred({username: req.body.username, email: req.body.email}, (status, data) => {
+        if (data.length > 0) {
+            if (data[0].username === req.body.username && data[0].email === req.body.email) return res.status(400).json({error: "mail and username"});
+            else if (data[0].username === req.body.username) return res.status(400).json({error: "username"});
+            else return res.status(400).json({error: "mail"});
         }
 
         let user = req.body;
@@ -640,7 +640,7 @@ app.post("/user", (req, res) => {
                 let token = thisFunctionCreatesNewToken(user.mail, 0);
                 res.status(status).json({data, jwt: token});
             });
-        });
+    });
 });
 
 
@@ -769,19 +769,7 @@ app.post('/api/event/:event_id/crew', (req, res) => {
 
 // post new image
 //todo add /api
-app.post('/user/:user_id/picture', (req, res) => {
-    console.log('fikk post-request fra klient');
-
-    // if (numberError([req.params.user_id])) res.status(400).json({error: "url parameter user_id must be a number"});
-    // else if (req.body.image === undefined) return res.status(400).json({error: "parameter profession undefined"});
-
-    console.log(req.headers);
-    console.log(req.body);
-
-    // res.json({message: "yesyes"});
-
-    res.send('yesyes');
-});
+app.post('/user/:user_id/picture', upload);
 
 /*
 app.post("/token", (req, res) => {
