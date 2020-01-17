@@ -7,26 +7,26 @@ const runSQL = require("./runSQL.js");
 
 
 
-// let pool = mysql.createPool({
-//     connectionLimit: 2,
-//     host: "mysql-ait.stud.idi.ntnu.no",
-//     user: "kwgulake",
-//     password: "qra2ZQqh",
-//     database: "kwgulake",
-//     debug: false,
-//     multipleStatements: true
-// });
-
-
-var pool = mysql.createPool({
-    connectionLimit: 1,
-    host: "mysql",
-    user: "root",
-    password: "",
-    database: "School",
+let pool = mysql.createPool({
+    connectionLimit: 2,
+    host: "mysql-ait.stud.idi.ntnu.no",
+    user: "kwgulake",
+    password: "qra2ZQqh",
+    database: "kwgulake",
     debug: false,
     multipleStatements: true
-  });
+});
+
+
+// var pool = mysql.createPool({
+//     connectionLimit: 1,
+//     host: "mysql",
+//     user: "root",
+//     password: "",
+//     database: "School",
+//     debug: false,
+//     multipleStatements: true
+//   });
 
 
 // test
@@ -261,23 +261,6 @@ test("get all events from database", done => {
     });
 });
 
-test("get one performance from database", done => {
-    eventDao.getPerformance(1, (status, data) => {
-        expect(data.length).toBe(1);
-        expect(data[0].user_id).toBe(1);
-        done();
-    });
-});
-
-test("get one contract from database", done => {
-    eventDao.getContract({eventId: 2, artistId: 1}, (status, data) => {
-        expect(data.length).toBe(1);
-        expect(data[0].contract).toBe("Dette er kontrakt 1");
-        done();
-    });
-});
-
-
 test("get all tickets involved in a specific event", done => {
     eventDao.getTickets(2, (status, data) => {
         expect(data.length).toBe(2);
@@ -460,13 +443,16 @@ test("update performance in database", done => {
         performanceId: 3,
     };
 
-    eventDao.updatePerformance(param, () => {
-        eventDao.getPerformance(2, (status, data) => {
-            // expect(data[0].start_time).toBe("2020-12-05 22:30:00");
-            expect(data[0].contract).toBe("Oppdatert kontrakt");
-            done();
-        });
-    });
+    eventDao.updatePerformance(param, callback);
+
+    function callback(status, data) {
+        console.log(
+            "Test callback: status=" + status + ", data=" + JSON.stringify(status, data)
+        );
+        expect(data.affectedRows).toBeGreaterThanOrEqual(1);
+        done();
+    }
+
 });
 
 test("update event in database", done => {
@@ -476,8 +462,8 @@ test("update event in database", done => {
         eventName: "Endret navn",
         active: 0,
         description: "Ny kategoi",
-        long : 0,
-        lat: 0,
+        longitude : 0,
+        latitude: 0,
         location: "Ny lokasjon",
         startTime: "2020-12-05 22:30:00",
         endTime: "2020-12-05 22:30:00",

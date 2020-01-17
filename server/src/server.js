@@ -469,45 +469,43 @@ app.put("/user/:usermail", (req, res) => {
 
     if (!sjekkMail(req.params.usermail)) return res.status(400).json({error: "given mail is not a valid mail"});
 
-    userDao.getUserByEmail(req.params.usermail, (status, data) => {
-        if (data[0].salt) {
-            let password = generator.generate({
-                length: 12,
-                numbers: true
+    userDao.getPassword(req.params.usermail, (status, data) => {
+
+        if(data.length !== 1) return res.status(400).json({errror : "user not found"});
+
+        let password = generator.generate({
+            length: 12,
+            numbers: true
+        });
+
+        let pw = password;
+
+        let hashPW = crypto.createHmac('sha512', data[0].salt);
+
+        hashPW.update(pw);
+
+        pw = hashPW.digest('hex');
+
+        userDao.updatePassword({userId: data[0].user_id, password: pw}, (stat, dat) => {
+
+            let mailOptions = {
+                from: 'noreply.harmoni.123@gmail.com',
+                to: data.epost,
+                subject: 'New Password',
+                text: `Her er ditt nye passord:\n${password}`
+        };
+
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
             });
 
-            let pw = password;
-
-            let hashPW = crypto.createHmac('sha512', data[0].salt);
-
-            hashPW.update(pw);
-
-            pw = hashPW.digest('hex');
-
-            //#TODO
-            userDao.updatePassword({userId: data[0].user_id, password: pw}, (stat, dat) => {
-
-                let mailOptions = {
-                    from: 'noreply.harmoni.123@gmail.com',
-                    to: data.epost,
-                    subject: 'New Password',
-                    text: `Her er ditt nye passord: \n${password}`
-                };
-
-                transporter.sendMail(mailOptions, function (error, info) {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log('Email sent: ' + info.response);
-                    }
-                });
-
-                res.status(200);
-                res.send();
-            });
-        } else {
-            res.status(400).json({error: "User not found"});
-        }
+            res.status(200);
+            res.send();
+        });
     });
 });
 

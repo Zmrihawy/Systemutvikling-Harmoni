@@ -15,7 +15,7 @@ CREATE TABLE `user` (
   phone varchar(30) NOT NULL,
   first_name varchar(300) DEFAULT NULL,
   surname varchar(300) NOT NULL,
-  picture varchar(400) DEFAULT NULL,
+  picture varbinary(400) DEFAULT NULL,
   PRIMARY KEY (user_id)
 );
 
