@@ -178,7 +178,7 @@ app.get("/api/event/:event_id", (req, res) => {
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
 
@@ -215,7 +215,7 @@ app.get("/api/event/:event_id/performance", (req, res) => {
                 });    
             }
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
 
@@ -233,7 +233,7 @@ app.get("/api/event/:event_id/ticket", (req, res) => {
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
 
@@ -251,7 +251,7 @@ app.get("/api/event/:event_id/performance/:performance_id", (req, res) => {
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
 
@@ -262,9 +262,9 @@ app.get("/api/user/:user_id/event/:active", (req, res) => {
     let token = thisFunctionCreatesNewToken(req.email, req.userId);
 
     if (numberError([req.params.user_id, req.params.active])) return res.status(400).json({error: "number field cannot be string"});
-    else if (req.params.user_id != req.userId) return res.status(401).json({jwt: token});
+    else if (req.params.user_id != req.userId) return res.status(401).json({jwt: token, error: "Not authorized to access this information"});
 
-    eventDao.getUsersEvents({userId: req.params.user_id, active: req.params.active}, (status, data) => {
+    eventDao.getUserEvents({userId: req.params.user_id, active: req.params.active}, (status, data) => {
         res.status(status).json({data, jwt: token});
     });
 });
@@ -283,7 +283,7 @@ app.get('/api/event/:event_id/crew', (req, res) => {
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
 
@@ -318,7 +318,7 @@ app.delete('/api/event/:event_id/performance/:performance_id/rider', (req, res) 
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});   
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});   
     });
 });
 
@@ -337,7 +337,7 @@ app.delete("/api/event/:event_id/ticket", (req, res) => {
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
 
@@ -355,7 +355,7 @@ app.delete("/api/event/:event_id/performance/:performance_id", (req, res) => {
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
 
@@ -413,7 +413,7 @@ app.delete("/api/event/:event_id", (req, res) => {
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
 
@@ -431,7 +431,7 @@ app.delete("/api/event/:event_id/crew", (req, res) => {
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });});
 
 /*
@@ -444,28 +444,27 @@ app.delete("/api/event/:event_id/crew", (req, res) => {
 app.put("/api/user/:user_id", (req, res) => {
     console.log("Fikk PUT-request fra klienten");
 
-    if (numberError([req.params.user_id, req.body.phone])) return res.status(400).json({error: "number field cannot be a string"});
-    else if (req.userId != req.params.user_id) return res.status(401).json({error: "Cannot edit other users"})
-    else if (req.body.username == undefined) res.status(400).json({error: "Missing parameter username"});
-    else if (req.body.email == undefined) return res.status(400).json({error: "Missing parameter email"});
-    else if (req.body.phone == undefined) return res.status(400).json({error: "Missing parameter phone"});
-    else if (req.body.firstName == undefined) return res.status(400).json({error: "Missing parameter firstName"});
-    else if (req.body.lastName == undefined) return res.status(400).json({error: "Missing parameter lastName"});
-    else if (!sjekkMail(req.body.email)) return res.status(400).json({error: "inc mail is not valid"});
+    if(numberError([req.params.user_id, req.body.phone])) return res.status(400).json({error: "number field cannot be a string"});
+    else if(req.userId != req.params.user_id) return res.status(401).json({error : "Cannot edit other users"})
+    else if(req.body.username == undefined) return res.status(400).json({error : "Missing parameter username"});
+    else if(req.body.email == undefined) return res.status(400).json({error : "Missing parameter email"});
+    else if(req.body.phone == undefined) return res.status(400).json({error : "Missing parameter phone"});
+    else if(req.body.firstName == undefined) return res.status(400).json({error : "Missing parameter firstName"});
+    else if(req.body.lastName == undefined) return res.status(400).json({error: "Missing parameter lastName"});
+    else if(!sjekkMail(req.body.email)) return res.status(400).json({error: "inc mail is not valid"});
 
-    userDao.updateUser({
-            username: req.body.username,
-            email: req.body.email,
-            phone: req.body.phone,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            userId: req.params.user_id
-        },
-        (status, data) => {
-            res.status(status);
-            let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
-            res.json({data, jwt: token});
-        });
+    userDao.updateUser({username: req.body.username,
+                        email: req.body.email,
+                        phone: req.body.phone,
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName,
+                        userId: req.params.user_id,
+                        artist: req.body.artist},
+                        (status, data) => {
+        res.status(status);
+        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        res.json({data, jwt: token});
+    });
 });
 
 //Update crew
@@ -489,7 +488,7 @@ app.put('/api/event/:event_id/crew', (req, res) => {
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
 
@@ -515,7 +514,7 @@ app.put("/api/event/:event_id/performance/:performance_id", (req, res) => {
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
 
@@ -541,7 +540,7 @@ app.put("/api/event/:event_id/ticket", (req, res) => {
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
 
@@ -567,7 +566,7 @@ app.put("/api/event/:event_id/performance/:performance_id/rider", (req, res) => 
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
 
@@ -693,7 +692,6 @@ app.put("/api/event/:event_id", (req, res) => {
 
         if (data[0].host_id == req.userId){
             eventDao.updateEvent({eventName: req.body.eventName,
-                                    hostId: req.body.userId,
                                     active: req.body.active,
                                     location: req.body.location,
                                     long: req.body.long,
@@ -706,7 +704,7 @@ app.put("/api/event/:event_id", (req, res) => {
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
 
@@ -748,19 +746,18 @@ app.post("/user", (req, res) => {
 
         pw = hash.digest('hex');
 
-        userDao.createUser({
-                username: user.username,
-                password: pw,
-                salt: salt,
-                email: user.email,
-                phone: user.phone,
-                firstName: user.firstName,
-                lastName: user.lastName
-            },
-            (status, data) => {
-                let token: string = thisFunctionCreatesNewToken(user.mail, 0);
-                res.status(status).json({data, jwt: token});
-            });
+        userDao.createUser({username: user.username,
+                            password: pw,
+                            salt: salt,
+                            email: user.email,
+                            phone: user.phone,
+                            firstName: user.firstName,
+                            lastName: user.lastName,
+                            artist: user.artist}, 
+                            (status, data) => {
+            let token = thisFunctionCreatesNewToken(user.mail, 0);
+            res.status(status).json({data, jwt : token});
+        });
     });
 });
 
@@ -774,37 +771,24 @@ app.post("/api/event", (req, res) => {
     else if (req.body.startTime == undefined) return res.status(400).json({error: "bad request : missing startTime parameter"});
     else if (req.body.userId == undefined) return res.status(400).json({error: "bad request : missing userId parameter"});
     else if (req.body.location == undefined) return res.status(400).json({error: "bad request : missing location parameter"});
-<<<<<<< HEAD
     else if (req.body.longitude == undefined) return res.status(400).json({error: "bad request : missing longitude parameter"});
     else if (req.body.latitude == undefined) return res.status(400).json({error: "bad request : missing latitude parameter"});
-
-
-    eventDao.createEvent({
-            eventName: req.body.eventName,
-            userId: req.body.userId,
-            location: req.body.location,
-            longitude: req.body.longitude,
-            latitude: req.body.latitude,
-=======
-    else if (req.body.long == undefined) return res.status(400).json({error: "bad request : missing long parameter"});
-    else if (req.body.lat == undefined) return res.status(400).json({error: "bad request : missing lat parameter"});
-    
+  
     userDao.getUser(req.userId, (status, data) => {
-        if(data[0].artist == 1){
-        eventDao.createEvent({eventName: req.body.eventName,
-            userId: req.body.userId,
-            location: req.body.location,
-            longitude: req.body.long,
-            latitude : req.body.lat,
->>>>>>> Add user type and validation
-            description: req.body.description,
-            startTime: req.body.startTime,
-            endTime: req.body.endTime}, 
-            (status, data) => {
-            res.status(status);
-            data.jwt = thisFunctionCreatesNewToken(req.email, req.userId);
-            res.send(data);
-        });
+        if(data[0].artist == 0){
+            eventDao.createEvent({eventName: req.body.eventName,
+                userId: req.body.userId,
+                location: req.body.location,
+                longitude: req.body.long,
+                latitude : req.body.lat,
+                description: req.body.description,
+                startTime: req.body.startTime,
+                endTime: req.body.endTime}, 
+                (status, data) => {
+                res.status(status);
+                data.jwt = thisFunctionCreatesNewToken(req.email, req.userId);
+                res.send(data);
+            });
         }
     });
 });
@@ -831,7 +815,7 @@ app.post("/api/event/:event_id/ticket", (req, res) => {
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
 
@@ -861,7 +845,7 @@ app.post("/api/event/:event_id/performance", (req, res) => {
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
 
@@ -884,7 +868,7 @@ app.post("/api/event/:event_id/performance/:performance_id/rider", (req, res) =>
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
 
@@ -909,7 +893,7 @@ app.post('/api/event/:event_id/crew', (req, res) => {
                 return res.status(status).json({data, jwt: token});
             });
         }
-        res.status(401).json({jwt: token});
+        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
 
@@ -964,23 +948,6 @@ app.get('/api/user/:user_id/picture', (req, res) => {
         res.json({data: data[0].picture, jwt: token});
     });
 });
-
-/*
-app.post("/token", (req, res) => {
-    var token = req.headers["x-access-token"];
-    jwt.verify(token, publicKey, (err, decoded) => {
-        if (err){
-            console.log("Token IKKE ok");
-            res.status(401);
-            res.json({error: "Not authorized"});
-        }else{
-            let newToken = jwt.sign({username: req.body.username}, privateKey, {
-                expiresIn: 60
-            });
-            res.json({jwt: newToken});
-        }
-    });
-});*/
 
 function numberError(nums: Array<mixed>): boolean {
     for (let i = 0; i < nums.length; i++) {

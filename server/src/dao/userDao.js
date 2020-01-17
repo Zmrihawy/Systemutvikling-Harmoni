@@ -46,10 +46,9 @@ module.exports = class UserDao extends Dao {
         super.query(`UPDATE ${CONSTANTS.PASSWORD_TABLE} SET ${CONSTANTS.PASSWORD_PASSWORD} = UNHEX(?), ${CONSTANTS.PASSWORD_AUTOGEN} = ?  WHERE ${CONSTANTS.PASSWORD_ID} = ?`, [sql.password, sql.autogen, sql.passId], callback);
     }
 
-    updateUser(sql : {username : string, email : string, phone : string |number, firstName : string, lastName : string, userId : string | number}, callback: (status: number, data : *) => void) :void {
-        console.log(sql);
-        super.query(`UPDATE ${CONSTANTS.USER_TABLE} SET ${CONSTANTS.USER_USERNAME} = ?, ${CONSTANTS.USER_EMAIL} = ?, ${CONSTANTS.USER_PHONE} = ?, ${CONSTANTS.USER_FIRST_NAME} = ?, ${CONSTANTS.USER_LAST_NAME} = ? WHERE ${CONSTANTS.USER_ID} = ?`,
-            [sql.username, sql.email, sql.phone, sql.firstName, sql.lastName, sql.userId], callback);
+    updateUser(sql : {username : string, email : string, phone : string |number, firstName : string, lastName : string, userId : string | number, artist: string}, callback: (status: number, data : *) => void) :void {
+        super.query(`UPDATE ${CONSTANTS.USER_TABLE} SET ${CONSTANTS.USER_USERNAME} = ?, ${CONSTANTS.USER_EMAIL} = ?, ${CONSTANTS.USER_PHONE} = ?, ${CONSTANTS.USER_FIRST_NAME} = ?, ${CONSTANTS.USER_LAST_NAME} = ?, ${CONSTANTS.USER_ARTIST} = ? WHERE ${CONSTANTS.USER_ID} = ?`,
+            [sql.username, sql.email, sql.phone, sql.firstName, sql.lastName, sql.artist, sql.userId], callback);
     }
 
     checkCred(sql: { username: string, email: string }, callback: (status: number, data: *) => void) :void {
