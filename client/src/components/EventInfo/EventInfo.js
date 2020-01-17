@@ -18,7 +18,7 @@ const eventInfo = props => {
                 <h1 className={classes.title}>{props.title}</h1>
                 <button
                     className={classes.button__edit}
-                    onClick={() => props.handleEditClick(1)}
+                    onClick={props.handleEditClick}
                 >
                     Rediger arrangement
                 </button>

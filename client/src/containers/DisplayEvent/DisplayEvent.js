@@ -57,6 +57,7 @@ export default class DisplayEvent extends Component {
             .then(recivedEvent => {
                 console.log(recivedEvent);
                 this.setState({
+                    id: recivedEvent.id,
                     title: recivedEvent.name,
                     description: recivedEvent.description,
                     location: recivedEvent.location,
@@ -66,7 +67,7 @@ export default class DisplayEvent extends Component {
                     dateTo: new Date(recivedEvent.endTime)
                         .toUTCString()
                         .slice(0, -7),
-                    longitude: recivedEvent.longitude, 
+                    longitude: recivedEvent.longitude,
                     latitude: recivedEvent.latitude
                 });
             })
@@ -127,9 +128,7 @@ export default class DisplayEvent extends Component {
         history.push('/arrangement/user/id/rider');
     };
 
-    handleEditClick = id => {
-        history.push('/arrangement/' + id + '/rediger');
-    };
+    handleEditClick = () => history.push('/arrangement/' + this.state.id + '/rediger');
 
     render() {
         let artists = [
