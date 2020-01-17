@@ -860,15 +860,20 @@ app.post("/api/event/:event_id/performance/:performance_id/rider", (req, res) =>
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
         let token = thisFunctionCreatesNewToken(req.email, req.userId);
 
-        if (data[0].host_id == req.userId){
-            eventDao.createRider({performanceId: req.params.performance_id,
-                                    name: req.body.name,
-                                    amount: req.body.amount}, 
-                                    (status, data) => {
-                return res.status(status).json({data, jwt: token});
-            });
+        let isConfirmed;
+        if (data[0].host_id == req.userId) isConfirmed = 1;
+        else if (checkEventAccess(data, req.userId)) isConfirmed = 0;
+        else{
+            return res.status(401).json({jwt: token, error: "Not authorized to access this information"});
         }
-        res.status(401).json({jwt: token, error: "Not authorized to access this information"});
+
+        eventDao.createRider({performanceId: req.params.performance_id,
+                                name: req.body.name,
+                                amount: req.body.amount,
+                                confirmed: isConfirmed}, 
+                                (status, data) => {
+            return res.status(status).json({data, jwt: token});
+        });
     });
 });
 

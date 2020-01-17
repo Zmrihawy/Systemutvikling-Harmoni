@@ -14,7 +14,7 @@ module.exports = class ServerDao extends Dao {
     }
 
     getRiders(sql: number, callback: (status: number, data: *) => void) :void {
-        super.query(`SELECT ${CONSTANTS.RIDER_NAME}, ${CONSTANTS.RIDER_AMOUNT} FROM ${CONSTANTS.RIDER_TABLE} WHERE ${CONSTANTS.RIDER_PERFORMANCE_ID} = ?`, [sql], callback);
+        super.query(`SELECT ${CONSTANTS.RIDER_NAME}, ${CONSTANTS.RIDER_AMOUNT}, ${CONSTANTS.RIDER_CONFIRMED} FROM ${CONSTANTS.RIDER_TABLE} WHERE ${CONSTANTS.RIDER_PERFORMANCE_ID} = ?`, [sql], callback);
     }
 
     getEvent(sql: number, callback: (status: number, data: *) => void) :void {
@@ -64,9 +64,9 @@ module.exports = class ServerDao extends Dao {
                     ${CONSTANTS.PERFORMANCE_CONTRACT}) VALUES (?,?,?,?,?,?) `, [sql.artistId, sql.eventId, sql.startTime, sql.endTime, sql.name, sql.contract], callback);
     }
 
-    createRider(sql: { performanceId: string | number, name: string, amount: string | number }, callback: (status: number, data: *) => void) :void {
-        super.query(`INSERT INTO ${CONSTANTS.RIDER_TABLE} VALUES (?,?,?) `,
-            [sql.performanceId, sql.name, sql.amount], callback);
+    createRider(sql: { performanceId: string | number, name: string, amount: string | number, confirmed: string | number }, callback: (status: number, data: *) => void) :void {
+        super.query(`INSERT INTO ${CONSTANTS.RIDER_TABLE} VALUES (?,?,?,?) `,
+            [sql.performanceId, sql.name, sql.amount, sql.confirmed], callback);
     }
 
     createCrew(sql: { profession: string, name: string, contactInfo: string | number, eventId: string | number }, callback: (status: number, data: *) => void) :void {
@@ -102,7 +102,7 @@ module.exports = class ServerDao extends Dao {
     }
 
     updateRider(sql: { name: string, amount: string | number, performanceId: string | number, oldName: string }, callback: (status: number, data: *) => void) :void {
-        super.query(`UPDATE ${CONSTANTS.RIDER_TABLE} SET ${CONSTANTS.RIDER_NAME} = ?, ${CONSTANTS.RIDER_AMOUNT} = ? WHERE ${CONSTANTS.RIDER_PERFORMANCE_ID} = ? and ${CONSTANTS.RIDER_NAME} = ?`,
+        super.query(`UPDATE ${CONSTANTS.RIDER_TABLE} SET ${CONSTANTS.RIDER_NAME} = ?, ${CONSTANTS.RIDER_AMOUNT} = ? , ${CONSTANTS.RIDER_CONFIRMED} = 1 WHERE ${CONSTANTS.RIDER_PERFORMANCE_ID} = ? and ${CONSTANTS.RIDER_NAME} = ?`,
             [sql.name, sql.amount, sql.performanceId, sql.oldName], callback);
     }
 

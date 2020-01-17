@@ -140,7 +140,8 @@ test("add a rider to database", done => {
         {
             performanceId: 2,
             name: "Beskrivelse for ny rider",
-            amount: 3
+            amount: 3,
+            confirmed: 0
         },
         callback
     );
@@ -212,6 +213,7 @@ test("update rider in database", done => {
     let param = {
         name: "Oppdatert rider",
         amount: 3,
+        confirmed: 1,
         performanceId: 2,
         oldName: "trenger fanta",
     };
@@ -220,6 +222,7 @@ test("update rider in database", done => {
         eventDao.getRiders(2, (status, data) => {
             expect(data[0].name).toBe("Oppdatert rider");
             expect(data[0].amount).toBe(3);
+            expect(data[0].confirmed).toBe(1);
             done();
         });
     });

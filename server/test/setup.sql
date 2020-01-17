@@ -72,6 +72,7 @@ CREATE TABLE rider (
   performance_id int(11) NOT NULL,
   name varchar(500) NOT NULL,
   amount int(11) NOT NULL,
+  confirmed tinyint(1) NOT NULL,
   PRIMARY KEY (performance_id, name),
   FOREIGN KEY (performance_id) REFERENCES performance(performance_id) ON DELETE CASCADE
 );
@@ -140,16 +141,16 @@ INSERT INTO performance (user_id, event_id, start_time, end_time, contract)
 VALUES (4, 3, "2021-12-05 18:45:00", "2021-12-05 19:00:00", "Dette er kontrakt 4");
 
 INSERT INTO rider
-VALUES (1, "trenger cola", 2);
+VALUES (1, "trenger cola", 2, 0);
 
 INSERT INTO rider
-VALUES (2, "trenger fanta", 1);
+VALUES (2, "trenger fanta", 1, 0);
 
 INSERT INTO rider
-VALUES (3, "trenger sprit", 4);
+VALUES (3, "trenger sprite", 4, 1);
 
 INSERT INTO rider
-VALUES (4, "trenger godteri", 2);
+VALUES (4, "trenger godteri", 2, 1);
 
 INSERT INTO crew (profession, name, contact_info, event_id)
 VALUES ("lydmann", "kurt", "kurt@kurt.no", 1);

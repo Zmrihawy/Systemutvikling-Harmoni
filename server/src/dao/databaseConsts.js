@@ -47,6 +47,7 @@ RIDER_TABLE :string;
 RIDER_PERFORMANCE_ID :string;
 RIDER_NAME :string;
 RIDER_AMOUNT :string;
+RIDER_CONFIRMED :string;
 
 CREW_TABLE :string;
 CREW_ID :string;
@@ -107,6 +108,7 @@ PASSWORD_AUTOGEN : string;
         this.RIDER_PERFORMANCE_ID = "performance_id";
         this.RIDER_NAME = "name";
         this.RIDER_AMOUNT = "amount";
+        this.RIDER_CONFIRMED = "confirmed";
 
         this.CREW_TABLE = "crew";
         this.CREW_ID = "crew_id";
