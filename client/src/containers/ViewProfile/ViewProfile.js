@@ -38,7 +38,7 @@ export default class ViewProfile extends Component {
                                 />
                             </div>
                             <button
-                                className={classes.redigerBtn}
+                                className={classes.redigerBtn} id={"redigerBtn"}
                                 onClick={this.showImageForm}
                             >
                                 Rediger profilbilde
@@ -47,7 +47,6 @@ export default class ViewProfile extends Component {
                                 className={classes.imageForm}
                                 id={'imageFormId'}
                             >
-                                <div className={classes.row}>
                                     <div className={classes.column}>
                                         <label id={'imgLabel'}>
                                             <b>Skrive inn link</b>
@@ -63,10 +62,9 @@ export default class ViewProfile extends Component {
                                             id={'imgBtn'}
                                             onClick={this.changePic}
                                         >
-                                            Send
+                                            ✓
                                         </button>
                                     </div>
-                                </div>
                             </div>
                         </div>
                         <button className={classes.redigerBrukerBtn} id={"redigerBrukerBtn"} onClick={this.showEditForm}>Rediger bruker</button>
@@ -307,6 +305,10 @@ export default class ViewProfile extends Component {
                 ).src = document.getElementById('imgInput').value;
                 document.getElementById('imageFormId').style.visibility =
                     'hidden';
+                if (document.getElementById('redigerBtn') !== null) {
+                    document.getElementById('redigerBtn').style.visibility = 'visible';
+                    document.getElementById('redigerBtn').style.pointerEvents = 'all';
+                }
             }
             else {
                 if (
@@ -323,6 +325,11 @@ export default class ViewProfile extends Component {
         }
     }
     showImageForm() {
+        if (document.getElementById('redigerBtn') !== null) {
+            document.getElementById('redigerBtn').style.visibility = 'hidden';
+            document.getElementById('redigerBtn').style.pointerEvents = 'none';
+        }
+
         if (document.getElementById('imageFormId') !== null) {
             document.getElementById('imageFormId').style.visibility = 'visible';
             document.getElementById('imgLabel').innerHTML = 'Link: ';
