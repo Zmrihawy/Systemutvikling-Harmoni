@@ -1,6 +1,6 @@
 const fs = require('fs');
 const IncomingForm = require('formidable').IncomingForm;
-
+const filePath = './saved/';
 
 module.exports = function upload(req, res) {
     console.log("Saving POSTed file");
@@ -12,19 +12,22 @@ module.exports = function upload(req, res) {
         // e.g. save it to the database
         // you can access it using file.path
 
-        console.log(typeof file);
+        // console.log(file);
 
-        // file.text()
-        //     .then(text => console.log(text))
-        //     .catch(err => console.log(err));
 
-        fs.writeFile('file.pdf', file, err => {
-            if (err) {
-                console.log('Error writing file');
-                throw err;
-            }
-            console.log('File saved!')
+        fs.readFile(file.path, (err, data) => {
+            if (err) return console.log(err);
+
+            let fileName = createFilePath(file.name);
+
+
+            fs.writeFile(filePath + fileName, data, err => {
+                console.log(fileName);
+                if (err) return console.log('Error writing file');
+                console.log('File saved!')
+            });
         });
+
     });
 
 
@@ -33,4 +36,24 @@ module.exports = function upload(req, res) {
     });
 
     form.parse(req);
+
+    function createFilePath(startName) {
+        let number = 0;
+        while (number < 20) {
+            try {
+                let name = number.toString() + startName;
+                if (fs.existsSync(filePath + name)) {
+                    number++;
+                    console.log("The file exists.");
+                } else {
+                    console.log('The file does not exist.');
+                    return name;
+                }
+            } catch (err) {
+                console.error(err);
+                return (Math.random() * 99999999).toString();
+            }
+        }
+        return (Math.random() * 99999999).toString();
+    }
 };
