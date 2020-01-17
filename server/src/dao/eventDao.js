@@ -112,7 +112,7 @@ module.exports = class ServerDao extends Dao {
 
     updateEvent(sql: { eventName: string, hostId: string | number, active: string | number, location: string, long: string | number, lat: string | number, description: string, startTime: string | number, endTime: string | number, eventId: string | number }, callback: (status: number, data: *) => void) {
         super.query(`UPDATE ${CONSTANTS.EVENT_TABLE} SET ${CONSTANTS.EVENT_NAME} = ?, ${CONSTANTS.EVENT_HOST_ID} = ?, ${CONSTANTS.EVENT_ACTIVE} = ?, ${CONSTANTS.EVENT_LOCATION} = ?, ${CONSTANTS.EVENT_LONGITUDE} = ?, ${CONSTANTS.EVENT_LATITUDE} = ?,${CONSTANTS.EVENT_DESCRIPTION} = ?, 
-            ${CONSTANTS.EVENT_START_TIME} = ?, ${CONSTANTS.EVENT_END_TIME} = ? WHERE ${CONSTANTS.EVENT_ID} = ?`, [sql.eventName, sql.hostId, sql.active, sql.location, Number(sql.long), Number(sql.lat), sql.description, sql.startTime, sql.endTime, sql.eventId], callback);
+            ${CONSTANTS.EVENT_START_TIME} = ?, ${CONSTANTS.EVENT_END_TIME} = ? WHERE ${CONSTANTS.EVENT_ID} = ?`, [sql.eventName, sql.hostId, sql.active, sql.location, Number(sql.longitude), Number(sql.latitude), sql.description, sql.startTime, sql.endTime, sql.eventId], callback);
     }
 
     updateCrew(sql: { profession: string, name: string, contactInfo: string, crewId: string | number }, callback: (status: number, data: *) => void) {
