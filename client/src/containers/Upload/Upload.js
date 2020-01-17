@@ -108,6 +108,8 @@ class Upload extends Component {
     }
 
     render() {
+        //console.log(this.state.files.length);
+
         return (
             <div className="Upload">
                 <span className="Title">Upload file</span>

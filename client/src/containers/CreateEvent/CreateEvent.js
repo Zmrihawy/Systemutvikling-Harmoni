@@ -9,6 +9,7 @@ import StaffAdder from '../eventCreation/StaffAdder/StaffAdder';
 import TicketAdder from '../eventCreation/TicketAdder/TicketAdder';
 import RiderAdder from '../eventCreation/RiderAdder/RiderAdder';
 import ContractAdder from '../../containers/eventCreation/ContractAdder/ContractAdder';
+import pdfReader from '../../components/PdfView/PdfViewPc';
 
 import classes from './CreateEvent.module.scss';
 import vectorSVG from '../../assets/images/undraw_filing_system_b5d2.svg';
@@ -150,16 +151,19 @@ export default class CreateEvent extends Component {
         switch (this.state.currentPage) {
             case 0:
                 current = (
-                    <BasicForm
-                        key={this.state.currentPage}
-                        title="Hva skal arrangementet hete?"
-                        inputType="text"
-                        value={this.state.newEvent.title}
-                        name="title"
-                        next={this.handleNext}
-                        changed={this.handleChange}
-                    />
+                    <>
+                        <BasicForm
+                            key={this.state.currentPage}
+                            title="Hva skal arrangementet hete?"
+                            inputType="text"
+                            value={this.state.newEvent.title}
+                            name="title"
+                            next={this.handleNext}
+                            changed={this.handleChange}
+                        />
+                    </>
                 );
+                //<pdfReader url={'TEST URL'} />
                 break;
 
             case 1:

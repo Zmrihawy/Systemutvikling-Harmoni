@@ -24,3 +24,10 @@
 .FileInput {
     display: none;
 }
+
+/*
+div:disabled {
+    background: rgb(189, 189, 189);
+    cursor: default;
+}
+*/
