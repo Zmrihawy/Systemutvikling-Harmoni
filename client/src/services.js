@@ -5,21 +5,35 @@ export class Event {
     hostId: number;
     active: number;
     location: string;
+    longitude: number;
+    latitude: number;
     description: string;
     startTime: string;
     endTime: string;
 
-    constructor(id: number, name: string, hostId: number, active: number, location: string, description: string, startTime: string, endTime: string) {
+    constructor(
+        id: number,
+        name: string,
+        hostId: number,
+        active: number,
+        location: string,
+        longitude: number,
+        latitude: number,
+        description: string,
+        startTime: string,
+        endTime: string
+    ) {
         this.id = id;
         this.name = name;
         this.hostId = hostId;
         this.active = active;
         this.location = location;
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
     }
-
 }
 
 export class Ticket {
@@ -29,7 +43,13 @@ export class Ticket {
     amount: number;
     description: string;
 
-    constructor(name: string, eventId: number, price: number, amount: number, description: string) {
+    constructor(
+        name: string,
+        eventId: number,
+        price: number,
+        amount: number,
+        description: string
+    ) {
         this.name = name;
         this.eventId = eventId;
         this.price = price;
@@ -58,7 +78,14 @@ export class Performance {
     endTime: string;
     contract: string;
 
-    constructor(id: number, userId: number, eventId: number, startTime: string, endTime: string, contract: string) {
+    constructor(
+        id: number,
+        userId: number,
+        eventId: number,
+        startTime: string,
+        endTime: string,
+        contract: string
+    ) {
         this.id = id;
         this.userId = userId;
         this.eventId = eventId;
@@ -76,7 +103,14 @@ export class User {
     firstName: string;
     surname: string;
 
-    constructor(id: number, username: string, email: string, phone: string, firstName: string, surname: string) {
+    constructor(
+        id: number,
+        username: string,
+        email: string,
+        phone: string,
+        firstName: string,
+        surname: string
+    ) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -93,7 +127,13 @@ export class Crew {
     contactInfo: string;
     eventId: number;
 
-    constructor(id: number, profession: string, name: string, contactInfo: string, eventId: number) {
+    constructor(
+        id: number,
+        profession: string,
+        name: string,
+        contactInfo: string,
+        eventId: number
+    ) {
         this.id = id;
         this.profession = profession;
         this.name = name;
@@ -101,8 +141,6 @@ export class Crew {
         this.eventId = eventId;
     }
 }
-
-
 
 class EventService {
     //GET
@@ -113,7 +151,7 @@ class EventService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -138,7 +176,9 @@ class EventService {
                 json.location,
                 json.description,
                 json.start_time,
-                json.end_time
+                json.end_time,
+                json.longitude,
+                json.latitude
             );
         }
     }
@@ -150,7 +190,7 @@ class EventService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -160,7 +200,7 @@ class EventService {
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     resolve(handleGetAllEventsResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -190,7 +230,7 @@ refreshToken(json.jwt);
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -200,7 +240,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     resolve(handleGetPerformanceResponse(json.data[0]));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -225,7 +265,7 @@ refreshToken(json.jwt);
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -235,7 +275,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     resolve(handleGetAllRidersResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -248,17 +288,14 @@ refreshToken(json.jwt);
         }
     }
 
-    getContract(
-        eventId: number,
-        artistId: number
-    ): Promise<any> {
+    getContract(eventId: number, artistId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/user/' + artistId + '/contract', {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -268,7 +305,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     resolve(handleGetContractResponse(json.data[0]));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -286,7 +323,7 @@ refreshToken(json.jwt);
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -296,7 +333,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     resolve(handleGetEventContractsResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -314,7 +351,7 @@ refreshToken(json.jwt);
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -324,7 +361,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     resolve(handleGetEventTicketsResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -344,17 +381,14 @@ refreshToken(json.jwt);
         }
     }
 
-    getPerformanceRiders(
-        eventId: number,
-        performanceId: number
-    ): Promise<any> {
+    getPerformanceRiders(eventId: number, performanceId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/user/event/' + eventId + '/' + performanceId, {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -364,7 +398,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     resolve(handleGetPerformanceRidersResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -384,7 +418,7 @@ refreshToken(json.jwt);
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -394,7 +428,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     resolve(handleGetUsersEventsResponse(json.data));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -424,7 +458,7 @@ refreshToken(json.jwt);
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -434,7 +468,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     resolve(handleGetCrewResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -479,7 +513,7 @@ refreshToken(json.jwt);
                 method: 'POST',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -518,7 +552,7 @@ refreshToken(json.jwt);
                 method: 'POST',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -529,7 +563,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -557,7 +591,7 @@ refreshToken(json.jwt);
                 method: 'POST',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -568,7 +602,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -581,14 +615,14 @@ refreshToken(json.jwt);
         name: string,
         amount: number
     ): Promise<any> {
-        let data = {name: name, amount: amount};
+        let data = { name: name, amount: amount };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/performance/' + performanceId + '/rider', {
                 method: 'POST',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -599,7 +633,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -624,7 +658,7 @@ refreshToken(json.jwt);
                 method: 'POST',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -635,7 +669,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -649,14 +683,14 @@ refreshToken(json.jwt);
         performanceId: number,
         name: string
     ): Promise<any> {
-        let data = {performanceId: performanceId, name: name};
+        let data = { performanceId: performanceId, name: name };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/rider', {
                 method: 'DELETE',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -667,7 +701,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -682,7 +716,7 @@ refreshToken(json.jwt);
                 method: 'DELETE',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -692,7 +726,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -721,7 +755,7 @@ refreshToken(json.jwt);
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -732,7 +766,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -757,7 +791,7 @@ refreshToken(json.jwt);
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -768,7 +802,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -803,7 +837,7 @@ refreshToken(json.jwt);
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -814,7 +848,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -822,18 +856,15 @@ refreshToken(json.jwt);
         });
     }
 
-    updateContract(
-        eventId: number,
-        contract: string
-    ): Promise<any> {
-        let data = {eventId: eventId, contract: contract};
+    updateContract(eventId: number, contract: string): Promise<any> {
+        let data = { eventId: eventId, contract: contract };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/contract', {
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -844,7 +875,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -874,7 +905,7 @@ refreshToken(json.jwt);
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -885,7 +916,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -912,7 +943,7 @@ refreshToken(json.jwt);
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -923,7 +954,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -932,14 +963,14 @@ refreshToken(json.jwt);
     }
 
     deleteTicket(name: string, eventId: number): Promise<any> {
-        let data = {name: name, eventId: eventId};
+        let data = { name: name, eventId: eventId };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/ticket', {
                 method: 'DELETE',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -950,7 +981,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -958,18 +989,15 @@ refreshToken(json.jwt);
         });
     }
 
-    deletePerformance(
-        eventId: number,
-        artistId: number
-    ): Promise<any> {
-        let data = {artistId: artistId};
+    deletePerformance(eventId: number, artistId: number): Promise<any> {
+        let data = { artistId: artistId };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/performance', {
                 method: 'DELETE',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -980,7 +1008,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -998,7 +1026,7 @@ class UserService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -1008,7 +1036,7 @@ class UserService {
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     resolve(handleGetUserResponse(json.data[0]));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -1033,7 +1061,7 @@ refreshToken(json.jwt);
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -1043,7 +1071,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     resolve(handleGetAllUsersResponse(json));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -1072,7 +1100,7 @@ refreshToken(json.jwt);
                 method: 'DELETE',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -1112,7 +1140,7 @@ refreshToken(json.jwt);
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1124,7 +1152,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -1132,7 +1160,11 @@ refreshToken(json.jwt);
         });
     }
 
-    updatePassword(userId: string, oldPassword: string, newPassword: string): Promise<any> {
+    updatePassword(
+        userId: string,
+        oldPassword: string,
+        newPassword: string
+    ): Promise<any> {
         let data = {
             oldPassword: oldPassword,
             newPassword: newPassword
@@ -1143,7 +1175,7 @@ refreshToken(json.jwt);
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1154,7 +1186,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError) return reject(json);
-refreshToken(json.jwt);
+                    refreshToken(json.jwt);
                     console.log(json);
                     resolve(json);
                 })
@@ -1184,7 +1216,7 @@ refreshToken(json.jwt);
             fetch('/user', {
                 method: 'POST',
                 headers: {
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1221,7 +1253,7 @@ refreshToken(json.jwt);
             fetch('/login', {
                 method: 'POST',
                 headers: {
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)

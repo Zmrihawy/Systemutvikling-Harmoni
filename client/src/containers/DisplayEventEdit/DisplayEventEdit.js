@@ -38,9 +38,6 @@ export default class DisplayEventEdit extends Component {
         event.startTime = startTime;
         event.endTime = endTime;
 
-        console.log(startTime);
-        console.log(endTime);
-
         this.setState({ event });
     };
 
@@ -80,6 +77,9 @@ export default class DisplayEventEdit extends Component {
                 event.endTime = event.endTime
                     .replace('Z', '')
                     .replace('T', ' ');
+        console.log('neger');
+                console.log(event);
+
                 this.setState({ event });
             })
             .catch(error => console.error(error));
