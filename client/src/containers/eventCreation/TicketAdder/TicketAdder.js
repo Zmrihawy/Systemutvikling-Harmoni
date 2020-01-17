@@ -51,13 +51,6 @@ export default class TicketAdder extends Component {
         }));
     };
 
-    /* handleInputChange = event => {
-        let inputValue = [...this.state.inputValue];
-        event.target.name = event.target.value;
-
-        this.setState({ inputValue });
-    }; */
-
     render() {
         return (
             <>
