@@ -35,17 +35,15 @@
 .editLayer:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
+.editHeader {
+    font-family: "Agency FB";
+    font-size: 30px;
+}
 .editTitle {
     font-family: 'Agency FB';
     font-size: x-large;
     color: #333333;
 }
-/* input[type=text]{
-  width: 12vw;
-  border: none;
-  background: transparent;
-  border-bottom: 1px solid #333333;
-} */
 .input:focus,
 input:focus {
     outline: none;

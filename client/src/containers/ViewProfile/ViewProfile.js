@@ -22,16 +22,6 @@ export default class ViewProfile extends Component {
         console.log(user);
 
         this.setState(user);
-
-        /* this.setState({ id: intId }, () => {
-            userService
-                .getUser(intId)
-                .then(userData => {
-                    console.log(userData);
-                    this.setState(userData);
-                })
-                .catch((error: Error) => console.log(error));
-        }); */
     }
     render() {
         return (
@@ -102,7 +92,7 @@ export default class ViewProfile extends Component {
                                 </div>
                             </div>
                             <div className={classes.editLayer}>
-                                <h4>
+                                <h4 className={classes.editHeader}>
                                     <b>Rediger Info</b>
                                 </h4>
                                 <div className={classes.row}>
@@ -126,7 +116,6 @@ export default class ViewProfile extends Component {
                                             type="text"
                                             placeholder={this.state.email}
                                         />
-                                        <b />
                                         <div className={classes.editTitle}>
                                             Telefon
                                         </div>
@@ -157,17 +146,47 @@ export default class ViewProfile extends Component {
                                             type="text"
                                             placeholder={this.state.surname}
                                         />
-                                        <b />
-                                        <b />
-                                        <button
-                                            className={classes.button}
-                                            onClick={event =>
-                                                this.eventHandler()
-                                            }
-                                        >
-                                            ✓
-                                        </button>
                                     </div>
+                                </div>
+                                <div className={classes.row}>
+                                    <h5 className={classes.editHeader}>
+                                        <b>Rediger Passord</b>
+                                    </h5>
+                                    <br/>
+                                    <div className={classes.editTitle}>
+                                        Gammel Passord
+                                    </div>
+                                    <input
+                                        id={'oldPasswordInp'}
+                                        className={classes.input}
+                                        type="password"
+                                    />
+                                    <div className={classes.editTitle}>
+                                        Nytt Passord
+                                    </div>
+                                    <input
+                                        id={'passwordInp'}
+                                        className={classes.input}
+                                        type="password"
+                                    />
+                                    <div className={classes.editTitle}>
+                                        Gjenta nytt passord
+                                    </div>
+                                    <input
+                                        id={'repeatPasswordInp'}
+                                        className={classes.input}
+                                        type="password"
+                                    />
+                                </div>
+                                <div className={classes.row}>
+                                    <button
+                                        className={classes.button}
+                                        onClick={event =>
+                                            this.eventHandler()
+                                        }
+                                    >
+                                        ✓
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -212,6 +231,22 @@ export default class ViewProfile extends Component {
         ) {
             newSurname = document.getElementById('surnameInp').value;
         }
+        if (
+            document.getElementById('passwordInp') !== null &&
+            document.getElementById('passwordInp').value !== ''
+        ) {
+            if(document.getElementById('repeatPasswordInp') !== null &&
+            document.getElementById('repeatPasswordInp').value === document.getElementById('passwordInp').value){
+                console.log("heinrich")
+                if(document.getElementById('oldPasswordInp') !== null &&
+                document.getElementById('oldPasswordInp').value !== ''){
+                    console.log("helsikke")
+                    if(this.checkUpdatePassword()){
+                        console.log("woop");
+                    }
+                }
+            }
+        }
         this.setState(
             {
                 username: newName,
@@ -222,6 +257,12 @@ export default class ViewProfile extends Component {
             },
             () => this.setUser()
         );
+    }
+    checkUpdatePassword(){
+        let verified = true;
+        userService.updatePassword(this.state.id,(document.getElementById("oldPasswordInp").value),(document.getElementById('passwordInp').value))
+            .catch((error: Error) => verified = false);
+        return verified;
     }
     setUser() {
         userService
