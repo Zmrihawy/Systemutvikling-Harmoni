@@ -69,6 +69,7 @@ export default class ViewProfile extends Component {
                                 </div>
                             </div>
                         </div>
+                        <button className={classes.redigerBrukerBtn} id={"redigerBrukerBtn"}>Rediger bruker</button>
                         <div className={classes.column}>
                             <div className={classes.bioLayer}>
                                 <h1 className={classes.h1} id={'nameP'}>
@@ -260,6 +261,9 @@ export default class ViewProfile extends Component {
     }
     checkUpdatePassword(){
         let verified = true;
+        console.log(this.state.id);
+        console.log(document.getElementById("oldPasswordInp").value);
+        console.log(document.getElementById("passwordInp").value)
         userService.updatePassword(this.state.id,(document.getElementById("oldPasswordInp").value),(document.getElementById('passwordInp').value))
             .catch((error: Error) => verified = false);
         return verified;
