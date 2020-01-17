@@ -12,7 +12,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const eventInfo = props => {
-    console.log(props.id);
     return (
         <div className={classes.container}>
             <div className={classes.top__section}>
@@ -26,7 +25,7 @@ const eventInfo = props => {
             </div>
             <div className={classes.desc}>
                 <h1 className={classes.descTitle}>Om arrangementet</h1>
-                <p>{props.desc}</p>
+                <p>{props.description}</p>
             </div>
 
             <div className={classes.info}>

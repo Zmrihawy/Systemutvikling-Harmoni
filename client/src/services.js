@@ -5,11 +5,11 @@ export class Event {
     hostId: number;
     active: number;
     location: string;
-    longitude: number;
-    latitude: number;
     description: string;
     startTime: string;
     endTime: string;
+    latitude: number;
+    longitude: number;
 
     constructor(
         id: number,
@@ -17,22 +17,22 @@ export class Event {
         hostId: number,
         active: number,
         location: string,
-        longitude: number,
-        latitude: number,
         description: string,
         startTime: string,
-        endTime: string
+        endTime: string,
+        latitude: number,
+        longitude: number
     ) {
         this.id = id;
         this.name = name;
         this.hostId = hostId;
         this.active = active;
         this.location = location;
-        this.longitude = longitude;
-        this.latitude = latitude;
         this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 }
 
@@ -818,7 +818,9 @@ class EventService {
         location: string,
         description: string,
         startTime: string,
-        endTime: string
+        endTime: string,
+        latitude: number,
+        longitude: number
     ): Promise<any> {
         let data = {
             eventId: eventId,
@@ -828,9 +830,12 @@ class EventService {
             location: location,
             description: description,
             startTime: startTime,
-            endTime: endTime
+            endTime: endTime,
+            latitude: longitude,
+            longitude: latitude
         };
         let isError: boolean = false;
+        console.log('jeg er ikke kokken din!');
         console.log(data);
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId, {

@@ -10,9 +10,9 @@ export default class DisplayEventEdit extends Component {
         event: {
             id: null,
             startTime: '2020-02-01 00:00:00.000',
-            endTime: '2020-02-10 00:00:00.000', 
-            longitude: '10.421906',
-            latitude: '63.446827'
+            endTime: '2020-02-10 00:00:00.000',
+            longitude: 10.421906,
+            latitude: 63.446827
         }
     };
 
@@ -54,18 +54,18 @@ export default class DisplayEventEdit extends Component {
     }
 
     handleMapClick = (map, e) => {
-        let longitude = e.lngLat.lng; 
-        let latitude = e.lngLat.lat; 
+        let longitude = e.lngLat.lng;
+        let latitude = e.lngLat.lat;
 
         let event = {
             ...this.state.event
         };
 
-        event.latitude = latitude; 
-        event.longitude = longitude; 
+        event.latitude = latitude;
+        event.longitude = longitude;
 
-        this.setState({ event: event })
-    }
+        this.setState({ event: event });
+    };
 
     async componentDidMount() {
         eventService
@@ -77,15 +77,13 @@ export default class DisplayEventEdit extends Component {
                 event.endTime = event.endTime
                     .replace('Z', '')
                     .replace('T', ' ');
-        console.log('neger');
-                console.log(event);
 
                 this.setState({ event });
             })
             .catch(error => console.error(error));
     }
 
-    handleButtonClick = e => {
+    handleButtonSubmitClick = e => {
         e.preventDefault();
         eventService
             .updateEvent(
@@ -96,10 +94,19 @@ export default class DisplayEventEdit extends Component {
                 this.state.event.location,
                 this.state.event.description,
                 this.state.event.startTime,
-                this.state.event.endTime
+                this.state.event.endTime,
+                this.state.event.latitude,
+                this.state.event.longitude
             )
-            .then(response => console.log(''))
+            .then(response =>
+                history.push('/arrangement/' + this.state.event.id)
+            )
             .catch(error => console.error(error));
+    };
+
+    handleButtonDeleteClick = e => {
+        e.preventDefault();
+        console.log('bleie');
     };
 
     render() {
@@ -108,11 +115,13 @@ export default class DisplayEventEdit extends Component {
                 startTime={this.state.event.startTime}
                 endTime={this.state.event.endTime}
                 event={this.state.event}
-                handleButtonClick={this.handleButtonClick}
+                handleButtonSubmitClick={this.handleButtonSubmitClick}
+                handleButtonDeleteClick={this.handleButtonDeleteClick}
                 handleDateChange={this.handleDateChange}
                 handleChange={this.handleChange}
                 longitude={this.state.event.longitude}
                 latitude={this.state.event.latitude}
+                location={this.state.event.location}
                 handleMapClick={this.handleMapClick}
             />
         );

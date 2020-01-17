@@ -8,7 +8,7 @@ import Map from '../Map/Map';
 
 const eventEdit = props => {
     return (
-        <form className={classes.container} onSubmit={props.handleButtonClick}>
+        <form className={classes.container} onSubmit={props.handleButtonSubmitClick}>
             <h1 className={classes.title}>Rediger arrangement</h1>
 
             <input
@@ -61,6 +61,7 @@ const eventEdit = props => {
                 className={classes.button__delete}
                 type="button"
                 value="Slett arrangement"
+                onClick={props.handleButtonDeleteClick}
             />
         </form>
     );
