@@ -1134,25 +1134,20 @@ refreshToken(json.jwt);
 
     forgotPassword(email : string): Promise<any>{
         let isError: boolean = false;
-
-            return new Promise((resolve, reject) => {
-            fetch('/user/' + email, {
-                method: 'PUT',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
+        return new Promise((resolve, reject) => {
+        fetch('/user/' + email, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                isError = isErrorStatus(response.status);
+                if (isError) return reject(response.status);
+                resolve(response.status);
             })
-                .then(response => {
-                    isError = isErrorStatus(response.status);
-                    return response.json();
-                })
-                .then(json => {
-                    console.log(json);
-                    if (isError) return reject(json);
-                    resolve(json);
-                })
-                .catch(error => console.error('Error: ', error));
+            .catch(error => console.error('Error: ', error));
         });
     }
 
