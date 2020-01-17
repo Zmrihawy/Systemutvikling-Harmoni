@@ -27,6 +27,7 @@ export default class Registration extends Component {
             <div className="login-page">
                 <div className="form">
                     <form className="register-form" onSubmit={this.register}>
+                    <p id = "error"></p><br/>
                         <input
                             type="text"
                             required
@@ -104,23 +105,14 @@ export default class Registration extends Component {
                 .then(() => history.push('/user/' + window.sessionStorage.getItem('user')))
             )
             .catch(data => {
-                let s = data.sqlMessage.slice(data.sqlMessage.indexOf('key'));
+                console.log(data);
 
-                console.log(s);
+                let err = document.querySelector("#error");
 
-                s = s
-                    .split("'")
-                    .join('')
-                    .replace('key', '')
-                    .trim();
-
-                console.log(s);
-
-                if (s === 'username') {
-                    console.log('brukernavn i bruk');
-                } else {
-                    console.log('mail i bruk');
-                }
+                //if(data.error === undefined) return err.innerHTML = "Internal Server Error, please try again later.";
+                if(data.error === "mail and username") return err.innerHTML = "Username and email is already in use.";
+                if(data.error === "mail") return err.innerHTML = "Mail is already in use";
+                if(data.error === "username") return err.innerHTML = "Username is already taken";
             });
     };
 

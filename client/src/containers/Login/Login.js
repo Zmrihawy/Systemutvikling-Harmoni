@@ -58,7 +58,6 @@ export default class Login extends Component {
             .then(data => console.log(data))
             .then(none => {
               history.push('/user/' + window.sessionStorage.getItem('user'));
-
             })
             .catch(data => {
                 document.querySelector("#error").innerHTML = 'Wrong e-mail or password';

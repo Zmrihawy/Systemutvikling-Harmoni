@@ -3,11 +3,18 @@
     width: 100%;
     background-color: #333333;
     overflow: hidden;
-    text-align: left;
+    text-align: right;
     display: block;
     box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.4);
 }
-.navLink {
+.navLinkR {
+    float: right;
+    padding: 12px;
+    color: whitesmoke;
+    text-decoration: none;
+    font-size: 17px;
+}
+.navLinkL {
     float: left;
     padding: 12px;
     color: whitesmoke;
@@ -21,11 +28,29 @@
     text-decoration: none;
     font-size: 17px;
 }
+.logo{
+    float: left;
+    height:50px;
+}
+.logoImg{
+    height: 100%;
+    width: auto;
+}
 .activeLink:hover {
     background-color: black;
+    cursor: pointer;
 }
-.navLink:hover {
+.navLinkR:hover {
     background-color: black;
+    cursor: pointer;
+}
+.navLinkL:hover {
+    background-color: black;
+    cursor: pointer;
+}
+.logo:hover{
+    background-color: black;
+    cursor: pointer;
 }
 
 #container {

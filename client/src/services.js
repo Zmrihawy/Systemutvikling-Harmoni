@@ -1196,7 +1196,8 @@ refreshToken(json.jwt);
             email: email,
             phone: phone,
             firstName: firstName,
-            lastName: lastName
+            lastName: lastName,
+            artist : 1
         };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
@@ -1214,10 +1215,7 @@ refreshToken(json.jwt);
                 })
                 .then(json => {
                     if (isError)
-                        return reject({
-                            error: json.errno,
-                            sqlMessage: json.sqlMessage
-                        });
+                        return reject(json);
                     refreshToken(json.jwt);
                     console.log('services' + json);
                     resolve(json);
@@ -1272,6 +1270,8 @@ function isErrorStatus(status) {
         case 500:
             return true;
         case 400:
+            return true;
+        case 409:
             return true;
         default:
             return false;
