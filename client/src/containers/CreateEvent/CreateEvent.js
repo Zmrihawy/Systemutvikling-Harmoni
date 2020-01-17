@@ -17,7 +17,7 @@ import vectorSVG from '../../assets/images/undraw_filing_system_b5d2.svg';
 export default class CreateEvent extends Component {
     state = {
         showBackdrop: false,
-        currentPage: 4,
+        currentPage: 0,
         newEvent: {
             title: '',
             category: '',
