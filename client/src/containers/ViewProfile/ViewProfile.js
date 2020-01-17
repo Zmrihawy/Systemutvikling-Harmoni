@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classes from './ViewProfile.module.scss';
 import { userService } from '../../services';
-import {ProfileHolder} from './ProfilePlaceholder.js';
+import profileHolder from '../../pictures/profileHolder.svg';
 export default class ViewProfile extends Component {
     constructor(props) {
         super(props);
@@ -33,7 +33,7 @@ export default class ViewProfile extends Component {
                                 <img
                                     className={classes.profile}
                                     id={'profileImg'}
-                                    src={ProfileHolder}
+                                    src={profileHolder}
                                     alt="Profile picture"
                                 />
                             </div>
@@ -291,33 +291,31 @@ export default class ViewProfile extends Component {
         }
     }
     changePic() {
-        console.log('helsikke');
         if (
             document.getElementById('imgInput') !== null &&
             document.getElementById('imgInput') !== null &&
             document.getElementById('imgInput').value !== null
         ) {
-            console.log('helsikke2');
             if (
                 document.getElementById('profileImg') !== null &&
                 document
                     .getElementById('imgInput')
-                    .value.match(/\.(jpg|gif|png)$/) != null
+                    .value.match(/\.(jpg|gif|png)$/) !== null
             ) {
-                console.log('helsikke3');
                 document.getElementById(
                     'profileImg'
                 ).src = document.getElementById('imgInput').value;
                 document.getElementById('imageFormId').style.visibility =
                     'hidden';
-            } else {
+            }
+            else {
                 if (
                     document.getElementById('profileImg') !== null &&
                     document.getElementById('imgLabel') !== null &&
                     document.getElementById('imgLabel').innerHTML !== null
                 ) {
                     document.getElementById('profileImg').src =
-                        'https://images.assetsdelivery.com/compings_v2/apoev/apoev1806/apoev180600175.jpg';
+                        profileHolder;
                     document.getElementById('imgLabel').innerHTML =
                         'Du må skrive inn gyldig bildeLink!';
                 }
