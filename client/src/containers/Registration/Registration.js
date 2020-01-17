@@ -118,6 +118,11 @@ export default class Registration extends Component {
                 userService.loginUser(this.state.password, this.state.email)
                 .then(() => history.push('/user/' + window.sessionStorage.getItem('user')))
             )
+            .then(() => {
+                console.log('Token:');
+                console.log(window.sessionStorage.getItem('user'));
+                history.push('/user/' + window.sessionStorage.getItem('user'));
+            })
             .catch(data => {
                 console.log(data);
 

@@ -17,7 +17,7 @@ import vectorSVG from '../../assets/images/undraw_filing_system_b5d2.svg';
 export default class CreateEvent extends Component {
     state = {
         showBackdrop: false,
-        currentPage: 0,
+        currentPage: 4,
         newEvent: {
             title: '',
             category: '',
@@ -151,17 +151,15 @@ export default class CreateEvent extends Component {
         switch (this.state.currentPage) {
             case 0:
                 current = (
-                    <>
-                        <BasicForm
-                            key={this.state.currentPage}
-                            title="Hva skal arrangementet hete?"
-                            inputType="text"
-                            value={this.state.newEvent.title}
-                            name="title"
-                            next={this.handleNext}
-                            changed={this.handleChange}
-                        />
-                    </>
+                    <BasicForm
+                        key={this.state.currentPage}
+                        title="Hva skal arrangementet hete?"
+                        inputType="text"
+                        value={this.state.newEvent.title}
+                        name="title"
+                        next={this.handleNext}
+                        changed={this.handleChange}
+                    />
                 );
                 //<pdfReader url={'TEST URL'} />
                 break;
