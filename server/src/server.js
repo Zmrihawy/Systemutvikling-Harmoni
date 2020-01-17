@@ -602,33 +602,44 @@ app.post("/user", (req, res) => {
     if (req.body.username == undefined) return res.status(400).json({error: "request missing username"});
     else if (req.body.password == undefined) return res.status(400).json({error: "request missing password"});
     else if (req.body.email == undefined) return res.status(400).json({error: "request missing email"});
+    else if (req.body.firstName == undefined) return res.status(400).json({error: "request missing first name"});
+    else if (req.body.lastName == undefined) return res.status(400).json({error: "request missing last name"});
+    else if (req.body.phone == undefined) return res.status(400).json({error: "request missing phone"});
     else if (!sjekkMail(req.body.email)) return res.status(400).json({error: "parameter email is not a valid email"});
     else if (numberError([req.body.phone])) return res.status(400).json({error: "number field is a string"});
 
-    let user = req.body;
+    userDao.checkCred({username:req.body.username, email : req.body.emai}, (status, data) => {
+        if(data.length > 0){
+            if(data[0].username === req.body.username && data[0].email === req.body.email) return res.status(400).json({error : "mail and username"});
+            else if(data[0].username === req.body.username) return res.status(400).json({error: "username"});
+            else return res.status(400).json({error : "mail"});
+        }
 
-    let salt = crypto.randomBytes(16).toString('hex').slice(0, 16).toUpperCase();
+        let user = req.body;
 
-    let pw = user.password;
+        let salt = crypto.randomBytes(16).toString('hex').slice(0, 16).toUpperCase();
 
-    let hash = crypto.createHmac('sha512', salt);
+        let pw = user.password;
 
-    hash.update(pw);
+        let hash = crypto.createHmac('sha512', salt);
 
-    pw = hash.digest('hex');
+        hash.update(pw);
 
-    userDao.createUser({
-            username: user.username,
-            password: pw,
-            salt: salt,
-            email: user.email,
-            phone: user.phone,
-            firstName: user.firstName,
-            lastName: user.lastName
-        },
-        (status, data) => {
-            let token = thisFunctionCreatesNewToken(user.mail, 0);
-            res.status(status).json({data, jwt: token});
+        pw = hash.digest('hex');
+
+        userDao.createUser({
+                username: user.username,
+                password: pw,
+                salt: salt,
+                email: user.email,
+                phone: user.phone,
+                firstName: user.firstName,
+                lastName: user.lastName
+            },
+            (status, data) => {
+                let token = thisFunctionCreatesNewToken(user.mail, 0);
+                res.status(status).json({data, jwt: token});
+            });
         });
 });
 

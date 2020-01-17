@@ -43,4 +43,8 @@ module.exports = class UserDao extends Dao {
             [sql.username, sql.email, sql.phone, sql.firstName, sql.lastName, sql.userId], callback);
     }
 
+    checkCred(sql : {username: string, email: string}, callback: (status: number, data: *) => void){
+        super.query(`SELECT DISTINCT ${CONSTANTS.USER_USERNAME}, ${CONSTANTS.USER_EMAIL} FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_USERNAME} = ? OR ${CONSTANTS.USER_EMAIL} = ?`, [sql.username, sql.email], callback);
+    }
+
 };
