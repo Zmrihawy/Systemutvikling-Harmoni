@@ -18,9 +18,13 @@ export default class DisplayEventOverview extends Component {
         activeEvents: [],
         archivedEvents: []
     };
+    
+    handleSearch = e => {
+        console.log('submit');
+    };
 
     handleButtonClick = id => {
-        history.push('/arrangement/' + id);
+        history.push('/arrangement/' + id )
     };
 
     async componentDidMount() {
@@ -47,6 +51,7 @@ export default class DisplayEventOverview extends Component {
                 activeEvents={this.state.activeEvents}
                 archivedEvents={this.state.archivedEvents}
                 handleButtonClick={this.handleButtonClick}
+                handleSearch={this.handleSearch}
             />
         );
     }

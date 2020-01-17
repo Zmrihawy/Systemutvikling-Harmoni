@@ -1,12 +1,34 @@
 .container {
     display: grid;
     grid-template-areas:
-        'input__search  input__toggle'
-        'active__events   active__events'
-        'archived__events archived__events';
+        'search__container'
+        'active__events'
+        'archived__events';
     width: 80%;
-    margin: 75px auto;
-    grid-gap: 100px;
+    margin: 50px auto;
+    grid-gap: 20px 0px;
+}
+
+.search__container{
+    display: grid;
+    grid-template-areas: 
+    'input__search input__button';
+    grid-template-columns: 1fr 50px;
+    margin: 0px 100px;
+    grid-gap: 5px;
+}
+
+.input__search  {
+    grid-area: input__search;
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid lightgray;
+}
+
+.input__button {
+    grid-area: input__button;
+    border-radius: 10px;
+    border: 1px solid lightgray;
 }
 
 .active__events {
@@ -28,6 +50,7 @@
 .title {
     font-size: 4em;
     text-align: center;
+    margin-bottom: 25px;
 }
 
 .title::before,
@@ -42,8 +65,10 @@
 
 .event__list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    grid-gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    grid-gap: 50px 20px;
+    justify-items: center;
+    
 }
 .event__list > .article {
     font-size: 1.4em;
@@ -51,7 +76,7 @@
     box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.3);
     border-bottom-right-radius: 20px;
     border-top-left-radius: 20px;
-    width: 350px;
+    width: 300px;
 }
 .event__list > .article .image {
     width: 100%;
