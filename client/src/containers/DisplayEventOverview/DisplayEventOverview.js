@@ -15,7 +15,8 @@ import {
 
 export default class DisplayEventOverview extends Component {
     state = {
-        events: []
+        activeEvents: [],
+        archivedEvents: []
     };
 
     handleButtonClick = id => {
@@ -23,12 +24,19 @@ export default class DisplayEventOverview extends Component {
     };
 
     async componentDidMount() {
-        let id = window.sessionStorage.getItem('user')
-        
+        let id = window.sessionStorage.getItem('user');
+
         eventService
             .getUsersEvents(id, 1)
             .then(serverEvents => {
-                this.setState({ events: serverEvents });
+                this.setState({ activeEvents: serverEvents });
+            })
+            .catch(error => console.error(error));
+
+        eventService
+            .getUsersEvents(id, 0)
+            .then(serverEvents => {
+                this.setState({ archivedEvents: serverEvents });
             })
             .catch(error => console.error(error));
     }
@@ -36,7 +44,8 @@ export default class DisplayEventOverview extends Component {
     render() {
         return (
             <EventOverview
-                events={this.state.events}
+                activeEvents={this.state.activeEvents}
+                archivedEvents={this.state.archivedEvents}
                 handleButtonClick={this.handleButtonClick}
             />
         );

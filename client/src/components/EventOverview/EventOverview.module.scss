@@ -1,15 +1,59 @@
-.grid {
+.container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-gap: 30px;
+    grid-template-areas:
+        'input__search  input__toggle'
+        'active__events   active__events'
+        'archived__events archived__events';
+    width: 80%;
+    margin: 75px auto;
+    grid-gap: 100px;
 }
-.grid > .article {
+
+.active__events {
+    grid-area: active__events;
+    grid-template-areas:
+        'title__active'
+        'event__list';
+    width: 100%;
+}
+
+.archived__events {
+    grid-area: archived__events;
+    grid-template-areas:
+        'title__archived'
+        'event__list';
+    width: 100%;
+}
+
+.title {
+    font-size: 4em;
+    text-align: center;
+}
+
+.title::before,
+.title::after {
+    display: inline-block;
+    content: '';
+    border-top: 0.3rem solid black;
+    width: 4rem;
+    margin: 0 1rem;
+    transform: translateY(-1rem);
+}
+
+.event__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-gap: 15px;
+}
+.event__list > .article {
+    font-size: 1.4em;
     border: 1px solid #ccc;
     box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.3);
     border-bottom-right-radius: 20px;
     border-top-left-radius: 20px;
+    width: 350px;
 }
-.grid > .article .image {
+.event__list > .article .image {
     width: 100%;
     border-top-left-radius: 20px;
     height: 45%;
@@ -25,6 +69,7 @@
 
 .text > button {
     background: gray;
+    font-size: 1.2em;
     border: 0;
     color: white;
     padding: 10px;
@@ -38,9 +83,4 @@
 .text > button:hover {
     background-color: rgb(197, 187, 187);
     color: black;
-}
-
-.container {
-    width: 80%;
-    margin: 75px auto;
 }
