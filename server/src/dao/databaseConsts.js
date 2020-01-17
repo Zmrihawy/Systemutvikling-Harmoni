@@ -32,6 +32,7 @@ USER_PHONE :string;
 USER_FIRST_NAME :string;
 USER_LAST_NAME :string;
 USER_PICTURE :string;
+USER_ARTIST :string;
 
 PERFORMANCE_TABLE :string;
 PERFORMANCE_ID :string;
@@ -91,6 +92,7 @@ PASSWORD_AUTOGEN : string;
         this.USER_FIRST_NAME = "first_name";
         this.USER_LAST_NAME = "surname";
         this.USER_PICTURE = "picture";
+        this.USER_ARTIST = "artist";
 
         this.PERFORMANCE_TABLE = "performance";
         this.PERFORMANCE_ID = "performance_id";

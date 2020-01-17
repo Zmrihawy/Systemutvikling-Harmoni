@@ -186,7 +186,7 @@ app.get("/api/event/:event_id", (req, res) => {
 app.get("/api/user", (req, res) => {
     console.log("/user: fikk request fra klient");
 
-    userDao.getAllUsers((status, data) => {
+    userDao.getAllArtists((status, data) => {
         res.status(status);
         let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
         res.json({data, jwt: token});
@@ -774,6 +774,7 @@ app.post("/api/event", (req, res) => {
     else if (req.body.startTime == undefined) return res.status(400).json({error: "bad request : missing startTime parameter"});
     else if (req.body.userId == undefined) return res.status(400).json({error: "bad request : missing userId parameter"});
     else if (req.body.location == undefined) return res.status(400).json({error: "bad request : missing location parameter"});
+<<<<<<< HEAD
     else if (req.body.longitude == undefined) return res.status(400).json({error: "bad request : missing longitude parameter"});
     else if (req.body.latitude == undefined) return res.status(400).json({error: "bad request : missing latitude parameter"});
 
@@ -784,15 +785,28 @@ app.post("/api/event", (req, res) => {
             location: req.body.location,
             longitude: req.body.longitude,
             latitude: req.body.latitude,
+=======
+    else if (req.body.long == undefined) return res.status(400).json({error: "bad request : missing long parameter"});
+    else if (req.body.lat == undefined) return res.status(400).json({error: "bad request : missing lat parameter"});
+    
+    userDao.getUser(req.userId, (status, data) => {
+        if(data[0].artist == 1){
+        eventDao.createEvent({eventName: req.body.eventName,
+            userId: req.body.userId,
+            location: req.body.location,
+            longitude: req.body.long,
+            latitude : req.body.lat,
+>>>>>>> Add user type and validation
             description: req.body.description,
             startTime: req.body.startTime,
-            endTime: req.body.endTime
-        },
-        (status, data) => {
+            endTime: req.body.endTime}, 
+            (status, data) => {
             res.status(status);
             data.jwt = thisFunctionCreatesNewToken(req.email, req.userId);
             res.send(data);
         });
+        }
+    });
 });
 
 //post a ticket

@@ -16,6 +16,7 @@ CREATE TABLE `user` (
   first_name varchar(300) DEFAULT NULL,
   surname varchar(300) NOT NULL,
   picture longblob DEFAULT NULL,
+  artist tinyint(1) NOT NULL,
   PRIMARY KEY (user_id)
 );
 
