@@ -2,6 +2,9 @@ const fs = require('fs');
 const IncomingForm = require('formidable').IncomingForm;
 const filePath = './saved/';
 
+import {eventDao} from './server';
+
+
 module.exports = function upload(req, res) {
     console.log("Saving POSTed file");
 
@@ -18,14 +21,19 @@ module.exports = function upload(req, res) {
         fs.readFile(file.path, (err, data) => {
             if (err) return console.log(err);
 
-            let fileName = createFilePath(file.name);
+            // let fileName = createFilePath(file.name);
 
-
-            fs.writeFile(filePath + fileName, data, err => {
-                console.log(fileName);
-                if (err) return console.log('Error writing file');
-                console.log('File saved!')
+            eventDao.uploadContract(1, data, response => {
+                // console.log(response);
+                console.log('UPLOADED');
             });
+
+
+            // fs.writeFile(filePath + fileName, data, err => {
+            //     console.log(fileName);
+            //     if (err) return console.log('Error writing file');
+            //     console.log('File saved!')
+            // });
         });
 
     });

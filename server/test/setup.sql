@@ -51,7 +51,7 @@ CREATE TABLE performance (
   start_time datetime,
   end_time datetime,
   name varchar(100),
-  contract varchar(300),
+  contract longblob,
   PRIMARY KEY (performance_id),
   FOREIGN KEY (event_id) REFERENCES event(event_id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES user(user_id)

@@ -54,7 +54,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-let eventDao: EventDao = new EventDao(pool);
+export let eventDao: EventDao = new EventDao(pool);
 let userDao: UserDao = new UserDao(pool);
 
 let publicKey: string;
