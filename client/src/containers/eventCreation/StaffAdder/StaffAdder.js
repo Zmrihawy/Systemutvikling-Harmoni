@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import classes from '../TicketAdder/TicketAdder';
+
 export default class StaffAdder extends Component {
     state = {
         staff: this.props.staff
@@ -34,54 +36,73 @@ export default class StaffAdder extends Component {
     render() {
         return (
             <>
-                <button onClick={this.handleNewStaff}>Legg til</button>
-                {this.state.staff.map((el, i) => {
-                    return (
-                        <div key={i} id={i}>
-                            <input
-                                type="text"
-                                placeholder="Stilling"
-                                onChange={this.handleChange}
-                                value={el.profession}
-                                name="profession"
-                            />
-                            <input
-                                type="text"
-                                placeholder="Navn"
-                                onChange={this.handleChange}
-                                value={el.name}
-                                name="name"
-                            />
-                            <input
-                                type="text"
-                                placeholder="Kontaktinfo"
-                                onChange={this.handleChange}
-                                value={el.contact}
-                                name="contact"
-                            />
-                            <span
-                                onClick={this.handleDeleteStaff}
-                                style={{ cursor: 'pointer' }}
-                            >
-                                &#10005;
-                            </span>
-                        </div>
-                    );
-                })}
                 <button
-                    onClick={() =>
-                        this.props.save(this.state.staff, 'staff', 'previous')
-                    }
+                    className="Button Button--add"
+                    onClick={this.handleNewStaff}
                 >
-                    Tilbake
+                    Nytt personell
                 </button>
-                <button
-                    onClick={() => {
-                        this.props.finished(this.state.staff, 'staff', '');
-                    }}
-                >
-                    Opprett
-                </button>
+                <div className="Adder">
+                    {this.state.staff.map((el, i) => {
+                        return (
+                            <div key={i} id={i} style={{ direction: 'ltr' }}>
+                                <input
+                                    className="Input"
+                                    type="text"
+                                    placeholder="Stilling"
+                                    onChange={this.handleChange}
+                                    value={el.profession}
+                                    name="profession"
+                                />
+                                <input
+                                    className="Input"
+                                    type="text"
+                                    placeholder="Navn"
+                                    onChange={this.handleChange}
+                                    value={el.name}
+                                    name="name"
+                                />
+                                <input
+                                    className="Input"
+                                    type="text"
+                                    placeholder="Kontaktinfo"
+                                    onChange={this.handleChange}
+                                    value={el.contact}
+                                    name="contact"
+                                />
+                                <span
+                                    className="Deleter"
+                                    onClick={this.handleDeleteStaff}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    &#10005;
+                                </span>
+                            </div>
+                        );
+                    })}
+                </div>
+                <div>
+                    <button
+                        className="Button Button--inverse"
+                        onClick={() =>
+                            this.props.save(
+                                this.state.staff,
+                                'staff',
+                                'previous'
+                            )
+                        }
+                    >
+                        &larr; Tilbake
+                    </button>
+                    <button
+                        className="Button"
+                        onClick={() => {
+                            this.props.finished(this.state.staff, 'staff', '');
+                        }}
+                    >
+                        Opprett &#10004;
+                    </button>
+                </div>
             </>
         );
     }

@@ -10,9 +10,11 @@ import TicketAdder from '../eventCreation/TicketAdder/TicketAdder';
 import RiderAdder from '../eventCreation/RiderAdder/RiderAdder';
 import ContractAdder from '../../containers/eventCreation/ContractAdder/ContractAdder';
 import pdfReader from '../../components/PdfView/PdfViewPc';
+import CreateEventSummary from './CreateEventSummary/CreateEventSummary';
 
 import classes from './CreateEvent.module.scss';
 import vectorSVG from '../../assets/images/undraw_filing_system_b5d2.svg';
+import Type from '../../components/UI/Type/Type';
 
 export default class CreateEvent extends Component {
     state = {
@@ -233,8 +235,11 @@ export default class CreateEvent extends Component {
                         <>
                             <div className="MediumTitle">Riders</div>
                             <p>
-                                Ingen artister har blitt lagt til, gå tilbake
-                                for å endre.
+                                Ingen artister har blitt lagt til, gå{' '}
+                                <span style={{ color: '#8499f0' }}>
+                                    tilbake
+                                </span>
+                                &nbsp;for å endre.
                             </p>
                             <div>
                                 <button
@@ -270,7 +275,10 @@ export default class CreateEvent extends Component {
                 } else {
                     current = (
                         <>
-                            <p>Ingen artister har blitt lagt til</p>
+                            <p>
+                                Ingen artister har blitt lagt til, gå tilbake
+                                for å endre.
+                            </p>
                             <button onClick={this.handlePrevious}>
                                 Forrige
                             </button>
@@ -298,17 +306,32 @@ export default class CreateEvent extends Component {
                             show={this.state.showBackdrop}
                             closed={this.handleToggleBackdrop}
                         >
-                            <div>Vil du opprette dette arrangementet?</div>
+                            <div className="MediumTitle">
+                                Vil du opprette følgende arrangement?
+                            </div>
+                            <CreateEventSummary event={this.state.newEvent} />
                             <div>
-                                <button onClick={this.handleNewEvent}>
+                                <button
+                                    className="Button Button--inverse"
+                                    onClick={this.handleNewEvent}
+                                >
                                     Ja
                                 </button>
-                                <button onClick={this.handleToggleBackdrop}>
+                                <button
+                                    className="Button"
+                                    onClick={this.handleToggleBackdrop}
+                                >
                                     Nei
                                 </button>
                             </div>
                         </Modal>
-                        Legg til personell
+                        <div className="MediumTitle">
+                            <Type
+                                strings="Skal arrangementet ha personell?"
+                                loop={false}
+                                speed={50}
+                            />
+                        </div>
                         <StaffAdder
                             staff={this.state.newEvent.staff}
                             finished={this.handleSaveStaff}

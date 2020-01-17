@@ -8,11 +8,7 @@
     .Button {
         box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.4);
         border-radius: 0.6rem;
-        background: linear-gradient(
-            to left,
-            #ff9f43 50%,
-            rgba(0, 0, 0, 0.795) 50%
-        );
+        background: linear-gradient(to left, #ff9f43 50%, #2f2e41 50%);
         border: none;
         background-position: right bottom;
         background-size: 200% 100%;
@@ -34,11 +30,7 @@
 
         &--inverse {
             margin-right: 2rem;
-            background: linear-gradient(
-                to left,
-                rgba(0, 0, 0, 0.795) 50%,
-                #ff9f43 50%
-            );
+            background: linear-gradient(to left, #2f2e41 50%, #ff9f43 50%);
             background-position: left bottom;
             background-size: 200% 100%;
 
@@ -55,8 +47,9 @@
         }
 
         &--add {
+            border-radius: 0;
             margin-top: 1rem;
-            padding: 0.6rem 2.5rem;
+            padding: 0.8rem 2.5rem;
             font-size: 1.6rem;
             background: linear-gradient(
                 to right bottom,
@@ -101,15 +94,55 @@
     }
 
     .Deleter {
+        vertical-align: middle;
         margin-left: 1rem;
         display: inline-block;
         color: rgb(219, 7, 7);
-        font-size: 3rem;
+        font-size: 2.8rem;
         cursor: pointer;
         transition: all 0.3s;
 
         &:hover {
             transform: translateX(-0.4rem);
+        }
+    }
+
+    .Adder {
+        direction: rtl;
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 35vh;
+
+        & input,
+        & select {
+            box-sizing: border-box;
+            font-size: 1.4rem;
+            padding: 0.6rem 1.5rem;
+            margin-top: 1rem;
+            border-radius: 0;
+
+            &:not(:last-of-type) {
+                border-right: 1px solid #000;
+            }
+        }
+
+        & select {
+            outline: none;
+            transform: scale(0.949045);
+
+            &:hover,
+            &:focus {
+                transform: scale(0.949045);
+            }
+        }
+
+        & input {
+            width: 28%;
+
+            &:hover,
+            &:focus {
+                transform: none;
+            }
         }
     }
 }

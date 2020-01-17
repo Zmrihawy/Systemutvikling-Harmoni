@@ -10,11 +10,22 @@
     top: 15%;
     box-sizing: border-box;
     transition: all 0.3s ease-out;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 @media (min-width: 600px) {
     .Modal {
-        width: 500px;
+        width: 400px;
         left: calc(50% - 250px);
+    }
+}
+
+@media (min-width: 1000px) {
+    .Modal {
+        width: 700px;
+        left: calc(50% - 350px);
     }
 }

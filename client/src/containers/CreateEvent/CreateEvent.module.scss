@@ -1,5 +1,5 @@
 .CreateEvent__container {
-    background: linear-gradient(to right, #ff9f43, #ffb065);
+    background: linear-gradient(to right, #2f2e41, #4c4a69);
     clip-path: polygon(0 88%, 100% 54%, 100% 100%, 0% 100%);
     position: absolute;
     width: 100%;
@@ -10,7 +10,7 @@
     height: calc(100vh - 5.1rem);
     font-size: 2rem;
     width: 100%;
-    padding: 5rem;
+    padding: 5rem 7rem;
 
     display: flex;
     flex-direction: column;
@@ -26,8 +26,8 @@
         height: 50%;
         width: auto;
         position: absolute;
-        right: 5%;
-        top: 30%;
+        right: 3%;
+        top: 31%;
     }
 
     .Card {

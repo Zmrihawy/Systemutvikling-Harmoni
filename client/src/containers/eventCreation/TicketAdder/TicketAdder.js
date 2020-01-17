@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import TicketLine from './TicketLine/TicketLine';
 import Modal from '../../../components/UI/Modal/Modal';
+import Type from '../../../components/UI/Type/Type';
+
+import classes from './TicketAdder.module.scss';
 
 export default class TicketAdder extends Component {
     state = {
@@ -54,73 +57,95 @@ export default class TicketAdder extends Component {
     render() {
         return (
             <>
-                <button onClick={this.handleNewTicket}>
-                    Legg til ny billett
+                <div className="MediumTitle">
+                    <Type
+                        strings="Hvilke billettyper ønsker du?"
+                        loop={false}
+                        speed={50}
+                    />
+                </div>
+                <button
+                    className="Button Button--add"
+                    onClick={this.handleNewTicket}
+                >
+                    Legg til billetter
                 </button>
 
                 <Modal
                     show={this.state.showModal}
                     closed={this.handleToggleModal}
                 >
+                    <div className="MediumTitle">Ny billettype</div>
                     <input
                         type="text"
                         name="ticketInput"
                         onChange={this.handleChange}
                         value={this.state.ticketInput}
                         className="Input"
+                        style={{ marginTop: '1rem' }}
                         required
                     />
-                    <button onClick={this.handleCustomTicketOption}>
-                        Opprett ny billettype
+                    <button
+                        className="Button Button--add"
+                        onClick={this.handleCustomTicketOption}
+                    >
+                        Opprett
                     </button>
                 </Modal>
-                <div>
-                    <p> Billettype Antall Pris </p>
+                <div className="Adder">
+                    {this.state.tickets.map((el, i) => {
+                        return (
+                            <div key={i} id={i} style={{ direction: 'ltr' }}>
+                                <TicketLine
+                                    changed={this.handleChange}
+                                    description={el.description}
+                                    amount={el.amount}
+                                    price={el.price}
+                                    options={this.state.ticketOptions}
+                                />
+                                <span
+                                    onClick={this.handleDeleteTickets}
+                                    className="Deleter"
+                                >
+                                    &#10005;
+                                </span>
+                            </div>
+                        );
+                    })}
                 </div>
-                {this.state.tickets.map((el, i) => {
-                    return (
-                        <div key={i} id={i}>
-                            <TicketLine
-                                changed={this.handleChange}
-                                description={el.description}
-                                amount={el.amount}
-                                price={el.price}
-                                options={this.state.ticketOptions}
-                            />
-                            <span
-                                onClick={this.handleDeleteTickets}
-                                style={{ cursor: 'pointer' }}
-                            >
-                                &#10005;
-                            </span>
-                        </div>
-                    );
-                })}
-                <button onClick={this.handleToggleModal}>
-                    Opprett billettype
-                </button>
                 <button
-                    onClick={() =>
-                        this.props.save(
-                            [this.state.tickets, this.state.ticketOptions],
-                            'tickets',
-                            'previous'
-                        )
-                    }
+                    className="Button Button--add"
+                    style={{ marginTop: '2rem', fontSize: '1.4rem' }}
+                    onClick={this.handleToggleModal}
                 >
-                    Forrige
+                    Ny billettype
                 </button>
-                <button
-                    onClick={() =>
-                        this.props.save(
-                            [this.state.tickets, this.state.ticketOptions],
-                            'tickets',
-                            'next'
-                        )
-                    }
-                >
-                    Videre
-                </button>
+                <div>
+                    <button
+                        className="Button Button--inverse"
+                        onClick={() =>
+                            this.props.save(
+                                [this.state.tickets, this.state.ticketOptions],
+                                'tickets',
+                                'previous'
+                            )
+                        }
+                    >
+                        &larr; Forrige
+                    </button>
+                    <button
+                        className="Button"
+                        onClick={() =>
+                            this.props.save(
+                                [this.state.tickets, this.state.ticketOptions],
+                                'tickets',
+                                'next'
+                            )
+                        }
+                    >
+                        Neste &rarr;
+                    </button>
+                </div>
             </>
         );
     }

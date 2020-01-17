@@ -4,6 +4,7 @@ const ticketLine = props => {
     return (
         <>
             <select
+                className="Input"
                 title="Billettype"
                 onChange={props.changed}
                 value={props.description}
@@ -18,6 +19,7 @@ const ticketLine = props => {
                 })}
             </select>
             <input
+                className="Input"
                 type="text"
                 name="amount"
                 onChange={props.changed}
@@ -25,6 +27,7 @@ const ticketLine = props => {
                 value={props.amount}
             />
             <input
+                className="Input"
                 type="text"
                 name="price"
                 onChange={props.changed}
