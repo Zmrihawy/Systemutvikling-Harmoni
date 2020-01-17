@@ -20,15 +20,24 @@ import UserDao from './dao/userDao.js';
 
 import EventDao from './dao/eventDao.js';
 
-var apiRoutes = express.Router();
+// import Upload from '';
+//
+// const upload = require('./upload');
 
-var app = express();
+const apiRoutes = express.Router();
 
-app.use(cors());
+const app = express();
+
+const corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 
-var pool: pool = mysql.createPool({
+const pool: pool = mysql.createPool({
     connectionLimit: 2,
     host: "mysql.stud.iie.ntnu.no",
     user: "kwgulake",
@@ -37,7 +46,7 @@ var pool: pool = mysql.createPool({
     debug: false
 });
 
-var transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'noreply.harmoni.123@gmail.com',
@@ -471,7 +480,7 @@ app.put("/user/:usermail", (req, res) => {
 
     userDao.getPassword(req.params.usermail, (status, data) => {
 
-        if(data.length !== 1) return res.status(400).json({errror : "user not found"});
+        if (data.length !== 1) return res.status(400).json({errror: "user not found"});
 
         let password = generator.generate({
             length: 12,
@@ -490,10 +499,10 @@ app.put("/user/:usermail", (req, res) => {
 
             let mailOptions = {
                 from: 'noreply.harmoni.123@gmail.com',
-                to: data.epost,
+                to: req.params.usermail,
                 subject: 'New Password',
                 text: `Her er ditt nye passord:\n${password}`
-        };
+            };
 
             transporter.sendMail(mailOptions, function (error, info) {
                 if (error) {
@@ -745,6 +754,22 @@ app.post('/api/event/:event_id/crew', (req, res) => {
             let token = thisFunctionCreatesNewToken(req.email, req.userId);
             res.json({data, jwt: token});
         });
+});
+
+// post new image
+//todo add /api
+app.post('/user/:user_id/picture', (req, res) => {
+    console.log('fikk post-request fra klient');
+
+    // if (numberError([req.params.user_id])) res.status(400).json({error: "url parameter user_id must be a number"});
+    // else if (req.body.image === undefined) return res.status(400).json({error: "parameter profession undefined"});
+
+    console.log(req.headers);
+    console.log(req.body);
+
+    // res.json({message: "yesyes"});
+
+    res.send('yesyes');
 });
 
 /*
