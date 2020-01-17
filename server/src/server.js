@@ -540,9 +540,11 @@ app.put("/api/user/:user_id/password", (req, res) => {
 
         if (pass.toUpperCase() !== data[0].password.toString()) return res.status(401).json({error: "wrong password"});
 
+        let hashpw2 = crypto.createHmac('sha512', data[0].salt);
+
         let pw = req.body.newPassword;
-        hashPW.update(pw);
-        pw = hashPW.digest('hex');
+        hashpw2.update(pw);
+        pw = hashpw2.digest('hex');
 
         userDao.updatePassword({userId: req.userId, password: pw}, (status, data) => {
             res.status(status);
@@ -610,9 +612,9 @@ app.post("/user", (req, res) => {
 
     userDao.checkCred({username: req.body.username, email: req.body.email}, (status, data) => {
         if (data.length > 0) {
-            if (data[0].username === req.body.username && data[0].email === req.body.email) return res.status(400).json({error: "mail and username"});
-            else if (data[0].username === req.body.username) return res.status(400).json({error: "username"});
-            else return res.status(400).json({error: "mail"});
+            if (data[0].username === req.body.username && data[0].email === req.body.email) return res.status(409).json({error: "mail and username"});
+            else if (data[0].username === req.body.username) return res.status(409).json({error: "username"});
+            else return res.status(409).json({error: "mail"});
         }
 
         let user = req.body;
@@ -769,7 +771,8 @@ app.post('/api/event/:event_id/crew', (req, res) => {
 
 // post new image
 //todo add /api
-app.post('/user/:user_id/picture', upload);
+// app.post('/user/:user_id/picture', upload);
+app.post('/upload', upload);
 
 /*
 app.post("/token", (req, res) => {

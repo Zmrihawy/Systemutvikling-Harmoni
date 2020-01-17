@@ -5,17 +5,20 @@ const IncomingForm = require('formidable').IncomingForm;
 module.exports = function upload(req, res) {
     console.log("Saving POSTed file");
 
-    let form = new IncomingForm()
+    let form = new IncomingForm();
 
     form.on('file', (field, file) => {
         // Do something with the file
         // e.g. save it to the database
         // you can access it using file.path
 
-        console.log(1);
+        console.log(typeof file);
 
-        fs.writeFile('test.txt', file, err => {
-            console.log(2);
+        // file.text()
+        //     .then(text => console.log(text))
+        //     .catch(err => console.log(err));
+
+        fs.writeFile('file.pdf', file, err => {
             if (err) {
                 console.log('Error writing file');
                 throw err;
@@ -28,4 +31,6 @@ module.exports = function upload(req, res) {
     form.on('end', () => {
         res.json();
     });
+
+    form.parse(req);
 };
