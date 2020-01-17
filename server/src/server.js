@@ -10,6 +10,8 @@ import cors from "cors";
 
 import jwt from "jsonwebtoken";
 
+const fs = require('fs');
+
 import crypto from 'crypto';
 
 import nodemailer from 'nodemailer';
@@ -816,8 +818,14 @@ app.get('/download', (req, res) => {
 
     eventDao.downloadContract(1, (status, data) => {
         res.status(status);
-        //let token = thisFunctionCreatesNewToken(req.email, req.userId);
-        res.json(data);
+        // let token = thisFunctionCreatesNewToken(req.email, req.userId);
+
+        // fs.writeFile('fil.pdf', data[0].contract, err => {
+        //     if (err) return console.log('Error writing file');
+        //     console.log('File saved!')
+        // });
+        
+        res.json({data: data[0].contract, jwt:"nullll"});
     });
 });
 

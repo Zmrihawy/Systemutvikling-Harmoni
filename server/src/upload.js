@@ -28,6 +28,8 @@ module.exports = function upload(req, res) {
                 console.log('UPLOADED');
             });
 
+            console.log(data);
+
 
             // fs.writeFile(filePath + fileName, data, err => {
             //     console.log(fileName);
