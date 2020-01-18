@@ -48,6 +48,7 @@
     "@babel/node": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-flow": "^7.7.4",
+    "discord.js": "^11.5.1",
     "flow-bin": "^0.115.0",
     "flow-coverage-report": "^0.6.1",
     "jest": "^24.9.0",
