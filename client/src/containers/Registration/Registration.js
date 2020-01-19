@@ -3,10 +3,7 @@ import '../Login/Login.css';
 import { User, userService } from '../../services.js';
 import { history } from '../App';
 import ShowPassword from '../Password/Password'
-<<<<<<< HEAD
-=======
 
->>>>>>> 2e4020b4d6f1b3f452d14e8ebd9bcd470c0facdb
 /*
 const validatedEmailRegex = /\S+@\S+\.\S+/;
 const regUserName = /^[\s0-9a-zæøåA-ZÆØÅ]+$/;
@@ -41,11 +38,7 @@ export default class Registration extends Component {
                             value={this.state.username}
                             onChange={this.onChange}
                         />
-<<<<<<< HEAD
                         <ShowPassword/>
-=======
-                        <ShowPassword parent={this}/>
->>>>>>> 2e4020b4d6f1b3f452d14e8ebd9bcd470c0facdb
                         <input
                             type="text"
                             required
