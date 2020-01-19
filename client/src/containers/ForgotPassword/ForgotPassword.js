@@ -5,7 +5,9 @@ import { history } from '../App';
 export default class ForgotPassword extends Component {
     constructor(props) {
         super(props);
-        this.state = new User();
+        this.state = {
+            email : window.sessionStorage.getItem('email')
+        }
     }
 
     render() {
@@ -14,7 +16,7 @@ export default class ForgotPassword extends Component {
                 <div className="form" onSubmit={this.newPw}>
                     <form className="login-form" onSubmit={this.login}>
                     <p id = "error"></p><br/>
-                        <input type="email" required name="email" value={this.state.email} placeholder="E-post" onChange={this.onChange} />
+                        <input type="email" required name="email" value={this.state.email} placeholder="E-post" onChange={this.onChange} onLoad={() => this.state.email = window.localStorage.getItem('email')} />
                         <input type="submit" value="Send Passord"></input>
                         <p className="message">
                             Ikke registrert?{' '}
@@ -34,6 +36,7 @@ export default class ForgotPassword extends Component {
     }
 
     onChange = event => {
+        if(event.target.name === 'email') window.sessionStorage.setItem('email', event.target.value);
         this.setState({
             [event.target.name]: event.target.value
         });

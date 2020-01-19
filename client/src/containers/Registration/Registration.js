@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../Login/Login.css';
 import { User, userService } from '../../services.js';
 import { history } from '../App';
+import ShowPassword from '../Password/Password'
 
 /*
 const validatedEmailRegex = /\S+@\S+\.\S+/;
@@ -20,6 +21,7 @@ export default class Registration extends Component {
     constructor(props) {
         super(props);
         this.state = new User();
+        this.state.email = window.sessionStorage.getItem('email');
     }
 
     render() {
@@ -36,14 +38,7 @@ export default class Registration extends Component {
                             value={this.state.username}
                             onChange={this.onChange}
                         />
-                        <input
-                            type="password"
-                            required
-                            name="password"
-                            placeholder="Passord"
-                            value={this.state.password}
-                            onChange={this.onChange}
-                        />
+                        <ShowPassword parent={this}/>
                         <input
                             type="text"
                             required
@@ -117,6 +112,7 @@ export default class Registration extends Component {
     };
 
     onChange = event => {
+        if(event.target.name === 'email') window.sessionStorage.setItem('email', event.target.value);
         this.setState({
             [event.target.name]: event.target.value
         });

@@ -30,11 +30,16 @@
 }
 .logo{
     float: left;
-    height:50px;
+    height: 100%;
+    padding-right: 5px;
+    background-color: #fa504f;
+}
+.logoImgText{
+    height: 100%;
+    width: auto;
 }
 .logoImg{
     height: 100%;
-    width: auto;
 }
 .activeLink:hover {
     background-color: black;

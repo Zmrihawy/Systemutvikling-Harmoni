@@ -4,3 +4,5 @@ import './index.scss';
 import App from './containers/App';
 
 ReactDOM.render(<App />, document.getElementById('root'));
+
+window.sessionStorage.removeItem('email');
