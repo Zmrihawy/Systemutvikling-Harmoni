@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './Login.css';
 import { User, userService } from '../../services';
 import { history } from '../App';
+import ShowPassword from '../Password/Password'
+
 export default class Login extends Component {
     constructor(props) {
         super(props);
@@ -15,14 +17,7 @@ export default class Login extends Component {
                     <form className="login-form" onSubmit={this.login}>
                     <p id = "error"></p><br/>
                         <input type="email" required name="email" value={this.state.email} placeholder="E-post" onChange={this.onChange} />
-                        <input
-                            type="password" 
-                            required
-                            name="password"
-                            value={this.state.username}
-                            placeholder="Passord"
-                            onChange={this.onChange}
-                        />
+                        <ShowPassword parent={this} />
                         <input type="submit" value="Logg inn"></input>
                         <p className="message">
                             Ikke registrert?{' '}

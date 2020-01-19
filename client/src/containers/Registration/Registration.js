@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../Login/Login.css';
 import { User, userService } from '../../services.js';
 import { history } from '../App';
-
+import ShowPassword from '../Password/Password'
 /*
 const validatedEmailRegex = /\S+@\S+\.\S+/;
 const regUserName = /^[\s0-9a-zæøåA-ZÆØÅ]+$/;
@@ -36,14 +36,7 @@ export default class Registration extends Component {
                             value={this.state.username}
                             onChange={this.onChange}
                         />
-                        <input
-                            type="password"
-                            required
-                            name="password"
-                            placeholder="Passord"
-                            value={this.state.password}
-                            onChange={this.onChange}
-                        />
+                        <ShowPassword/>
                         <input
                             type="text"
                             required
@@ -68,16 +61,25 @@ export default class Registration extends Component {
                             value={this.state.email}
                             onChange={this.onChange}
                         />
+
                         <input
                             type="text"
                             required
                             name="phone"
-                            placeholder="Telefon"
+                            placeholder="Phone"
                             value={this.state.phone}
                             onChange={this.onChange}
                         />
+                        
+                            <label>
+                                <input type="radio" name="artist" value="0" onChange={this.onChange} /><a>Arrangør</a>
+                                <input type="radio" name="artist" value="1" onChange={this.onChange} /><a>Artist</a>
+                            </label>
+
+                        
                         {/*<label for="avatar">Choose a profile picture:</label>
                 <input type="file" accept="image/*" id="avatar" />*/}
+                        
                         <input type="submit" value="Registrer"></input>
                         <p className="message">
                             Allerede registrert? <a href="#">Logg inn</a>
@@ -90,11 +92,21 @@ export default class Registration extends Component {
 
     register = event => {
         event.preventDefault();
+        
+        let passwordData;
+
+        if(document.getElementById("pw") !== null && document.getElementById("pw").value !== ''){
+            passwordData = document.getElementById("pw").value;
+            this.setState({
+            password : passwordData
+        });
+        console.log(passwordData);
+        }
 
         userService
             .createUser(
                 this.state.username,
-                this.state.password,
+                passwordData,
                 this.state.email,
                 this.state.phone,
                 this.state.firstName,
@@ -109,7 +121,7 @@ export default class Registration extends Component {
 
                 let err = document.querySelector("#error");
 
-                //if(data.error === undefined) return err.innerHTML = "Internal Server Error, please try again later.";
+                if(data.error === undefined) return err.innerHTML = "Internal Server Error, please try again later.";
                 if(data.error === "mail and username") return err.innerHTML = "Username and email is already in use.";
                 if(data.error === "mail") return err.innerHTML = "Mail is already in use";
                 if(data.error === "username") return err.innerHTML = "Username is already taken";

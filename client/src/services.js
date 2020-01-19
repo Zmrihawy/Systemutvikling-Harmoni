@@ -1196,8 +1196,7 @@ refreshToken(json.jwt);
             email: email,
             phone: phone,
             firstName: firstName,
-            lastName: lastName,
-            artist : 1
+            lastName: lastName
         };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
