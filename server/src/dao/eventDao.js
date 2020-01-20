@@ -130,4 +130,14 @@ module.exports = class ServerDao extends Dao {
     downloadContract(performanceId: string | number, callback: (status: number, data: *) => void) {
         super.query(`SELECT ${CONSTANTS.PERFORMANCE_CONTRACT} FROM ${CONSTANTS.PERFORMANCE_TABLE} WHERE ${CONSTANTS.PERFORMANCE_ID} = ?`, [performanceId], callback);
     }
+
+    uploadEventPicture(eventId: string | number, picture: any, callback: (status: number, data: *) => void) {
+        super.query(`UPDATE ${CONSTANTS.EVENT_TABLE} SET ${CONSTANTS.EVENT_PICTURE} = ? WHERE ${CONSTANTS.EVENT_ID} = ?`,
+            [picture, eventId], callback);
+    }
+
+    getEventPicture(eventId: string | number, callback: (status: number, data: *) => void) {
+        super.query(`SELECT ${CONSTANTS.EVENT_PICTURE} FROM ${CONSTANTS.EVENT_TABLE} WHERE ${CONSTANTS.EVENT_ID} = `,
+            [eventId], callback);
+    }
 };

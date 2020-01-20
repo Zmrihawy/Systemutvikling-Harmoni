@@ -22,7 +22,7 @@ import UserDao from './dao/userDao.js';
 
 import EventDao from './dao/eventDao.js';
 
-import upload from './upload';
+import Uploader from './upload';
 
 import discord from './discord-bot'
 
@@ -60,6 +60,7 @@ const transporter = nodemailer.createTransport({
 
 export let eventDao: EventDao = new EventDao(pool);
 let userDao: UserDao = new UserDao(pool);
+let uploader: Uploader = new Uploader();
 
 let publicKey: string;
 
@@ -807,24 +808,56 @@ app.post('/api/event/:event_id/crew', (req, res) => {
         });
 });
 
-// post new image
-//todo add /api
-// app.post('/user/:user_id/picture', upload);
-app.post('/upload', upload);
+// put contract
+app.put('/api/event/event_id/performance/performance_id/contract', uploader.uploadContract);
 
-app.get('/download', (req, res) => {
+// get contract
+app.get('/api/event/event_id/performance/performance_id/contract', (req, res) => {
     console.log('Fikk get-request fra klient');
 
-    eventDao.downloadContract(1, (status, data) => {
+    eventDao.downloadContract(req.params.performance_id, (status, data) => {
         res.status(status);
-        // let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        let token = thisFunctionCreatesNewToken(req.email, req.userId);
 
         // fs.writeFile('fil.pdf', data[0].contract, err => {
         //     if (err) return console.log('Error writing file');
         //     console.log('File saved!')
         // });
-        
-        res.json({data: data[0].contract, jwt:"nullll"});
+
+        res.json({data: data[0].contract, jwt: token});
+    });
+});
+
+// put event picture
+app.put('/api/event/event_id/performance/performance_id/picture', uploader.uploadEventPicture);
+
+// get event picture
+app.get('/api/event/event_id/performance/performance_id/picture', (req, res) => {
+    console.log('Fikk get-request fra klient');
+
+    eventDao.downloadPicture({
+        eventId: req.params.event_id,
+        performanceId: req.params.performance_id
+    }, (status, data) => {
+        res.status(status);
+        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+
+        res.json({data: data[0].contract, jwt: token});
+    });
+});
+
+// put user picture
+app.put('/api/user/user_id/picture', uploader.uploadUserPicture);
+
+// get user picture
+app.get('/api/user/user_id/picture', (req, res) => {
+    console.log('Fikk get-request fra klient');
+
+    userDao.downloadPicture(req.params.user_id, (status, data) => {
+        res.status(status);
+        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+
+        res.json({data: data[0].contract, jwt: token});
     });
 });
 
@@ -863,7 +896,6 @@ function sjekkMail(inc: string): boolean {
 var server = app.listen(8080);
 
 console.log("running");
-
 
 
 //
