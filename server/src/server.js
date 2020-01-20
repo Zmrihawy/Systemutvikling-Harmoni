@@ -47,7 +47,7 @@ const pool: pool = mysql.createPool({
     user: "kwgulake",
     password: "qra2ZQqh",
     database: "kwgulake",
-    debug: false
+    multipleStatements : true
 });
 
 const transporter = nodemailer.createTransport({
@@ -824,10 +824,7 @@ app.get('/api/event/:event_id/performance/:performance_id/contract', (req, res) 
         res.status(status);
         let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
 
-        // fs.writeFile('fil.pdf', data[0].contract, err => {
-        //     if (err) return console.log('Error writing file');
-        //     console.log('File saved!')
-        // });
+        if(data[0] == undefined) return res.json({data : "No contract exists", jwt : token});
 
         res.json({data: data[0].contract, jwt: token});
     });
@@ -844,6 +841,8 @@ app.get('/api/event/:event_id/picture', (req, res) => {
         res.status(status);
         let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
 
+        if(data[0] == undefined) return res.json({data : "No picture exists", jwt : token});
+
         res.json({data: data[0].picture, jwt: token});
     });
 });
@@ -858,6 +857,8 @@ app.get('/api/user/:user_id/picture', (req, res) => {
     userDao.downloadPicture(req.params.user_id, (status, data) => {
         res.status(status);
         let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
+
+        if(data[0] == undefined) return res.json({data : "No picture exists", jwt : token});
 
         res.json({data: data[0].picture, jwt: token});
     });
