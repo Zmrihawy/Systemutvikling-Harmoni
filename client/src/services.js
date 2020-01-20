@@ -1406,7 +1406,7 @@ class UserService {
     }
 }
 
-function isErrorStatus(status: Number, data: * = null) {
+function isErrorStatus(status: number) {
     switch (status) {
         case 401:
             return true;
