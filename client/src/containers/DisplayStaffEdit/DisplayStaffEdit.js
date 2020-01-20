@@ -8,6 +8,18 @@ export default class DisplayStaffEdit extends Component {
         staff: []
     };
 
+    handleNewStaff = () => {
+        let staff = this.state.staff;
+        staff.push({
+            name: '',
+            profession: '',
+            contact: ''
+        });
+
+        this.setState({ staff });
+    };
+
+
     async componentDidMount() {
         let eventId = this.props.match.params.id;
 
