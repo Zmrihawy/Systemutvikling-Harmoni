@@ -118,6 +118,7 @@ app.post("/login", (req, res) => {
             }
             return res.status(401).json({error: "wrong password"});
         } else {
+            if(data[0] === undefined) return res.json('user undefined');
             if (pass.toUpperCase() === data[0].password_hex.toString()) {
                 console.log("User ID:", login);
                 console.log("username & passord ok");
