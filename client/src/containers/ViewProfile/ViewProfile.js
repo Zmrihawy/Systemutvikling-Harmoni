@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import classes from './ViewProfile.module.scss';
 import { userService } from '../../services';
 import profileHolder from '../../pictures/profileHolder.svg';
-import profileBackground from '../../pictures/profileBackground.svg';
 export default class ViewProfile extends Component {
     constructor(props) {
         super(props);
@@ -23,7 +22,7 @@ export default class ViewProfile extends Component {
     render() {
         return (
             <div className={classes.viewProfile}>
-                    <div className={classes.row}>
+                <div className={classes.row}>
                         <div className={classes.column} id={'imageColumn'}>
                             <div className={classes.imgContainer}>
                                 <img
@@ -142,36 +141,36 @@ export default class ViewProfile extends Component {
                                             placeholder={this.state.surname}
                                         />
                                     </div>
-                                </div>
-                                <div className={classes.row}>
-                                    <h5 className={classes.editHeader}>
-                                        <b>Endre Passord</b>
-                                    </h5>
-                                    <br/>
-                                    <div className={classes.editTitle}>
-                                        Gammel Passord
+                                    <div className={classes.column}>
+                                        <h5 className={classes.editHeader}>
+                                            <b>Endre Passord</b>
+                                        </h5>
+                                        <br/>
+                                        <div className={classes.editTitle}>
+                                            Gammel Passord
+                                        </div>
+                                        <input
+                                            id={'oldPasswordInp'}
+                                            className={classes.input}
+                                            type="password"
+                                        />
+                                        <div className={classes.editTitle}>
+                                            Nytt Passord
+                                        </div>
+                                        <input
+                                            id={'passwordInp'}
+                                            className={classes.input}
+                                            type="password"
+                                        />
+                                        <div className={classes.editTitle}>
+                                            Gjenta nytt passord
+                                        </div>
+                                        <input
+                                            id={'repeatPasswordInp'}
+                                            className={classes.input}
+                                            type="password"
+                                        />
                                     </div>
-                                    <input
-                                        id={'oldPasswordInp'}
-                                        className={classes.input}
-                                        type="password"
-                                    />
-                                    <div className={classes.editTitle}>
-                                        Nytt Passord
-                                    </div>
-                                    <input
-                                        id={'passwordInp'}
-                                        className={classes.input}
-                                        type="password"
-                                    />
-                                    <div className={classes.editTitle}>
-                                        Gjenta nytt passord
-                                    </div>
-                                    <input
-                                        id={'repeatPasswordInp'}
-                                        className={classes.input}
-                                        type="password"
-                                    />
                                 </div>
                                 <div className={classes.row}>
                                     <button
@@ -186,7 +185,6 @@ export default class ViewProfile extends Component {
                             </div>
                         </div>
                     </div>
-                <img src={profileBackground} className={classes.profileBackground}/>
             </div>
         );
     }

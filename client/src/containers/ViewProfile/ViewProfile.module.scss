@@ -2,6 +2,7 @@
 }
 .editLayer {
     position: absolute;
+    left: 550px;
     background-color: white;
     border: 3px solid #ff9f43;
     border-radius: 30px;
@@ -11,12 +12,13 @@
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
     transition: 0.3s;
     font-size: 20px;
-    width: 400px;
+    width: 800px;
     text-align: center;
     padding: 5px 30px;
 }
 .bioLayer{
-    top: 125px;
+    top: 450px;
+    left: 100px;
     position: absolute;
     background-color: white;
     border: 3px solid #ff9f43;
@@ -57,8 +59,9 @@
     color: #eee;
 }
 .imgContainer {
-    position: relative;
+    position: absolute;
     width: 24vw;
+    left: 100px;
     max-width: 400px;
 }
 .imgContainer:hover .overlay {
@@ -87,9 +90,6 @@ input:focus {
     border: 3px solid #ff9f43;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
     transition: 0.3s;
-}
-.profileBackground {
-    width: 100%;
 }
 .profile:hover{
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
@@ -124,7 +124,7 @@ input:focus {
 .column {
     float: left;
     padding-left: 10px;
-    width: 50%;
+    width: 33.3%;
 }
 .row {
     padding-top: 50px;
@@ -136,13 +136,15 @@ input:focus {
 }
 .imageForm {
     visibility: hidden;
+    position: absolute;
+    top: 350px;
     font-family: 'Agency FB';
     font-size: large;
 }
 .redigerBtn {
     position: absolute;
     top: 350px;
-    left: 40px;
+    left: 120px;
     width: 65px;
     height: 65px;
     background-color: #333333;
@@ -164,11 +166,13 @@ input:focus {
 }
 .imgBtn {
     width: 90px;
+    position: absolute;
     background-color: #333333;
     border: none;
     border-radius: 20px;
     color: white;
     padding: 7.5px 16px;
+    left: 100px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
