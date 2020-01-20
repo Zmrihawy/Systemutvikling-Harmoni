@@ -2,7 +2,7 @@ const fs = require('fs');
 const IncomingForm = require('formidable').IncomingForm;
 const filePath = './saved/';
 
-import {eventDao} from './server';
+import {eventDao, userDao} from './server';
 
 
 module.exports = class Uploader {

@@ -59,7 +59,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export let eventDao: EventDao = new EventDao(pool);
-let userDao: UserDao = new UserDao(pool);
+export let userDao: UserDao = new UserDao(pool);
 let uploader: Uploader = new Uploader();
 
 let publicKey: string;
@@ -440,6 +440,7 @@ app.put("/api/performance/:performance_id", (req, res) => {
     eventDao.updatePerformance({
             startTime: req.body.startTime,
             endTime: req.body.endTime,
+            name: req.body.name,
             contract: req.body.contract,
             performanceId: req.params.performance_id
         },
@@ -757,6 +758,7 @@ app.post("/api/event/:event_id/performance", (req, res) => {
             eventId: req.params.event_id,
             startTime: req.body.startTime,
             endTime: req.body.endTime,
+            name: req.body.name,
             contract: req.body.contract
         },
         (status, data) => {
@@ -809,30 +811,30 @@ app.post('/api/event/:event_id/crew', (req, res) => {
 });
 
 // put contract
-app.put('/api/event/event_id/performance/performance_id/contract', uploader.uploadContract);
+app.put('/api/event/:event_id/performance/:performance_id/contract', uploader.uploadContract);
 
 // get contract
-app.get('/api/event/event_id/performance/performance_id/contract', (req, res) => {
+app.get('/event/:event_id/performance/:performance_id/contract', (req, res) => {
     console.log('Fikk get-request fra klient');
 
     eventDao.downloadContract(req.params.performance_id, (status, data) => {
         res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        // let token = thisFunctionCreatesNewToken(req.email, req.userId);
 
         // fs.writeFile('fil.pdf', data[0].contract, err => {
         //     if (err) return console.log('Error writing file');
         //     console.log('File saved!')
         // });
 
-        res.json({data: data[0].contract, jwt: token});
+        res.json({data: data[0].contract, jwt: 'token'});
     });
 });
 
 // put event picture
-app.put('/api/event/event_id/performance/performance_id/picture', uploader.uploadEventPicture);
+app.put('/api/event/:event_id/picture', uploader.uploadEventPicture);
 
 // get event picture
-app.get('/api/event/event_id/performance/performance_id/picture', (req, res) => {
+app.get('/api/event/:event_id/picture', (req, res) => {
     console.log('Fikk get-request fra klient');
 
     eventDao.downloadPicture({
@@ -847,10 +849,10 @@ app.get('/api/event/event_id/performance/performance_id/picture', (req, res) => 
 });
 
 // put user picture
-app.put('/api/user/user_id/picture', uploader.uploadUserPicture);
+app.put('/api/user/:user_id/picture', uploader.uploadUserPicture);
 
 // get user picture
-app.get('/api/user/user_id/picture', (req, res) => {
+app.get('/api/user/:user_id/picture', (req, res) => {
     console.log('Fikk get-request fra klient');
 
     userDao.downloadPicture(req.params.user_id, (status, data) => {
