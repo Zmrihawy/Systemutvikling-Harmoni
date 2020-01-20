@@ -106,23 +106,23 @@ app.post("/login", (req, res) => {
 
         let login = data[0].user_id;
 
-        if(data.length > 1){
-            if(pass.toUpperCase() === data[0].password_hex.toString() || pass.toUpperCase() === data[1].password_hex.toString){
-                        console.log("User ID:", login);
-                        console.log("username & passord ok");
-
-                        let token = jwt.sign({email: req.body.email, userId: login}, privateKey, {
-                            expiresIn: 50000
-                        });
-                        return res.json({jwt: token, userId: login});
-            }
-            return res.status(401).json({error: "wrong password"});
-        } else{
-            if(pass.toUpperCase() === data[0].password_hex.toString()){
+        if (data.length > 1) {
+            if (pass.toUpperCase() === data[0].password_hex.toString() || pass.toUpperCase() === data[1].password_hex.toString) {
                 console.log("User ID:", login);
                 console.log("username & passord ok");
 
-                let token = jwt.sign({email: req.body.email, userId: login}, privateKey, {
+                let token: string = jwt.sign({email: req.body.email, userId: login}, privateKey, {
+                    expiresIn: 50000
+                });
+                return res.json({jwt: token, userId: login});
+            }
+            return res.status(401).json({error: "wrong password"});
+        } else {
+            if (pass.toUpperCase() === data[0].password_hex.toString()) {
+                console.log("User ID:", login);
+                console.log("username & passord ok");
+
+                let token: string = jwt.sign({email: req.body.email, userId: login}, privateKey, {
                     expiresIn: 50000
                 });
                 return res.json({jwt: token, userId: login});
@@ -132,7 +132,7 @@ app.post("/login", (req, res) => {
     });
 });
 
-export function thisFunctionCreatesNewToken(passedMail: string, userId: number): { jwt: string } {
+export function thisFunctionCreatesNewToken(passedMail: string, userId: number): string {
 
     let newToken = jwt.sign({email: passedMail, userId: userId}, privateKey, {
         expiresIn: 5000
@@ -154,7 +154,7 @@ app.get("/api/user/:id", (req, res) => {
 
     userDao.getUser(req.params.id, (status, data) => {
         res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
         res.json({data, jwt: token});
     });
 });
@@ -167,7 +167,7 @@ app.get("/api/event/:event_id", (req, res) => {
 
     eventDao.getEvent(req.params.event_id, (status, data) => {
         res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
         res.json({data, jwt: token});
     });
 });
@@ -178,7 +178,7 @@ app.get("/api/users", (req, res) => {
 
     userDao.getAllUsers((status, data) => {
         res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
         res.json({data, jwt: token});
     });
 });
@@ -189,7 +189,7 @@ app.get("/api/events", (req, res) => {
 
     eventDao.getAllEvents((status, data) => {
         res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
         res.json({data, jwt: token});
     });
 });
@@ -204,13 +204,13 @@ app.get("/api/event/:event_id/performances", (req, res) => {
         if (data[0].host_id == req.user_id) {
             eventDao.getEventPerformancesHost(req.userId, (status, data) => {
                 res.status(status);
-                let token = thisFunctionCreatesNewToken(req.email, req.userId);
+                let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
                 res.json({data, jwt: token});
             })
         } else {
             eventDao.getEventPerformancesArtist({eventId: req.params.event_id, userId: req.userId}, (status, data) => {
                 res.status(status);
-                let token = thisFunctionCreatesNewToken(req.email, req.userId);
+                let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
                 res.json({data, jwt: token});
             });
         }
@@ -225,7 +225,7 @@ app.get("/api/event/:event_id/tickets", (req, res) => {
 
     eventDao.getTickets(req.params.event_id, (status, data) => {
         res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
         res.json({data, jwt: token});
     });
 });
@@ -238,7 +238,7 @@ app.get("/api/user/event/:event_id/:performance_id", (req, res) => {
 
     eventDao.getRiders(req.params.performanceId, (status, data) => {
         res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
         res.json({data, jwt: token});
     });
 });
@@ -251,7 +251,7 @@ app.get("/api/user/:user_id/event/:active", (req, res) => {
 
     eventDao.getUsersEvents({userId: req.params.user_id, active: req.params.active}, (status, data) => {
         res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
         res.json({data, jwt: token});
     });
 });
@@ -264,7 +264,7 @@ app.get('/api/event/:event_id/crew', (req, res) => {
 
     eventDao.getCrew(req.params.event_id, (status, data) => {
         res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
         res.json({data, jwt: token});
     });
 });
@@ -284,7 +284,7 @@ app.delete('/api/performance/:performance_id/rider', (req, res) => {
 
     eventDao.deleteRider({performanceId: req.params.performance_id, name: req.body.name}, (status, data) => {
         res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
         res.json({data, jwt: token});
     });
 });
@@ -298,7 +298,7 @@ app.delete("/api/event/:event_id/ticket", (req, res) => {
 
     eventDao.deleteTicket({eventId: req.params.event_id, name: req.body.name}, (status, data) => {
         res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
         res.json({data, jwt: token});
     })
 
@@ -312,7 +312,7 @@ app.delete("/api/performance/:performance_id", (req, res) => {
 
     eventDao.deletePerformance(req.params.performance_id, (status, data) => {
         res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
         res.json({data, jwt: token});
     })
 })
@@ -336,20 +336,22 @@ app.delete("/api/user/:user_id", (req, res) => {
 
         pass = hashPW.digest('hex');
 
-        if(data.length === 2){
-            if(data[0].password_hex.toString() === pass.toUpperCase() || data[1].password_hex.toString() === pass.toUpperCase()){
+        if (data.length === 2) {
+            if (data[0].password_hex.toString() === pass.toUpperCase() || data[1].password_hex.toString() === pass.toUpperCase()) {
                 userDao.deleteUser(req.params.user_id, (st, dt) => {
-                res.status(st);
-                return res.json(dt);
-            });    
-            } return res.json(401).json({error : "Wrong password"});
-        }else {
-            if(data[0].password_hex.toString() === pass.toUpperCase()){
-               userDao.deleteUser(req.params.user_id, (st, dt) => {
-                res.status(st);
-                return res.json(dt);
-            }); 
-            } return res.json(401).json({error : "Wrong password"});
+                    res.status(st);
+                    return res.json(dt);
+                });
+            }
+            return res.json(401).json({error: "Wrong password"});
+        } else {
+            if (data[0].password_hex.toString() === pass.toUpperCase()) {
+                userDao.deleteUser(req.params.user_id, (st, dt) => {
+                    res.status(st);
+                    return res.json(dt);
+                });
+            }
+            return res.json(401).json({error: "Wrong password"});
         }
     })
 });
@@ -364,7 +366,7 @@ app.delete("/api/event/:event_id", (req, res) => {
         if (data[0].user_id === req.userId) {
             eventDao.deleteEvent(req.params.event_id, (status, data) => {
                 res.status(status);
-                let token = thisFunctionCreatesNewToken(req.email, req.userId);
+                let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
                 res.json({data, jwt: token});
             });
         } else res.status(401).json({error: "not authorized"});
@@ -400,7 +402,7 @@ app.put("/api/user/:user_id", (req, res) => {
         },
         (status, data) => {
             res.status(status);
-            let token = thisFunctionCreatesNewToken(req.email, req.userId);
+            let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
             res.json({data, jwt: token});
         });
 });
@@ -422,7 +424,7 @@ app.put('/api/event/:event_id/crew/:crew_id', (req, res) => {
         },
         (status, data) => {
             res.status(status);
-            let token = thisFunctionCreatesNewToken(req.email, req.userId);
+            let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
             res.json({data, jwt: token});
         });
 });
@@ -446,7 +448,7 @@ app.put("/api/performance/:performance_id", (req, res) => {
         },
         (status, data) => {
             res.status(status);
-            let token = thisFunctionCreatesNewToken(req.email, req.userId);
+            let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
             res.json({data, jwt: token});
         })
 });
@@ -469,7 +471,7 @@ app.put("/api/event/:event_id/ticket", (req, res) => {
         },
         (status, data) => {
             res.status(status);
-            let token = thisFunctionCreatesNewToken(req.email, req.userId);
+            let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
             res.json({data, jwt: token});
         });
 });
@@ -492,7 +494,7 @@ app.put("/api/performance/:performance_id/rider", (req, res) => {
         },
         (status, data) => {
             res.status(status);
-            let token = thisFunctionCreatesNewToken(req.email, req.userId);
+            let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
             res.json({data, jwt: token});
         });
 });
@@ -522,19 +524,19 @@ app.put("/user/:usermail", (req, res) => {
 
         pw = hashPW.digest('hex');
 
-        if(data.length === 0){
+        if (data.length === 0) {
             userDao.createPassword({
-                userId : data[0].user_id, password : pw, autogen : 1
+                userId: data[0].user_id, password: pw, autogen: 1
             }, (stat, dat) => sendMail(req, res, password));
         } else {
             userDao.updatePassword({
-                passId : data[1].password_id, password : pw, autogen : 1
+                passId: data[1].password_id, password: pw, autogen: 1
             }, (stat, dat) => sendMail(req, res, password));
         }
     });
 
-    function sendMail(req, res, password){
-            
+    function sendMail(req, res, password) {
+
         let mailOptions = {
             from: 'noreply.harmoni.123@gmail.com',
             to: req.params.usermail,
@@ -575,11 +577,11 @@ app.put("/api/user/:user_id/password", (req, res) => {
 
         let login = data[0].user_id;
 
-        if(data.length === 2){
-            if(pass.toUpperCase() !== data[0].password_hex.toString() && pass.toUpperCase() !== data[1].password_hex.toString()){
-                return res.status(401).json({error : "wrong password"});
+        if (data.length === 2) {
+            if (pass.toUpperCase() !== data[0].password_hex.toString() && pass.toUpperCase() !== data[1].password_hex.toString()) {
+                return res.status(401).json({error: "wrong password"});
             }
-        } else if(pass.toUpperCase() !== data[0].password_hex.toString()) return res.status(401).json({error: "wrong password"});
+        } else if (pass.toUpperCase() !== data[0].password_hex.toString()) return res.status(401).json({error: "wrong password"});
 
         let hashpw2 = crypto.createHmac('sha512', data[0].salt);
 
@@ -589,7 +591,7 @@ app.put("/api/user/:user_id/password", (req, res) => {
 
         userDao.setPassword({userId: req.userId, password: pw}, (status, data) => {
             res.status(status);
-            let token = thisFunctionCreatesNewToken(req.mail, req.userId);
+            let token: string = thisFunctionCreatesNewToken(req.mail, req.userId);
             res.json({data, jwt: token});
         })
     });
@@ -627,7 +629,7 @@ app.put("/api/event/:event_id", (req, res) => {
         },
         (status, data) => {
             res.status(status);
-            let token = thisFunctionCreatesNewToken(req.email, req.userId);
+            let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
             res.json({data, jwt: token});
         });
 });
@@ -680,7 +682,7 @@ app.post("/user", (req, res) => {
                 lastName: user.lastName
             },
             (status, data) => {
-                let token = thisFunctionCreatesNewToken(user.mail, 0);
+                let token: string = thisFunctionCreatesNewToken(user.mail, 0);
                 res.status(status).json({data, jwt: token});
             });
     });
@@ -735,7 +737,7 @@ app.post("/api/event/:event_id/ticket", (req, res) => {
         },
         (status, data) => {
             res.status(status);
-            let token = thisFunctionCreatesNewToken(req.email, req.userId);
+            let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
             res.json({data, jwt: token});
         });
 });
@@ -763,7 +765,7 @@ app.post("/api/event/:event_id/performance", (req, res) => {
         },
         (status, data) => {
             res.status(status);
-            let token = thisFunctionCreatesNewToken(req.email, req.userId);
+            let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
             res.json({data, jwt: token});
         });
 });
@@ -783,7 +785,7 @@ app.post("/api/performance/:performance_id/rider", (req, res) => {
         },
         (status, data) => {
             res.status(status);
-            let token = thisFunctionCreatesNewToken(req.email, req.userId);
+            let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
             res.json({data, jwt: token});
         });
 });
@@ -805,7 +807,7 @@ app.post('/api/event/:event_id/crew', (req, res) => {
         },
         (status, data) => {
             res.status(status);
-            let token = thisFunctionCreatesNewToken(req.email, req.userId);
+            let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
             res.json({data, jwt: token});
         });
 });
@@ -820,7 +822,7 @@ app.get('/api/event/:event_id/performance/:performance_id/contract', (req, res) 
 
     eventDao.downloadContract(req.params.performance_id, (status, data) => {
         res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
 
         // fs.writeFile('fil.pdf', data[0].contract, err => {
         //     if (err) return console.log('Error writing file');
@@ -838,12 +840,9 @@ app.put('/api/event/:event_id/picture', uploader.uploadEventPicture);
 app.get('/api/event/:event_id/picture', (req, res) => {
     console.log('Fikk get-request fra klient');
 
-    eventDao.downloadPicture({
-        eventId: req.params.event_id,
-        performanceId: req.params.performance_id
-    }, (status, data) => {
+    eventDao.downloadPicture(req.params.event_id, (status, data) => {
         res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
 
         res.json({data: data[0].picture, jwt: token});
     });
@@ -858,7 +857,7 @@ app.get('/api/user/:user_id/picture', (req, res) => {
 
     userDao.downloadPicture(req.params.user_id, (status, data) => {
         res.status(status);
-        let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
 
         res.json({data: data[0].picture, jwt: token});
     });

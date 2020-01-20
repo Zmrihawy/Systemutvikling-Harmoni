@@ -68,7 +68,7 @@ module.exports = class UserDao extends Dao {
         INSERT INTO ${CONSTANTS.PASSWORD_TABLE}, (${CONSTANTS.PASSWORD_ID}, ${CONSTANTS.PASSWORD_PASSWORD}, ${CONSTANTS.PASSWORD_USER_ID}, ${CONSTANTS.PASSWORD_AUTOGEN}) VALUES
         (DEFAULT, UNHEX(?),?,0)`, [sql.password, sql.userId], callback);
     }
-    
+
 
     /**UPLOADS AND DOWNLOADS*/
     downloadPicture(userId: string | number, callback: (status: number, data: *) => void) {
