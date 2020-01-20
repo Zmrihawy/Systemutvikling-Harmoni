@@ -23,7 +23,7 @@ import engineer from '../../assets/images/engineer.svg';
 export default class CreateEvent extends Component {
     state = {
         showBackdrop: false,
-        currentPage: 0,
+        currentPage: 4,
         newEvent: {
             title: '',
             description: '',

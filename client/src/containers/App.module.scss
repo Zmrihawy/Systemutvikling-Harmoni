@@ -145,4 +145,16 @@
             }
         }
     }
+
+    .Scroll {
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 45vh;
+
+        & input {
+            font-size: 1.4rem;
+            padding: 0.6rem 1.5rem;
+            margin-top: 1rem;
+        }
+    }
 }

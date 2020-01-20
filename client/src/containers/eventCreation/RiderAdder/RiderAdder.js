@@ -39,39 +39,50 @@ export default class RiderAdder extends Component {
                 <div id={index} key={index}>
                     {el.name}
                     <br />
-                    <button onClick={this.handleNewRider}>+</button>
-                    {el.riders.map((el, i) => {
-                        return (
-                            <div key={`${index} ${i}`} id={`${index} ${i}`}>
-                                <input
-                                    type="text"
-                                    placeholder="Beskrivelse"
-                                    name="description"
-                                    onChange={this.handleChange}
-                                    value={
-                                        this.state.artists[index].riders[i]
-                                            .description
-                                    }
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Antall"
-                                    name="amount"
-                                    onChange={this.handleChange}
-                                    value={
-                                        this.state.artists[index].riders[i]
-                                            .amount
-                                    }
-                                />
-                                <span
-                                    onClick={this.handleDeleteRider}
-                                    style={{ cursor: 'pointer' }}
+                    <button
+                        className="Button Button--add"
+                        onClick={this.handleNewRider}
+                    >
+                        Ny rider
+                    </button>
+                    <div>
+                        {el.riders.map((el, i) => {
+                            return (
+                                <div
+                                    key={`${index} ${i}`}
+                                    id={`${index} ${i}`}
+                                    style={{ direction: 'ltr' }}
                                 >
-                                    &#10005;
-                                </span>
-                            </div>
-                        );
-                    })}
+                                    <input
+                                        type="text"
+                                        placeholder="Beskrivelse"
+                                        name="description"
+                                        onChange={this.handleChange}
+                                        value={
+                                            this.state.artists[index].riders[i]
+                                                .description
+                                        }
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder="Antall"
+                                        name="amount"
+                                        onChange={this.handleChange}
+                                        value={
+                                            this.state.artists[index].riders[i]
+                                                .amount
+                                        }
+                                    />
+                                    <span
+                                        className="Deleter"
+                                        onClick={this.handleDeleteRider}
+                                    >
+                                        &#10005;
+                                    </span>
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
             );
         });
@@ -79,27 +90,34 @@ export default class RiderAdder extends Component {
         return (
             <>
                 <div className="MediumTitle">Har artistene riders?</div>
-                {artists}
-                <button
-                    className="Button"
-                    onClick={() =>
-                        this.props.save(
-                            this.state.artists,
-                            'riders',
-                            'previous'
-                        )
-                    }
-                >
-                    Tilbake
-                </button>
-                <button
-                    className="Button"
-                    onClick={() =>
-                        this.props.save(this.state.artists, 'riders', 'next')
-                    }
-                >
-                    Neste
-                </button>
+                <div className="Scroll">{artists}</div>
+
+                <div>
+                    <button
+                        className="Button Button--inverse"
+                        onClick={() =>
+                            this.props.save(
+                                this.state.artists,
+                                'riders',
+                                'previous'
+                            )
+                        }
+                    >
+                        Tilbake
+                    </button>
+                    <button
+                        className="Button"
+                        onClick={() =>
+                            this.props.save(
+                                this.state.artists,
+                                'riders',
+                                'next'
+                            )
+                        }
+                    >
+                        Neste
+                    </button>
+                </div>
             </>
         );
     }

@@ -11,20 +11,24 @@
     height: calc(100vh - 5rem);
 }
 
-#error{
-    font-size : 17px;
+#error {
+    font-size: 17px;
 }
 
 .login-page {
     width: 360px;
     padding: 8% 0 0;
     margin: auto;
+
+    & input[type='submit'] {
+        cursor: pointer;
+    }
 }
 .form {
     z-index: 1;
     background: #ffffff;
     max-width: 360px;
-    margin: 0 auto 100px;
+    margin: 0 auto;
     padding: 45px;
     text-align: center;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
@@ -54,7 +58,7 @@
     transition: all 0.3 ease;
     cursor: pointer;
 }
-.form a{
+.form a {
     cursor: pointer;
 }
 .form button:hover,
@@ -68,7 +72,7 @@
     font-size: 12px;
 }
 .form .message a {
-    color: #4caf50;
+    color: #ff9f43;
     text-decoration: none;
 }
 

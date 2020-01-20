@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import '../Login/Login.css';
+import '../Login/Login.scss';
 import { User, userService } from '../../services.js';
 import { history } from '../App';
-import ShowPassword from '../Password/Password'
+import ShowPassword from '../Password/Password';
 
 /*
 const validatedEmailRegex = /\S+@\S+\.\S+/;
@@ -29,7 +29,8 @@ export default class Registration extends Component {
             <div className="login-page">
                 <div className="form">
                     <form className="register-form" onSubmit={this.register}>
-                    <p id = "error"></p><br/>
+                        <p id="error"></p>
+                        <br />
                         <input
                             type="text"
                             required
@@ -38,7 +39,7 @@ export default class Registration extends Component {
                             value={this.state.username}
                             onChange={this.onChange}
                         />
-                        <ShowPassword/>
+                        <ShowPassword />
                         <input
                             type="text"
                             required
@@ -72,16 +73,27 @@ export default class Registration extends Component {
                             value={this.state.phone}
                             onChange={this.onChange}
                         />
-                        
-                            <label>
-                                <input type="radio" name="artist" value="0" onChange={this.onChange} /><a>Arrangør</a>
-                                <input type="radio" name="artist" value="1" onChange={this.onChange} /><a>Artist</a>
-                            </label>
 
-                        
+                        <label>
+                            <input
+                                type="radio"
+                                name="artist"
+                                value="0"
+                                onChange={this.onChange}
+                            />
+                            <a>Arrangør</a>
+                            <input
+                                type="radio"
+                                name="artist"
+                                value="1"
+                                onChange={this.onChange}
+                            />
+                            <a>Artist</a>
+                        </label>
+
                         {/*<label for="avatar">Choose a profile picture:</label>
                 <input type="file" accept="image/*" id="avatar" />*/}
-                        
+
                         <input type="submit" value="Registrer"></input>
                         <p className="message">
                             Allerede registrert? <a href="#">Logg inn</a>
@@ -94,15 +106,18 @@ export default class Registration extends Component {
 
     register = event => {
         event.preventDefault();
-        
+
         let passwordData;
 
-        if(document.getElementById("pw") !== null && document.getElementById("pw").value !== ''){
-            passwordData = document.getElementById("pw").value;
+        if (
+            document.getElementById('pw') !== null &&
+            document.getElementById('pw').value !== ''
+        ) {
+            passwordData = document.getElementById('pw').value;
             this.setState({
-            password : passwordData
-        });
-        console.log(passwordData);
+                password: passwordData
+            });
+            console.log(passwordData);
         }
 
         userService
@@ -115,8 +130,13 @@ export default class Registration extends Component {
                 this.state.lastName
             )
             .then(() =>
-                userService.loginUser(this.state.password, this.state.email)
-                .then(() => history.push('/user/' + window.sessionStorage.getItem('user')))
+                userService
+                    .loginUser(this.state.password, this.state.email)
+                    .then(() =>
+                        history.push(
+                            '/user/' + window.sessionStorage.getItem('user')
+                        )
+                    )
             )
             .then(() => {
                 console.log('Token:');
@@ -126,17 +146,24 @@ export default class Registration extends Component {
             .catch(data => {
                 console.log(data);
 
-                let err = document.querySelector("#error");
+                let err = document.querySelector('#error');
 
-                if(data.error === undefined) return err.innerHTML = "Internal Server Error, please try again later.";
-                if(data.error === "mail and username") return err.innerHTML = "Username and email is already in use.";
-                if(data.error === "mail") return err.innerHTML = "Mail is already in use";
-                if(data.error === "username") return err.innerHTML = "Username is already taken";
+                if (data.error === undefined)
+                    return (err.innerHTML =
+                        'Internal Server Error, please try again later.');
+                if (data.error === 'mail and username')
+                    return (err.innerHTML =
+                        'Username and email is already in use.');
+                if (data.error === 'mail')
+                    return (err.innerHTML = 'Mail is already in use');
+                if (data.error === 'username')
+                    return (err.innerHTML = 'Username is already taken');
             });
     };
 
     onChange = event => {
-        if(event.target.name === 'email') window.sessionStorage.setItem('email', event.target.value);
+        if (event.target.name === 'email')
+            window.sessionStorage.setItem('email', event.target.value);
         this.setState({
             [event.target.name]: event.target.value
         });

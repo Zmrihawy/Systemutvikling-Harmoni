@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../Login/Login.css';
+import '../Login/Login.scss';
 import { User, userService } from '../../services';
 import { history } from '../App';
 export default class ForgotPassword extends Component {
