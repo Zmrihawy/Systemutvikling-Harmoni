@@ -703,8 +703,8 @@ app.post("/api/event", (req, res) => {
             eventName: req.body.eventName,
             userId: req.body.userId,
             location: req.body.location,
-            longitude: req.body.long,
-            latitude: req.body.lat,
+            longitude: req.body.longitude,
+            latitude: req.body.latitude,
             description: req.body.description,
             startTime: req.body.startTime,
             endTime: req.body.endTime
