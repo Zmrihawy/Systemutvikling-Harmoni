@@ -28,6 +28,17 @@ var pool = mysql.createPool({
     multipleStatements: true
   });
 
+ /* var pool = mysql.createPool({
+  connectionLimit : 2,
+  host: 'mysql-ait.stud.idi.ntnu.no',
+  port : 3306,
+  user : "hkgranli",
+  password : "hKlhk6fF",
+  database : 'hkgranli',
+  debug : false,
+  multipleStatements:true
+});*/
+
 
 // test
 let userDao = new UserDao(pool);
@@ -63,9 +74,10 @@ test("get one user from database", done => {
 
 test("get user's password and salt from database", done => {
     userDao.getPassword("testemail", (status, data) => {
-        let user = data[0];
-        expect(user.password).toBe("2955d5f4a8980763b5a1ec72c69b983a5772697e6504879711d8bcc2119cbf881d137f4190976c1af4503e2614649190c3a8e04a78f560d3e6f592240a7f3660".toUpperCase());
-        expect(user.salt).toBe("62ca87a099fa85a1".toUpperCase());
+        //let user = data[0];
+        console.log(data[0]);
+        expect(data[0].password_hex).toBe("2955d5f4a8980763b5a1ec72c69b983a5772697e6504879711d8bcc2119cbf881d137f4190976c1af4503e2614649190c3a8e04a78f560d3e6f592240a7f3660".toUpperCase());
+        expect(data[0].salt).toBe("62ca87a099fa85a1".toUpperCase());
         done();
     });
 });
@@ -93,16 +105,14 @@ test("create new user in database", done => {
     };
     userDao.createUser(
         user,
-        callback
+        (status,data) => {
+            console.log("Test callback: status=" + status + ", data=" + JSON.stringify(status, data));
+            userDao.getAllUsers((sat, dat) => {
+                expect(dat.length).toBeGreaterThanOrEqual(5);
+                done();
+            });
+        }
     );
-
-    function callback(status, data) {
-        console.log(
-            "Test callback: status=" + status + ", data=" + JSON.stringify(status, data)
-        );
-        expect(data.affectedRows).toBe(1);
-        done();
-    }
 });
 
 test("create new users with username already in use", done => {
@@ -221,11 +231,13 @@ test("update user in database", done => {
 
 test("update user's password in database", done => {
     userDao.updatePassword({
-        userId: 5,
-        password: "28ae51d656ead70e127d63f5bc16c2b7ef381f95f8d0184dea2eb9d37f9a93b169f0efd3a5ecb2502784f82ce00c2df984a4b189d4fc586f8ba03b0cb03f84ed"
+        passId: 5,
+        password: "28ae51d656ead70e127d63f5bc16c2b7ef381f95f8d0184dea2eb9d37f9a93b169f0efd3a5ecb2502784f82ce00c2df984a4b189d4fc586f8ba03b0cb03f84ed",
+        autogen : 1
+
     }, () => {
         userDao.getPassword("banan@gmail.com", (status, data) => {
-            expect(data[0].password).toBe("28ae51d656ead70e127d63f5bc16c2b7ef381f95f8d0184dea2eb9d37f9a93b169f0efd3a5ecb2502784f82ce00c2df984a4b189d4fc586f8ba03b0cb03f84ed".toUpperCase());
+            expect(data[0].password_hex).toBe("28ae51d656ead70e127d63f5bc16c2b7ef381f95f8d0184dea2eb9d37f9a93b169f0efd3a5ecb2502784f82ce00c2df984a4b189d4fc586f8ba03b0cb03f84ed".toUpperCase());
             done();
         });
     });

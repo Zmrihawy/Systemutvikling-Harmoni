@@ -103,16 +103,30 @@ app.post("/login", (req, res) => {
 
         let login = data[0].user_id;
 
-        if (pass.toUpperCase() !== data[0].password.toString()) return res.status(401).json({error: "wrong password"});
+        if(data.length > 1){
+            if(pass.toUpperCase() === data[0].password_hex.toString() || pass.toUpperCase() === data[1].password_hex.toString){
+                        console.log("User ID:", login);
+                        console.log("username & passord ok");
 
-        console.log("User ID:", login);
-        console.log("username & passord ok");
+                        let token = jwt.sign({email: req.body.email, userId: login}, privateKey, {
+                            expiresIn: 50000
+                        });
+                        return res.json({jwt: token, userId: login});
+            }
+            return res.status(401).json({error: "wrong password"});
+        } else{
+            if(pass.toUpperCase() === data[0].password_hex.toString()){
+                console.log("User ID:", login);
+                console.log("username & passord ok");
 
-        let token = jwt.sign({email: req.body.email, userId: login}, privateKey, {
-            expiresIn: 50000
-        });
-        res.json({jwt: token, userId: login});
-    })
+                let token = jwt.sign({email: req.body.email, userId: login}, privateKey, {
+                    expiresIn: 50000
+                });
+                return res.json({jwt: token, userId: login});
+            }
+        }
+        return res.status(401).json({error: "wrong password"});
+    });
 });
 
 function thisFunctionCreatesNewToken(passedMail: string, userId: number): { jwt: string } {
@@ -307,7 +321,7 @@ app.delete("/api/user/:user_id", (req, res) => {
     if (numberError([req.params.user_id])) return res.status(400).json({error: "url parameter user_id must be a number"});
     else if (req.body.password == undefined) return res.status(400).json({error: "request missing password"});
 
-    userDao.getPassword(req.params.user_id, (status, data) => {
+    userDao.getPassword(req.params.email, (status, data) => {
 
         let pw = req.body.password;
 
@@ -319,14 +333,20 @@ app.delete("/api/user/:user_id", (req, res) => {
 
         pass = hashPW.digest('hex');
 
-        if (data[0].password.toString() === pass.toUpperCase()) {
-            userDao.deleteUser(req.params.user_id, (st, dt) => {
+        if(data.length === 2){
+            if(data[0].password_hex.toString() === pass.toUpperCase() || data[1].password_hex.toString() === pass.toUpperCase()){
+                userDao.deleteUser(req.params.user_id, (st, dt) => {
                 res.status(st);
-                dt["jwt"] = thisFunctionCreatesNewToken(req.email, req.userId);
-                res.json(dt);
-            });
-        } else {
-            res.status(401).json({error: "Not authorized"});
+                return res.json(dt);
+            });    
+            } return res.json(401).json({error : "Wrong password"});
+        }else {
+            if(data[0].password_hex.toString() === pass.toUpperCase()){
+               userDao.deleteUser(req.params.user_id, (st, dt) => {
+                res.status(st);
+                return res.json(dt);
+            }); 
+            } return res.json(401).json({error : "Wrong password"});
         }
     })
 });
@@ -482,7 +502,8 @@ app.put("/user/:usermail", (req, res) => {
 
     userDao.getPassword(req.params.usermail, (status, data) => {
 
-        if (data.length !== 1) return res.status(400).json({errror: "user not found"});
+        if (data.length === 0) return res.status(400).json({errror: "user not found"});
+        if (data.length > 2) return res.status(501).json({errror: "internal server error"});
 
         let password = generator.generate({
             length: 12,
@@ -497,27 +518,37 @@ app.put("/user/:usermail", (req, res) => {
 
         pw = hashPW.digest('hex');
 
-        userDao.updatePassword({userId: data[0].user_id, password: pw}, (stat, dat) => {
-
-            let mailOptions = {
-                from: 'noreply.harmoni.123@gmail.com',
-                to: req.params.usermail,
-                subject: 'New Password',
-                text: `Her er ditt nye passord:\n${password}`
-            };
-
-            transporter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log('Email sent: ' + info.response);
-                }
-            });
-
-            res.status(200);
-            res.send();
-        });
+        if(data.length === 0){
+            userDao.createPassword({
+                userId : data[0].user_id, password : pw, autogen : 1
+            }, (stat, dat) => sendMail(req, res, password));
+        } else {
+            userDao.updatePassword({
+                passId : data[1].password_id, password : pw, autogen : 1
+            }, (stat, dat) => sendMail(req, res, password));
+        }
     });
+
+    function sendMail(req, res, password){
+            
+        let mailOptions = {
+            from: 'noreply.harmoni.123@gmail.com',
+            to: req.params.usermail,
+            subject: 'New Password',
+            text: `Her er ditt nye passord:\n${password}`
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+
+        res.status(200);
+        res.send();
+    }
 });
 
 //Update password
@@ -528,7 +559,7 @@ app.put("/api/user/:user_id/password", (req, res) => {
     else if (req.params.user_id != req.userId) return res.status(401).json({error: "cannot change password of another user"});
 
     userDao.getPassword(req.email, (status, data) => {
-        if (data.length === 0 || data.length > 1) return res.status(500).json({error: "token error"});
+        if (data.length > 2) return res.status(500).json({error: "token error"});
 
         if (data[0] == undefined) return res.status(401).json({error: "wrong email"});
 
@@ -540,7 +571,11 @@ app.put("/api/user/:user_id/password", (req, res) => {
 
         let login = data[0].user_id;
 
-        if (pass.toUpperCase() !== data[0].password.toString()) return res.status(401).json({error: "wrong password"});
+        if(data.length === 2){
+            if(pass.toUpperCase() !== data[0].password_hex.toString() && pass.toUpperCase() !== data[1].password_hex.toString()){
+                return res.status(401).json({error : "wrong password"});
+            }
+        } else if(pass.toUpperCase() !== data[0].password_hex.toString()) return res.status(401).json({error: "wrong password"});
 
         let hashpw2 = crypto.createHmac('sha512', data[0].salt);
 
@@ -548,7 +583,7 @@ app.put("/api/user/:user_id/password", (req, res) => {
         hashpw2.update(pw);
         pw = hashpw2.digest('hex');
 
-        userDao.updatePassword({userId: req.userId, password: pw}, (status, data) => {
+        userDao.setPassword({userId: req.userId, password: pw}, (status, data) => {
             res.status(status);
             let token = thisFunctionCreatesNewToken(req.mail, req.userId);
             res.json({data, jwt: token});

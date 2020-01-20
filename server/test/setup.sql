@@ -3,13 +3,13 @@ DROP TABLE IF EXISTS `ticket`;
 DROP TABLE IF EXISTS `rider`;
 DROP TABLE IF EXISTS `performance`;
 DROP TABLE IF EXISTS `event`;
+DROP TABLE IF EXISTS `password`;
 DROP TABLE IF EXISTS `user`;
 
 
 CREATE TABLE `user` (
   user_id int(11) NOT NULL AUTO_INCREMENT,
   username varchar(50) NOT NULL UNIQUE,
-  password BINARY(64) NOT NULL,
   salt BINARY(8) NOT NULL,
   email varchar(100) NOT NULL UNIQUE,
   phone varchar(30) NOT NULL,
@@ -17,6 +17,15 @@ CREATE TABLE `user` (
   surname varchar(300) NOT NULL,
   picture varbinary(400) DEFAULT NULL,
   PRIMARY KEY (user_id)
+);
+
+CREATE TABLE password (
+  password_id int(11) NOT NULL AUTO_INCREMENT,
+  password_hex BINARY(64) NOT NULL,
+  user_id int(11) NOT NULL,
+  autogen int(1), -- 0 => brukergenerert 1 => autogenerert
+  PRIMARY KEY (password_id),
+  FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE `event` (
@@ -75,17 +84,22 @@ CREATE TABLE crew(
   FOREIGN KEY (event_id) REFERENCES event(event_id) ON DELETE CASCADE
 );
 
-INSERT INTO user (username, password, salt, email, phone, first_name, surname, picture)
-VALUES("testbruker", UNHEX("2955d5f4a8980763b5a1ec72c69b983a5772697e6504879711d8bcc2119cbf881d137f4190976c1af4503e2614649190c3a8e04a78f560d3e6f592240a7f3660"), UNHEX("62ca87a099fa85a1"), "testemail", "999999", "test", "bruker", "bildelink");
+INSERT INTO user (username, salt, email, phone, first_name, surname, picture)
+VALUES("testbruker", UNHEX("62ca87a099fa85a1"), "testemail", "999999", "test", "bruker", "bildelink");
+INSERT INTO password (password_id , password_hex, user_id, autogen) VALUES(DEFAULT, UNHEX("2955d5f4a8980763b5a1ec72c69b983a5772697e6504879711d8bcc2119cbf881d137f4190976c1af4503e2614649190c3a8e04a78f560d3e6f592240a7f3660"), 1, 0);
 
-INSERT INTO user (username, password, salt, email, phone, first_name, surname, picture)
-VALUES("thomasbjerke", UNHEX("28ae51d656ead70e127d63f5bc16c2b7ef381f95f8d0184dea2eb9d37f9a93b169f0efd3a5ecb2502784f82ce00c2df984a4b189d4fc586f8ba03b0cb03f84ed"), UNHEX("ff2b807e70549309"), "thomas@email.com", "90592427", "thomas", "bjerke", "thomasbildelink");
 
-INSERT INTO user (username, password, salt, email, phone, first_name, surname, picture)
-VALUES("kåreandersen", UNHEX("949c083c8eeceaca63ac5da7db9b129fef1d757b0100f16d8013009f3601cdd775ca02c23f78dc428fe44e5846d64fbcb290bfca452ffb1340d53a103e240b40"), UNHEX("517d958ff38f270a"), "kåre@email.com", "11111111", "kåre", "andersen", "kårebildelink");
+INSERT INTO user (username, salt, email, phone, first_name, surname, picture)
+VALUES("thomasbjerke", UNHEX("ff2b807e70549309"), "thomas@email.com", "90592427", "thomas", "bjerke", "thomasbildelink");
+INSERT INTO password (password_id , password_hex, user_id, autogen) VALUES(DEFAULT, UNHEX("28ae51d656ead70e127d63f5bc16c2b7ef381f95f8d0184dea2eb9d37f9a93b169f0efd3a5ecb2502784f82ce00c2df984a4b189d4fc586f8ba03b0cb03f84ed"), 2,0);
 
-INSERT INTO user (username, password, salt, email, phone, first_name, surname, picture)
-VALUES("torstein", UNHEX("83176d4c3b58a50f9c024e9ef57ec3b01398a591f3ad3b5243aa25e311a2eaab6c78208f5ffa8421eff6d3db96c3f6b79ca4cc1fa4f3c02e44d1824ebe8d11e1"), UNHEX("f3734ea50ad945e9"), "tormail", "5555555", "tor", "stein", "torbildelink");
+INSERT INTO user (username, salt, email, phone, first_name, surname, picture)
+VALUES("kåreandersen", UNHEX("517d958ff38f270a"), "kåre@email.com", "11111111", "kåre", "andersen", "kårebildelink");
+INSERT INTO password (password_id , password_hex, user_id, autogen) VALUES(DEFAULT, UNHEX("949c083c8eeceaca63ac5da7db9b129fef1d757b0100f16d8013009f3601cdd775ca02c23f78dc428fe44e5846d64fbcb290bfca452ffb1340d53a103e240b40"), 3 ,0);
+
+INSERT INTO user (username, salt, email, phone, first_name, surname, picture)
+VALUES("torstein", UNHEX("f3734ea50ad945e9"), "tormail", "5555555", "tor", "stein", "torbildelink");
+INSERT INTO password (password_id , password_hex, user_id, autogen) VALUES(DEFAULT, UNHEX("83176d4c3b58a50f9c024e9ef57ec3b01398a591f3ad3b5243aa25e311a2eaab6c78208f5ffa8421eff6d3db96c3f6b79ca4cc1fa4f3c02e44d1824ebe8d11e1"), 4, 0);
 
 INSERT INTO event (name, host_id, active, location, longitude, latitude,  description, start_time, end_time)
 VALUES("testEvent", 4, 1, "Trondheim", 63.4156747,10.4061419,"Festival", "2020-12-05 13:45:00", "2020-12-05 14:00:00");
@@ -130,7 +144,7 @@ INSERT INTO rider
 VALUES (2, "trenger fanta", 1);
 
 INSERT INTO rider
-VALUES (3, "trenger sprite", 4);
+VALUES (3, "trenger sprit", 4);
 
 INSERT INTO rider
 VALUES (4, "trenger godteri", 2);
