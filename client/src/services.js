@@ -1165,7 +1165,7 @@ class UserService {
         }
     }
 
-    getUser(userId: number): Promise<any> {
+    getPicture(userId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/user/' + userId + '/picture', {
