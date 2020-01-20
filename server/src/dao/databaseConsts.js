@@ -13,6 +13,7 @@ EVENT_LATITUDE :string;
 EVENT_DESCRIPTION :string;
 EVENT_START_TIME :string;
 EVENT_END_TIME :string;
+EVENT_PICTURE :string;
 
 TICKET_TABLE :string;
 TICKET_NAME :string;
@@ -71,6 +72,7 @@ PASSWORD_AUTOGEN : string;
         this.EVENT_DESCRIPTION = "description";
         this.EVENT_START_TIME = "start_time";
         this.EVENT_END_TIME = "end_time";
+        this.EVENT_PICTURE = "picture";
 
         this.TICKET_TABLE = "ticket";
         this.TICKET_NAME = "name";

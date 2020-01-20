@@ -66,7 +66,17 @@ module.exports = class UserDao extends Dao {
     setPassword(sql : {password : string, userId: string|number}, callback: (status: number, data : *) => void) {
         super.query(`REMOVE * FROM ${CONSTANTS.PASSWORD_TABLE} WHERE ${CONSTANTS.PASSWORD_USER_ID} = ?;
         INSERT INTO ${CONSTANTS.PASSWORD_TABLE}, (${CONSTANTS.PASSWORD_ID}, ${CONSTANTS.PASSWORD_PASSWORD}, ${CONSTANTS.PASSWORD_USER_ID}, ${CONSTANTS.PASSWORD_AUTOGEN}) VALUES
-        (DEFAULT, UNHEX(?),?,0)`, [sql.password, sql.userId] , callback);
+        (DEFAULT, UNHEX(?),?,0)`, [sql.password, sql.userId], callback);
     }
 
+
+    /**UPLOADS AND DOWNLOADS*/
+    downloadPicture(userId: string | number, callback: (status: number, data: *) => void) {
+        super.query(`SELECT ${CONSTANTS.USER_PICTURE} FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_ID} = ?`,
+            [userId], callback);
+    }
+    uploadPicture(userId: string | number, picture: any, callback: (status: number, data: *) => void) {
+        super.query(`UPDATE ${CONSTANTS.USER_TABLE} SET ${CONSTANTS.USER_PICTURE} = ? WHERE ${CONSTANTS.USER_ID} = ?`,
+            [picture, userId], callback);
+    }
 };

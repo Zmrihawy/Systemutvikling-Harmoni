@@ -21,7 +21,7 @@ module.exports = class ServerDao extends Dao {
     }
 
     getUsersEvents(sql: { userId: string | number, active: string | number }, callback: (status: number, data: *) => void) {
-        super.query(`SELECT ${CONSTANTS.EVENT_NAME}, ${CONSTANTS.EVENT_ID},${CONSTANTS.EVENT_START_TIME},${CONSTANTS.EVENT_LOCATION} FROM 
+        super.query(`SELECT ${CONSTANTS.EVENT_NAME}, ${CONSTANTS.EVENT_ID},${CONSTANTS.EVENT_START_TIME},${CONSTANTS.EVENT_LOCATION} FROM
         ${CONSTANTS.EVENT_TABLE} a JOIN ${CONSTANTS.USER_TABLE} b ON a.${CONSTANTS.EVENT_HOST_ID} = b.${CONSTANTS.USER_ID} WHERE b.${CONSTANTS.USER_ID} = ? AND ${CONSTANTS.EVENT_ACTIVE} = ?`, [sql.userId, sql.active], callback);
     }
 
@@ -58,9 +58,9 @@ module.exports = class ServerDao extends Dao {
                     VALUES (?,?,?,?,?) `, [sql.name, sql.eventId, sql.price, sql.description, sql.amount], callback);
     }
 
-    createPerformance(sql: { artistId: string | number, eventId: string | number, startTime: string, endTime: string, contract: string }, callback: (status: number, data: *) => void) {
-        super.query(`INSERT INTO ${CONSTANTS.PERFORMANCE_TABLE} (${CONSTANTS.PERFORMANCE_ARTIST_ID},${CONSTANTS.PERFORMANCE_EVENT_ID},${CONSTANTS.PERFORMANCE_START_TIME},${CONSTANTS.PERFORMANCE_END_TIME},
-                    ${CONSTANTS.PERFORMANCE_CONTRACT}) VALUES (?,?,?,?,?) `, [sql.artistId, sql.eventId, sql.startTime, sql.endTime, sql.contract], callback);
+    createPerformance(sql: { artistId: string | number, eventId: string | number, startTime: string, endTime: string, name: string, contract: string }, callback: (status: number, data: *) => void) {
+        super.query(`INSERT INTO ${CONSTANTS.PERFORMANCE_TABLE} (${CONSTANTS.PERFORMANCE_ARTIST_ID},${CONSTANTS.PERFORMANCE_EVENT_ID},${CONSTANTS.PERFORMANCE_START_TIME},${CONSTANTS.PERFORMANCE_END_TIME},${CONSTANTS.PERFORMANCE_NAME},
+                    ${CONSTANTS.PERFORMANCE_CONTRACT}) VALUES (?,?,?,?,?,?) `, [sql.artistId, sql.eventId, sql.startTime, sql.endTime, sql.name, sql.contract], callback);
     }
 
     createRider(sql: { performanceId: string | number, name: string, amount: string | number }, callback: (status: number, data: *) => void) {
@@ -105,9 +105,9 @@ module.exports = class ServerDao extends Dao {
             [sql.name, sql.amount, sql.performanceId, sql.oldName], callback);
     }
 
-    updatePerformance(sql: { startTime: string, endTime: string, contract: string, performanceId: string | number }, callback: (status: number, data: *) => void) {
-        super.query(`UPDATE ${CONSTANTS.PERFORMANCE_TABLE} SET ${CONSTANTS.PERFORMANCE_START_TIME} = ?, ${CONSTANTS.PERFORMANCE_END_TIME} = ?, ${CONSTANTS.PERFORMANCE_CONTRACT} = ? WHERE ${CONSTANTS.PERFORMANCE_ID} = ?`,
-            [sql.startTime, sql.endTime, sql.contract, sql.performanceId], callback);
+    updatePerformance(sql: { startTime: string, endTime: string, name: string, contract: string, performanceId: string | number }, callback: (status: number, data: *) => void) {
+        super.query(`UPDATE ${CONSTANTS.PERFORMANCE_TABLE} SET ${CONSTANTS.PERFORMANCE_START_TIME} = ?, ${CONSTANTS.PERFORMANCE_END_TIME} = ?, ${CONSTANTS.PERFORMANCE_NAME} = ?, ${CONSTANTS.PERFORMANCE_CONTRACT} = ? WHERE ${CONSTANTS.PERFORMANCE_ID} = ?`,
+            [sql.startTime, sql.endTime, sql.name, sql.contract, sql.performanceId], callback);
     }
 
     updateEvent(sql: { eventName: string, hostId: string | number, active: string | number, location: string, longitude: string | number, latitude: string | number, description: string, startTime: string | number, endTime: string | number, eventId: string | number }, callback: (status: number, data: *) => void) {
@@ -125,5 +125,19 @@ module.exports = class ServerDao extends Dao {
     uploadContract(performanceId: string | number, contract: any, callback: (status: number, data: *) => void) {
         super.query(`UPDATE ${CONSTANTS.PERFORMANCE_TABLE} SET ${CONSTANTS.PERFORMANCE_CONTRACT} = ? WHERE ${CONSTANTS.PERFORMANCE_ID} = ?`,
             [contract, performanceId], callback);
+    }
+
+    downloadContract(performanceId: string | number, callback: (status: number, data: *) => void) {
+        super.query(`SELECT ${CONSTANTS.PERFORMANCE_CONTRACT} FROM ${CONSTANTS.PERFORMANCE_TABLE} WHERE ${CONSTANTS.PERFORMANCE_ID} = ?`, [performanceId], callback);
+    }
+
+    uploadPicture(eventId: string | number, picture: any, callback: (status: number, data: *) => void) {
+        super.query(`UPDATE ${CONSTANTS.EVENT_TABLE} SET ${CONSTANTS.EVENT_PICTURE} = ? WHERE ${CONSTANTS.EVENT_ID} = ?`,
+            [picture, eventId], callback);
+    }
+
+    downloadPicture(eventId: string | number, callback: (status: number, data: *) => void) {
+        super.query(`SELECT ${CONSTANTS.EVENT_PICTURE} FROM ${CONSTANTS.EVENT_TABLE} WHERE ${CONSTANTS.EVENT_ID} = `,
+            [eventId], callback);
     }
 };
