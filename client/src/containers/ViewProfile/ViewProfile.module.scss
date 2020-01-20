@@ -10,7 +10,7 @@
     visibility: hidden;
     color: #333333;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
-    transition: 0.3s;
+    transition: 0.5s;
     font-size: 20px;
     width: 800px;
     text-align: center;
@@ -25,7 +25,7 @@
     border-radius: 30px;
     color: #333333;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
-    transition: 0.3s;
+    transition: 0.5s;
     font-size: 20px;
     width: 300px;
     text-align: center;
@@ -152,7 +152,7 @@ input:focus {
     font-size: 15px;
     margin: 3px 1.5px;
     cursor: pointer;
-    transition-duration: 0.3s;
+    transition-duration: 0.5s;
 }
 .redigerBtn:hover {
     background-color: #333333;

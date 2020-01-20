@@ -38,7 +38,7 @@ export default class ViewProfile extends Component {
                                 ✎
                             </button>
                         </div>
-                            <div className={classes.bioLayer}>
+                            <div className={classes.bioLayer} id={"bioLayer"}>
                                 <h1 className={classes.h1} id={'nameP'}>
                                     {'' +
                                         this.state.firstName +
@@ -244,44 +244,21 @@ export default class ViewProfile extends Component {
         document.getElementById('repeatPasswordInp').value = '';
         document.getElementById('passwordInp').value = '';
 
-    }
-    changePic() {
-        if (
-            document.getElementById('imgInput') !== null &&
-            document.getElementById('imgInput') !== null &&
-            document.getElementById('imgInput').value !== null
-        ) {
-            if (
-                document.getElementById('profileImg') !== null &&
-                document
-                    .getElementById('imgInput')
-                    .value.match(/\.(jpg|gif|png)$/) !== null
-            ) {
-                document.getElementById(
-                    'profileImg'
-                ).src = document.getElementById('imgInput').value;
-                if (document.getElementById('redigerBtn') !== null) {
-                    document.getElementById('redigerBtn').style.visibility = 'visible';
-                    document.getElementById('redigerBtn').style.pointerEvents = 'all';
-                }
-            }
-            else {
-                if (
-                    document.getElementById('profileImg') !== null &&
-                    document.getElementById('imgLabel') !== null &&
-                    document.getElementById('imgLabel').innerHTML !== null
-                ) {
-                    document.getElementById('profileImg').src =
-                        profileHolder;
-                    document.getElementById('imgLabel').innerHTML =
-                        'Du må skrive inn gyldig bildeLink!';
-                }
-            }
+        if(document.getElementById("imgContainer") !== null && document.getElementById("redigerBtn") !==
+            null && document.getElementById("bioLayer") !== null) {
+            document.getElementById("imgContainer").style.left = "540px";
+            document.getElementById("bioLayer").style.left = "540px";
+            document.getElementById("redigerBtn").style.left = "560px";
         }
+
     }
+
     showEditForm() {
-        if(document.getElementById("imgContainer") !== null) {
+        if(document.getElementById("imgContainer") !== null && document.getElementById("redigerBtn") !==
+        null && document.getElementById("bioLayer") !== null) {
            document.getElementById("imgContainer").style.left = "100px";
+           document.getElementById("bioLayer").style.left = "100px";
+           document.getElementById("redigerBtn").style.left = "110px";
         }
         if(document.getElementById("editLayer") !== null){
             document.getElementById("editLayer").style.visibility = 'visible';
