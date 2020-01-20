@@ -285,7 +285,12 @@ class EventService {
         });
 
         function handleGetPictureResponse(json) {
-            return json;
+            var arrayBufferView = new Uint8Array(json.data);
+            var blob = new Blob([arrayBufferView], {type: 'image'});
+            var urlCreator = window.URL || window.webkitURL;
+            var imageUrl = urlCreator.createObjectURL(blob);
+            urlCreator.revokeObjectURL(blob);
+            return imageUrl;
         }
     }
 
@@ -314,7 +319,12 @@ class EventService {
         });
 
         function handleGetContractResponse(json) {
-            return json;
+            var arrayBufferView = new Uint8Array(json.data);
+            var blob = new Blob([arrayBufferView], {type: 'application/pdf'});
+            var urlCreator = window.URL || window.webkitURL;
+            var contractUrl = urlCreator.createObjectURL(blob);
+            urlCreator.revokeObjectURL(blob);
+            return contractUrl;
         }
     }
 
@@ -1189,7 +1199,12 @@ class UserService {
         });
 
         function handleGetUserResponse(json: *) {
-            return json;
+            var arrayBufferView = new Uint8Array(json.data);
+            var blob = new Blob([arrayBufferView], {type: 'image'});
+            var urlCreator = window.URL || window.webkitURL;
+            var imageUrl = urlCreator.createObjectURL(blob);
+            urlCreator.revokeObjectURL(blob);
+            return imageUrl;
         }
     }
 
