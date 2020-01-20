@@ -12,11 +12,6 @@ module.exports = class UserDao extends Dao {
                     FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_ID} = ?`, [sql], callback);
     }
 
-    getUserByEmail(sql: string, callback: (status: number, data : *) => void) :void {
-        super.query(`SELECT ${CONSTANTS.USER_ID}, ${CONSTANTS.USER_USERNAME}, ${CONSTANTS.USER_EMAIL}, ${CONSTANTS.USER_PHONE}, ${CONSTANTS.USER_FIRST_NAME}, ${CONSTANTS.USER_LAST_NAME} 
-                    FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_EMAIL} = ?`, [sql], callback);
-    }
-
     getPassword(sql : string, callback: (status: number, data : *) => void) :void {
         super.query(`SELECT u.${CONSTANTS.USER_ID}, HEX(p.${CONSTANTS.PASSWORD_PASSWORD}) as ${CONSTANTS.PASSWORD_PASSWORD}, HEX(u.${CONSTANTS.USER_SALT}) as ${CONSTANTS.USER_SALT}, p.${CONSTANTS.PASSWORD_AUTOGEN} FROM ${CONSTANTS.USER_TABLE} u LEFT JOIN ${CONSTANTS.PASSWORD_TABLE} p ON 
         p.${CONSTANTS.USER_ID} = u.${CONSTANTS.PASSWORD_USER_ID} WHERE ${CONSTANTS.USER_EMAIL} = ? ORDER BY p.${CONSTANTS.PASSWORD_AUTOGEN}`, [sql], callback);
@@ -24,6 +19,10 @@ module.exports = class UserDao extends Dao {
 
     getAllArtists(callback: (status: number, data : *) => void) :void {
         super.query(`SELECT ${CONSTANTS.USER_ID}, ${CONSTANTS.USER_USERNAME} FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_ARTIST} = 1`, [], callback);
+    }
+    
+    checkCred(sql : {username: string, email: string}, callback: (status: number, data: *) => void){
+        super.query(`SELECT DISTINCT ${CONSTANTS.USER_USERNAME}, ${CONSTANTS.USER_EMAIL} FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_USERNAME} = ? OR ${CONSTANTS.USER_EMAIL} = ?`, [sql.username, sql.email], callback);
     }
 
     createUser(sql: { username: string, salt: string, email: string, phone: string | number, firstName: string, lastName: string, password: string }, callback: (status: number, data: *) => void) :void {
@@ -60,7 +59,6 @@ module.exports = class UserDao extends Dao {
         INSERT INTO ${CONSTANTS.PASSWORD_TABLE} (${CONSTANTS.PASSWORD_PASSWORD}, ${CONSTANTS.PASSWORD_USER_ID}, ${CONSTANTS.PASSWORD_AUTOGEN}) VALUES
         (UNHEX(?),?,0)`, [sql.userId, sql.password, sql.userId], callback);
     }
-
 
     /**UPLOADS AND DOWNLOADS*/
     downloadPicture(userId: string | number, callback: (status: number, data: *) => void) :void {
