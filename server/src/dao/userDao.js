@@ -21,8 +21,8 @@ module.exports = class UserDao extends Dao {
     }*/
 
     getPassword(sql : string, callback: (status: number, data : *) => void) {
-        super.query(`SELECT ${CONSTANTS.USER_ID}, ${CONSTANTS.PASSWORD_TABLE}.HEX(${CONSTANTS.PASSWORD_PASSWORD}) as ${CONSTANTS.PASSWORD_PASSWORD} , HEX(${CONSTANTS.USER_SALT}) as ${CONSTANTS.USER_SALT}, ${CONSTANTS.PASSWORD_AUTOGEN} FROM ${CONSTANTS.USER_TABLE} JOIN ${CONSTANTS.PASSWORD_TABLE} ON 
-        ${CONSTANTS.USER_ID} = ${CONSTANTS.PASSWORD_USER_ID} WHERE ${CONSTANTS.USER_EMAIL} = ? ORDER BY ${CONSTANTS.PASSWORD_TABLE}.${CONSTANTS.PASSWORD_AUTOGEN}`, [sql], callback);
+        super.query(`SELECT u.${CONSTANTS.USER_ID}, HEX(p.${CONSTANTS.PASSWORD_PASSWORD}) as ${CONSTANTS.PASSWORD_PASSWORD}, HEX(u.${CONSTANTS.USER_SALT}) as ${CONSTANTS.USER_SALT}, p.${CONSTANTS.PASSWORD_AUTOGEN} FROM ${CONSTANTS.USER_TABLE} u LEFT JOIN ${CONSTANTS.PASSWORD_TABLE} p ON 
+        p.${CONSTANTS.USER_ID} = u.${CONSTANTS.PASSWORD_USER_ID} WHERE ${CONSTANTS.USER_EMAIL} = ? ORDER BY p.${CONSTANTS.PASSWORD_AUTOGEN}`, [sql], callback);
     }
 
     getAllUsers(callback: (status: number, data : *) => void) {
@@ -30,8 +30,8 @@ module.exports = class UserDao extends Dao {
     }
 
     createUser(sql : {username : string, salt : string, email : string, phone : string | number, firstName : string, lastName : string, password : string}, callback: (status: number, data : *) => void) {
-        super.query(`INSERT INTO ${CONSTANTS.USER_TABLE} (${CONSTANTS.USER_USERNAME}, ${CONSTANTS.USER_PASSWORD}, ${CONSTANTS.USER_SALT},${CONSTANTS.USER_EMAIL},${CONSTANTS.USER_PHONE},${CONSTANTS.USER_FIRST_NAME},${CONSTANTS.USER_LAST_NAME}) 
-                    VALUES (?,UNHEX(?),?,?,?,?)
+        super.query(`INSERT INTO ${CONSTANTS.USER_TABLE} (${CONSTANTS.USER_USERNAME}, ${CONSTANTS.USER_SALT},${CONSTANTS.USER_EMAIL},${CONSTANTS.USER_PHONE},${CONSTANTS.USER_FIRST_NAME},${CONSTANTS.USER_LAST_NAME}) 
+                    VALUES (?,UNHEX(?),?,?,?,?);
                     INSERT INTO ${CONSTANTS.PASSWORD_TABLE} (${CONSTANTS.PASSWORD_ID}, ${CONSTANTS.PASSWORD_PASSWORD}, ${CONSTANTS.PASSWORD_USER_ID}, ${CONSTANTS.PASSWORD_AUTOGEN})
                     VALUES (DEFAULT, UNHEX(?), LAST_INSERT_ID(), 0)`, [sql.username, sql.salt, sql.email, sql.phone, sql.firstName, sql.lastName, sql.password], callback);
     }
@@ -50,7 +50,7 @@ module.exports = class UserDao extends Dao {
     }*/
 
     updatePassword(sql : {password : string, passId : string | number, autogen: string|number}, callback: (status: number, data : *) => void) {
-        super.query(`UPDATE ${CONSTANTS.PASSWORD_TABLE} SET ${CONSTANTS.PASSWORD_PASSWORD} = UNHEX(?), ${CONSTANTS.PASSWORD_AUTOGEN} = ?,  WHERE ${CONSTANTS.PASSWORD_ID} = ?`, [sql.password, sql.autogen, sql.passId], callback);
+        super.query(`UPDATE ${CONSTANTS.PASSWORD_TABLE} SET ${CONSTANTS.PASSWORD_PASSWORD} = UNHEX(?), ${CONSTANTS.PASSWORD_AUTOGEN} = ?  WHERE ${CONSTANTS.PASSWORD_ID} = ?`, [sql.password, sql.autogen, sql.passId], callback);
     }
 
     updateUser(sql : {username : string, email : string, phone : string |number, firstName : string, lastName : string, userId : string | number}, callback: (status: number, data : *) => void) {
@@ -66,7 +66,7 @@ module.exports = class UserDao extends Dao {
     setPassword(sql : {password : string, userId: string|number}, callback: (status: number, data : *) => void) {
         super.query(`REMOVE * FROM ${CONSTANTS.PASSWORD_TABLE} WHERE ${CONSTANTS.PASSWORD_USER_ID} = ?;
         INSERT INTO ${CONSTANTS.PASSWORD_TABLE}, (${CONSTANTS.PASSWORD_ID}, ${CONSTANTS.PASSWORD_PASSWORD}, ${CONSTANTS.PASSWORD_USER_ID}, ${CONSTANTS.PASSWORD_AUTOGEN}) VALUES
-        (DEFAULT, UNHEX(?),?,0)`, [sql.password, sql.userId] , callback)
+        (DEFAULT, UNHEX(?),?,0)`, [sql.password, sql.userId] , callback);
     }
 
 };

@@ -114,7 +114,7 @@ PASSWORD_AUTOGEN : string;
         this.PASSWORD_TABLE = "password";
         this.PASSWORD_ID = "password_id";
         this.PASSWORD_USER_ID = "user_id";
-        this.PASSWORD_PASSWORD = "password";
+        this.PASSWORD_PASSWORD = "password_hex";
         this.PASSWORD_AUTOGEN  = "autogen";
     }
 };
