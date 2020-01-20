@@ -3,6 +3,7 @@ const IncomingForm = require('formidable').IncomingForm;
 const filePath = './saved/';
 
 import {eventDao, userDao} from './server';
+import {thisFunctionCreatesNewToken} from "./server";
 
 
 module.exports = class Uploader {
@@ -47,7 +48,8 @@ module.exports = class Uploader {
 
 
         form.on('end', () => {
-            res.json();
+            let token = thisFunctionCreatesNewToken(req.email, req.userId);
+            res.json({message: 'Uploaded contract!', jwt: token});
         });
 
         form.parse(req);
@@ -90,7 +92,8 @@ module.exports = class Uploader {
 
         });
         form.on('end', () => {
-            res.json();
+            let token = thisFunctionCreatesNewToken(req.email, req.userId);
+            res.json({message: 'Uploaded event picture!', jwt: token});
         });
         form.parse(req);
     }
@@ -112,7 +115,8 @@ module.exports = class Uploader {
 
         });
         form.on('end', () => {
-            res.json();
+            let token = thisFunctionCreatesNewToken(req.email, req.userId);
+            res.json({message: 'Uploaded user picture!', jwt: token});
         });
         form.parse(req);
     }

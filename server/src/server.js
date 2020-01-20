@@ -132,7 +132,7 @@ app.post("/login", (req, res) => {
     });
 });
 
-function thisFunctionCreatesNewToken(passedMail: string, userId: number): { jwt: string } {
+export function thisFunctionCreatesNewToken(passedMail: string, userId: number): { jwt: string } {
 
     let newToken = jwt.sign({email: passedMail, userId: userId}, privateKey, {
         expiresIn: 5000
@@ -811,25 +811,23 @@ app.post('/api/event/:event_id/crew', (req, res) => {
 });
 
 
-//TODO ADD TOKEN TO THESE BELOW!!!!!
-
 // put contract
 app.put('/api/event/:event_id/performance/:performance_id/contract', uploader.uploadContract);
 
 // get contract
-app.get('/event/:event_id/performance/:performance_id/contract', (req, res) => {
+app.get('/api/event/:event_id/performance/:performance_id/contract', (req, res) => {
     console.log('Fikk get-request fra klient');
 
     eventDao.downloadContract(req.params.performance_id, (status, data) => {
         res.status(status);
-        // let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        let token = thisFunctionCreatesNewToken(req.email, req.userId);
 
         // fs.writeFile('fil.pdf', data[0].contract, err => {
         //     if (err) return console.log('Error writing file');
         //     console.log('File saved!')
         // });
 
-        res.json({data: data[0].contract, jwt: 'token'});
+        res.json({data: data[0].contract, jwt: token});
     });
 });
 
@@ -852,17 +850,17 @@ app.get('/api/event/:event_id/picture', (req, res) => {
 });
 
 // put user picture
-app.put('/user/:user_id/picture', uploader.uploadUserPicture);
+app.put('/api/user/:user_id/picture', uploader.uploadUserPicture);
 
 // get user picture
-app.get('/user/:user_id/picture', (req, res) => {
+app.get('/api/user/:user_id/picture', (req, res) => {
     console.log('Fikk get-request fra klient');
 
     userDao.downloadPicture(req.params.user_id, (status, data) => {
         res.status(status);
-        // let token = thisFunctionCreatesNewToken(req.email, req.userId);
+        let token = thisFunctionCreatesNewToken(req.email, req.userId);
 
-        res.json({data: data[0].picture, jwt: 'token'});
+        res.json({data: data[0].picture, jwt: token});
     });
 });
 
