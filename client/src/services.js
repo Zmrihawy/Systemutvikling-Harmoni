@@ -288,9 +288,9 @@ class EventService {
             var arrayBufferView = new Uint8Array(json.data);
             var blob = new Blob([arrayBufferView], {type: 'image'});
             var urlCreator = window.URL || window.webkitURL;
-            var imageUrl = urlCreator.createObjectURL(blob);
+            var pictureUrl = urlCreator.createObjectURL(blob);
             urlCreator.revokeObjectURL(blob);
-            return imageUrl;
+            return pictureUrl;
         }
     }
 
@@ -1202,9 +1202,9 @@ class UserService {
             var arrayBufferView = new Uint8Array(json.data);
             var blob = new Blob([arrayBufferView], {type: 'image'});
             var urlCreator = window.URL || window.webkitURL;
-            var imageUrl = urlCreator.createObjectURL(blob);
+            var pictureUrl = urlCreator.createObjectURL(blob);
             urlCreator.revokeObjectURL(blob);
-            return imageUrl;
+            return pictureUrl;
         }
     }
 
