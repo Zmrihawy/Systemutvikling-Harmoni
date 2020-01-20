@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classes from './ViewProfile.module.scss';
 import { userService } from '../../services';
-
+import profileHolder from '../../pictures/profileHolder.svg';
 export default class ViewProfile extends Component {
     constructor(props) {
         super(props);
@@ -16,71 +16,32 @@ export default class ViewProfile extends Component {
     }
     async componentDidMount() {
         var intId = parseInt(this.props.match.params.id, 10);
-
         const user = await userService.getUser(intId);
-
-        console.log(user);
-
         this.setState(user);
-
-        /* this.setState({ id: intId }, () => {
-            userService
-                .getUser(intId)
-                .then(userData => {
-                    console.log(userData);
-                    this.setState(userData);
-                })
-                .catch((error: Error) => console.log(error));
-        }); */
+        let picture = await userService.getPicture(intId)
+            .then(picLink => (document.getElementById("profileImg").src = picLink))
+        console.log(picture);
     }
     render() {
         return (
             <div className={classes.viewProfile}>
-                <div className={classes.showLayer}>
-                    <div className={classes.row}>
+                <div className={classes.row}>
                         <div className={classes.column} id={'imageColumn'}>
-                            <div className={classes.imgContainer}>
+                            <div className={classes.imgContainer} id={"imgContainer"}>
                                 <img
                                     className={classes.profile}
                                     id={'profileImg'}
-                                    src="https://images.assetsdelivery.com/compings_v2/apoev/apoev1806/apoev180600175.jpg"
+                                    src={profileHolder}
                                     alt="Profile picture"
                                 />
                             </div>
                             <button
-                                className={classes.redigerBtn}
-                                onClick={this.showImageForm}
+                                className={classes.redigerBtn} id={"redigerBtn"}
                             >
-                                Rediger profilbilde
+                                ✎
                             </button>
-                            <div
-                                className={classes.imageForm}
-                                id={'imageFormId'}
-                            >
-                                <div className={classes.row}>
-                                    <div className={classes.column}>
-                                        <label id={'imgLabel'}>
-                                            <b>Skrive inn link</b>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="imgInput"
-                                            placeholder="eks: 123bilde.jpg"
-                                        />
-                                        <button
-                                            type="submit"
-                                            className={classes.imgBtn}
-                                            id={'imgBtn'}
-                                            onClick={this.changePic}
-                                        >
-                                            Send
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-                        <div className={classes.column}>
-                            <div className={classes.bioLayer}>
+                            <div className={classes.bioLayer} id={"bioLayer"}>
                                 <h1 className={classes.h1} id={'nameP'}>
                                     {'' +
                                         this.state.firstName +
@@ -88,21 +49,14 @@ export default class ViewProfile extends Component {
                                         this.state.surname +
                                         ''}
                                 </h1>
-                                <b />
-                                <div className={classes.p} id={'usernameP'}>
-                                    Brukernavn: {this.state.username}
-                                </div>
-                                <b />
+                                <p>Artist</p>
                                 <div className={classes.p} id={'emailP'}>
-                                    Epost: {this.state.email}
+                                    {this.state.email}
                                 </div>
-                                <b />
-                                <div className={classes.p} id={'telephoneP'}>
-                                    Telefonnummer: {this.state.phone}
-                                </div>
+                                <button className={classes.redigerBrukerBtn} id={"redigerBrukerBtn"} onClick={this.showEditForm}>Rediger bruker</button>
                             </div>
-                            <div className={classes.editLayer}>
-                                <h4>
+                            <div className={classes.editLayer} id={"editLayer"}>
+                                <h4 className={classes.editHeader}>
                                     <b>Rediger Info</b>
                                 </h4>
                                 <div className={classes.row}>
@@ -126,7 +80,6 @@ export default class ViewProfile extends Component {
                                             type="text"
                                             placeholder={this.state.email}
                                         />
-                                        <b />
                                         <div className={classes.editTitle}>
                                             Telefon
                                         </div>
@@ -157,22 +110,50 @@ export default class ViewProfile extends Component {
                                             type="text"
                                             placeholder={this.state.surname}
                                         />
-                                        <b />
-                                        <b />
-                                        <button
-                                            className={classes.button}
-                                            onClick={event =>
-                                                this.eventHandler()
-                                            }
-                                        >
-                                            ✓
-                                        </button>
+                                    </div>
+                                    <div className={classes.column}>
+                                        <h5 className={classes.editHeader}>
+                                            <b>Endre Passord</b>
+                                        </h5>
+                                        <br/>
+                                        <div className={classes.editTitle}>
+                                            Gammel Passord
+                                        </div>
+                                        <input
+                                            id={'oldPasswordInp'}
+                                            className={classes.input}
+                                            type="password"
+                                        />
+                                        <div className={classes.editTitle}>
+                                            Nytt Passord
+                                        </div>
+                                        <input
+                                            id={'passwordInp'}
+                                            className={classes.input}
+                                            type="password"
+                                        />
+                                        <div className={classes.editTitle}>
+                                            Gjenta nytt passord
+                                        </div>
+                                        <input
+                                            id={'repeatPasswordInp'}
+                                            className={classes.input}
+                                            type="password"
+                                        />
                                     </div>
                                 </div>
+                                <div className={classes.row}>
+                                    <button
+                                        className={classes.button}
+                                        onClick={event =>
+                                            this.eventHandler()
+                                        }
+                                    >
+                                        Lagre endringene
+                                    </button>
+                                </div>
                             </div>
-                        </div>
                     </div>
-                </div>
             </div>
         );
     }
@@ -212,6 +193,19 @@ export default class ViewProfile extends Component {
         ) {
             newSurname = document.getElementById('surnameInp').value;
         }
+        if (
+            document.getElementById('passwordInp') !== null &&
+            document.getElementById('passwordInp').value !== ''
+        ) {
+            if(document.getElementById('repeatPasswordInp') !== null &&
+            document.getElementById('repeatPasswordInp').value === document.getElementById('passwordInp').value){
+                if(document.getElementById('oldPasswordInp') !== null &&
+                document.getElementById('oldPasswordInp').value !== ''){
+                    if(this.checkUpdatePassword()){
+                    }
+                }
+            }
+        }
         this.setState(
             {
                 username: newName,
@@ -222,6 +216,12 @@ export default class ViewProfile extends Component {
             },
             () => this.setUser()
         );
+    }
+    checkUpdatePassword(){
+        let verified = true;
+        userService.updatePassword(this.state.id,(document.getElementById("oldPasswordInp").value),(document.getElementById('passwordInp').value))
+            .catch((error: Error) => verified = false);
+        return verified;
     }
     setUser() {
         userService
@@ -234,46 +234,43 @@ export default class ViewProfile extends Component {
                 this.state.surname
             )
             .catch((error: Error) => console.log(error.message));
-    }
-    changePic() {
-        console.log('helsikke');
-        if (
-            document.getElementById('imgInput') !== null &&
-            document.getElementById('imgInput') !== null &&
-            document.getElementById('imgInput').value !== null
-        ) {
-            console.log('helsikke2');
-            if (
-                document.getElementById('profileImg') !== null &&
-                document
-                    .getElementById('imgInput')
-                    .value.match(/\.(jpg|gif|png)$/) != null
-            ) {
-                console.log('helsikke3');
-                document.getElementById(
-                    'profileImg'
-                ).src = document.getElementById('imgInput').value;
-                document.getElementById('imageFormId').style.visibility =
-                    'hidden';
-            } else {
-                if (
-                    document.getElementById('profileImg') !== null &&
-                    document.getElementById('imgLabel') !== null &&
-                    document.getElementById('imgLabel').innerHTML !== null
-                ) {
-                    document.getElementById('profileImg').src =
-                        'https://images.assetsdelivery.com/compings_v2/apoev/apoev1806/apoev180600175.jpg';
-                    document.getElementById('imgLabel').innerHTML =
-                        'Du må skrive inn gyldig bildeLink!';
-                }
-            }
+        if(document.getElementById("editLayer") !== null){
+            document.getElementById("editLayer").style.visibility = 'hidden';
+            document.getElementById("editLayer").style.pointerEvents = 'none';
         }
+        if(document.getElementById("redigerBrukerBtn") !== null){
+            document.getElementById("redigerBrukerBtn").style.visibility = 'visible';
+            document.getElementById("redigerBrukerBtn").style.pointerEvents = 'all' +
+                '';
+        }
+        document.getElementById('oldPasswordInp').value = '';
+        document.getElementById('repeatPasswordInp').value = '';
+        document.getElementById('passwordInp').value = '';
+
+        if(document.getElementById("imgContainer") !== null && document.getElementById("redigerBtn") !==
+            null && document.getElementById("bioLayer") !== null) {
+            document.getElementById("imgContainer").style.left = "540px";
+            document.getElementById("bioLayer").style.left = "540px";
+            document.getElementById("redigerBtn").style.left = "560px";
+        }
+
     }
-    showImageForm() {
-        console.log('heinrich');
-        if (document.getElementById('imageFormId') !== null) {
-            document.getElementById('imageFormId').style.visibility = 'visible';
-            document.getElementById('imgLabel').innerHTML = 'Link: ';
+
+    showEditForm() {
+        if(document.getElementById("imgContainer") !== null && document.getElementById("redigerBtn") !==
+        null && document.getElementById("bioLayer") !== null) {
+           document.getElementById("imgContainer").style.left = "100px";
+           document.getElementById("bioLayer").style.left = "100px";
+           document.getElementById("redigerBtn").style.left = "110px";
+        }
+        if(document.getElementById("editLayer") !== null){
+            document.getElementById("editLayer").style.visibility = 'visible';
+            document.getElementById("editLayer").style.pointerEvents = 'all';
+        }
+        if(document.getElementById("redigerBrukerBtn") !== null){
+            document.getElementById("redigerBrukerBtn").style.visibility = 'hidden';
+            document.getElementById("redigerBrukerBtn").style.pointerEvents = 'none';
+
         }
     }
 }
