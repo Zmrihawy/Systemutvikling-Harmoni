@@ -18,7 +18,7 @@ const runSQL = require("./runSQL.js");
 // });
 
 
-/*var pool = mysql.createPool({
+var pool = mysql.createPool({
     connectionLimit: 1,
     host: "mysql",
     user: "root",
@@ -26,9 +26,9 @@ const runSQL = require("./runSQL.js");
     database: "School",
     debug: false,
     multipleStatements: true
-  });*/
+  });
 
-  var pool = mysql.createPool({
+ /* var pool = mysql.createPool({
   connectionLimit : 2,
   host: 'mysql-ait.stud.idi.ntnu.no',
   port : 3306,
@@ -37,7 +37,7 @@ const runSQL = require("./runSQL.js");
   database : 'hkgranli',
   debug : false,
   multipleStatements:true
-});
+});*/
 
 
 // test
