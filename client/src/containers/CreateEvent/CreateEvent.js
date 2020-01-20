@@ -258,12 +258,14 @@ export default class CreateEvent extends Component {
             case 6:
                 if (this.state.newEvent.artists.length > 0) {
                     current = (
-                        <>
-                            <ContractAdder
-                                artists={this.state.newEvent.artists}
-                                save={this.handleSave}
-                            />
-                        </>
+                        <div className="FileUpload">
+                            <div className="Card">
+                                <ContractAdder
+                                    artists={this.state.newEvent.artists}
+                                    save={this.handleSave}
+                                />
+                            </div>
+                        </div>
                     );
                 } else {
                     current = (

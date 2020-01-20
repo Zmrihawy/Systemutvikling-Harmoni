@@ -105,6 +105,8 @@ class Upload extends Component {
             // Not Production ready! Do some error handling here instead...
             this.setState({ successfullUploaded: true, uploading: false });
         }
+        console.log(this.state.successfullUploaded);
+        console.log(this.state.files);
     }
 
     render() {
