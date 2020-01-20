@@ -41,13 +41,14 @@ test("get one event from database", done => {
     eventDao.getEvent(1, (status, data) => {
         expect(data.length).toBe(1);
         expect(data[0].name).toBe("testEvent");
+        expect(data[0].username).toBe("torstein");
         done();
     });
 });
 
 test("get all active events for user 1 from database", done => {
     eventDao.getUserEvents({userId: 1, active: 1}, (status, data) => {
-        expect(data.length).toBe(2);
+        expect(data.length).toBe(1);
         done();
     });
 });
@@ -66,6 +67,37 @@ test("get all riders for one specific performance", done => {
     });
 });
 
+test("get participants for one specific event", done => {
+    eventDao.getEventParticipants(2, (status, data) => {
+        expect(data.length).toBe(2);
+        done();
+    })
+})
+
+test("get host information for one specific event", done => {
+    eventDao.getEventPerformancesHost(2, (status, data) => {
+        expect(data.length).toBe(2);
+        expect(data[0].contract != "" && data[1].contract != "").toBe(true);
+        done();
+    })
+})
+
+test("get artist information for one specific event", done => {
+    eventDao.getEventPerformancesArtist({eventId: 2, userId: 3}, (status, data) => {
+        console.log(status);
+        console.log(data);
+        expect(data.length).toBe(2);
+        expect(data[0].contract == undefined || data[1].contract == undefined).toBe(true);
+        done();
+    })
+})
+
+test("get crew for one specific event", done => {
+    eventDao.getCrew(1, (status, data) => {
+        expect(data.length).toBe(4);
+        done();
+    })
+})
 
 //POST-methods:
 
@@ -88,7 +120,7 @@ test("add an event to database", done => {
         console.log(
             "Test callback: status=" + status + ", data=" + JSON.stringify(status, data)
         );
-        expect(data.affectedRows).toBeGreaterThanOrEqual(1);
+        expect(data.affectedRows).toBe(1);
         done();
     }
 });
@@ -109,7 +141,7 @@ test("add a ticket to database", done => {
         console.log(
             "Test callback: status=" + status + ", data=" + JSON.stringify(status, data)
         );
-        expect(data.affectedRows).toBeGreaterThanOrEqual(1);
+        expect(data.affectedRows).toBe(1);
         done();
     }
 });
@@ -130,7 +162,7 @@ test("add a performance to database", done => {
         console.log(
             "Test callback: status=" + status + ", data=" + JSON.stringify(status, data)
         );
-        expect(data.affectedRows).toBeGreaterThanOrEqual(1);
+        expect(data.affectedRows).toBe(1);
         done();
     }
 });
@@ -150,11 +182,30 @@ test("add a rider to database", done => {
         console.log(
             "Test callback: status=" + status + ", data=" + JSON.stringify(status, data)
         );
-        expect(data.affectedRows).toBeGreaterThanOrEqual(1);
+        expect(data.affectedRows).toBe(1);
         done();
     }
 });
 
+test("add a crew to database", done => {
+    eventDao.createCrew(
+        {
+            profession: "lydmann",
+            name: "Trym",
+            contanctInfo: "Ttym@goldschmidt.no",
+            eventId: 1
+        },
+        callback
+    );
+
+    function callback(status, data) {
+        console.log(
+            "Test callback: status=" + status + ", data=" + JSON.stringify(status, data)
+        );
+        expect(data.affectedRows).toBe(1);
+        done();
+    }
+});
 
 //DELETE-methods:
 
@@ -186,6 +237,12 @@ test("delete performance from database", done => {
     });
 });
 
+test("delete crew from database", done => {
+    eventDao.deleteCrew(5, (status, data) => {
+        expect(data.affectedRows).toBe(1);
+        done();
+    });
+});
 
 //PUT-methods
 
@@ -234,8 +291,8 @@ test("update event in database", done => {
         eventName: "Endret navn",
         active: 0,
         description: "Ny kategoi",
-        long : 0,
-        lat: 0,
+        longitude : 0,
+        latitude: 0,
         location: "Ny lokasjon",
         startTime: "2020-12-05 22:30:00",
         endTime: "2020-12-05 22:30:00",
@@ -247,6 +304,41 @@ test("update event in database", done => {
             console.log(data);
             expect(data[0].active).toBe(0);
             expect(data[0].location).toBe("Ny lokasjon");
+            done();
+        });
+    });
+});
+
+test("update performance in database", done => {
+
+    let param = {
+        startTime: "2020-10-03 20:15:00",  
+        endTime: "2020-10-03 21:00:00",
+        contract: "Dette er en ny kontrakt",
+        performanceId: 3
+    };
+
+    eventDao.updatePerformance(param, (status, data) => {
+        expect(data.affectedRows).toBe(1);
+        done();
+    });
+});
+
+test("update crew in database", done => {
+
+    let param = {
+        profession: "lysmann", 
+        name: "Bjørn", 
+        contactInfo: "bjørn@schreiner.no", 
+        crewId: 1
+    };
+
+    eventDao.updateCrew(param, () => {
+        eventDao.getCrew(1, (status, data) => {
+            console.log(data);
+            expect(data[0].profession).toBe("lysmann");
+            expect(data[0].name).toBe("Bjørn");
+            expect(data[0].contact_info).toBe("bjørn@schreiner.no");
             done();
         });
     });

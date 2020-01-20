@@ -262,7 +262,7 @@ app.get("/api/user/:user_id/event/:active", (req, res) => {
     let token = thisFunctionCreatesNewToken(req.email, req.userId);
 
     if (numberError([req.params.user_id, req.params.active])) return res.status(400).json({error: "number field cannot be string"});
-    else if (req.params.user_id != req.userId) return res.status(403).json({jwt: token, error: "Not authorized to access this information"});
+    else if (req.params.user_id != req.userId) return res.status(401).json({jwt: token});
 
     eventDao.getUserEvents({userId: req.params.user_id, active: req.params.active}, (status, data) => {
         res.status(status).json({data, jwt: token});
@@ -452,6 +452,7 @@ app.put("/api/user/:user_id", (req, res) => {
     else if(req.body.phone == undefined) return res.status(400).json({error : "Missing parameter phone"});
     else if(req.body.firstName == undefined) return res.status(400).json({error : "Missing parameter firstName"});
     else if(req.body.lastName == undefined) return res.status(400).json({error: "Missing parameter lastName"});
+    else if(req.body.artist == undefined) return res.status(400).json({error: "Missing parameter artist"});
     else if(!sjekkMail(req.body.email)) return res.status(400).json({error: "inc mail is not valid"});
 
     userDao.updateUser({username: req.body.username,
@@ -510,6 +511,7 @@ app.put("/api/event/:event_id/performance/:performance_id", (req, res) => {
             eventDao.updatePerformance({startTime: req.body.startTime,
                                         endTime: req.body.endTime,
                                         contract: req.body.contract,
+                                        name: req.body.name,
                                         performanceId: req.params.performance_id}, 
                                         (status, data) => {
                 return res.status(status).json({data, jwt: token});
@@ -693,10 +695,11 @@ app.put("/api/event/:event_id", (req, res) => {
 
         if (data[0].host_id == req.userId){
             eventDao.updateEvent({eventName: req.body.eventName,
+                                    hostId: req.body.userId,
                                     active: req.body.active,
                                     location: req.body.location,
-                                    long: req.body.long,
-                                    lat : req.body.lat,
+                                    longitude: req.body.longitude,
+                                    latitude: req.body.latitude,
                                     description: description,
                                     startTime: req.body.startTime,
                                     endTime: req.body.endTime,
@@ -780,8 +783,8 @@ app.post("/api/event", (req, res) => {
             eventDao.createEvent({eventName: req.body.eventName,
                 userId: req.body.userId,
                 location: req.body.location,
-                longitude: req.body.long,
-                latitude : req.body.lat,
+                longitude: req.body.longitude,
+                latitude : req.body.latitude,
                 description: req.body.description,
                 startTime: req.body.startTime,
                 endTime: req.body.endTime}, 
@@ -841,6 +844,7 @@ app.post("/api/event/:event_id/performance", (req, res) => {
                                         eventId: req.params.event_id,
                                         startTime: req.body.startTime,
                                         endTime: req.body.endTime,
+                                        name: req.body.name,
                                         contract: req.body.contract}, 
                                         (status, data) => {
                 return res.status(status).json({data, jwt: token});
@@ -861,20 +865,25 @@ app.post("/api/event/:event_id/performance/:performance_id/rider", (req, res) =>
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
         let token = thisFunctionCreatesNewToken(req.email, req.userId);
 
-        let isConfirmed;
-        if (data[0].host_id == req.userId) isConfirmed = 1;
-        else if (checkEventAccess(data, req.userId)) isConfirmed = 0;
-        else{
-            return res.status(403).json({jwt: token, error: "Not authorized to access this information"});
+        if (data[0].host_id == req.userId){
+            eventDao.createRider({performanceId: req.params.performance_id,
+                                    name: req.body.name,
+                                    amount: req.body.amount,
+                                    confirmed: 1}, 
+                                    (status, data) => {
+                return res.status(status).json({data, jwt: token});
+            });
         }
-
-        eventDao.createRider({performanceId: req.params.performance_id,
-                                name: req.body.name,
-                                amount: req.body.amount,
-                                confirmed: isConfirmed}, 
-                                (status, data) => {
-            return res.status(status).json({data, jwt: token});
-        });
+        else if (checkEventAccess(data, req.userId)) {
+            eventDao.createRider({performanceId: req.params.performance_id,
+                                    name: req.body.name,
+                                    amount: req.body.amount,
+                                    confirmed: 0}, 
+                                    (status, data) => {
+                return res.status(status).json({data, jwt: token});
+            });
+        }
+        res.status(403).json({jwt: token, error: "Not authorized to access this information"});    
     });
 });
 
