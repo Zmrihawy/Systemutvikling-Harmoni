@@ -24,7 +24,7 @@ export default class ViewProfile extends Component {
             <div className={classes.viewProfile}>
                 <div className={classes.row}>
                         <div className={classes.column} id={'imageColumn'}>
-                            <div className={classes.imgContainer}>
+                            <div className={classes.imgContainer} id={"imgContainer"}>
                                 <img
                                     className={classes.profile}
                                     id={'profileImg'}
@@ -280,6 +280,9 @@ export default class ViewProfile extends Component {
         }
     }
     showEditForm() {
+        if(document.getElementById("imgContainer") !== null) {
+           document.getElementById("imgContainer").style.left = "100px";
+        }
         if(document.getElementById("editLayer") !== null){
             document.getElementById("editLayer").style.visibility = 'visible';
             document.getElementById("editLayer").style.pointerEvents = 'all';
