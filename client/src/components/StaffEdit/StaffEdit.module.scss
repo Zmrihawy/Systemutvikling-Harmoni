@@ -1,0 +1,72 @@
+.container {
+    display: grid;
+    grid-template-areas:
+        'title              title'
+        'input__name        input__name'
+        'calendar           map'
+        'calendar           input__location'
+        'input__description input__description'
+        'button__submit     button__delete';
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+    margin: 50px auto;
+    place-items: center center;
+    width: 60%;
+}
+
+.title {
+    grid-area: title;
+    font-size: 4em;
+    font-weight: bolder;
+}
+
+.input__name {
+    grid-area: input__name;
+}
+
+.input__location {
+    grid-area: input__location;
+}
+
+.calendar {
+    grid-area: calendar;
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+    border: 1px solid lightgray;
+    overflow: hidden;
+}
+
+.map {
+    grid-area: map;
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    border-radius: 20px;
+    -webkit-box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+.input__description {
+    grid-area: input__description;
+    height: 500px;
+}
+
+.button__submit {
+    grid-area: button__submit;
+}
+
+.button__delete {
+    grid-area: button__delete;
+}
+
+.container > input,
+.container > textarea {
+    padding: 15px;
+    font-size: 1.4em;
+    background-color: #fdfdfd;
+    border-radius: 15px;
+    border: 1px solid lightgray;
+    width: 100%;
+}

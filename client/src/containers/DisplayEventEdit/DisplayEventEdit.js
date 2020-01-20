@@ -106,9 +106,10 @@ export default class DisplayEventEdit extends Component {
 
     handleButtonDeleteClick = e => {
         e.preventDefault();
-        eventService.deleteEvent(this.state.event.id)
-        .then(responce => history.push('/arrangement'))
-        .catch(error => console.error(error));
+        eventService
+            .deleteEvent(this.state.event.id)
+            .then(responce => history.push('/arrangement'))
+            .catch(error => console.error(error));
     };
 
     render() {

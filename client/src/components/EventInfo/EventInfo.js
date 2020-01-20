@@ -83,6 +83,7 @@ const eventInfo = props => {
 
             <div className={classes.artists}>
                 <h1 className={classes.subtitle}>Artister</h1>
+                <button className={classes.artist__button} onClick={props.handleArtistEditClick}>Rediger</button>
 
                 <div className={classes.artist__list}>
                     {props.artists.map((artist, i) => (
@@ -107,6 +108,7 @@ const eventInfo = props => {
 
             <div className={classes.tickets}>
                 <h1 className={classes.subtitle}>Billetter</h1>
+                <button className={classes.ticket__button} onClick={props.handleTicketEditClick}>Rediger</button>
 
                 <div className={classes.ticket__list}>
                     {props.tickets.map((ticket, i) => (
@@ -121,6 +123,7 @@ const eventInfo = props => {
 
             <div className={classes.staff}>
                 <h1 className={classes.subtitle}>Personell</h1>
+                <button className={classes.staff__button} onClick={props.handleStaffEditClick}>Rediger</button>
 
                 <div className={classes.staff__list}>
                     {props.staff.map((staff, i) => (
@@ -128,8 +131,9 @@ const eventInfo = props => {
                             <h2 className={classes.staff__name}>
                                 {staff.name}
                             </h2>
+
                             <p className={classes.staff_number}>
-                                Mobil: {staff.number}
+                                Kontakt: {staff.number}
                             </p>
                             <p className={classes.staff_proffesion}>
                                 {staff.profession}

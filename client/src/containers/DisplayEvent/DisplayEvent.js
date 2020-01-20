@@ -128,7 +128,23 @@ export default class DisplayEvent extends Component {
         history.push('/arrangement/user/id/rider');
     };
 
-    handleEditClick = () => history.push('/arrangement/' + this.state.id + '/rediger');
+    handleEditClick = () =>
+        history.push('/arrangement/' + this.state.id + '/rediger');
+
+    handleArtistEditClick = e => {
+        e.preventDefault();
+        history.push('/arrangement/' + this.state.id + '/rediger/artister');
+    };
+
+    handleTicketEditClick = e => {
+        e.preventDefault();
+        history.push('/arrangement/' + this.state.id + '/rediger/billetter');
+    };
+
+    handleStaffEditClick = e => {
+        e.preventDefault();
+        history.push('/arrangement/' + this.state.id + '/rediger/personell');
+    };
 
     render() {
         let artists = [
@@ -160,6 +176,9 @@ export default class DisplayEvent extends Component {
                 handleEditClick={this.handleEditClick}
                 tickets={this.state.tickets}
                 staff={this.state.staff}
+                handleArtistEditClick={this.handleArtistEditClick}
+                handleTicketEditClick={this.handleTicketEditClick}
+                handleStaffEditClick={this.handleStaffEditClick}
             />
         );
     }

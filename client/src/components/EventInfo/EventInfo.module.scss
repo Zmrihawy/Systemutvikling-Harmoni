@@ -147,6 +147,7 @@
     display: grid;
     grid-template-areas:
         'artist__title'
+        'artist__edit'
         'artist__list';
     grid-gap: 10px;
 }
@@ -156,6 +157,13 @@
     justify-self: center;
 }
 
+.artist__button {
+    grid-area: artist__edit;
+    padding: 0;
+    border: none;
+    font-size: 1.2em;
+
+}
 .artist__list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -279,8 +287,16 @@
     display: grid;
     grid-template-areas:
         'ticket__title'
+        'ticket__edit'
         'ticket__list';
     grid-gap: 10px;
+}
+
+.ticket__button {
+    grid-area: ticket__edit;
+    padding: 0;
+    border: none;
+    font-size: 1.2em;
 }
 
 .tickets > h1 {
@@ -356,9 +372,16 @@
     display: grid;
     grid-template-areas:
         'staff__title'
-        'staff__number'
+        'edit__staff'
         'staff__list';
     grid-gap: 10px;
+}
+
+.staff__button {
+    grid-area: edit__staff;
+    padding: 0;
+    border: none;
+    font-size: 1.2em;
 }
 
 .staff > h1 {
