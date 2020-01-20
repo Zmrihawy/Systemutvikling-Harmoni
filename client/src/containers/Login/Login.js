@@ -3,11 +3,15 @@ import './Login.css';
 import { User, userService } from '../../services';
 import { history } from '../App';
 import ShowPassword from '../Password/Password'
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2e4020b4d6f1b3f452d14e8ebd9bcd470c0facdb
 export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = new User();
+        this.state.email = window.sessionStorage.getItem('email');
     }
 
     render() {
@@ -16,7 +20,11 @@ export default class Login extends Component {
                 <div className="form" onSubmit={this.login}>
                     <form className="login-form" onSubmit={this.login}>
                     <p id = "error"></p><br/>
+<<<<<<< HEAD
                         <input type="email" required name="email" value={this.state.email} placeholder="E-post" onChange={this.onChange} />
+=======
+                        <input type="email" required name="email" value={this.state.email} placeholder="E-post" onChange={this.onChange} onLoad={() => this.state.email = window.localStorage.getItem('email')} />
+>>>>>>> 2e4020b4d6f1b3f452d14e8ebd9bcd470c0facdb
                         <ShowPassword parent={this} />
                         <input type="submit" value="Logg inn"></input>
                         <p className="message">
@@ -40,6 +48,8 @@ export default class Login extends Component {
     }
 
     onChange = event => {
+
+        if(event.target.name === 'email') window.sessionStorage.setItem('email', event.target.value);
         this.setState({
             [event.target.name]: event.target.value
         });

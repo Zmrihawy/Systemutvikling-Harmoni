@@ -3,7 +3,7 @@ import classes from './NavBar.module.scss';
 
 import { history } from '../../containers/App';
 
-import icon from '../../pictures/icon2.png';
+import icon from '../../pictures/icon4.png';
 import icon2 from '../../pictures/icon3.png';
 
 export default class NavBar extends Component {
@@ -15,7 +15,7 @@ export default class NavBar extends Component {
         if(window.sessionStorage.getItem('jwt') == undefined) return (
             <div className={classes.navBar}>
                 <div className={classes.logo} id="logo" onClick={ event => this.changePage('logo')}>
-                    <img src ={icon2} className={classes.logoImg}/>
+                    <img src ={icon2} alt = "logo" className={classes.logoImgText}/>
                 </div>
             </div>
         );
@@ -26,7 +26,7 @@ export default class NavBar extends Component {
                         Logg Ut
                     </div>
                     <div className={classes.logo} id="logo" onClick={ event => this.changePage('logo')}>
-                        <img src ={icon} className={classes.logoImg}/>
+                        <img src ={icon} alt = "logo" className={classes.logoImg}/>
                     </div>
                     <div className={classes.activeLink} id="eventLink" onClick={event => { this.changePage('eventLink'); }} >
                         Mine Arrangement
@@ -64,6 +64,9 @@ export default class NavBar extends Component {
                     case 'logo':
                         if(window.sessionStorage.getItem('jwt') == undefined) history.push('/');
                         else history.push('/user/' + window.sessionStorage.getItem('user'));
+                        break;
+                    default :
+                        console.log("error");
                 }
             }
         }
