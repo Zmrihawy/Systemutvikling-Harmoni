@@ -5,6 +5,8 @@ import Modal from '../../components/UI/Modal/Modal';
 import BasicForm from '../../components/BasicForm/BasicForm';
 import DatePicker from '../DatePicker/DatePicker';
 import ArtistAdder from '../eventCreation/ArtistAdder/ArtistAdder';
+import DescriptionAdder from '../../components/DescriptionAdder/DescriptionAdder';
+import LocationAdder from '../../containers/eventCreation/LocationAdder/LocationAdder';
 import StaffAdder from '../eventCreation/StaffAdder/StaffAdder';
 import TicketAdder from '../eventCreation/TicketAdder/TicketAdder';
 import RiderAdder from '../eventCreation/RiderAdder/RiderAdder';
@@ -21,11 +23,13 @@ import engineer from '../../assets/images/engineer.svg';
 export default class CreateEvent extends Component {
     state = {
         showBackdrop: false,
-        currentPage: 7,
+        currentPage: 0,
         newEvent: {
             title: '',
-            category: '',
-            location: '',
+            description: '',
+            location: 'Trondheim',
+            longitude: 10.3951,
+            latitude: 63.4305,
             times: [
                 moment().format('YYYY-MM-DD hh:mm:ss'),
                 moment().format('YYYY-MM-DD hh:mm:ss')
@@ -107,6 +111,21 @@ export default class CreateEvent extends Component {
         this.handleToggleBackdrop();
     };
 
+    handleMapClick = (map, e) => {
+        console.log('Map clicked');
+        let longitude = e.lngLat.lng;
+        let latitude = e.lngLat.lat;
+
+        let newEvent = {
+            ...this.state.newEvent
+        };
+
+        newEvent.latitude = latitude;
+        newEvent.longitude = longitude;
+
+        this.setState({ newEvent });
+    };
+
     handleSave = (input, select, action) => {
         let result;
         // Remove empty elements from the array
@@ -173,16 +192,13 @@ export default class CreateEvent extends Component {
             case 1:
                 current = (
                     <>
-                        <BasicForm
-                            key={this.state.currentPage}
-                            title="Hvilken type arrangement er det?"
-                            inputType="text"
-                            value={this.state.newEvent.category}
-                            name="category"
+                        <DescriptionAdder
+                            title="Hva skal beskrivelsen av arrangementet være?"
+                            value={this.state.newEvent.description}
+                            name="description"
                             next={this.handleNext}
                             previous={this.handlePrevious}
                             changed={this.handleChange}
-                            last
                         />
                     </>
                 );
@@ -191,15 +207,17 @@ export default class CreateEvent extends Component {
             case 2:
                 current = (
                     <>
-                        <BasicForm
+                        <LocationAdder
                             key={this.state.currentPage}
                             title="Hvor skal arrangementet være?"
                             inputType="text"
                             value={this.state.newEvent.location}
-                            name="location"
                             next={this.handleNext}
                             previous={this.handlePrevious}
                             changed={this.handleChange}
+                            longitude={this.state.newEvent.longitude}
+                            latitude={this.state.newEvent.latitude}
+                            mapClicked={this.handleMapClick}
                             last
                         />
                     </>
@@ -352,14 +370,20 @@ export default class CreateEvent extends Component {
     render() {
         let current = this.getCurrentPage();
         let image;
-        this.state.currentPage < 8
-            ? (image = manWithFiles)
-            : (image = engineer);
+        const currentPage = this.state.currentPage;
+        currentPage < 8 ? (image = manWithFiles) : (image = engineer);
+        if (currentPage === 2) image = null;
 
         return (
             <>
                 <div className={classes.CreateEvent__container}></div>
-                {<img className={classes.CreateEvent__image} src={image}></img>}
+                {image ? (
+                    <img
+                        className={classes.CreateEvent__image}
+                        src={image}
+                        alt="Filler Image"
+                    />
+                ) : null}
                 <div className={classes.CreateEvent}>{current}</div>
             </>
         );

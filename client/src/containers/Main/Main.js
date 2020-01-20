@@ -1,4 +1,3 @@
-import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import { HashRouter, Route } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';

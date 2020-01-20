@@ -5,7 +5,12 @@
         font-size: 3.5rem;
     }
 
-    &__buttons button {
-        margin-right: 5rem;
+    &__buttons {
+        display: flex;
+        width: max-content;
+
+        & button {
+            margin-right: 5rem;
+        }
     }
 }

@@ -7,7 +7,7 @@ const MapBox = ReactMapboxGl({
         'pk.eyJ1Ijoia3ZpbmxhdWdsb3ZlcjY0IiwiYSI6ImNrNTVid25kYTBld20zZnJ1bWQ5ODF1bXEifQ.8Ui5ppovKsFXEpf4hGM9Qw',
     scrollZoom: false
 });
-
+//map
 const map = props => {
     return (
         <MapBox
@@ -17,7 +17,7 @@ const map = props => {
                 width: '100%'
             }}
             center={[props.longitude, props.latitude]}
-            onClick={(props.handleMapClick)}
+            onClick={props.handleMapClick}
         >
             <Popup coordinates={[props.longitude, props.latitude]}>
                 <h1>{props.location}</h1>

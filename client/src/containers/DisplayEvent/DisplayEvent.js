@@ -19,7 +19,7 @@ export default class DisplayEvent extends Component {
     state = {
         id: null,
         title: '',
-        category: '',
+        description: '',
         location: '',
         ticketAmount: null,
         image: '',

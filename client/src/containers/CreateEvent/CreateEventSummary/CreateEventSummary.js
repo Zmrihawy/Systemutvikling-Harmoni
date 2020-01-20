@@ -12,7 +12,7 @@ const createEventSummary = props => {
             </div>
             <div id="1" style={{ textAlign: 'end' }}>
                 <div>{props.event.title}</div>
-                <div>{props.event.category}</div>
+                <div>{props.event.description}</div>
                 <div>{props.event.location}</div>
             </div>
         </div>

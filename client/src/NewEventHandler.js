@@ -3,13 +3,18 @@ import { eventService } from './services';
 class NewEventHandler {
     handleNewEvent = async newEvent => {
         try {
+            console.log(newEvent);
             const eventID = await this.saveEvent(
                 newEvent.title,
                 newEvent.location,
-                newEvent.category,
+                newEvent.longitude,
+                newEvent.latitude,
+                newEvent.description,
                 newEvent.times[0],
                 newEvent.times[1]
             );
+            console.log('Event:');
+            console.log(eventID);
 
             let ticketsSuccess;
             if (newEvent.tickets.length > 0) {
@@ -42,16 +47,26 @@ class NewEventHandler {
             console.log('Riders:');
             console.log(riderSuccess);
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
         }
     };
 
-    saveEvent = async (name, location, description, startTime, endTime) => {
+    saveEvent = async (
+        name,
+        location,
+        longitude,
+        latitude,
+        description,
+        startTime,
+        endTime
+    ) => {
         const event = await eventService.createEvent(
             1, //userID
             name,
             1,
             location,
+            longitude,
+            latitude,
             description,
             startTime,
             endTime
@@ -63,7 +78,6 @@ class NewEventHandler {
     saveTickets = async (tickets, eventID) => {
         const ticketsID = tickets.map(async ticket => {
             return await eventService.createTicket(
-                1,
                 ticket.description,
                 eventID,
                 ticket.price,
@@ -78,7 +92,6 @@ class NewEventHandler {
     saveCrew = async (staff, eventID) => {
         const staffID = staff.map(async staff => {
             return await eventService.createCrew(
-                1,
                 eventID,
                 staff.profession,
                 staff.name,
@@ -104,7 +117,8 @@ class NewEventHandler {
                     eventID,
                     startTime,
                     endTime,
-                    artist.name
+                    artist.name,
+                    ''
                 );
                 return performance.data.insertId;
             })
@@ -112,11 +126,13 @@ class NewEventHandler {
     };
 
     saveRiders = async (artists, performanceIDs) => {
+        console.log('[PerformanceIDS]:');
+        console.log(performanceIDs);
         const riderIDs = artists.map(async (artist, index) => {
+            console.log('[SaveRiders]');
             console.log(artist);
             return await artist.riders.map(async rider => {
                 return await eventService.createRider(
-                    1,
                     performanceIDs[index],
                     rider.description,
                     rider.amount

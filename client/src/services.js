@@ -152,7 +152,7 @@ class EventService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -191,7 +191,7 @@ class EventService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -233,7 +233,7 @@ class EventService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -268,7 +268,7 @@ class EventService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -294,18 +294,24 @@ class EventService {
         }
     }
 
-
     getContract(eventId: number, performanceId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
-            fetch('/api/event/' + eventId + '/performance/' + performanceId + '/contract', {
-                method: 'GET',
-                headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+            fetch(
+                '/api/event/' +
+                    eventId +
+                    '/performance/' +
+                    performanceId +
+                    '/contract',
+                {
+                    method: 'GET',
+                    headers: {
+                        'x-access-token': window.sessionStorage.getItem('jwt'),
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    }
                 }
-            })
+            )
                 .then(response => {
                     isError = isErrorStatus(response.status);
                     return response.json();
@@ -335,7 +341,7 @@ class EventService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -358,17 +364,14 @@ class EventService {
         }
     }
 
-    getContract(
-        eventId: number,
-        artistId: number
-    ): Promise<any> {
+    getContract(eventId: number, artistId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/user/' + artistId + '/contract', {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -396,7 +399,7 @@ class EventService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -424,7 +427,7 @@ class EventService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -454,17 +457,14 @@ class EventService {
         }
     }
 
-    getPerformanceRiders(
-        eventId: number,
-        performanceId: number
-    ): Promise<any> {
+    getPerformanceRiders(eventId: number, performanceId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/user/event/' + eventId + '/' + performanceId, {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -494,7 +494,7 @@ class EventService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -536,7 +536,7 @@ class EventService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -584,7 +584,7 @@ class EventService {
             active: active,
             location: location,
             longitude: longitude,
-            latitude: longitude,
+            latitude: latitude,
             description: description,
             startTime: startTime,
             endTime: endTime
@@ -595,7 +595,7 @@ class EventService {
                 method: 'POST',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -634,7 +634,7 @@ class EventService {
                 method: 'POST',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -658,21 +658,25 @@ class EventService {
         eventId: number,
         startTime: string,
         endTime: string,
+        name: string,
         contract: string
     ): Promise<any> {
         let data = {
             userId: userId,
             startTime: startTime,
             endTime: endTime,
+            name: name,
             contract: contract
         };
+        console.log('[CreatePerformance] data from services:');
+        console.log(data);
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/performance', {
                 method: 'POST',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -696,14 +700,14 @@ class EventService {
         name: string,
         amount: number
     ): Promise<any> {
-        let data = {name: name, amount: amount};
+        let data = { name: name, amount: amount };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/performance/' + performanceId + '/rider', {
                 method: 'POST',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -733,13 +737,15 @@ class EventService {
             name: name,
             contactInfo: contactInfo
         };
+        console.log('Crew:');
+        console.log(data);
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/crew', {
                 method: 'POST',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -764,14 +770,14 @@ class EventService {
         performanceId: number,
         name: string
     ): Promise<any> {
-        let data = {performanceId: performanceId, name: name};
+        let data = { performanceId: performanceId, name: name };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/rider', {
                 method: 'DELETE',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -797,7 +803,7 @@ class EventService {
                 method: 'DELETE',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -836,7 +842,7 @@ class EventService {
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -872,7 +878,7 @@ class EventService {
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -922,7 +928,7 @@ class EventService {
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -948,15 +954,22 @@ class EventService {
     ): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
-            fetch('/api/event/' + eventId + '/performance/' + performanceId + '/contract', {
-                method: 'PUT',
-                headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(contract)
-            })
+            fetch(
+                '/api/event/' +
+                    eventId +
+                    '/performance/' +
+                    performanceId +
+                    '/contract',
+                {
+                    method: 'PUT',
+                    headers: {
+                        'x-access-token': window.sessionStorage.getItem('jwt'),
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(contract)
+                }
+            )
                 .then(response => {
                     isError = isErrorStatus(response.status);
                     return response.json();
@@ -971,17 +984,14 @@ class EventService {
         });
     }
 
-    updatePicture(
-        eventId: number,
-        picture: File
-    ): Promise<any> {
+    updatePicture(eventId: number, picture: File): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/picture', {
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(picture)
@@ -1021,7 +1031,7 @@ class EventService {
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1059,7 +1069,7 @@ class EventService {
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1079,14 +1089,14 @@ class EventService {
     }
 
     deleteTicket(name: string, eventId: number): Promise<any> {
-        let data = {name: name, eventId: eventId};
+        let data = { name: name, eventId: eventId };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/ticket', {
                 method: 'DELETE',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1105,18 +1115,15 @@ class EventService {
         });
     }
 
-    deletePerformance(
-        eventId: number,
-        artistId: number
-    ): Promise<any> {
-        let data = {artistId: artistId};
+    deletePerformance(eventId: number, artistId: number): Promise<any> {
+        let data = { artistId: artistId };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/performance', {
                 method: 'DELETE',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1145,7 +1152,7 @@ class UserService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -1180,7 +1187,7 @@ class UserService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -1213,7 +1220,7 @@ class UserService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -1252,7 +1259,7 @@ class UserService {
                 method: 'DELETE',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -1292,7 +1299,7 @@ class UserService {
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1318,7 +1325,7 @@ class UserService {
             fetch('/user/' + email, {
                 method: 'PUT',
                 headers: {
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -1331,7 +1338,11 @@ class UserService {
         });
     }
 
-    updatePassword(userId: string, oldPassword: string, newPassword: string): Promise<any> {
+    updatePassword(
+        userId: string,
+        oldPassword: string,
+        newPassword: string
+    ): Promise<any> {
         let data = {
             oldPassword: oldPassword,
             newPassword: newPassword
@@ -1342,7 +1353,7 @@ class UserService {
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1361,17 +1372,14 @@ class UserService {
         });
     }
 
-    updatePicture(
-        userId: number,
-        picture: File
-    ): Promise<any> {
+    updatePicture(userId: number, picture: File): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/user/' + userId + '/picture', {
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(picture)
@@ -1389,7 +1397,6 @@ class UserService {
                 .catch(error => console.error('Error: ', error));
         });
     }
-
 
     //POST
     createUser(
@@ -1413,7 +1420,7 @@ class UserService {
             fetch('/user', {
                 method: 'POST',
                 headers: {
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1423,8 +1430,7 @@ class UserService {
                     return response.json();
                 })
                 .then(json => {
-                    if (isError)
-                        return reject(json);
+                    if (isError) return reject(json);
                     refreshToken(json.jwt);
                     console.log('services' + json);
                     resolve(json);
@@ -1447,7 +1453,7 @@ class UserService {
             fetch('/login', {
                 method: 'POST',
                 headers: {
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
