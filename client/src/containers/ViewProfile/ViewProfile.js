@@ -18,6 +18,9 @@ export default class ViewProfile extends Component {
         var intId = parseInt(this.props.match.params.id, 10);
         const user = await userService.getUser(intId);
         this.setState(user);
+        let picture = await userService.getPicture(intId)
+            .then(picLink => (document.getElementById("profileImg").src = picLink))
+        console.log(picture);
     }
     render() {
         return (
