@@ -694,8 +694,8 @@ app.post("/api/event", (req, res) => {
     else if (req.body.startTime == undefined) return res.status(400).json({error: "bad request : missing startTime parameter"});
     else if (req.body.userId == undefined) return res.status(400).json({error: "bad request : missing userId parameter"});
     else if (req.body.location == undefined) return res.status(400).json({error: "bad request : missing location parameter"});
-    else if (req.body.long == undefined) return res.status(400).json({error: "bad request : missing long parameter"});
-    else if (req.body.lat == undefined) return res.status(400).json({error: "bad request : missing lat parameter"});
+    else if (req.body.longitude == undefined) return res.status(400).json({error: "bad request : missing longitude parameter"});
+    else if (req.body.latitude == undefined) return res.status(400).json({error: "bad request : missing latitude parameter"});
 
 
     eventDao.createEvent({
