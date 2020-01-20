@@ -3,13 +3,11 @@
     grid-template-areas:
         'title '
         'desc__wrapper'
-        'staff__list'
-        'button__submit';
+        'form';
     grid-gap: 15px;
     margin: 50px auto;
     place-items: center center;
     width: 60%;
-    
 }
 
 .title {
@@ -18,45 +16,57 @@
     font-weight: bolder;
 }
 
-.desc__wrapper{
+.desc__wrapper {
     grid-area: desc__wrapper;
     display: grid;
-    grid-template-areas: 
-    'ph__name ph__contact ph__profession';
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: 'ph__name ph__contact ph__profession margin';
+    grid-template-columns: 1fr 1fr 1fr 60px;
     place-items: center center;
     width: 100%;
 }
 
-.ph__name{
+.desc__wrapper > p {
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+.ph__name {
     grid-area: ph__name;
-    font-size: 1.6em;
 }
 
-.ph__contact{
+.ph__contact {
     grid-area: ph__contact;
-    font-size: 1.6em;
 }
 
-.ph__profession{
+.ph__profession {
     grid-area: ph__profession;
-    font-size: 1.6em;
-
 }
 
-.staff__list{
-    display:grid;
+.form {
+    grid-area: form;
+    display: grid;
+    grid-template-areas:
+        'staff__list'
+        'button__add'
+        'button__submit';
+    grid-gap: 15px;
+    width: 100%;
+}
+
+.staff__list {
+    display: grid;
     grid-area: staff__list;
     grid-gap: 15px;
     width: 100%;
     place-items: center center;
-
 }
 
-.staff__wrapper{
-    grid-template-areas: 
-    'input__name input__contact input__profession button__delete';
-    grid-template-columns: 1fr 1fr 1fr 20px;
+.staff__wrapper {
+    display: grid;
+    grid-template-areas: 'input__name input__contact input__profession button__delete';
+    grid-template-columns: 1fr 1fr 1fr 60px;
+    grid-gap: 5px;
+    width: 100%;
 }
 
 .input__name {
@@ -64,7 +74,7 @@
 }
 
 .input__contactInfo {
-    grid-area: input__contactInfo;
+    grid-area: input__contact;
 }
 
 .input__profession {
@@ -73,12 +83,23 @@
 
 .button__delete {
     grid-area: button__delete;
-    background-color: red;
+}
+
+.button__add {
+    grid-area: button__add;
 }
 
 .button__submit {
     grid-area: button__submit;
+}
 
+.button__submit,
+.button__add {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.4em;
+    background-color: #fdfdfd;
+    border: 1px solid lightgray;
 }
 
 .staff__wrapper > input {
@@ -86,5 +107,4 @@
     font-size: 1.4em;
     background-color: #fdfdfd;
     border: 1px solid lightgray;
-    width: 33%;
 }
