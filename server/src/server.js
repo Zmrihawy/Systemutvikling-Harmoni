@@ -864,3 +864,17 @@ function sjekkMail(inc: string): boolean {
 var server = app.listen(8080);
 
 console.log("running");
+
+
+
+//
+// GET
+// PUT - /api/
+// event / event_id / picture
+//
+// GET
+// PUT - /api/us
+// er / user_id / picutre
+// GET
+// PUT - /api/
+// event / event_id / perfomance / performance_id / contract
