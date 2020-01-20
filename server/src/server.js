@@ -482,7 +482,8 @@ app.put("/user/:usermail", (req, res) => {
 
     userDao.getPassword(req.params.usermail, (status, data) => {
 
-        if (data.length !== 1) return res.status(400).json({errror: "user not found"});
+        if (data.length === 0) return res.status(400).json({errror: "user not found"});
+        if (data.length > 2) return res.status(501).json({errror: "internal server error"});
 
         let password = generator.generate({
             length: 12,
@@ -497,27 +498,37 @@ app.put("/user/:usermail", (req, res) => {
 
         pw = hashPW.digest('hex');
 
-        userDao.updatePassword({userId: data[0].user_id, password: pw}, (stat, dat) => {
-
-            let mailOptions = {
-                from: 'noreply.harmoni.123@gmail.com',
-                to: req.params.usermail,
-                subject: 'New Password',
-                text: `Her er ditt nye passord:\n${password}`
-            };
-
-            transporter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log('Email sent: ' + info.response);
-                }
-            });
-
-            res.status(200);
-            res.send();
-        });
+        if(data.length === 0){
+            userDao.createPassword({
+                userId : data[0].user_id, password : pw, autogen : 1
+            }, (stat, dat) => sendMail(req, res, password));
+        } else {
+            userDao.updatePassword({
+                passId : data[1].password_id, password : pw, autogen : 1
+            }, (stat, dat) => sendMail(req, res, password));
+        }
     });
+
+    function sendMail(req, res, password){
+            
+        let mailOptions = {
+            from: 'noreply.harmoni.123@gmail.com',
+            to: req.params.usermail,
+            subject: 'New Password',
+            text: `Her er ditt nye passord:\n${password}`
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+
+        res.status(200);
+        res.send();
+    }
 });
 
 //Update password
@@ -548,7 +559,7 @@ app.put("/api/user/:user_id/password", (req, res) => {
         hashpw2.update(pw);
         pw = hashpw2.digest('hex');
 
-        userDao.updatePassword({userId: req.userId, password: pw}, (status, data) => {
+        userDao.setPassword({userId: req.userId, password: pw}, (status, data) => {
             res.status(status);
             let token = thisFunctionCreatesNewToken(req.mail, req.userId);
             res.json({data, jwt: token});

@@ -19,6 +19,15 @@ CREATE TABLE `user` (
   PRIMARY KEY (user_id)
 );
 
+CREATE TABLE password (
+  password_id int(11) NOT NULL AUTO_INCREMENT,
+  password BINARY(64) NOT NULL,
+  user_id int(11) NOT NULL,
+  autogen int(1), -- 0 => brukergenerert 1 => autogenerert
+  PRIMARY KEY (password_id),
+  FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
+);
+
 CREATE TABLE `event` (
   event_id int(11) NOT NULL AUTO_INCREMENT,
   name varchar(100) NOT NULL,

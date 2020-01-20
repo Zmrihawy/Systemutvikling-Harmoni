@@ -53,6 +53,12 @@ CREW_NAME :string;
 CREW_CONTACT_INFO :string;
 CREW_EVENT_ID :string;
 
+PASSWORD_TABLE :string;
+PASSWORD_ID : string;
+PASSWORD_USER_ID: string;
+PASSWORD_PASSWORD: string;
+PASSWORD_AUTOGEN : string;
+
     constructor() {
         this.EVENT_TABLE = "event";
         this.EVENT_ID = "event_id";
@@ -104,5 +110,11 @@ CREW_EVENT_ID :string;
         this.CREW_NAME = "name";
         this.CREW_CONTACT_INFO = "contact_info";
         this.CREW_EVENT_ID = "event_id";
+
+        this.PASSWORD_TABLE = "password";
+        this.PASSWORD_ID = "password_id";
+        this.PASSWORD_USER_ID = "user_id";
+        this.PASSWORD_PASSWORD = "password";
+        this.PASSWORD_AUTOGEN  = "autogen";
     }
 };
