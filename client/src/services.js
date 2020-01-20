@@ -509,6 +509,8 @@ class EventService {
                         userId,
                         active,
                         data.location,
+                        data.longitude,
+                        data.latitude,
                         '',
                         data.start_time,
                         ''
