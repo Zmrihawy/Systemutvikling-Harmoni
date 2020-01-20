@@ -662,7 +662,6 @@ class EventService {
     ): Promise<any> {
         let data = {
             userId: userId,
-            eventId: eventId,
             startTime: startTime,
             endTime: endTime,
             contract: contract
@@ -1012,7 +1011,6 @@ class EventService {
         let data = {
             userId: userId,
             performanceId: performanceId,
-            eventId: eventId,
             startTime: startTime,
             endTime: endTime,
             contract: contract
@@ -1193,12 +1191,12 @@ class UserService {
                 .then(json => {
                     if (isError) return reject(json);
                     refreshToken(json.jwt);
-                    resolve(handleGetUserResponse(json.data));
+                    resolve(handleGetPictureResponse(json.data));
                 })
                 .catch(error => console.error('Error: ', error));
         });
 
-        function handleGetUserResponse(json: *) {
+        function handleGetPictureResponse(json: *) {
             var arrayBufferView = new Uint8Array(json.data);
             var blob = new Blob([arrayBufferView], {type: 'image'});
             var urlCreator = window.URL || window.webkitURL;
