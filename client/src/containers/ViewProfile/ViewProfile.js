@@ -34,35 +34,10 @@ export default class ViewProfile extends Component {
                             </div>
                             <button
                                 className={classes.redigerBtn} id={"redigerBtn"}
-                                onClick={this.showImageForm}
                             >
                                 ✎
                             </button>
-                            <div
-                                className={classes.imageForm}
-                                id={'imageFormId'}
-                            >
-                                    <div className={classes.column}>
-                                        <label id={'imgLabel'}>
-                                            <b>Skrive inn link</b>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="imgInput"
-                                            placeholder="eks: 123bilde.jpg"
-                                        />
-                                        <button
-                                            type="submit"
-                                            className={classes.imgBtn}
-                                            id={'imgBtn'}
-                                            onClick={this.changePic}
-                                        >
-                                            ✓
-                                        </button>
-                                    </div>
-                            </div>
                         </div>
-                        <div className={classes.column}>
                             <div className={classes.bioLayer}>
                                 <h1 className={classes.h1} id={'nameP'}>
                                     {'' +
@@ -71,17 +46,9 @@ export default class ViewProfile extends Component {
                                         this.state.surname +
                                         ''}
                                 </h1>
-                                <b />
-                                <div className={classes.p} id={'usernameP'}>
-                                    Brukernavn: {this.state.username}
-                                </div>
-                                <b />
+                                <p>Artist</p>
                                 <div className={classes.p} id={'emailP'}>
-                                    Epost: {this.state.email}
-                                </div>
-                                <b />
-                                <div className={classes.p} id={'telephoneP'}>
-                                    Telefonnummer: {this.state.phone}
+                                    {this.state.email}
                                 </div>
                                 <button className={classes.redigerBrukerBtn} id={"redigerBrukerBtn"} onClick={this.showEditForm}>Rediger bruker</button>
                             </div>
@@ -183,7 +150,6 @@ export default class ViewProfile extends Component {
                                     </button>
                                 </div>
                             </div>
-                        </div>
                     </div>
             </div>
         );
@@ -294,8 +260,6 @@ export default class ViewProfile extends Component {
                 document.getElementById(
                     'profileImg'
                 ).src = document.getElementById('imgInput').value;
-                document.getElementById('imageFormId').style.visibility =
-                    'hidden';
                 if (document.getElementById('redigerBtn') !== null) {
                     document.getElementById('redigerBtn').style.visibility = 'visible';
                     document.getElementById('redigerBtn').style.pointerEvents = 'all';
@@ -313,17 +277,6 @@ export default class ViewProfile extends Component {
                         'Du må skrive inn gyldig bildeLink!';
                 }
             }
-        }
-    }
-    showImageForm() {
-        if (document.getElementById('redigerBtn') !== null) {
-            document.getElementById('redigerBtn').style.visibility = 'hidden';
-            document.getElementById('redigerBtn').style.pointerEvents = 'none';
-        }
-
-        if (document.getElementById('imageFormId') !== null) {
-            document.getElementById('imageFormId').style.visibility = 'visible';
-            document.getElementById('imgLabel').innerHTML = 'Link: ';
         }
     }
     showEditForm() {
