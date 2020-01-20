@@ -88,6 +88,9 @@ input:focus {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
     transition: 0.3s;
 }
+.profileBackground {
+    width: 100%;
+}
 .profile:hover{
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
 }

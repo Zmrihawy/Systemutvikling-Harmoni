@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classes from './ViewProfile.module.scss';
 import { userService } from '../../services';
 import profileHolder from '../../pictures/profileHolder.svg';
+import profileBackground from '../../pictures/profileBackground.svg';
 export default class ViewProfile extends Component {
     constructor(props) {
         super(props);
@@ -16,11 +17,7 @@ export default class ViewProfile extends Component {
     }
     async componentDidMount() {
         var intId = parseInt(this.props.match.params.id, 10);
-
         const user = await userService.getUser(intId);
-
-        console.log(user);
-
         this.setState(user);
     }
     render() {
@@ -189,6 +186,7 @@ export default class ViewProfile extends Component {
                             </div>
                         </div>
                     </div>
+                <img src={profileBackground} className={classes.profileBackground}/>
             </div>
         );
     }
@@ -234,12 +232,9 @@ export default class ViewProfile extends Component {
         ) {
             if(document.getElementById('repeatPasswordInp') !== null &&
             document.getElementById('repeatPasswordInp').value === document.getElementById('passwordInp').value){
-                console.log("heinrich")
                 if(document.getElementById('oldPasswordInp') !== null &&
                 document.getElementById('oldPasswordInp').value !== ''){
-                    console.log("helsikke")
                     if(this.checkUpdatePassword()){
-                        console.log("woop");
                     }
                 }
             }
