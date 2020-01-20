@@ -689,8 +689,7 @@ app.post("/user", (req, res) => {
 app.post("/api/event", (req, res) => {
     console.log("Fikk POST-request fra klienten");
 
-    if (req.body.name == undefined) return res.status(400).json({error: "request missing event-name"});
-    else if (numberError([req.body.active])) return res.status(400).json({error: "number field is a string"});
+    if (numberError([req.body.active])) return res.status(400).json({error: "number field is a string"});
     else if (req.body.eventName == undefined) return res.status(400).json({error: "bad request : missing eventName parameter"});
     else if (req.body.startTime == undefined) return res.status(400).json({error: "bad request : missing startTime parameter"});
     else if (req.body.userId == undefined) return res.status(400).json({error: "bad request : missing userId parameter"});
