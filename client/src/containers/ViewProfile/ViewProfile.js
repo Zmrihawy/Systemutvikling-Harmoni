@@ -145,7 +145,7 @@ export default class ViewProfile extends Component {
                                 </div>
                                 <div className={classes.row}>
                                     <h5 className={classes.editHeader}>
-                                        <b>Rediger Passord</b>
+                                        <b>Endre Passord</b>
                                     </h5>
                                     <br/>
                                     <div className={classes.editTitle}>
@@ -180,7 +180,7 @@ export default class ViewProfile extends Component {
                                             this.eventHandler()
                                         }
                                     >
-                                        ✓
+                                        Lagre endringene
                                     </button>
                                 </div>
                             </div>
@@ -252,9 +252,6 @@ export default class ViewProfile extends Component {
     }
     checkUpdatePassword(){
         let verified = true;
-        console.log(this.state.id);
-        console.log(document.getElementById("oldPasswordInp").value);
-        console.log(document.getElementById("passwordInp").value)
         userService.updatePassword(this.state.id,(document.getElementById("oldPasswordInp").value),(document.getElementById('passwordInp').value))
             .catch((error: Error) => verified = false);
         return verified;
