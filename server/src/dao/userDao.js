@@ -70,11 +70,11 @@ module.exports = class UserDao extends Dao {
 
 
     /**UPLOADS AND DOWNLOADS*/
-    getUserPicture(userId: string | number, callback: (status: number, data: *) => void) {
+    downloadPicture(userId: string | number, callback: (status: number, data: *) => void) {
         super.query(`SELECT ${CONSTANTS.USER_PICTURE} FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_ID} = ?`,
             [userId], callback);
     }
-    uploadUserPicture(userId: string | number, picture: any, callback: (status: number, data: *) => void) {
+    uploadPicture(userId: string | number, picture: any, callback: (status: number, data: *) => void) {
         super.query(`UPDATE ${CONSTANTS.USER_TABLE} SET ${CONSTANTS.USER_PICTURE} = ? WHERE ${CONSTANTS.USER_ID} = ?`,
             [picture, userId], callback);
     }

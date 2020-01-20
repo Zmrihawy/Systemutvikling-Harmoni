@@ -60,7 +60,7 @@ module.exports = class ServerDao extends Dao {
 
     createPerformance(sql: { artistId: string | number, eventId: string | number, startTime: string, endTime: string, name: string, contract: string }, callback: (status: number, data: *) => void) {
         super.query(`INSERT INTO ${CONSTANTS.PERFORMANCE_TABLE} (${CONSTANTS.PERFORMANCE_ARTIST_ID},${CONSTANTS.PERFORMANCE_EVENT_ID},${CONSTANTS.PERFORMANCE_START_TIME},${CONSTANTS.PERFORMANCE_END_TIME},${CONSTANTS.PERFORMANCE_NAME},
-                    ${CONSTANTS.PERFORMANCE_CONTRACT}) VALUES (?,?,?,?,?) `, [sql.artistId, sql.eventId, sql.startTime, sql.endTime, sql.name, sql.contract], callback);
+                    ${CONSTANTS.PERFORMANCE_CONTRACT}) VALUES (?,?,?,?,?,?) `, [sql.artistId, sql.eventId, sql.startTime, sql.endTime, sql.name, sql.contract], callback);
     }
 
     createRider(sql: { performanceId: string | number, name: string, amount: string | number }, callback: (status: number, data: *) => void) {
@@ -131,12 +131,12 @@ module.exports = class ServerDao extends Dao {
         super.query(`SELECT ${CONSTANTS.PERFORMANCE_CONTRACT} FROM ${CONSTANTS.PERFORMANCE_TABLE} WHERE ${CONSTANTS.PERFORMANCE_ID} = ?`, [performanceId], callback);
     }
 
-    uploadEventPicture(eventId: string | number, picture: any, callback: (status: number, data: *) => void) {
+    uploadPicture(eventId: string | number, picture: any, callback: (status: number, data: *) => void) {
         super.query(`UPDATE ${CONSTANTS.EVENT_TABLE} SET ${CONSTANTS.EVENT_PICTURE} = ? WHERE ${CONSTANTS.EVENT_ID} = ?`,
             [picture, eventId], callback);
     }
 
-    getEventPicture(eventId: string | number, callback: (status: number, data: *) => void) {
+    downloadPicture(eventId: string | number, callback: (status: number, data: *) => void) {
         super.query(`SELECT ${CONSTANTS.EVENT_PICTURE} FROM ${CONSTANTS.EVENT_TABLE} WHERE ${CONSTANTS.EVENT_ID} = `,
             [eventId], callback);
     }
