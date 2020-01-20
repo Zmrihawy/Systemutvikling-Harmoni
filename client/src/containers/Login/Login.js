@@ -18,7 +18,7 @@ export default class Login extends Component {
                     <form className="login-form" onSubmit={this.login}>
                     <p id = "error"></p><br/>
                         <input type="email" required name="email" value={this.state.email} placeholder="E-post" onChange={this.onChange} />
-                        <ShowPassword parent={this} />
+                        <ShowPassword/>
                         <input type="submit" value="Logg inn"></input>
                         <p className="message">
                             Ikke registrert?{' '}
@@ -52,7 +52,7 @@ export default class Login extends Component {
         event.preventDefault();
 
         userService
-            .loginUser(this.state.password, this.state.email)
+            .loginUser(document.getElementById("pass").value, this.state.email)
             .then(data => console.log(data))
             .then(none => {
               history.push('/user/' + window.sessionStorage.getItem('user'));

@@ -43,16 +43,14 @@ export default class ShowPassword extends Component{
   render(){
       if(document.URL.indexOf('registrer') >= 0) return (
             <label className="password">
-            <input type={this.state.type} id ="pw" placeholder="Password" className="password__input" onChange={ () => this.passwordStrength
-                //this.parent.state.password = this.value;
-                }/>
+            <input type={this.state.type} id ="pw" placeholder="Password" className="password__input" onChange={this.passwordStrength}/>
             <span className="password__show" onClick={this.showHide}>{this.state.type === 'input' ? 'Hide' : 'Show'}</span>
             <span className="password__strength" data-score={this.state.score} />
             </label>
       ); 
       else return (
             <label className="password">
-            <input type={this.state.type} placeholder="Password" className="password__input" onChange={this.passwordStrength}/>
+            <input type={this.state.type} id="pass" placeholder="Password" className="password__input" onChange={this.passwordStrength}/>
             <span className="password__show" onClick={this.showHide}>{this.state.type === 'input' ? 'Hide' : 'Show'}</span>
             </label>
       )
