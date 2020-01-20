@@ -9,3 +9,7 @@ client.once('ready', () => {
     client.channels.get('668080630696771604')
     .send('Server online');
 });
+
+client.on('message', (message) => {
+  if(message.content.startsWith("!status")) return message.reply("Online");
+});
