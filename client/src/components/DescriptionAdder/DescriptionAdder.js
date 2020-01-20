@@ -1,10 +1,11 @@
 import React from 'react';
 
 import Type from '../UI/Type/Type';
+import classes from './DescriptionAdder.module.scss';
 
 const descriptionAdder = props => {
     return (
-        <>
+        <div className={classes.DescriptionAdder}>
             <div className="MediumTitle">
                 <Type strings={props.title} speed={50} />
             </div>
@@ -34,7 +35,7 @@ const descriptionAdder = props => {
                     />
                 </div>
             </form>
-        </>
+        </div>
     );
 };
 
