@@ -65,7 +65,7 @@ export class Rider {
     amount: number;
     confirmed: number;
 
-    constructor(id: number, name: string, amount: number) {
+    constructor(id: number, name: string, amount: number, confirmed: number) {
         this.id = id;
         this.name = name;
         this.amount = amount;
@@ -786,8 +786,9 @@ class EventService {
 
     //DELETE
     //HAR
-    deleteCrew(crewId: number): Promise<any> {
+    deleteCrew(eventId: number, crewId: number): Promise<any> {
         let isError: boolean = false;
+        let data = {crewId: crewId};
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/crew', {
             method: 'DELETE',
@@ -1081,6 +1082,7 @@ class EventService {
     }
     //har
     updateCrew(
+        oldName: string,
         eventId: number,
         crewId: number,
         profession: string,
