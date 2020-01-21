@@ -249,8 +249,8 @@ export default class ViewProfile extends Component {
 
         if(document.getElementById("imgContainer") !== null && document.getElementById("redigerBtn") !==
             null && document.getElementById("bioLayer") !== null) {
-            document.getElementById("imgContainer").style.left = "calc(50% - 12vw)";
-            document.getElementById("bioLayer").style.left = "calc(50% - 150px)";
+            document.getElementById("imgContainer").style.left = "calc(50% - 11vw)";
+            document.getElementById("bioLayer").style.left = "calc(50% - 12vw)";
             document.getElementById("redigerBtn").style.left = "calc(50% - 120px)";
         }
 
@@ -261,7 +261,7 @@ export default class ViewProfile extends Component {
         null && document.getElementById("bioLayer") !== null) {
            document.getElementById("imgContainer").style.left = "10%";
            document.getElementById("bioLayer").style.left = "10%";
-           document.getElementById("redigerBtn").style.left = "calc(10% + 20px)";
+           document.getElementById("redigerBtn").style.left = "calc(10% + 30px)";
         }
         if(document.getElementById("editLayer") !== null){
             document.getElementById("editLayer").style.visibility = 'visible';

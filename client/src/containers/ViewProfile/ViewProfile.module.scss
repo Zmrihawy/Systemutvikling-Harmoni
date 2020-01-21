@@ -18,7 +18,7 @@
 }
 .bioLayer{
     top: 450px;
-    left: calc(50% - 150px);
+    left: calc(50% - 12vw);
     position: absolute;
     background-color: white;
     border: 3px solid #ff9f43;
@@ -27,7 +27,7 @@
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
     transition: 0.5s;
     font-size: 20px;
-    width: 300px;
+    width: 24vw;
     text-align: center;
     padding: 5px 30px;
 }
@@ -61,7 +61,7 @@
 .imgContainer {
     position: absolute;
     width: 24vw;
-    left: calc(50% - 12vw);
+    left: calc(50% - 11vw);
     max-width: 400px;
     transition-duration: 0.5s;
 }
@@ -85,8 +85,8 @@ input:focus {
     outline: none;
 }
 .profile {
-    width: 300px;
-    height: 300px;
+    width: 22vw;
+    height: 22vw;
     border-radius: 50%;
     border: 3px solid #ff9f43;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
