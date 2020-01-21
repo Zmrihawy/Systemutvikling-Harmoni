@@ -1257,6 +1257,7 @@ class UserService {
     }
 
     getAllArtists(): Promise<any> {
+        
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/user', {
