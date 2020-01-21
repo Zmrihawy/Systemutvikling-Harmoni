@@ -16,6 +16,7 @@ module.exports = function Constants() {
   this.EVENT_DESCRIPTION = "description";
   this.EVENT_START_TIME = "start_time";
   this.EVENT_END_TIME = "end_time";
+  this.EVENT_PICTURE = "picture";
   this.TICKET_TABLE = "ticket";
   this.TICKET_NAME = "name";
   this.TICKET_EVENT_ID = "event_id";
@@ -50,4 +51,9 @@ module.exports = function Constants() {
   this.CREW_NAME = "name";
   this.CREW_CONTACT_INFO = "contact_info";
   this.CREW_EVENT_ID = "event_id";
+  this.PASSWORD_TABLE = "password";
+  this.PASSWORD_ID = "password_id";
+  this.PASSWORD_USER_ID = "user_id";
+  this.PASSWORD_PASSWORD = "password_hex";
+  this.PASSWORD_AUTOGEN = "autogen";
 };

@@ -50,6 +50,10 @@ const pool: pool = mysql.createPool({
     multipleStatements: true
 });
 
+pool.on('error',  (req,res) => {
+    return res.status(500).json({error : "internal server error"});
+});
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
