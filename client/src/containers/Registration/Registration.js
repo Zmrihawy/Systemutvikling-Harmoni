@@ -109,9 +109,6 @@ export default class Registration extends Component {
     register = event => {
         event.preventDefault();
 
-        console.log(document.querySelector("#pw1"));
-        console.log(document.querySelector("#pw2"));
-
         if(document.querySelector("#pw2").value !== document.querySelector("#pw1").value) return document.querySelector('#error').innerHTML = "Passord-felter matcher ikke";
 
         userService
@@ -134,12 +131,9 @@ export default class Registration extends Component {
                     )
             )
             .then(() => {
-                console.log('Token:');
-                console.log(window.sessionStorage.getItem('user'));
                 history.push('/user/' + window.sessionStorage.getItem('user'));
             })
             .catch(data => {
-                console.log(data);
 
                 let err = document.querySelector('#error');
 

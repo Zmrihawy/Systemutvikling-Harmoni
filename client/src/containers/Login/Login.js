@@ -65,7 +65,6 @@ export default class Login extends Component {
 
         userService
             .loginUser(document.getElementById('pw').value, this.state.email)
-            .then(data => console.log(data))
             .then(none => {
                 history.push('/user/' + window.sessionStorage.getItem('user'));
             })

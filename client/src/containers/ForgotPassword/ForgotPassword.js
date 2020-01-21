@@ -47,13 +47,10 @@ export default class ForgotPassword extends Component {
     newPw = event => {
         event.preventDefault();
 
-        console.log(this.state.email);
-
         userService
             .forgotPassword(this.state.email)
             .then(() => history.push('/login'))
             .catch(data => {
-                console.log(data);
                 document.querySelector("#error").innerHTML = 'E-mail ikke registrert';
             });
     };
