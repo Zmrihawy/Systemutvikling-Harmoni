@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classes from './ViewProfile.module.scss';
 import { userService } from '../../services';
 import profileHolder from '../../pictures/profileHolder.svg';
+
 export default class ViewProfile extends Component {
     constructor(props) {
         super(props);
@@ -11,16 +12,15 @@ export default class ViewProfile extends Component {
             email: null,
             phone: null,
             firstName: null,
-            surname: null
+            surname: null,
+            picture: null
         };
     }
     async componentDidMount() {
         var intId = parseInt(this.props.match.params.id, 10);
         const user = await userService.getUser(intId);
         this.setState(user);
-        let picture = await userService.getPicture(intId)
-            .then(picLink => (document.getElementById("profileImg").src = picLink))
-        console.log(picture);
+        document.getElementById("profileImg").src = this.state.picture;
     }
     render() {
         return (
@@ -32,6 +32,9 @@ export default class ViewProfile extends Component {
                                     className={classes.profile}
                                     id={'profileImg'}
                                     src={profileHolder}
+                                    onError={
+                                        this.fileError
+                                    }
                                     alt="Profile picture"
                                 />
                             </div>
@@ -270,7 +273,7 @@ export default class ViewProfile extends Component {
                 console.log("change");
                 if(document.getElementById("editLayer") !== null){
                     document.getElementById("editLayer").innerHTML =
-                        '<h4 className={classes.editHeader}>\n' +
+                        "<h4 className={classes.editHeader}>\n" +
                             '<b>Rediger Info</b>\n' +
                         '</h4>' +
                         '<div className={classes.editTitle}>\n' +
@@ -288,8 +291,63 @@ export default class ViewProfile extends Component {
                             'id={\'emailInp\'}\n' +
                             'className={classes.input}\n' +
                             'type="text"\n' +
-                        '/>'
-
+                        '/>' +
+                        '<div className={classes.editTitle}>\n' +
+                            'Telefon\n' +
+                        '</div>\n' +
+                        '<input\n' +
+                            'id={\'telephoneInp\'}\n' +
+                            'className={classes.input}\n' +
+                            'type="text"\n' +
+                            '/>\n' +
+                        '</div>' +
+                        '<div className={classes.editTitle}>\n' +
+                            'Fornavn\n' +
+                        '</div>\n' +
+                        '<input\n' +
+                            'id={\'firstNameInp\'}\n' +
+                            'className={classes.input}\n' +
+                            'type="text"\n' +
+                        '/>\n' +
+                        '</div>' +
+                        '<div className={classes.editTitle}>\n' +
+                            'Etternavn\n' +
+                        '</div>\n' +
+                        '<input\n' +
+                            'id={\'surnameInp\'}\n' +
+                            'className={classes.input}\n' +
+                        '   type="text"\n' +
+                            '/>\n' +
+                        '<div className={classes.editTitle}>\n' +
+                            'Gammel Passord\n' +
+                        '</div>\n' +
+                        '<input\n' +
+                            'id={\'oldPasswordInp\'}\n' +
+                            'className={classes.input}\n' +
+                            'type="password"\n' +
+                        '/>\n' +
+                        '</div>' +
+                        '<div className={classes.editTitle}>\n' +
+                            'Nytt Passord\n' +
+                        '</div>\n' +
+                        '<input\n' +
+                            'id={\'passwordInp\'}\n' +
+                            'className={classes.input}\n' +
+                            'type="password"\n' +
+                        '/>\n' +
+                        '</div>' +
+                        '<div className={classes.editTitle}>\n' +
+                        'Gjenta Nytt Passord\n' +
+                        '</div>\n' +
+                        '<input\n' +
+                        'id={\'repeatPasswordInp\'}\n' +
+                        'className={classes.input}\n' +
+                        'type="password"\n' +
+                        '/>\n' +
+                        '</div>' +
+                        '<br>' +
+                        '<button onclick={console.log(this.state.username)}> Lagre Endringer </button>' +
+                        '</div>'
                 }
             }
         }
@@ -301,6 +359,11 @@ export default class ViewProfile extends Component {
             document.getElementById("redigerBrukerBtn").style.visibility = 'hidden';
             document.getElementById("redigerBrukerBtn").style.pointerEvents = 'none';
 
+        }
+    }
+    fileError(){
+        if((document.getElementById('profileImg')) !== null){
+            document.getElementById('profileImg').src = profileHolder;
         }
     }
 }
