@@ -77,9 +77,9 @@ app.use("/api", (req, res, next) => {
             console.log("Token IKKE ok");
             res.status(401).json({error: "Not authorized -> Token Expired"});
         } else {
-            console.log(req.email + "har gjort en request");
             req.email = decoded.email;
             req.userId = decoded.userId;
+            console.log(req.userId + "har gjort en request");
             next();
         }
         ;
