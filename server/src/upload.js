@@ -18,7 +18,7 @@ module.exports = class Uploader {
             // e.g. save it to the database
             // you can access it using file.path
 
-            console.log('Received file!')
+            console.log('Received file!');
 
 
             fs.readFile(file.path, (err, data) => {
