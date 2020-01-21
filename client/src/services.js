@@ -913,9 +913,7 @@ class EventService {
         latitude: number,
         description: string,
         startTime: string,
-        endTime: string,
-        latitude: number,
-        longitude: number
+        endTime: string
     ): Promise<any> {
         let data = {
             eventId: eventId,
@@ -927,9 +925,7 @@ class EventService {
             latitude: latitude,
             description: description,
             startTime: startTime,
-            endTime: endTime,
-            latitude: longitude,
-            longitude: latitude
+            endTime: endTime
         };
         let isError: boolean = false;
         console.log('jeg er ikke kokken din!');
