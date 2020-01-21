@@ -18,7 +18,7 @@
 }
 .bioLayer{
     top: 450px;
-    left: 540px;
+    left: calc(50% - 150px);
     position: absolute;
     background-color: white;
     border: 3px solid #ff9f43;
@@ -61,7 +61,7 @@
 .imgContainer {
     position: absolute;
     width: 24vw;
-    left: 540px;
+    left: calc(50% - 12vw);
     max-width: 400px;
     transition-duration: 0.5s;
 }
@@ -138,7 +138,7 @@ input:focus {
 .redigerBtn {
     position: absolute;
     top: 350px;
-    left: 560px;
+    left: calc(50% - 120px);
     width: 65px;
     height: 65px;
     background-color: whitesmoke;
