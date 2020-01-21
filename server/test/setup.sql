@@ -15,7 +15,7 @@ CREATE TABLE `user` (
   phone varchar(30) NOT NULL,
   first_name varchar(300) DEFAULT NULL,
   surname varchar(300) NOT NULL,
-  picture varbinary(400) DEFAULT NULL,
+  picture longblob DEFAULT NULL,
   PRIMARY KEY (user_id)
 );
 
@@ -39,6 +39,7 @@ CREATE TABLE `event` (
   description varchar(150) DEFAULT NULL,
   start_time datetime NOT NULL,
   end_time datetime NOT NULL,
+  picture longblob,
   PRIMARY KEY (event_id),
   FOREIGN KEY (host_id) REFERENCES user(user_id)
 );
