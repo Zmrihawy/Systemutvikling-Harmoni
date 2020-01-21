@@ -6,7 +6,7 @@
         'calendar           map'
         'calendar           input__location'
         'input__description input__description'
-        'button__submit     button__submit';
+        'button__submit     button__delete';
     grid-template-columns: 1fr 1fr;
     grid-gap: 15px;
     margin: 50px auto;
@@ -33,6 +33,8 @@
     height: 100%;
     width: 100%;
     border-radius: 20px;
+    border: 1px solid lightgray;
+    overflow: hidden;
 }
 
 .map {
@@ -53,6 +55,10 @@
 
 .button__submit {
     grid-area: button__submit;
+}
+
+.button__delete {
+    grid-area: button__delete;
 }
 
 .container > input,

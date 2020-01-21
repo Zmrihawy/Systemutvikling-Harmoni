@@ -15,19 +15,35 @@ import {
 
 export default class DisplayEventOverview extends Component {
     state = {
-        events: []
+        activeEvents: [],
+        archivedEvents: [],
+        keyword: ""
     };
+    
+    handleSearch = e => {
+        this.setState({ keyword: e.target.value });
+    };
+
 
     handleButtonClick = id => {
-        history.push('/arrangement/' + id);
+        history.push('/arrangement/' + id )
     };
 
+
     async componentDidMount() {
+        let id = window.sessionStorage.getItem('user');
+
         eventService
-            //TODO Hardkoda
-            .getUsersEvents(1, 1)
+            .getUsersEvents(id, 1)
             .then(serverEvents => {
-                this.setState({ events: serverEvents });
+                this.setState({ activeEvents: serverEvents, fullActive: serverEvents });
+            })
+            .catch(error => console.error(error));
+
+        eventService
+            .getUsersEvents(id, 0)
+            .then(serverEvents => {
+                this.setState({ archivedEvents: serverEvents, fullArchive: serverEvents });
             })
             .catch(error => console.error(error));
     }
@@ -35,8 +51,10 @@ export default class DisplayEventOverview extends Component {
     render() {
         return (
             <EventOverview
-                events={this.state.events}
+                activeEvents={this.state.activeEvents.filter(str => str.name.toLowerCase().includes(this.state.keyword))}
+                archivedEvents={this.state.archivedEvents.filter(str => str.name.toLowerCase().includes(this.state.keyword))}
                 handleButtonClick={this.handleButtonClick}
+                handleSearch={this.handleSearch}
             />
         );
     }

@@ -11,6 +11,8 @@ export class Event {
     description: string;
     startTime: string;
     endTime: string;
+    latitude: number;
+    longitude: number;
 
     constructor(
         id: number,
@@ -34,6 +36,8 @@ export class Event {
         this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 }
 
@@ -179,7 +183,9 @@ class EventService {
                 json.latitude,
                 json.description,
                 json.start_time,
-                json.end_time
+                json.end_time,
+                json.longitude,
+                json.latitude
             );
         }
     }
@@ -286,7 +292,7 @@ class EventService {
 
         function handleGetPictureResponse(json) {
             var arrayBufferView = new Uint8Array(json.data);
-            var blob = new Blob([arrayBufferView], {type: 'image'});
+            var blob = new Blob([arrayBufferView], { type: 'image' });
             var urlCreator = window.URL || window.webkitURL;
             var pictureUrl = urlCreator.createObjectURL(blob);
             urlCreator.revokeObjectURL(blob);
@@ -326,7 +332,7 @@ class EventService {
 
         function handleGetContractResponse(json) {
             var arrayBufferView = new Uint8Array(json.data);
-            var blob = new Blob([arrayBufferView], {type: 'application/pdf'});
+            var blob = new Blob([arrayBufferView], { type: 'application/pdf' });
             var urlCreator = window.URL || window.webkitURL;
             var contractUrl = urlCreator.createObjectURL(blob);
             urlCreator.revokeObjectURL(blob);
@@ -907,7 +913,9 @@ class EventService {
         latitude: number,
         description: string,
         startTime: string,
-        endTime: string
+        endTime: string,
+        latitude: number,
+        longitude: number
     ): Promise<any> {
         let data = {
             eventId: eventId,
@@ -919,9 +927,12 @@ class EventService {
             latitude: latitude,
             description: description,
             startTime: startTime,
-            endTime: endTime
+            endTime: endTime,
+            latitude: longitude,
+            longitude: latitude
         };
         let isError: boolean = false;
+        console.log('jeg er ikke kokken din!');
         console.log(data);
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId, {
@@ -1205,7 +1216,7 @@ class UserService {
 
         function handleGetPictureResponse(json: *) {
             var arrayBufferView = new Uint8Array(json.data);
-            var blob = new Blob([arrayBufferView], {type: 'image'});
+            var blob = new Blob([arrayBufferView], { type: 'image' });
             var urlCreator = window.URL || window.webkitURL;
             var pictureUrl = urlCreator.createObjectURL(blob);
             urlCreator.revokeObjectURL(blob);

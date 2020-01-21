@@ -10,6 +10,7 @@ import DisplayEvent from '../DisplayEvent/DisplayEvent';
 import DisplayRider from '../DisplayRider/DisplayRider';
 import ViewProfile from '../ViewProfile/ViewProfile';
 import DisplayEventEdit from '../DisplayEventEdit/DisplayEventEdit';
+import DisplayStaffEdit from '../DisplayStaffEdit/DisplayStaffEdit';
 import Header from '../../components/Header/Header';
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
@@ -45,6 +46,22 @@ export default class Main extends Component {
                     component={CreateEvent}
                 />
                 <Route exact path="/user/:id" component={ViewProfile} />
+
+                <Route
+                    exact
+                    path="/arrangement/:id/rediger/artister"
+                    component={DisplayStaffEdit}
+                />
+                <Route
+                    exact
+                    path="/arrangement/:id/rediger/billetter"
+                    component={DisplayStaffEdit}
+                />
+                <Route
+                    exact
+                    path="/arrangement/:id/rediger/personell"
+                    component={DisplayStaffEdit}
+                />
             </HashRouter>
         );
     }
