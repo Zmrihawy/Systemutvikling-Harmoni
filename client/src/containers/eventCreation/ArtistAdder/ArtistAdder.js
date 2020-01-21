@@ -74,6 +74,7 @@ export default class ArtistAdder extends Component {
                         &larr; Tilbake
                     </button>
                     <button
+                        autoFocus
                         className="Button"
                         onClick={() =>
                             this.props.save(

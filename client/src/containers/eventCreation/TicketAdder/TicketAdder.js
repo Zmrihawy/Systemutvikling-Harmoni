@@ -134,6 +134,7 @@ export default class TicketAdder extends Component {
                         &larr; Forrige
                     </button>
                     <button
+                        autoFocus
                         className="Button"
                         onClick={() =>
                             this.props.save(

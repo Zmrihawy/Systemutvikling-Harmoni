@@ -95,6 +95,7 @@ export default class StaffAdder extends Component {
                         &larr; Tilbake
                     </button>
                     <button
+                        autoFocus
                         className="Button"
                         onClick={() => {
                             this.props.finished(this.state.staff, 'staff', '');

@@ -120,6 +120,7 @@ export default class DatePicker extends Component {
                         &larr; Tilbake
                     </button>
                     <button
+                        autoFocus
                         className="Button"
                         onClick={() =>
                             this.props.save(

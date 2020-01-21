@@ -29,6 +29,7 @@ const descriptionAdder = props => {
                     </button>
 
                     <input
+                        autoFocus
                         type="submit"
                         className="Button"
                         value="Neste &rarr;"

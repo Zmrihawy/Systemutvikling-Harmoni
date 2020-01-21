@@ -50,14 +50,15 @@ export default class ContractAdder extends Component {
                         )
                     }
                 >
-                    Forrige
+                    &larr; Tilbake
                 </button>
                 <button
+                    autoFocus
                     onClick={() =>
                         this.props.save(this.state.artists, 'riders', 'next')
                     }
                 >
-                    Videre
+                    Neste &rarr;
                 </button>
             </>
         );

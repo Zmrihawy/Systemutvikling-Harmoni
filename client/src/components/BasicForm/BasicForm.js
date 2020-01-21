@@ -29,6 +29,7 @@ const basicForm = props => {
                     ) : null}
 
                     <input
+                        autoFocus
                         type="submit"
                         className="Button"
                         value="Neste &rarr;"
