@@ -9,7 +9,6 @@ const locationAdder = props => {
         <div className={classes.LocationAdder}>
             <div>
                 <BasicForm
-                    key={props.key}
                     title={props.title}
                     inputType="text"
                     value={props.value}

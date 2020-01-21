@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Progress from './Progress/Progress';
 import Dropzone from './Dropzone/Dropzone';
 import './Upload.css';
+import { eventService } from './../../services';
 
-class Upload extends Component {
+class UploadFile extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,10 +36,10 @@ class Upload extends Component {
             req.open(
                 'PUT',
                 '/api/event/' +
-                eventId +
-                '/performance/' +
-                performanceId +
-                '/contract'
+                    eventId +
+                    '/performance/' +
+                    performanceId +
+                    '/contract'
             );
 
             req.setRequestHeader(
@@ -160,4 +161,4 @@ function refreshToken(jwt) {
     window.sessionStorage.setItem('jwt', jwt);
 }
 
-export default Upload;
+export default UploadFile;

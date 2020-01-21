@@ -1,20 +1,21 @@
 .ArtistAdder {
     &__fields {
         direction: rtl;
-        overflow-x: visible;
+        overflow-x: hidden;
         overflow-y: auto;
-        max-height: 40vh;
+        max-height: 35vh;
 
         & div {
             direction: ltr;
 
-            & input {
+            & select {
                 margin-top: 1rem;
                 font-size: 1.6rem;
 
                 &:hover,
                 &:focus {
                     transform: none;
+                    outline: none;
                 }
             }
         }
