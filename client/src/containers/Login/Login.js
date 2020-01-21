@@ -13,6 +13,7 @@ export default class Login extends Component {
 
     render() {
         return (
+            <div className="loginBg">
             <div className="login-page">
                 <div className="form" onSubmit={this.login}>
                     <form className="login-form" onSubmit={this.login}>
@@ -27,7 +28,8 @@ export default class Login extends Component {
                             onChange={this.onChange}
                         />
                         <ShowPassword />
-                        <input type="submit" value="Logg inn"></input>
+                        <button  className="Button" type="submit" value="Logg inn">
+                        Logg Inn </button>
                         <p className="message">
                             Ikke registrert?{' '}
                             <a onClick={this.handleClick}>Lag en bruker</a>
@@ -37,6 +39,7 @@ export default class Login extends Component {
                         </p>
                     </form>
                 </div>
+            </div>
             </div>
         );
     }

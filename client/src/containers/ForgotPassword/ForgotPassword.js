@@ -12,12 +12,13 @@ export default class ForgotPassword extends Component {
 
     render() {
         return (
+            <div className ="loginBg">
             <div className="login-page">
                 <div className="form" onSubmit={this.newPw}>
                     <form className="login-form" onSubmit={this.login}>
                     <p id = "error"></p><br/>
                         <input type="email" required name="email" value={this.state.email} placeholder="E-post" onChange={this.onChange} onLoad={() => this.state.email = window.localStorage.getItem('email')} />
-                        <input type="submit" value="Send Passord"></input>
+                        <input type="submit" className = "Button" value="Send Passord"></input>
                         <p className="message">
                             Ikke registrert?{' '}
                             <a onClick={() => history.push('/registrer')}>Lag en bruker</a>
@@ -27,6 +28,7 @@ export default class ForgotPassword extends Component {
                         </p>
                     </form>
                 </div>
+            </div>
             </div>
         );
     }

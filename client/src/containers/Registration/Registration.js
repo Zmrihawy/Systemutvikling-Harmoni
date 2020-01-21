@@ -26,6 +26,7 @@ export default class Registration extends Component {
 
     render() {
         return (
+            <div className="loginBg">
             <div className="login-page">
                 <div className="form">
                     <form className="register-form" onSubmit={this.register}>
@@ -39,7 +40,8 @@ export default class Registration extends Component {
                             value={this.state.username}
                             onChange={this.onChange}
                         />
-                        <ShowPassword />
+                        <ShowPassword id = {"pw1"}/>
+                        <ShowPassword id = {"pw2"}/>
                         <input
                             type="text"
                             required
@@ -73,7 +75,6 @@ export default class Registration extends Component {
                             value={this.state.phone}
                             onChange={this.onChange}
                         />
-
                         <label>
                             <input
                                 type="radio"
@@ -94,12 +95,13 @@ export default class Registration extends Component {
                         {/*<label for="avatar">Choose a profile picture:</label>
                 <input type="file" accept="image/*" id="avatar" />*/}
 
-                        <input type="submit" value="Registrer"></input>
+                        <input className="Button" type="submit" value="Registrer"></input>
                         <p className="message">
                             Allerede registrert? <a href="#">Logg inn</a>
                         </p>
                     </form>
                 </div>
+            </div>
             </div>
         );
     }
@@ -107,27 +109,20 @@ export default class Registration extends Component {
     register = event => {
         event.preventDefault();
 
-        let passwordData;
+        console.log(document.querySelector("#pw1"));
+        console.log(document.querySelector("#pw2"));
 
-        if (
-            document.getElementById('pw') !== null &&
-            document.getElementById('pw').value !== ''
-        ) {
-            passwordData = document.getElementById('pw').value;
-            this.setState({
-                password: passwordData
-            });
-            console.log(passwordData);
-        }
+        if(document.querySelector("#pw2").value !== document.querySelector("#pw1").value) return document.querySelector('#error').innerHTML = "Passord-felter matcher ikke";
 
         userService
             .createUser(
                 this.state.username,
-                passwordData,
+                document.querySelector("#pw1").value,
                 this.state.email,
                 this.state.phone,
                 this.state.firstName,
-                this.state.lastName
+                this.state.lastName,
+                this.state.artist
             )
             .then(() =>
                 userService

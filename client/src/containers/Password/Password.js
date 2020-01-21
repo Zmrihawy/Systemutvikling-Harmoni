@@ -44,7 +44,7 @@ export default class ShowPassword extends Component {
                 <label className="password">
                     <input
                         type={this.state.type}
-                        id="pw"
+                        id={this.props.id}
                         placeholder="Passord"
                         className="password__input"
                         onChange={this.passwordStrength}
@@ -63,7 +63,7 @@ export default class ShowPassword extends Component {
                 <label className="password">
                     <input
                         type={this.state.type}
-                        id="pass"
+                        id={this.props.id}
                         placeholder="Passord"
                         className="password__input"
                         onChange={this.passwordStrength}
