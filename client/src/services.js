@@ -1256,10 +1256,10 @@ class UserService {
         }
     }
 
-    getAllUsers(): Promise<any> {
+    getAllArtists(): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
-            fetch('/api/users', {
+            fetch('/api/user', {
             method: 'GET',
                 headers: {
                 'x-access-token': window.sessionStorage.getItem('jwt'),
