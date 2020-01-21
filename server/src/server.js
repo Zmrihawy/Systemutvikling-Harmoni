@@ -47,7 +47,7 @@ const pool: pool = mysql.createPool({
     user: "kwgulake",
     password: "qra2ZQqh",
     database: "kwgulake",
-    multipleStatements : true
+    multipleStatements: true
 });
 
 const transporter = nodemailer.createTransport({
@@ -88,7 +88,7 @@ app.use("/api", (req, res, next) => {
 
 // Handles login and returns JWT-token as JSON
 app.post("/login", (req, res) => {
-    console.log("user trying to log in");
+    console.log(req.body.email + " trying to log in");
 
     if (req.body.email == undefined) return res.status(400).json({error: "bad request : missing email parameter"});
     else if (req.body.password == undefined) return res.status(400).json({error: " bad request : mssing password parameter"});
@@ -118,7 +118,7 @@ app.post("/login", (req, res) => {
             }
             return res.status(401).json({error: "wrong password"});
         } else {
-            if(data[0] === undefined) return res.json('user undefined');
+            if (data[0] === undefined) return res.json('user undefined');
             if (pass.toUpperCase() === data[0].password_hex.toString()) {
                 console.log("User ID:", login);
                 console.log("username & passord ok");
@@ -512,6 +512,8 @@ app.put("/user/:usermail", (req, res) => {
         if (data.length === 0) return res.status(400).json({errror: "user not found"});
         if (data.length > 2) return res.status(501).json({errror: "internal server error"});
 
+        console.log(data.length);
+
         let password = generator.generate({
             length: 12,
             numbers: true
@@ -530,7 +532,7 @@ app.put("/user/:usermail", (req, res) => {
                 userId: data[0].user_id, password: pw, autogen: 1
             }, (stat, dat) => sendMail(req, res, password));
         } else {
-            if(data[1] === undefined) return res.json('password trouble');
+            if (data[1] === undefined) return res.json('password trouble');
             userDao.updatePassword({
                 passId: data[1].password_id, password: pw, autogen: 1
             }, (stat, dat) => sendMail(req, res, password));
@@ -824,7 +826,7 @@ app.get('/api/event/:event_id/performance/:performance_id/contract', (req, res) 
         res.status(status);
         let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
 
-        if(data[0] == undefined) return res.json({data : "No contract exists", jwt : token});
+        if (data[0] == undefined) return res.json({data: "No contract exists", jwt: token});
 
         res.json({data: data[0].contract, jwt: token});
     });
@@ -841,7 +843,7 @@ app.get('/api/event/:event_id/picture', (req, res) => {
         res.status(status);
         let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
 
-        if(data[0] == undefined) return res.json({data : "No picture exists", jwt : token});
+        if (data[0] == undefined) return res.json({data: "No picture exists", jwt: token});
 
         res.json({data: data[0].picture, jwt: token});
     });
@@ -858,7 +860,7 @@ app.get('/api/user/:user_id/picture', (req, res) => {
         res.status(status);
         let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
 
-        if(data[0] == undefined) return res.json({data : "No picture exists", jwt : token});
+        if (data[0] == undefined) return res.json({data: "No picture exists", jwt: token});
 
         res.json({data: data[0].picture, jwt: token});
     });
