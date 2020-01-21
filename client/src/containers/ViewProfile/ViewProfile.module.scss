@@ -189,13 +189,28 @@ input:focus {
         top: 500px;
     }
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1000px) {
     .bioLayer {
-        left: 15px;
-        top: 500px;
+        left: 0;
+        top: 350px;
+        width: 100%;
     }
     .editLayer {
-        left: 15px;
-        top: 500px;
+        left: 0px;
+        top: 600px;
+        width: 100%;
+    }
+    .imgContainer {
+        top: 100px;
+        left: 100px;
+        width: 200px;
+    }
+    .profile {
+        left: 100px;
+        width: 200px;
+        height: 200px;
+    }
+    .redigerBtn {
+        top: 250px;
     }
 }

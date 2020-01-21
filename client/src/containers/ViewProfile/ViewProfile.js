@@ -249,9 +249,11 @@ export default class ViewProfile extends Component {
 
         if(document.getElementById("imgContainer") !== null && document.getElementById("redigerBtn") !==
             null && document.getElementById("bioLayer") !== null) {
-            document.getElementById("imgContainer").style.left = "calc(50% - 11vw)";
-            document.getElementById("bioLayer").style.left = "calc(50% - 12vw)";
-            document.getElementById("redigerBtn").style.left = "calc(50% - 120px)";
+            if(window.innerWidth >= 1000){
+                document.getElementById("imgContainer").style.left = "calc(50% - 11vw)";
+                document.getElementById("bioLayer").style.left = "calc(50% - 12vw)";
+                document.getElementById("redigerBtn").style.left = "calc(50% - 120px)";
+            }
         }
 
     }
@@ -259,9 +261,37 @@ export default class ViewProfile extends Component {
     showEditForm() {
         if(document.getElementById("imgContainer") !== null && document.getElementById("redigerBtn") !==
         null && document.getElementById("bioLayer") !== null) {
-           document.getElementById("imgContainer").style.left = "10%";
-           document.getElementById("bioLayer").style.left = "10%";
-           document.getElementById("redigerBtn").style.left = "calc(10% + 30px)";
+            if(window.innerWidth >= 1000){
+                document.getElementById("imgContainer").style.left = "10%";
+                document.getElementById("bioLayer").style.left = "10%";
+                document.getElementById("redigerBtn").style.left = "calc(10% + 30px)";
+            }
+            else{
+                console.log("change");
+                if(document.getElementById("editLayer") !== null){
+                    document.getElementById("editLayer").innerHTML =
+                        '<h4 className={classes.editHeader}>\n' +
+                            '<b>Rediger Info</b>\n' +
+                        '</h4>' +
+                        '<div className={classes.editTitle}>\n' +
+                            ' Brukernavn\n' +
+                        '</div>\n' +
+                        '<input\n' +
+                            'id={\'nameInp\'}\n' +
+                            'className={\classes.input\}\n' +
+                            'type="text"\n' +
+                        '/>' +
+                        '<div className={classes.editTitle}>\n' +
+                            'Epost\n' +
+                        '</div>\n' +
+                        '<input\n' +
+                            'id={\'emailInp\'}\n' +
+                            'className={classes.input}\n' +
+                            'type="text"\n' +
+                        '/>'
+
+                }
+            }
         }
         if(document.getElementById("editLayer") !== null){
             document.getElementById("editLayer").style.visibility = 'visible';
