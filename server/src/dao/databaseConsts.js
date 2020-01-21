@@ -20,7 +20,6 @@ TICKET_NAME :string;
 TICKET_EVENT_ID :string;
 TICKET_PRICE :string;
 TICKET_AMOUNT :string;
-TICKET_DESCRIPTION :string;
 
 USER_TABLE :string;
 USER_ID :string;
@@ -32,6 +31,7 @@ USER_PHONE :string;
 USER_FIRST_NAME :string;
 USER_LAST_NAME :string;
 USER_PICTURE :string;
+USER_ARTIST :string;
 
 PERFORMANCE_TABLE :string;
 PERFORMANCE_ID :string;
@@ -46,6 +46,7 @@ RIDER_TABLE :string;
 RIDER_PERFORMANCE_ID :string;
 RIDER_NAME :string;
 RIDER_AMOUNT :string;
+RIDER_CONFIRMED :string;
 
 CREW_TABLE :string;
 CREW_ID :string;
@@ -79,7 +80,6 @@ PASSWORD_AUTOGEN : string;
         this.TICKET_EVENT_ID = "event_id";
         this.TICKET_PRICE = "price";
         this.TICKET_AMOUNT = "amount";
-        this.TICKET_DESCRIPTION = "description";
 
         this.USER_TABLE = "user";
         this.USER_ID = "user_id";
@@ -91,6 +91,7 @@ PASSWORD_AUTOGEN : string;
         this.USER_FIRST_NAME = "first_name";
         this.USER_LAST_NAME = "surname";
         this.USER_PICTURE = "picture";
+        this.USER_ARTIST = "artist";
 
         this.PERFORMANCE_TABLE = "performance";
         this.PERFORMANCE_ID = "performance_id";
@@ -105,6 +106,7 @@ PASSWORD_AUTOGEN : string;
         this.RIDER_PERFORMANCE_ID = "performance_id";
         this.RIDER_NAME = "name";
         this.RIDER_AMOUNT = "amount";
+        this.RIDER_CONFIRMED = "confirmed";
 
         this.CREW_TABLE = "crew";
         this.CREW_ID = "crew_id";

@@ -1,5 +1,11 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.thisFunctionCreatesNewToken = thisFunctionCreatesNewToken;
+exports.userDao = exports.eventDao = void 0;
+
 var _mysql = _interopRequireDefault(require("mysql"));
 
 var _express = _interopRequireDefault(require("express"));
@@ -20,12 +26,23 @@ var _userDao = _interopRequireDefault(require("./dao/userDao.js"));
 
 var _eventDao = _interopRequireDefault(require("./dao/eventDao.js"));
 
+var _upload = _interopRequireDefault(require("./upload"));
+
+var _discordBot = _interopRequireDefault(require("./discord-bot"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var fs = require('fs');
 
 var apiRoutes = _express["default"].Router();
 
 var app = (0, _express["default"])();
-app.use((0, _cors["default"])());
+var corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200
+};
+app.use((0, _cors["default"])(corsOptions));
+app.use((0, _cors["default"])(corsOptions));
 app.use(_bodyParser["default"].json());
 
 var pool = _mysql["default"].createPool({
@@ -34,7 +51,13 @@ var pool = _mysql["default"].createPool({
   user: "kwgulake",
   password: "qra2ZQqh",
   database: "kwgulake",
-  debug: false
+  multipleStatements: true
+});
+
+pool.on('error', function (req, res) {
+  return res.status(500).json({
+    error: "internal server error"
+  });
 });
 
 var transporter = _nodemailer["default"].createTransport({
@@ -46,7 +69,10 @@ var transporter = _nodemailer["default"].createTransport({
 });
 
 var eventDao = new _eventDao["default"](pool);
+exports.eventDao = eventDao;
 var userDao = new _userDao["default"](pool);
+exports.userDao = userDao;
+var uploader = new _upload["default"]();
 var publicKey;
 var privateKey = publicKey = "arbeiderklassenrusteropptilvepnetrevolusjon"; // middleware-functions
 
@@ -63,9 +89,9 @@ app.use("/api", function (req, res, next) {
         error: "Not authorized -> Token Expired"
       });
     } else {
-      console.log(req.email + "har gjort en request");
       req.email = decoded.email;
       req.userId = decoded.userId;
+      console.log(req.userId + "har gjort en request");
       next();
     }
 
@@ -74,7 +100,7 @@ app.use("/api", function (req, res, next) {
 }); // Handles login and returns JWT-token as JSON
 
 app.post("/login", function (req, res) {
-  console.log("user trying to log in");
+  console.log(req.body.email + " trying to log in");
   if (req.body.email == undefined) return res.status(400).json({
     error: "bad request : missing email parameter"
   });else if (req.body.password == undefined) return res.status(400).json({
@@ -93,22 +119,51 @@ app.post("/login", function (req, res) {
     hashPW.update(pass);
     pass = hashPW.digest('hex');
     var login = data[0].user_id;
-    if (pass.toUpperCase() !== data[0].password.toString()) return res.status(401).json({
+
+    if (data.length > 1) {
+      if (pass.toUpperCase() === data[0].password_hex.toString() || pass.toUpperCase() === data[1].password_hex.toString()) {
+        console.log("User ID:", login);
+        console.log("username & passord ok");
+
+        var token = _jsonwebtoken["default"].sign({
+          email: req.body.email,
+          userId: login
+        }, privateKey, {
+          expiresIn: 50000
+        });
+
+        return res.json({
+          jwt: token,
+          userId: login
+        });
+      }
+
+      return res.status(401).json({
+        error: "wrong password"
+      });
+    } else {
+      if (data[0] === undefined) return res.json('user undefined');
+
+      if (pass.toUpperCase() === data[0].password_hex.toString()) {
+        console.log("User ID:", login);
+        console.log("username & passord ok");
+
+        var _token = _jsonwebtoken["default"].sign({
+          email: req.body.email,
+          userId: login
+        }, privateKey, {
+          expiresIn: 50000
+        });
+
+        return res.json({
+          jwt: _token,
+          userId: login
+        });
+      }
+    }
+
+    return res.status(401).json({
       error: "wrong password"
-    });
-    console.log("User ID:", login);
-    console.log("username & passord ok");
-
-    var token = _jsonwebtoken["default"].sign({
-      email: req.body.email,
-      userId: login
-    }, privateKey, {
-      expiresIn: 50000
-    });
-
-    res.json({
-      jwt: token,
-      userId: login
     });
   });
 });
@@ -191,10 +246,8 @@ app.get("/api/event/:event_id/performances", function (req, res) {
     error: "parameter event_id must be a number"
   });
   eventDao.getEvent(req.params.event_id, function (status, data) {
-    return data[0].host_id != req.user_id;
-  }).then(function (isArtist) {
-    if (isArtist) {
-      getEventPerformancesHost(req.userId, function (status, data) {
+    if (data[0].host_id == req.user_id) {
+      eventDao.getEventPerformancesHost(req.userId, function (status, data) {
         res.status(status);
         var token = thisFunctionCreatesNewToken(req.email, req.userId);
         res.json({
@@ -238,10 +291,7 @@ app.get("/api/user/event/:event_id/:performance_id", function (req, res) {
   if (numberError([req.params.performance_id])) return res.status(400).json({
     error: "number field cannot be string"
   });
-  eventDao.getRiders({
-    performanceId: req.params.performanceId,
-    userId: req.userId
-  }, function (status, data) {
+  eventDao.getRiders(req.params.performanceId, function (status, data) {
     res.status(status);
     var token = thisFunctionCreatesNewToken(req.email, req.userId);
     res.json({
@@ -354,7 +404,7 @@ app["delete"]("/api/user/:user_id", function (req, res) {
   });else if (req.body.password == undefined) return res.status(400).json({
     error: "request missing password"
   });
-  userDao.getPassword(req.params.user_id, function (status, data) {
+  userDao.getPassword(req.params.email, function (status, data) {
     var pw = req.body.password;
 
     var hashPW = _crypto["default"].createHmac('sha512', data[0].salt);
@@ -363,15 +413,27 @@ app["delete"]("/api/user/:user_id", function (req, res) {
     hashPW.update(pass);
     pass = hashPW.digest('hex');
 
-    if (data[0].password.toString() === pass.toUpperCase()) {
-      userDao.deleteUser(req.params.user_id, function (st, dt) {
-        res.status(st);
-        dt["jwt"] = thisFunctionCreatesNewToken(req.email, req.userId);
-        res.json(dt);
+    if (data.length === 2) {
+      if (data[0].password_hex.toString() === pass.toUpperCase() || data[1].password_hex.toString() === pass.toUpperCase()) {
+        userDao.deleteUser(req.params.user_id, function (st, dt) {
+          res.status(st);
+          return res.json(dt);
+        });
+      }
+
+      return res.json(401).json({
+        error: "Wrong password"
       });
     } else {
-      res.status(401).json({
-        error: "Not authorized"
+      if (data[0].password_hex.toString() === pass.toUpperCase()) {
+        userDao.deleteUser(req.params.user_id, function (st, dt) {
+          res.status(st);
+          return res.json(dt);
+        });
+      }
+
+      return res.json(401).json({
+        error: "Wrong password"
       });
     }
   });
@@ -479,6 +541,7 @@ app.put("/api/performance/:performance_id", function (req, res) {
   eventDao.updatePerformance({
     startTime: req.body.startTime,
     endTime: req.body.endTime,
+    name: req.body.name,
     contract: req.body.contract,
     performanceId: req.params.performance_id
   }, function (status, data) {
@@ -552,46 +615,64 @@ app.put("/user/:usermail", function (req, res) {
   if (!sjekkMail(req.params.usermail)) return res.status(400).json({
     error: "given mail is not a valid mail"
   });
-  userDao.getUser(req.params.usermail, function (status, data) {
-    if (data[0].salt) {
-      var password = _generatePassword["default"].generate({
-        length: 12,
-        numbers: true
-      });
+  userDao.getPassword(req.params.usermail, function (status, data) {
+    if (data.length === 0) return res.status(400).json({
+      errror: "user not found"
+    });
+    if (data.length > 2) return res.status(501).json({
+      errror: "internal server error"
+    });
+    console.log(data.length);
 
-      var pw = password;
+    var password = _generatePassword["default"].generate({
+      length: 12,
+      numbers: true
+    });
 
-      var hashPW = _crypto["default"].createHmac('sha512', data[0].salt);
+    var pw = password;
 
-      hashPW.update(pw);
-      pw = hashPW.digest('hex'); //#TODO
+    var hashPW = _crypto["default"].createHmac('sha512', data[0].salt);
 
-      userDao.updatePassword({
+    hashPW.update(pw);
+    pw = hashPW.digest('hex');
+
+    if (data.length === 1) {
+      userDao.createPassword({
         userId: data[0].user_id,
-        password: pw
+        password: pw,
+        autogen: 1
       }, function (stat, dat) {
-        var mailOptions = {
-          from: 'noreply.harmoni.123@gmail.com',
-          to: data.epost,
-          subject: 'New Password',
-          text: "Her er ditt nye passord: \n".concat(password)
-        };
-        transporter.sendMail(mailOptions, function (error, info) {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log('Email sent: ' + info.response);
-          }
-        });
-        res.status(200);
-        res.send();
+        return sendMail(req, res, password);
       });
     } else {
-      res.status(400).json({
-        error: "User not found"
+      if (data[1] === undefined) return res.json('password trouble');
+      userDao.updatePassword({
+        passId: data[1].password_id,
+        password: pw,
+        autogen: 1
+      }, function (stat, dat) {
+        return sendMail(req, res, password);
       });
     }
   });
+
+  function sendMail(req, res, password) {
+    var mailOptions = {
+      from: 'noreply.harmoni.123@gmail.com',
+      to: req.params.usermail,
+      subject: 'New Password',
+      text: "Her er ditt nye passord:\n".concat(password)
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+    res.status(200);
+    res.send();
+  }
 }); //Update password
 
 app.put("/api/user/:user_id/password", function (req, res) {
@@ -602,7 +683,7 @@ app.put("/api/user/:user_id/password", function (req, res) {
     error: "cannot change password of another user"
   });
   userDao.getPassword(req.email, function (status, data) {
-    if (data.length === 0 || data.length > 1) return res.status(500).json({
+    if (data.length > 2) return res.status(500).json({
       error: "token error"
     });
     if (data[0] == undefined) return res.status(401).json({
@@ -614,14 +695,23 @@ app.put("/api/user/:user_id/password", function (req, res) {
     var pass = req.body.oldPassword;
     hashPW.update(pass);
     pass = hashPW.digest('hex');
-    var login = data[0].user_id;
-    if (pass.toUpperCase() !== data[0].password.toString()) return res.status(401).json({
+
+    if (data.length === 2) {
+      if (pass.toUpperCase() !== data[0].password_hex.toString() && pass.toUpperCase() !== data[1].password_hex.toString()) {
+        return res.status(401).json({
+          error: "wrong password"
+        });
+      }
+    } else if (pass.toUpperCase() !== data[0].password_hex.toString()) return res.status(401).json({
       error: "wrong password"
     });
+
+    var hashpw2 = _crypto["default"].createHmac('sha512', data[0].salt);
+
     var pw = req.body.newPassword;
-    hashPW.update(pw);
-    pw = hashPW.digest('hex');
-    userDao.updatePassword({
+    hashpw2.update(pw);
+    pw = hashpw2.digest('hex');
+    userDao.setPassword({
       userId: req.userId,
       password: pw
     }, function (status, data) {
@@ -641,29 +731,28 @@ app.put("/api/event/:event_id", function (req, res) {
     error: "url parameter event_id must be a number"
   });else if (numberError([req.body.active])) return res.status(400).json({
     error: "number field is a string"
-  });else if (req.body.eventName == undefined) return res.status(400).json({
-    error: "bad request : missing eventName parameter"
-  });else if (req.body.startTime == undefined) return res.status(400).json({
-    error: "bad request : missing startTime parameter"
-  });else if (req.body.userId == undefined) return res.status(400).json({
-    error: "bad request : missing userId parameter"
-  });else if (req.body.location == undefined) return res.status(400).json({
-    error: "bad request : missing location parameter"
-  });else if (req.body["long"] == undefined) return res.status(400).json({
-    error: "bad request : missing long parameter"
-  });else if (req.body.lat == undefined) return res.status(400).json({
-    error: "bad request : missing lat parameter"
-  });
+  }); //todo check if user is logged in, maybe it does, I don't know
+  else if (req.body.eventName == undefined) return res.status(400).json({
+      error: "bad request : missing eventName parameter"
+    });else if (req.body.startTime == undefined) return res.status(400).json({
+      error: "bad request : missing startTime parameter"
+    });else if (req.body.location == undefined) return res.status(400).json({
+      error: "bad request : missing location parameter"
+    });else if (req.body.longitude == undefined) return res.status(400).json({
+      error: "bad request : missing longitude parameter"
+    });else if (req.body.latitude == undefined) return res.status(400).json({
+      error: "bad request : missing latitude parameter"
+    });
   if (req.body.active == undefined) req.body.active = 1;
   var description = req.body.description;
   if (description == undefined) description = "";
   eventDao.updateEvent({
     eventName: req.body.eventName,
-    hostId: req.body.userId,
+    hostId: req.userId,
     active: req.body.active,
     location: req.body.location,
-    "long": req.body["long"],
-    lat: req.body.lat,
+    longitude: req.body.longitude,
+    latitude: req.body.latitude,
     description: description,
     startTime: req.body.startTime,
     endTime: req.body.endTime,
@@ -692,44 +781,62 @@ app.post("/user", function (req, res) {
     error: "request missing password"
   });else if (req.body.email == undefined) return res.status(400).json({
     error: "request missing email"
+  });else if (req.body.firstName == undefined) return res.status(400).json({
+    error: "request missing first name"
+  });else if (req.body.lastName == undefined) return res.status(400).json({
+    error: "request missing last name"
+  });else if (req.body.phone == undefined) return res.status(400).json({
+    error: "request missing phone"
   });else if (!sjekkMail(req.body.email)) return res.status(400).json({
     error: "parameter email is not a valid email"
   });else if (numberError([req.body.phone])) return res.status(400).json({
     error: "number field is a string"
   });
-  var user = req.body;
-
-  var salt = _crypto["default"].randomBytes(16).toString('hex').slice(0, 16).toUpperCase();
-
-  var pw = user.password;
-
-  var hash = _crypto["default"].createHmac('sha512', salt);
-
-  hash.update(pw);
-  pw = hash.digest('hex');
-  userDao.createUser({
-    username: user.username,
-    password: pw,
-    salt: salt,
-    email: user.email,
-    phone: user.phone,
-    firstName: user.firstName,
-    lastName: user.lastName
+  userDao.checkCred({
+    username: req.body.username,
+    email: req.body.email
   }, function (status, data) {
-    userDao.getUserByEmail();
-    var token = thisFunctionCreatesNewToken(user.mail, 0);
-    res.status(status).json({
-      data: data,
-      jwt: token
+    if (data.length > 0) {
+      if (data[0].username === req.body.username && data[0].email === req.body.email) return res.status(409).json({
+        error: "mail and username"
+      });else if (data[0].username === req.body.username) return res.status(409).json({
+        error: "username"
+      });else return res.status(409).json({
+        error: "mail"
+      });
+    }
+
+    var user = req.body;
+
+    var salt = _crypto["default"].randomBytes(16).toString('hex').slice(0, 16).toUpperCase();
+
+    var pw = user.password;
+
+    var hash = _crypto["default"].createHmac('sha512', salt);
+
+    hash.update(pw);
+    pw = hash.digest('hex');
+    userDao.createUser({
+      username: user.username,
+      password: pw,
+      salt: salt,
+      email: user.email,
+      phone: user.phone,
+      firstName: user.firstName,
+      lastName: user.lastName
+    }, function (status, data) {
+      var token = thisFunctionCreatesNewToken(user.mail, 0);
+      res.status(status).json({
+        data: data,
+        jwt: token
+      });
     });
   });
 }); //post an event
 
 app.post("/api/event", function (req, res) {
   console.log("Fikk POST-request fra klienten");
-  if (req.body.name == undefined) return res.status(400).json({
-    error: "request missing event-name"
-  });else if (numberError([req.body.active])) return res.status(400).json({
+  if (numberError([req.body.active])) return res.status(400).json({
     error: "number field is a string"
   });else if (req.body.eventName == undefined) return res.status(400).json({
     error: "bad request : missing eventName parameter"
@@ -739,17 +846,17 @@ app.post("/api/event", function (req, res) {
     error: "bad request : missing userId parameter"
   });else if (req.body.location == undefined) return res.status(400).json({
     error: "bad request : missing location parameter"
-  });else if (req.body["long"] == undefined) return res.status(400).json({
-    error: "bad request : missing long parameter"
-  });else if (req.body.lat == undefined) return res.status(400).json({
-    error: "bad request : missing lat parameter"
+  });else if (req.body.longitude == undefined) return res.status(400).json({
+    error: "bad request : missing longitude parameter"
+  });else if (req.body.latitude == undefined) return res.status(400).json({
+    error: "bad request : missing latitude parameter"
   });
   eventDao.createEvent({
     eventName: req.body.eventName,
     userId: req.body.userId,
     location: req.body.location,
-    "long": req.body["long"],
-    lat: req.body.lat,
+    longitude: req.body.longitude,
+    latitude: req.body.latitude,
     description: req.body.description,
     startTime: req.body.startTime,
     endTime: req.body.endTime
@@ -806,6 +913,7 @@ app.post("/api/event/:event_id/performance", function (req, res) {
     eventId: req.params.event_id,
     startTime: req.body.startTime,
     endTime: req.body.endTime,
+    name: req.body.name,
     contract: req.body.contract
   }, function (status, data) {
     res.status(status);
@@ -864,6 +972,60 @@ app.post('/api/event/:event_id/crew', function (req, res) {
       jwt: token
     });
   });
+}); // put contract
+
+app.put('/api/event/:event_id/performance/:performance_id/contract', uploader.uploadContract); // get contract
+
+app.get('/api/event/:event_id/performance/:performance_id/contract', function (req, res) {
+  console.log('Fikk get-request fra klient');
+  eventDao.downloadContract(req.params.performance_id, function (status, data) {
+    res.status(status);
+    var token = thisFunctionCreatesNewToken(req.email, req.userId);
+    if (data[0] == undefined) return res.json({
+      data: "No contract exists",
+      jwt: token
+    });
+    res.json({
+      data: data[0].contract,
+      jwt: token
+    });
+  });
+}); // put event picture
+
+app.put('/api/event/:event_id/picture', uploader.uploadEventPicture); // get event picture
+
+app.get('/api/event/:event_id/picture', function (req, res) {
+  console.log('Fikk get-request fra klient');
+  eventDao.downloadPicture(req.params.event_id, function (status, data) {
+    res.status(status);
+    var token = thisFunctionCreatesNewToken(req.email, req.userId);
+    if (data[0] == undefined) return res.json({
+      data: "No picture exists",
+      jwt: token
+    });
+    res.json({
+      data: data[0].picture,
+      jwt: token
+    });
+  });
+}); // put user picture
+
+app.put('/api/user/:user_id/picture', uploader.uploadUserPicture); // get user picture
+
+app.get('/api/user/:user_id/picture', function (req, res) {
+  console.log('Fikk get-request fra klient');
+  userDao.downloadPicture(req.params.user_id, function (status, data) {
+    res.status(status);
+    var token = thisFunctionCreatesNewToken(req.email, req.userId);
+    if (data[0] == undefined) return res.json({
+      data: "No picture exists",
+      jwt: token
+    });
+    res.json({
+      data: data[0].picture,
+      jwt: token
+    });
+  });
 });
 /*
 app.post("/token", (req, res) => {
@@ -900,4 +1062,14 @@ function sjekkMail(inc) {
 }
 
 var server = app.listen(8080);
-console.log("running");
+console.log("running"); //
+// GET
+// PUT - /api/
+// event / event_id / picture
+//
+// GET
+// PUT - /api/us
+// er / user_id / picutre
+// GET
+// PUT - /api/
+// event / event_id / perfomance / performance_id / contract
