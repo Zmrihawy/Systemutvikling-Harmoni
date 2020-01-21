@@ -74,20 +74,9 @@ test("get participants for one specific event", done => {
     })
 })
 
-test("get host information for one specific event", done => {
-    eventDao.getEventPerformancesHost(2, (status, data) => {
+test("get performance information for one specific event", done => {
+    eventDao.getEventPerformances(2, (status, data) => {
         expect(data.length).toBe(2);
-        expect(data[0].contract != "" && data[1].contract != "").toBe(true);
-        done();
-    })
-})
-
-test("get artist information for one specific event", done => {
-    eventDao.getEventPerformancesArtist({eventId: 2, userId: 3}, (status, data) => {
-        console.log(status);
-        console.log(data);
-        expect(data.length).toBe(2);
-        expect(data[0].contract == undefined || data[1].contract == undefined).toBe(true);
         done();
     })
 })
@@ -111,7 +100,8 @@ test("add an event to database", done => {
             longitude : 63.4090508,
             latitude: 10.4528865,
             startTime: "2020-12-05 19:00:00",
-            endTime: "2020-12-06 00:00:00"
+            endTime: "2020-12-06 00:00:00",
+            picture: "link"
         },
         callback
     );
@@ -131,8 +121,7 @@ test("add a ticket to database", done => {
             name: "Ny billett",
             eventId: 2,
             price: 125,
-            description: "Beskrivelse til ny billett",
-            amount: 3,
+            amount: 3
         },
         callback
     );
@@ -251,17 +240,14 @@ test("update ticket in database", done => {
     let param = {
         price: 130,
         amount: 200,
-        description: 'Oppdatert billettbeskrivelse',
-        name: 'TestBillett2',
+        name: 'Updated',
         eventId: 2,
+        oldName: 'Ny billett'
     };
 
-    eventDao.updateTicket(param, () => {
-        eventDao.getTickets(2, (status, data) => {
-            expect(data[1].price).toBe(130);
-            expect(data[1].description).toBe('Oppdatert billettbeskrivelse');
-            done();
-        });
+    eventDao.updateTicket(param, (status, data) => {
+        expect(data.affectedRows).toBe(1);
+        done();
     });
 });
 

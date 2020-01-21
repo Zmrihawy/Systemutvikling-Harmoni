@@ -50,7 +50,6 @@ CREATE TABLE ticket (
   event_id int(11) NOT NULL,
   price DOUBLE NOT NULL,
   amount FLOAT(6, 2),
-  description varchar(300) NOT NULL,
   PRIMARY KEY (name, event_id),
   FOREIGN KEY (event_id) REFERENCES event(event_id) ON DELETE CASCADE
 );
@@ -115,17 +114,17 @@ VALUES("konsert", 2, 0, "Tromsø", 69.6565335,18.9613271,"Konsert", "2020-05-05 
 INSERT INTO event (name, host_id, active, location, longitude, latitude, description, start_time, end_time)
 VALUES("kino", 3, 1, "Trondheim", 63.427057,10.3903364,"Festival", "2021-12-05 13:45:00", "2021-12-05 14:00:00");
 
-INSERT INTO ticket(name, event_id, price, amount, description)
-VALUES("TestBillett", 2, 125.0, 2, "testbeskrivelse");
+INSERT INTO ticket(name, event_id, price, amount)
+VALUES("TestBillett", 2, 125.0, 2);
 
-INSERT INTO ticket(name, event_id, price, amount, description)
-VALUES("TestBillett2", 2, 145.0, 20, "testbeskrivelse2");
+INSERT INTO ticket(name, event_id, price, amount)
+VALUES("TestBillett2", 2, 145.0, 20);
 
-INSERT INTO ticket(name, event_id, price, amount, description)
-VALUES("billett", 1, 200.0, 1, "beskrivelse");
+INSERT INTO ticket(name, event_id, price, amount)
+VALUES("billett", 1, 200.0, 1);
 
-INSERT INTO ticket(name, event_id, price, amount, description)
-VALUES("gullbillett", 4, 10000.0, 10, "gullbeskrivelse");
+INSERT INTO ticket(name, event_id, price, amount)
+VALUES("gullbillett", 4, 10000.0, 10);
 
 INSERT INTO performance (user_id, event_id, start_time, end_time, contract)
 VALUES (1, 2, "2021-12-05 13:45:00", "2021-12-05 14:00:00", "Dette er kontrakt 1");

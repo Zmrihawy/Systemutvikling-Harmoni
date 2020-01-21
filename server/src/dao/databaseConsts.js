@@ -20,7 +20,6 @@ TICKET_NAME :string;
 TICKET_EVENT_ID :string;
 TICKET_PRICE :string;
 TICKET_AMOUNT :string;
-TICKET_DESCRIPTION :string;
 
 USER_TABLE :string;
 USER_ID :string;
@@ -81,7 +80,6 @@ PASSWORD_AUTOGEN : string;
         this.TICKET_EVENT_ID = "event_id";
         this.TICKET_PRICE = "price";
         this.TICKET_AMOUNT = "amount";
-        this.TICKET_DESCRIPTION = "description";
 
         this.USER_TABLE = "user";
         this.USER_ID = "user_id";

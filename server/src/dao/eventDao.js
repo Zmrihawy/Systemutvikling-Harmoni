@@ -14,7 +14,7 @@ module.exports = class ServerDao extends Dao {
     }
 
     getRiders(sql: number, callback: (status: number, data: *) => void) :void {
-        super.query(`SELECT ${CONSTANTS.RIDER_NAME}, ${CONSTANTS.RIDER_AMOUNT}, ${CONSTANTS.RIDER_CONFIRMED} FROM ${CONSTANTS.RIDER_TABLE} WHERE ${CONSTANTS.RIDER_PERFORMANCE_ID} = ?`, [sql], callback);
+        super.query(`SELECT * FROM ${CONSTANTS.RIDER_TABLE} WHERE ${CONSTANTS.RIDER_PERFORMANCE_ID} = ?`, [sql], callback);
     }
 
     getEvent(sql: number, callback: (status: number, data: *) => void) :void {
@@ -23,20 +23,13 @@ module.exports = class ServerDao extends Dao {
     }
 
     getUserEvents(sql: { userId: string | number, active: string | number }, callback: (status: number, data: *) => void) :void {
-        super.query(`SELECT ${CONSTANTS.EVENT_NAME}, ${CONSTANTS.EVENT_ID},${CONSTANTS.EVENT_START_TIME},${CONSTANTS.EVENT_LOCATION} FROM
+        super.query(`SELECT ${CONSTANTS.EVENT_NAME}, ${CONSTANTS.EVENT_ID},${CONSTANTS.EVENT_START_TIME}, ${CONSTANTS.EVENT_END_TIME}, ${CONSTANTS.EVENT_LOCATION} FROM
         ${CONSTANTS.EVENT_TABLE} a JOIN ${CONSTANTS.USER_TABLE} b ON a.${CONSTANTS.EVENT_HOST_ID} = b.${CONSTANTS.USER_ID} WHERE b.${CONSTANTS.USER_ID} = ? AND ${CONSTANTS.EVENT_ACTIVE} = ?`, [sql.userId, sql.active], callback);
     }
 
-    getEventPerformancesHost(sql: number, callback: (status: number, data: *) => void) :void {
-        super.query(`SELECT u.${CONSTANTS.USER_PICTURE}, u.${CONSTANTS.USER_USERNAME}, u.${CONSTANTS.USER_ID}, p.${CONSTANTS.PERFORMANCE_NAME}, p.${CONSTANTS.PERFORMANCE_CONTRACT}, p.${CONSTANTS.PERFORMANCE_START_TIME}, p.${CONSTANTS.PERFORMANCE_END_TIME}, p.${CONSTANTS.PERFORMANCE_ID} 
-        FROM ${CONSTANTS.PERFORMANCE_TABLE} as p LEFT JOIN ${CONSTANTS.USER_TABLE} as u ON p.${CONSTANTS.PERFORMANCE_ARTIST_ID} = u.${CONSTANTS.USER_ID} WHERE p.${CONSTANTS.PERFORMANCE_EVENT_ID} = ?`, [sql], callback);
-    }
-
-    getEventPerformancesArtist(sql: { eventId: number, userId: string | number }, callback: (status: number, data: *) => void): void {
-        super.query(`SELECT ${CONSTANTS.USER_PICTURE}, ${CONSTANTS.USER_USERNAME}, u.${CONSTANTS.USER_ID}, ${CONSTANTS.PERFORMANCE_NAME}, ${CONSTANTS.PERFORMANCE_CONTRACT}, ${CONSTANTS.PERFORMANCE_START_TIME}, ${CONSTANTS.PERFORMANCE_END_TIME}, ${CONSTANTS.PERFORMANCE_ID} 
-        FROM ${CONSTANTS.PERFORMANCE_TABLE} as p LEFT JOIN ${CONSTANTS.USER_TABLE} as u ON p.${CONSTANTS.PERFORMANCE_ARTIST_ID} = u.${CONSTANTS.USER_ID} WHERE ${CONSTANTS.PERFORMANCE_EVENT_ID} = ? AND u.${CONSTANTS.USER_ID} = ?; 
-        SELECT ${CONSTANTS.USER_PICTURE}, ${CONSTANTS.USER_USERNAME}, u.${CONSTANTS.USER_ID}, ${CONSTANTS.PERFORMANCE_NAME}, ${CONSTANTS.PERFORMANCE_START_TIME}, ${CONSTANTS.PERFORMANCE_END_TIME}
-        FROM ${CONSTANTS.PERFORMANCE_TABLE} as p LEFT JOIN ${CONSTANTS.USER_TABLE} as u ON p.${CONSTANTS.PERFORMANCE_ARTIST_ID} = u.${CONSTANTS.USER_ID} WHERE ${CONSTANTS.PERFORMANCE_EVENT_ID} = ? AND u.${CONSTANTS.USER_ID} <> ?`, [sql.eventId, sql.userId, sql.eventId, sql.userId], callback);
+    getEventPerformances(sql: number, callback: (status: number, data: *) => void) :void {
+        super.query(`SELECT ${CONSTANTS.USER_USERNAME}, u.${CONSTANTS.USER_ID}, ${CONSTANTS.USER_PICTURE}, ${CONSTANTS.PERFORMANCE_NAME}, ${CONSTANTS.PERFORMANCE_START_TIME}, ${CONSTANTS.PERFORMANCE_END_TIME}, ${CONSTANTS.PERFORMANCE_ID} 
+        FROM ${CONSTANTS.PERFORMANCE_TABLE} as p LEFT JOIN ${CONSTANTS.USER_TABLE} as u ON p.${CONSTANTS.PERFORMANCE_ARTIST_ID} = u.${CONSTANTS.USER_ID} WHERE ${CONSTANTS.PERFORMANCE_EVENT_ID} = ?`, [sql], callback);
     }
 
     getTickets(sql: number | string, callback: (status: number, data: *) => void) :void {
@@ -48,20 +41,20 @@ module.exports = class ServerDao extends Dao {
     }
 
     /**CREATE*/
-    createEvent(sql: { eventName: string, userId: string | number, location: string, latitude: number, longitude: number, description: string, startTime: string, endTime: string }, callback: (status: number, data: *) => void) :void {
-        super.query(`INSERT INTO ${CONSTANTS.EVENT_TABLE} (${CONSTANTS.EVENT_NAME},${CONSTANTS.EVENT_HOST_ID},${CONSTANTS.EVENT_LOCATION},${CONSTANTS.EVENT_LONGITUDE},${CONSTANTS.EVENT_LATITUDE},
-                    ${CONSTANTS.EVENT_DESCRIPTION},${CONSTANTS.EVENT_START_TIME},${CONSTANTS.EVENT_END_TIME}) 
-                    VALUES (?,?,?,?,?,?,?,?) `, [sql.eventName, sql.userId, sql.location, Number(sql.longitude), Number(sql.latitude), sql.description, sql.startTime, sql.endTime], callback);
+    createEvent(sql: { eventName: string, userId: string | number, location: string, latitude: number, longitude: number, description: string, startTime: string, endTime: string, picture: string }, callback: (status: number, data: *) => void) :void {
+        super.query(`INSERT INTO ${CONSTANTS.EVENT_TABLE} (${CONSTANTS.EVENT_NAME},${CONSTANTS.EVENT_HOST_ID},${CONSTANTS.EVENT_LOCATION},${CONSTANTS.EVENT_LONGITUDE},${CONSTANTS.EVENT_LATITUDE}, ${CONSTANTS.EVENT_PICTURE},
+                    ${CONSTANTS.EVENT_DESCRIPTION},${CONSTANTS.EVENT_START_TIME},${CONSTANTS.EVENT_END_TIME},${CONSTANTS.EVENT_ACTIVE}) 
+                    VALUES (?,?,?,?,?,?,?,?,?,1) `, [sql.eventName, sql.userId, sql.location, Number(sql.longitude), Number(sql.latitude), sql.picture, sql.description, sql.startTime, sql.endTime], callback);
     }
 
-    createTicket(sql: { name: string, eventId: string | number, price: number | string, description: string, amount: string | number }, callback: (status: number, data: *) => void) :void {
-        super.query(`INSERT INTO ${CONSTANTS.TICKET_TABLE} (${CONSTANTS.TICKET_NAME},${CONSTANTS.TICKET_EVENT_ID},${CONSTANTS.TICKET_PRICE},${CONSTANTS.TICKET_DESCRIPTION},${CONSTANTS.TICKET_AMOUNT}) 
-                    VALUES (?,?,?,?,?) `, [sql.name, sql.eventId, sql.price, sql.description, sql.amount], callback);
+    createTicket(sql: { name: string, eventId: string | number, price: number | string, amount: string | number }, callback: (status: number, data: *) => void) :void {
+        super.query(`INSERT INTO ${CONSTANTS.TICKET_TABLE} (${CONSTANTS.TICKET_NAME},${CONSTANTS.TICKET_EVENT_ID},${CONSTANTS.TICKET_PRICE},${CONSTANTS.TICKET_AMOUNT}) 
+                    VALUES (?,?,?,?) `, [sql.name, sql.eventId, sql.price, sql.amount], callback);
     }
 
-    createPerformance(sql: { artistId: string | number, eventId: string | number, startTime: string, endTime: string, name: string, contract: string }, callback: (status: number, data: *) => void) :void {
-        super.query(`INSERT INTO ${CONSTANTS.PERFORMANCE_TABLE} (${CONSTANTS.PERFORMANCE_ARTIST_ID},${CONSTANTS.PERFORMANCE_EVENT_ID},${CONSTANTS.PERFORMANCE_START_TIME},${CONSTANTS.PERFORMANCE_END_TIME},${CONSTANTS.PERFORMANCE_NAME},
-                    ${CONSTANTS.PERFORMANCE_CONTRACT}) VALUES (?,?,?,?,?,?) `, [sql.artistId, sql.eventId, sql.startTime, sql.endTime, sql.name, sql.contract], callback);
+    createPerformance(sql: { artistId: string | number, eventId: string | number, startTime: string, endTime: string, name: string }, callback: (status: number, data: *) => void) :void {
+        super.query(`INSERT INTO ${CONSTANTS.PERFORMANCE_TABLE} (${CONSTANTS.PERFORMANCE_ARTIST_ID},${CONSTANTS.PERFORMANCE_EVENT_ID},${CONSTANTS.PERFORMANCE_START_TIME},${CONSTANTS.PERFORMANCE_END_TIME},${CONSTANTS.PERFORMANCE_NAME}) VALUES (?,?,?,?,?) `
+        , [sql.artistId, sql.eventId, sql.startTime, sql.endTime, sql.name], callback);
     }
 
     createRider(sql: { performanceId: string | number, name: string, amount: string | number, confirmed: string | number }, callback: (status: number, data: *) => void) :void {
@@ -96,9 +89,9 @@ module.exports = class ServerDao extends Dao {
     }
 
     /**UPDATE*/
-    updateTicket(sql: { price: string | number, amount: string | number, description: string, name: string, eventId: string | number }, callback: (status: number, data: *) => void) :void {
-        super.query(`UPDATE ${CONSTANTS.TICKET_TABLE} SET ${CONSTANTS.TICKET_PRICE} = ?, ${CONSTANTS.TICKET_AMOUNT} = ?, ${CONSTANTS.TICKET_DESCRIPTION} = ?  WHERE ${CONSTANTS.TICKET_NAME} = ? AND ${CONSTANTS.TICKET_EVENT_ID} = ? `,
-            [sql.price, sql.amount, sql.description, sql.name, sql.eventId], callback);
+    updateTicket(sql: { price: string | number, amount: string | number, name: string, eventId: string | number, oldName: string }, callback: (status: number, data: *) => void) :void {
+        super.query(`UPDATE ${CONSTANTS.TICKET_TABLE} SET ${CONSTANTS.TICKET_PRICE} = ?, ${CONSTANTS.TICKET_AMOUNT} = ?, ${CONSTANTS.TICKET_NAME} = ? WHERE ${CONSTANTS.TICKET_NAME} = ? AND ${CONSTANTS.TICKET_EVENT_ID} = ? `,
+            [sql.price, sql.amount, sql.name, sql.oldName, sql.eventId], callback);
     }
 
     updateRider(sql: { name: string, amount: string | number, performanceId: string | number, oldName: string }, callback: (status: number, data: *) => void) :void {
@@ -106,9 +99,9 @@ module.exports = class ServerDao extends Dao {
             [sql.name, sql.amount, sql.performanceId, sql.oldName], callback);
     }
 
-    updatePerformance(sql: { startTime: string, endTime: string, name: string, contract: string, performanceId: string | number }, callback: (status: number, data: *) => void) :void {
-        super.query(`UPDATE ${CONSTANTS.PERFORMANCE_TABLE} SET ${CONSTANTS.PERFORMANCE_START_TIME} = ?, ${CONSTANTS.PERFORMANCE_END_TIME} = ?, ${CONSTANTS.PERFORMANCE_NAME} = ?, ${CONSTANTS.PERFORMANCE_CONTRACT} = ? WHERE ${CONSTANTS.PERFORMANCE_ID} = ?`,
-            [sql.startTime, sql.endTime, sql.name, sql.contract, sql.performanceId], callback);
+    updatePerformance(sql: { startTime: string, endTime: string, name: string, performanceId: string | number }, callback: (status: number, data: *) => void) :void {
+        super.query(`UPDATE ${CONSTANTS.PERFORMANCE_TABLE} SET ${CONSTANTS.PERFORMANCE_START_TIME} = ?, ${CONSTANTS.PERFORMANCE_END_TIME} = ?, ${CONSTANTS.PERFORMANCE_NAME} = ? WHERE ${CONSTANTS.PERFORMANCE_ID} = ?`,
+            [sql.startTime, sql.endTime, sql.name, sql.performanceId], callback);
     }
 
     updateEvent(sql: { eventName: string, active: string | number, location: string, longitude: string | number, latitude: string | number, description: string, startTime: string | number, endTime: string | number, eventId: string | number }, callback: (status: number, data: *) => void) :void {
@@ -135,10 +128,5 @@ module.exports = class ServerDao extends Dao {
     uploadPicture(eventId: string | number, picture: any, callback: (status: number, data: *) => void) :void {
         super.query(`UPDATE ${CONSTANTS.EVENT_TABLE} SET ${CONSTANTS.EVENT_PICTURE} = ? WHERE ${CONSTANTS.EVENT_ID} = ?`,
             [picture, eventId], callback);
-    }
-
-    downloadPicture(eventId: string | number, callback: (status: number, data: *) => void) :void {
-        super.query(`SELECT ${CONSTANTS.EVENT_PICTURE} FROM ${CONSTANTS.EVENT_TABLE} WHERE ${CONSTANTS.EVENT_ID} = `,
-            [eventId], callback);
     }
 };

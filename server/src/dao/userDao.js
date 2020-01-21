@@ -8,7 +8,7 @@ const CONSTANTS = new Constants();
 module.exports = class UserDao extends Dao {
 
     getUser(sql: number, callback: (status: number, data : *) => void) :void {
-        super.query(`SELECT ${CONSTANTS.USER_ID}, ${CONSTANTS.USER_USERNAME}, ${CONSTANTS.USER_EMAIL}, ${CONSTANTS.USER_PHONE}, ${CONSTANTS.USER_FIRST_NAME}, ${CONSTANTS.USER_LAST_NAME}
+        super.query(`SELECT ${CONSTANTS.USER_ID}, ${CONSTANTS.USER_USERNAME}, ${CONSTANTS.USER_EMAIL}, ${CONSTANTS.USER_PHONE}, ${CONSTANTS.USER_FIRST_NAME}, ${CONSTANTS.USER_LAST_NAME}, ${CONSTANTS.USER_ARTIST}, ${CONSTANTS.USER_PICTURE}
                     FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_ID} = ?`, [sql], callback);
     }
 
@@ -57,11 +57,6 @@ module.exports = class UserDao extends Dao {
     }
 
     /**UPLOADS AND DOWNLOADS*/
-    downloadPicture(userId: string | number, callback: (status: number, data: *) => void) :void {
-        super.query(`SELECT ${CONSTANTS.USER_PICTURE} FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_ID} = ?`,
-            [userId], callback);
-    }
-
     uploadPicture(userId: string | number, picture: any, callback: (status: number, data: *) => void) :void {
         super.query(`UPDATE ${CONSTANTS.USER_TABLE} SET ${CONSTANTS.USER_PICTURE} = ? WHERE ${CONSTANTS.USER_ID} = ?`,
             [picture, userId], callback);
