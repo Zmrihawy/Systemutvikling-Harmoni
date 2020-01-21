@@ -126,7 +126,7 @@ export default class Registration extends Component {
             )
             .then(() =>
                 userService
-                    .loginUser(this.state.password, this.state.email)
+                    .loginUser(document.querySelector("#pw1").value, this.state.email)
                     .then(() =>
                         history.push(
                             '/user/' + window.sessionStorage.getItem('user')

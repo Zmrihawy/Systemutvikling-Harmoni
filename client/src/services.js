@@ -1257,7 +1257,6 @@ class UserService {
     }
 
     getAllArtists(): Promise<any> {
-        
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/user', {
@@ -1275,7 +1274,7 @@ class UserService {
     .then(json => {
             if (isError) return reject(json);
         refreshToken(json.jwt);
-        resolve(handleGetAllUsersResponse(json));
+        resolve(handleGetAllUsersResponse(json.data));
     })
     .catch(error => console.error('Error: ', error));
     });
