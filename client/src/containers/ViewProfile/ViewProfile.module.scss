@@ -1,17 +1,51 @@
-.viewProfile {
-}
-.showLayer {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
+.viewProfile{
 }
 .editLayer {
+    position: absolute;
+    left: 550px;
+    background-color: white;
+    border: 3px solid #ff9f43;
+    border-radius: 30px;
+    pointer-events: none;
+    visibility: hidden;
     color: #333333;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
+    transition: 0.5s;
     font-size: 20px;
-    width: 30vw;
+    width: 800px;
     text-align: center;
     padding: 5px 30px;
+}
+.bioLayer{
+    top: 450px;
+    left: 540px;
+    position: absolute;
+    background-color: white;
+    border: 3px solid #ff9f43;
+    border-radius: 30px;
+    color: #333333;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
+    transition: 0.5s;
+    font-size: 20px;
+    width: 300px;
+    text-align: center;
+    padding: 5px 30px;
+}
+.bioLayer:hover{
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
+}
+.redigerBrukerBtn{
+    background-color: #333333;
+    border: none;
+    border-radius: 20px;
+    color: whitesmoke;
+    padding: 7.5px 16px;
+    text-align: center;
+    transition-duration: 0.3s;
+    cursor:pointer;
+}
+.redigerBrukerBtn:hover{
+    color: #ff9f43;
 }
 .icon {
     color: white;
@@ -25,36 +59,41 @@
     color: #eee;
 }
 .imgContainer {
-    position: relative;
+    position: absolute;
     width: 24vw;
+    left: 540px;
     max-width: 400px;
+    transition-duration: 0.5s;
 }
 .imgContainer:hover .overlay {
     opacity: 1;
 }
 .editLayer:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
+}
+.editHeader {
+    font-family: "Agency FB";
+    font-size: 30px;
 }
 .editTitle {
     font-family: 'Agency FB';
     font-size: x-large;
     color: #333333;
 }
-/* input[type=text]{
-  width: 12vw;
-  border: none;
-  background: transparent;
-  border-bottom: 1px solid #333333;
-} */
 .input:focus,
 input:focus {
     outline: none;
 }
 .profile {
-    width: 100%;
-    height: auto;
-    border: solid 3px #333333;
-    border-radius: 40px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 3px solid #ff9f43;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
+    transition: 0.3s;
+}
+.profile:hover{
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
 }
 .h1 {
     font-family: 'Agency FB';
@@ -86,7 +125,7 @@ input:focus {
 .column {
     float: left;
     padding-left: 10px;
-    width: 50%;
+    width: 33.3%;
 }
 .row {
     padding-top: 50px;
@@ -96,17 +135,16 @@ input:focus {
     display: table;
     clear: both;
 }
-.imageForm {
-    visibility: hidden;
-    font-family: 'Agency FB';
-    font-size: large;
-}
 .redigerBtn {
-    width: 90px;
-    background-color: #333333;
-    border: none;
-    border-radius: 20px;
-    color: whitesmoke;
+    position: absolute;
+    top: 350px;
+    left: 560px;
+    width: 65px;
+    height: 65px;
+    background-color: whitesmoke;
+    border: 3px solid #ff9f43;
+    border-radius: 50%;
+    color: #333333;
     padding: 7.5px 16px;
     text-align: center;
     text-decoration: none;
@@ -114,7 +152,7 @@ input:focus {
     font-size: 15px;
     margin: 3px 1.5px;
     cursor: pointer;
-    transition-duration: 0.3s;
+    transition-duration: 0.5s;
 }
 .redigerBtn:hover {
     background-color: #333333;
@@ -122,11 +160,13 @@ input:focus {
 }
 .imgBtn {
     width: 90px;
+    position: absolute;
     background-color: #333333;
     border: none;
     border-radius: 20px;
-    color: whitesmoke;
+    color: white;
     padding: 7.5px 16px;
+    left: 100px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -138,4 +178,24 @@ input:focus {
 .imgBtn:hover {
     background-color: #333333;
     color: #ff9f43;
+}
+@media only screen and (max-width: 600px){
+    .bioLayer{
+        left: 15px;
+        top: 500px;
+    }
+    .editLayer{
+        left: 15px;
+        top: 500px;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .bioLayer {
+        left: 15px;
+        top: 500px;
+    }
+    .editLayer {
+        left: 15px;
+        top: 500px;
+    }
 }
