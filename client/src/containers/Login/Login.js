@@ -27,7 +27,7 @@ export default class Login extends Component {
                             placeholder="E-post"
                             onChange={this.onChange}
                         />
-                        <ShowPassword />
+                        <ShowPassword id={"pw"} />
                         <button  className="Button" type="submit" value="Logg inn">
                         Logg Inn </button>
                         <p className="message">
@@ -64,7 +64,7 @@ export default class Login extends Component {
         event.preventDefault();
 
         userService
-            .loginUser(document.getElementById('pass').value, this.state.email)
+            .loginUser(document.getElementById('pw').value, this.state.email)
             .then(data => console.log(data))
             .then(none => {
                 history.push('/user/' + window.sessionStorage.getItem('user'));
