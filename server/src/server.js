@@ -68,9 +68,13 @@ let privateKey = (publicKey = "arbeiderklassenrusteropptilvepnetrevolusjon");
 
 // middleware-functions
 app.use("/api", (req, res, next) => {
+
     var token = req.headers["x-access-token"];
 
-    if (token == undefined) return res.status(400).json({error: "missing access token header"});
+    if (token == undefined) {
+        console.log('request has no token');
+        return res.status(400).json({error: "missing access token header"});
+    }
 
     jwt.verify(token, publicKey, (err, decoded) => {
         if (err) {

@@ -26,10 +26,7 @@ module.exports = class Uploader {
 
                 // let fileName = createFilePath(file.name);
 
-                eventDao.uploadContract({
-                    eventId: req.params.event_id,
-                    performanceId: req.params.performanceId
-                }, data, response => {
+                eventDao.uploadContract(req.params.performance_id, data, response => {
                     // console.log(response);
                     console.log('UPLOADED');
                 });
