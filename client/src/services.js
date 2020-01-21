@@ -210,7 +210,7 @@ class EventService {
     getAllEvents(): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
-            fetch('/api/events/', {
+            fetch('/api/event', {
             method: 'GET',
                 headers: {
                 'x-access-token': window.sessionStorage.getItem('jwt'),
