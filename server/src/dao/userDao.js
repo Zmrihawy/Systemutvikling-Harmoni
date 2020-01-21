@@ -2,16 +2,17 @@
 
 import Dao from "./dao.js";
 import Constants from "./databaseConsts.js";
+
 const CONSTANTS = new Constants();
 
 module.exports = class UserDao extends Dao {
 
-    getUser(sql: number, callback: (status: number, data : *) => void) {
+    getUser(sql: number, callback: (status: number, data: *) => void) {
         super.query(`SELECT ${CONSTANTS.USER_ID}, ${CONSTANTS.USER_USERNAME}, ${CONSTANTS.USER_EMAIL}, ${CONSTANTS.USER_PHONE}, ${CONSTANTS.USER_FIRST_NAME}, ${CONSTANTS.USER_LAST_NAME} 
                     FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_ID} = ?`, [sql], callback);
     }
 
-    getUserByEmail(sql: string, callback: (status: number, data : *) => void) {
+    getUserByEmail(sql: string, callback: (status: number, data: *) => void) {
         super.query(`SELECT ${CONSTANTS.USER_ID}, ${CONSTANTS.USER_USERNAME}, ${CONSTANTS.USER_EMAIL}, ${CONSTANTS.USER_PHONE}, ${CONSTANTS.USER_FIRST_NAME}, ${CONSTANTS.USER_LAST_NAME} 
                     FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_EMAIL} = ?`, [sql], callback);
     }
@@ -20,28 +21,28 @@ module.exports = class UserDao extends Dao {
         super.query(`SELECT ${CONSTANTS.USER_ID}, HEX(${CONSTANTS.USER_PASSWORD}) as ${CONSTANTS.USER_PASSWORD} , HEX(${CONSTANTS.USER_SALT}) as ${CONSTANTS.USER_SALT} FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_EMAIL} = ?`, [sql], callback);
     }*/
 
-    getPassword(sql : string, callback: (status: number, data : *) => void) {
-        super.query(`SELECT u.${CONSTANTS.USER_ID}, HEX(p.${CONSTANTS.PASSWORD_PASSWORD}) as ${CONSTANTS.PASSWORD_PASSWORD}, HEX(u.${CONSTANTS.USER_SALT}) as ${CONSTANTS.USER_SALT}, p.${CONSTANTS.PASSWORD_AUTOGEN} FROM ${CONSTANTS.USER_TABLE} u LEFT JOIN ${CONSTANTS.PASSWORD_TABLE} p ON 
+    getPassword(sql: string, callback: (status: number, data: *) => void) {
+        super.query(`SELECT u.${CONSTANTS.USER_ID}, HEX(p.${CONSTANTS.PASSWORD_PASSWORD}) as ${CONSTANTS.PASSWORD_PASSWORD}, HEX(u.${CONSTANTS.USER_SALT}) as ${CONSTANTS.USER_SALT}, p.${CONSTANTS.PASSWORD_AUTOGEN} FROM ${CONSTANTS.USER_TABLE} u JOIN ${CONSTANTS.PASSWORD_TABLE} p ON 
         p.${CONSTANTS.USER_ID} = u.${CONSTANTS.PASSWORD_USER_ID} WHERE ${CONSTANTS.USER_EMAIL} = ? ORDER BY p.${CONSTANTS.PASSWORD_AUTOGEN}`, [sql], callback);
     }
 
-    getAllUsers(callback: (status: number, data : *) => void) {
+    getAllUsers(callback: (status: number, data: *) => void) {
         super.query(`SELECT ${CONSTANTS.USER_ID}, ${CONSTANTS.USER_USERNAME} FROM ${CONSTANTS.USER_TABLE}`, [], callback);
     }
 
-    createUser(sql : {username : string, salt : string, email : string, phone : string | number, firstName : string, lastName : string, password : string}, callback: (status: number, data : *) => void) {
+    createUser(sql: { username: string, salt: string, email: string, phone: string | number, firstName: string, lastName: string, password: string }, callback: (status: number, data: *) => void) {
         super.query(`INSERT INTO ${CONSTANTS.USER_TABLE} (${CONSTANTS.USER_USERNAME}, ${CONSTANTS.USER_SALT},${CONSTANTS.USER_EMAIL},${CONSTANTS.USER_PHONE},${CONSTANTS.USER_FIRST_NAME},${CONSTANTS.USER_LAST_NAME}) 
                     VALUES (?,UNHEX(?),?,?,?,?);
                     INSERT INTO ${CONSTANTS.PASSWORD_TABLE} (${CONSTANTS.PASSWORD_ID}, ${CONSTANTS.PASSWORD_PASSWORD}, ${CONSTANTS.PASSWORD_USER_ID}, ${CONSTANTS.PASSWORD_AUTOGEN})
                     VALUES (DEFAULT, UNHEX(?), LAST_INSERT_ID(), 0)`, [sql.username, sql.salt, sql.email, sql.phone, sql.firstName, sql.lastName, sql.password], callback);
     }
 
-    createPassword(sql : {userId: string|number, password: string, autogen: string|number}, callback: (status: number, data : *) => void){
+    createPassword(sql: { userId: string | number, password: string, autogen: string | number }, callback: (status: number, data: *) => void) {
         super.query(`INSERT INTO ${CONSTANTS.PASSWORD_TABLE} (${CONSTANTS.PASSWORD_ID}, ${CONSTANTS.PASSWORD_PASSWORD}, ${CONSTANTS.PASSWORD_USER_ID}, ${CONSTANTS.PASSWORD_AUTOGEN})
         VALUES(DEFAULT, UNHEX(?), ?,?)`, [sql.password, sql.userId, sql.autogen], callback);
     }
 
-    deleteUser(sql: string | number, callback: (status: number, data : *) => void) {
+    deleteUser(sql: string | number, callback: (status: number, data: *) => void) {
         super.query(`DELETE FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_ID} = ?`, [sql], callback);
     }
 
@@ -49,24 +50,24 @@ module.exports = class UserDao extends Dao {
         super.query(`UPDATE ${CONSTANTS.USER_TABLE} SET ${CONSTANTS.USER_PASSWORD} = UNHEX(?) WHERE ${CONSTANTS.USER_ID} = ?`, [sql.password, sql.userId], callback);
     }*/
 
-    updatePassword(sql : {password : string, passId : string | number, autogen: string|number}, callback: (status: number, data : *) => void) {
+    updatePassword(sql: { password: string, passId: string | number, autogen: string | number }, callback: (status: number, data: *) => void) {
         super.query(`UPDATE ${CONSTANTS.PASSWORD_TABLE} SET ${CONSTANTS.PASSWORD_PASSWORD} = UNHEX(?), ${CONSTANTS.PASSWORD_AUTOGEN} = ?  WHERE ${CONSTANTS.PASSWORD_ID} = ?`, [sql.password, sql.autogen, sql.passId], callback);
     }
 
-    updateUser(sql : {username : string, email : string, phone : string |number, firstName : string, lastName : string, userId : string | number}, callback: (status: number, data : *) => void) {
+    updateUser(sql: { username: string, email: string, phone: string | number, firstName: string, lastName: string, userId: string | number }, callback: (status: number, data: *) => void) {
         console.log(sql);
         super.query(`UPDATE ${CONSTANTS.USER_TABLE} SET ${CONSTANTS.USER_USERNAME} = ?, ${CONSTANTS.USER_EMAIL} = ?, ${CONSTANTS.USER_PHONE} = ?, ${CONSTANTS.USER_FIRST_NAME} = ?, ${CONSTANTS.USER_LAST_NAME} = ? WHERE ${CONSTANTS.USER_ID} = ?`,
             [sql.username, sql.email, sql.phone, sql.firstName, sql.lastName, sql.userId], callback);
     }
 
-    checkCred(sql : {username: string, email: string}, callback: (status: number, data: *) => void){
+    checkCred(sql: { username: string, email: string }, callback: (status: number, data: *) => void) {
         super.query(`SELECT DISTINCT ${CONSTANTS.USER_USERNAME}, ${CONSTANTS.USER_EMAIL} FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_USERNAME} = ? OR ${CONSTANTS.USER_EMAIL} = ?`, [sql.username, sql.email], callback);
     }
 
-    setPassword(sql : {password : string, userId: string|number}, callback: (status: number, data : *) => void) {
-        super.query(`REMOVE * FROM ${CONSTANTS.PASSWORD_TABLE} WHERE ${CONSTANTS.PASSWORD_USER_ID} = ?;
+    setPassword(sql: { password: string, userId: string | number }, callback: (status: number, data: *) => void) {
+        super.query(`DELETE * FROM ${CONSTANTS.PASSWORD_TABLE} WHERE ${CONSTANTS.PASSWORD_USER_ID} = ?;
         INSERT INTO ${CONSTANTS.PASSWORD_TABLE}, (${CONSTANTS.PASSWORD_ID}, ${CONSTANTS.PASSWORD_PASSWORD}, ${CONSTANTS.PASSWORD_USER_ID}, ${CONSTANTS.PASSWORD_AUTOGEN}) VALUES
-        (DEFAULT, UNHEX(?),?,0)`, [sql.password, sql.userId], callback);
+        (DEFAULT, UNHEX(?),?,0)`, [sql.userId, sql.password, sql.userId], callback);
     }
 
 
@@ -75,6 +76,7 @@ module.exports = class UserDao extends Dao {
         super.query(`SELECT ${CONSTANTS.USER_PICTURE} FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_ID} = ?`,
             [userId], callback);
     }
+
     uploadPicture(userId: string | number, picture: any, callback: (status: number, data: *) => void) {
         super.query(`UPDATE ${CONSTANTS.USER_TABLE} SET ${CONSTANTS.USER_PICTURE} = ? WHERE ${CONSTANTS.USER_ID} = ?`,
             [picture, userId], callback);

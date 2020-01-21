@@ -107,7 +107,7 @@ app.post("/login", (req, res) => {
         let login = data[0].user_id;
 
         if (data.length > 1) {
-            if (pass.toUpperCase() === data[0].password_hex.toString() || pass.toUpperCase() === data[1].password_hex.toString) {
+            if (pass.toUpperCase() === data[0].password_hex.toString() || pass.toUpperCase() === data[1].password_hex.toString()) {
                 console.log("User ID:", login);
                 console.log("username & passord ok");
 
@@ -525,11 +525,12 @@ app.put("/user/:usermail", (req, res) => {
 
         pw = hashPW.digest('hex');
 
-        if (data.length === 0) {
+        if (data.length === 1) {
             userDao.createPassword({
                 userId: data[0].user_id, password: pw, autogen: 1
             }, (stat, dat) => sendMail(req, res, password));
         } else {
+            if(data[1] === undefined) return res.json('password trouble');
             userDao.updatePassword({
                 passId: data[1].password_id, password: pw, autogen: 1
             }, (stat, dat) => sendMail(req, res, password));
@@ -575,8 +576,6 @@ app.put("/api/user/:user_id/password", (req, res) => {
 
         hashPW.update(pass);
         pass = hashPW.digest('hex');
-
-        let login = data[0].user_id;
 
         if (data.length === 2) {
             if (pass.toUpperCase() !== data[0].password_hex.toString() && pass.toUpperCase() !== data[1].password_hex.toString()) {
