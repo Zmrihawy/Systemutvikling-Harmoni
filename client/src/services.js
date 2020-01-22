@@ -199,7 +199,9 @@ class EventService {
                 json.description,
                 json.start_time,
                 json.end_time,
-                pictureUrl
+                pictureUrl,
+                json.first_name,
+                json.surname
             );
         }
     }
