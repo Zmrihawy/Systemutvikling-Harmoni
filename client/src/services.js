@@ -1546,8 +1546,8 @@ function isErrorRequest(response: *): boolean {
 
     function printError(response: *, errorMsg: string): void {
         response.json().then(json => {
-            console.log(response.status + ': ' + errorMsg)
-            console.log(json.error)
+            console.log(response.status + ': ' + errorMsg);
+            console.log(json.error);
         });
     }
 }
