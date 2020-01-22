@@ -6,11 +6,51 @@ import { history } from '../../containers/App';
 import icon from '../../pictures/icon4.png';
 import icon2 from '../../pictures/icon3.png';
 
+import meny from '../../pictures/menu.png';
+
 export default class NavBar extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = { height: 512, show : false};
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+
+        this.show = this.show.bind(this);
+        this.close = this.close.bind(this);
     }
+
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener("resize", this.updateWindowDimensions.bind(this));
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateWindowDimensions.bind(this));
+    }
+
+    updateWindowDimensions() {
+        this.setState({ width: window.innerWidth, height: window.innerHeight});
+    }
+
+    setDisplay(){
+        if(this.state.hidden) return classes.menuContainerHidden;
+        return classes.menuContainerDisplay;
+    }
+
+    show(e){
+        e.preventDefault();
+        this.setState({ show : true }, () => {
+            document.addEventListener('click', this.close);
+          });
+    }
+    
+    close(e){
+        e.preventDefault();
+        this.setState({ show : false }, () => {
+            document.removeEventListener('click', this.close);
+          });
+    }
+
+
     render() {
         if(window.sessionStorage.getItem('jwt') == undefined) return (
             <div className={classes.navBar}>
@@ -19,6 +59,35 @@ export default class NavBar extends Component {
                 </div>
             </div>
         );
+        
+        if(this.state.width/this.state.height < 1)
+            return(
+            <>
+                <div className={classes.navBar}>
+                    <div className={classes.mobilNavLinkR}>
+                        Logg Ut
+                    </div>
+
+                    <div className={classes.mobilNavLinkL} onClick={this.show}>
+                        <img src={meny} className={classes.mobileMenu}/>
+                    </div>                    
+                </div>
+                {this.state.show ? (
+                    <div className={classes.mobilNavLink}>
+                        <div className={classes.mobilNavLink} id="profileLink" onClick={event => this.changePage('profileLink')}>
+                            Min Profil
+                        </div>
+                        <div className={classes.mobilNavLink} id="eventLink" onClick={event => { this.changePage('eventLink'); }} >
+                            Mine Arrangement
+                        </div>
+                        <div className={classes.mobilNavLink} id="createLink" onClick={event => {this.changePage('createLink');}}>
+                            Lage Arrangement
+                        </div>
+                         
+                    </div>
+                    ) : (null) }
+            </>)
+
         return (
             
                 <div className={classes.navBar}>
