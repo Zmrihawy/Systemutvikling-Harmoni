@@ -229,21 +229,22 @@ class EventService {
 
         function handleGetAllEventsResponse(json) {
             return json.map(data => {
-                let pictureUrl: string = bufferToPicture(data.picture);
-                return new Event(
-                    data.event_id,
-                    data.name,
-                    data.host_id,
-                    data.active,
-                    data.location,
-                    data.longitude,
-                    data.latitude,
-                    data.description,
-                    data.start_time,
-                    data.end_time,
-                    pictureUrl
-                )}
-        );
+                    let pictureUrl: string = bufferToPicture(data.picture);
+                    return new Event(
+                        data.event_id,
+                        data.name,
+                        data.host_id,
+                        data.active,
+                        data.location,
+                        data.longitude,
+                        data.latitude,
+                        data.description,
+                        data.start_time,
+                        data.end_time,
+                        pictureUrl
+                    )
+                }
+            );
         }
     }
 
@@ -524,20 +525,21 @@ class EventService {
 
         function handleGetUsersEventsResponse(json) {
             return json.map(data => {
-                let pictureUrl: string = bufferToPicture(json.picture);
-                return new Event(
-                    data.event_id,
-                    data.name,
-                    userId,
-                    active,
-                    data.location,
-                    data.longitude,
-                    data.latitude,
-                    '',
-                    data.start_time,
-                    data.end_time,
-                    pictureUrl
-                )}
+                    let pictureUrl: string = bufferToPicture(json.picture);
+                    return new Event(
+                        data.event_id,
+                        data.name,
+                        userId,
+                        active,
+                        data.location,
+                        data.longitude,
+                        data.latitude,
+                        '',
+                        data.start_time,
+                        data.end_time,
+                        pictureUrl
+                    )
+                }
             );
         }
     }
