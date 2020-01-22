@@ -180,8 +180,7 @@ app.get("/api/event/:event_id", (req, res) => {
             eventDao.getEvent(req.params.event_id, (status, data) => {
                 res.status(status).json({data, jwt: token});
             });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -212,8 +211,7 @@ app.get("/api/event/:event_id/performance", (req, res) => {
             eventDao.getEventPerformances(req.userId, (status, data) => {
                 res.status(status).json({data, jwt: token});
             });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -232,8 +230,7 @@ app.get("/api/event/:event_id/ticket", (req, res) => {
             eventDao.getTickets(req.params.event_id, (status, data) => {
                 res.status(status).json({data, jwt: token});
             });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -252,8 +249,7 @@ app.get("/api/event/:event_id/performance/:performance_id", (req, res) => {
             eventDao.getRiders(req.params.performanceId, (status, data) => {
                 res.status(status).json({data, jwt: token});
             });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -322,8 +318,7 @@ app.delete('/api/event/:event_id/performance/:performance_id/rider', (req, res) 
             eventDao.deleteRider({performanceId: req.params.performance_id, name: req.body.name}, (status, data) => {
                 res.status(status).json({data, jwt: token});
             });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -343,8 +338,7 @@ app.delete("/api/event/:event_id/ticket", (req, res) => {
             eventDao.deleteTicket({eventId: req.params.event_id, name: req.body.name}, (status, data) => {
                 res.status(status).json({data, jwt: token});
             });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -363,8 +357,7 @@ app.delete("/api/event/:event_id/performance/:performance_id", (req, res) => {
             eventDao.deletePerformance(req.params.performance_id, (status, data) => {
                 res.status(status).json({data, jwt: token});
             });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -376,7 +369,7 @@ app.delete("/api/user/:user_id", (req, res) => {
 
     if (numberError([req.params.user_id])) return res.status(400).json({error: "url parameter user_id must be a number"});
     else if (req.body.password == undefined) return res.status(400).json({error: "request missing password"});
-    else if (req.params.userId != req.userId) return res.status(401).json({error: "Not authorized"});
+    else if (req.params.userId != req.userId) return res.status(403).json({error: "not your user"});
 
     userDao.getPassword(req.params.email, (status, data) => {
 
@@ -397,7 +390,7 @@ app.delete("/api/user/:user_id", (req, res) => {
                     return res.json(dt);
                 });
             }
-            return res.json(401).json({error: "Wrong password"});
+            return res.json(403).json({error: "Wrong password"});
         } else {
             if (data[0].password_hex.toString() === pass.toUpperCase()) {
                 userDao.deleteUser(req.params.user_id, (st, dt) => {
@@ -405,7 +398,7 @@ app.delete("/api/user/:user_id", (req, res) => {
                     return res.json(dt);
                 });
             }
-            return res.json(401).json({error: "Wrong password"});
+            return res.json(403).json({error: "Wrong password"});
         }
     })
 });
@@ -423,8 +416,7 @@ app.delete("/api/event/:event_id", (req, res) => {
             eventDao.deleteEvent(req.params.event_id, (status, data) => {
                 res.status(status).json({data, jwt: token});
             });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -443,8 +435,7 @@ app.delete("/api/event/:event_id/crew", (req, res) => {
             eventDao.deleteCrew(req.body.crewId, (status, data) => {
                 res.status(status).json({data, jwt: token});
             });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -508,8 +499,7 @@ app.put('/api/event/:event_id/crew', (req, res) => {
                 (status, data) => {
                     res.status(status).json({data, jwt: token});
                 });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -536,8 +526,7 @@ app.put("/api/event/:event_id/performance/:performance_id", (req, res) => {
                 (status, data) => {
                     res.status(status).json({data, jwt: token});
                 });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -567,8 +556,7 @@ app.put("/api/event/:event_id/ticket", (req, res) => {
                 (status, data) => {
                     res.status(status).json({data, jwt: token});
                 });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -598,8 +586,7 @@ app.put("/api/event/:event_id/performance/:performance_id/rider", (req, res) => 
                 (status, data) => {
                     res.status(status).json({data, jwt: token});
                 });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -741,8 +728,7 @@ app.put("/api/event/:event_id", (req, res) => {
                 (status, data) => {
                     res.status(status).json({data, jwt: token});
                 });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -859,8 +845,7 @@ app.post("/api/event/:event_id/ticket", (req, res) => {
                 (status, data) => {
                     res.status(status).json({data, jwt: token});
                 });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -871,14 +856,14 @@ app.post("/api/event/:event_id/ticket", (req, res) => {
 app.post("/api/event/:event_id/performance", (req, res) => {
     console.log("Fikk POST-request fra klienten");
 
-    if (req.body.userId == undefined) return res.status(400).json({error: "bad request : missing artist parameter"});
-    else if (req.body.startTime == undefined) return res.status(400).json({error: "bad requst : missing startTime parameter"});
+    if (req.body.startTime == undefined) return res.status(400).json({error: "bad requst : missing startTime parameter"});
     else if (req.body.endTime == undefined) return res.status(400).json({error: "bad request : missing endTime parameter"});
     else if (numberError([req.params.event_id])) return res.status(400).json({error: "url parameter event_id must be a number"});
-    else if (numberError([req.body.userId])) return res.status(400).json({error: "number field is a string"});
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
         let token = thisFunctionCreatesNewToken(req.email, req.userId);
+
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no data received'});
 
         if (data[0].host_id == req.userId) {
             eventDao.createPerformance({
@@ -889,10 +874,9 @@ app.post("/api/event/:event_id/performance", (req, res) => {
                     name: req.body.name
                 },
                 (status, data) => {
-                     res.status(status).json({data, jwt: token});
+                    res.status(status).json({data, jwt: token});
                 });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -917,7 +901,7 @@ app.post("/api/event/:event_id/performance/:performance_id/rider", (req, res) =>
                     confirmed: 1
                 },
                 (status, data) => {
-                     res.status(status).json({data, jwt: token});
+                    res.status(status).json({data, jwt: token});
                 });
         } else if (checkEventAccess(data, req.userId)) {
             eventDao.createRider({
@@ -927,10 +911,9 @@ app.post("/api/event/:event_id/performance/:performance_id/rider", (req, res) =>
                     confirmed: 0
                 },
                 (status, data) => {
-                     res.status(status).json({data, jwt: token});
+                    res.status(status).json({data, jwt: token});
                 });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -956,10 +939,9 @@ app.post('/api/event/:event_id/crew', (req, res) => {
                     eventId: req.params.event_id
                 },
                 (status, data) => {
-                     res.status(status).json({data, jwt: token});
+                    res.status(status).json({data, jwt: token});
                 });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });

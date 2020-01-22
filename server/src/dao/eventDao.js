@@ -9,7 +9,7 @@ module.exports = class ServerDao extends Dao {
 
     /**GET*/
     getEventParticipants(sql: number, callback: (status: number, data: *) => void) :void{
-        super.query(`SELECT p.${CONSTANTS.PERFORMANCE_ARTIST_ID}, e.${CONSTANTS.EVENT_HOST_ID} FROM ${CONSTANTS.PERFORMANCE_TABLE} as p JOIN ${CONSTANTS.EVENT_TABLE} as e 
+        super.query(`SELECT p.${CONSTANTS.PERFORMANCE_ARTIST_ID}, e.${CONSTANTS.EVENT_HOST_ID} FROM ${CONSTANTS.EVENT_TABLE} e LEFT JOIN ${CONSTANTS.PERFORMANCE_TABLE} p 
         ON p.${CONSTANTS.PERFORMANCE_EVENT_ID} = e.${CONSTANTS.EVENT_ID} WHERE e.${CONSTANTS.EVENT_ID} = ?`, [sql], callback);
     }
 
@@ -58,7 +58,7 @@ module.exports = class ServerDao extends Dao {
     }
 
     createRider(sql: { performanceId: string | number, name: string, amount: string | number, confirmed: string | number }, callback: (status: number, data: *) => void) :void {
-        super.query(`INSERT INTO ${CONSTANTS.RIDER_TABLE} VALUES (?,?,?,?) `,
+        super.query(`INSERT INTO ${CONSTANTS.RIDER_TABLE} VALUES (?,?,?) `,
             [sql.performanceId, sql.name, sql.amount, sql.confirmed], callback);
     }
 
