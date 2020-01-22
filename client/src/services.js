@@ -274,7 +274,18 @@ class EventService {
 
         function handleGetPerformanceResponse(json) {
             return json.map(
-                data => new Performance(data.performanceId, data.userId, data.eventId, data.startTime, data.endTime, '', data.username, data.name, bufferToPicture(data.picture))
+                data =>
+                    new Performance(
+                        data.performance_id,
+                        data.user_id,
+                        data.event_id,
+                        data.start_time,
+                        data.end_time,
+                        '',
+                        data.username,
+                        data.name,
+                        bufferToPicture(data.picture)
+                    )
             );
         }
     }
