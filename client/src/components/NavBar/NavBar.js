@@ -64,7 +64,7 @@ export default class NavBar extends Component {
             return(
             <>
                 <div className={classes.navBar}>
-                    <div className={classes.mobilNavLinkR}>
+                <div className={classes.mobilNavLinkR} id="logLink" onClick={event => {this.changePage('logLink');}}>
                         Logg Ut
                     </div>
 
