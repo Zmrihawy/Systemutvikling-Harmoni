@@ -516,14 +516,13 @@ class EventService {
     getUsersEvents(userId: number, active: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
-            fetch('/api/user/' + userId + '/event/', {
+            fetch('/api/user/' + userId + '/event/' + active, {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                },
-                body: active
+                }
             })
                 .then(response => {
                     isError = isErrorRequest(response);
