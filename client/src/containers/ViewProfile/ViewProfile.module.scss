@@ -201,18 +201,15 @@ input:focus {
         top: 600px;
         width: 100%;
     }
-    .imgContainer {
-        top: 100px;
-        left: 0;
-        width: 100%;
-    }
-    .profile {
+    .imgContainer{
+        width: 50%;
+        
     }
     .redigerBtn {
         top: 250px;
     }
 }
-@media only screen and (max-width: 1422px){
+@media only screen and (max-width: 1600px){
     .bioLayer {
         top: 65vh;
     }
