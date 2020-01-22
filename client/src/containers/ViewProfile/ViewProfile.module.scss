@@ -17,7 +17,7 @@
     padding: 5px 30px;
 }
 .bioLayer{
-    bottom: 32.5%;
+    top: 50vh;
     left: 37.5%;
     position: absolute;
     background-color: white;
@@ -210,5 +210,10 @@ input:focus {
     }
     .redigerBtn {
         top: 250px;
+    }
+}
+@media only screen and (max-width: 1280px){
+    .bioLayer {
+        top: 50vh;
     }
 }
