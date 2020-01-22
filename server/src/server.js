@@ -519,10 +519,6 @@ app.put("/api/user/:user_id", (req, res) => {
         jwt: token,
         error: "Missing parameter lastName"
     });
-    else if (req.body.artist == undefined) return res.status(400).json({
-        jwt: token,
-        error: "Missing parameter artist"
-    });
     else if (!sjekkMail(req.body.email)) return res.status(400).json({
         jwt: token,
         error: "inc mail is not valid"
@@ -535,7 +531,6 @@ app.put("/api/user/:user_id", (req, res) => {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             userId: req.params.user_id,
-            artist: req.body.artist
         },
         (status, data) => {
             res.status(status);
