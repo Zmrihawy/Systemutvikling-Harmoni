@@ -538,7 +538,7 @@ class EventService {
 
         function handleGetUsersEventsResponse(json) {
             return json.map(data => {
-                    let pictureUrl: string = bufferToPicture(json.picture);
+                    let pictureUrl: string = bufferToPicture(data.picture);
                     return new Event(
                         data.event_id,
                         data.name,
