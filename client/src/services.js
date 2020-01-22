@@ -520,8 +520,8 @@ class EventService {
                     return response.json();
                 })
                 .then(json => {
-                    if (isError) return reject(json);
                     refreshToken(json.jwt);
+                    if (isError) return reject(json);
                     resolve(handleGetUsersEventsResponse(json.data));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -604,7 +604,7 @@ class EventService {
             eventName: eventName,
             location: location,
             longitude: longitude,
-            latitude: longitude,
+            latitude: latitude,
             description: description,
             startTime: startTime,
             endTime: endTime
@@ -720,7 +720,7 @@ class EventService {
         let data = {name: name, amount: amount};
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
-            fetch('/api/event/' + eventId + 'performance/' + performanceId + '/rider', {
+            fetch('/api/event/' + eventId + '/performance/' + performanceId + '/rider', {
                 method: 'POST',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
@@ -873,13 +873,13 @@ class EventService {
         name: string,
         eventId: number,
         price: number,
-        amount: number,
+        amount: number
     ): Promise<any> {
         let data = {
             oldName: oldName,
             name: name,
             price: price,
-            amount: amount,
+            amount: amount
         };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
@@ -1276,11 +1276,11 @@ class UserService {
                 data =>
                     new User(
                         data.user_id,
-                        data.username,
                         "",
                         "",
                         "",
-                        "",
+                        data.first_name,
+                        data.surname,
                         1,
                         ""
                     )
