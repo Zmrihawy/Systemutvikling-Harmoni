@@ -13,14 +13,22 @@ export default class ViewProfile extends Component {
             phone: null,
             firstName: null,
             surname: null,
-            picture: null
+            picture: null,
+            artist: null
         };
     }
     async componentDidMount() {
         var intId = parseInt(this.props.match.params.id, 10);
         const user = await userService.getUser(intId);
         this.setState(user);
+        console.log(user);
+        console.log(this.state.picture);
         document.getElementById("profileImg").src = this.state.picture;
+        if(this.state.artist === 0){
+            if(document.getElementById("titleP") !== null){
+                document.getElementById("titleP").innerHTML = "Arrangør";
+            }
+        }
     }
     render() {
         return (
@@ -52,7 +60,7 @@ export default class ViewProfile extends Component {
                                         this.state.surname +
                                         ''}
                                 </h1>
-                                <p>Artist</p>
+                                <p id="titleP">Artist</p>
                                 <div className={classes.p} id={'emailP'}>
                                     {this.state.email}
                                 </div>
