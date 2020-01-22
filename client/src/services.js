@@ -231,7 +231,7 @@ class EventService {
             return json.map(
                 data => {
                     let pictureUrl: string = bufferToPicture(json.picture);
-                    new Event(
+                    return new Event(
                         data.event_id,
                         data.name,
                         data.host_id,
@@ -275,7 +275,7 @@ class EventService {
 
         function handleGetPerformanceResponse(json) {
             return json.map(
-                data => new Performance(data.performanceId, data.userId, data.eventId, data.startTime, data.endTime, '', data.username, data.name, data.picture)
+                data => new Performance(data.performanceId, data.userId, data.eventId, data.startTime, data.endTime, '', data.username, data.name, bufferToPicture(data.picture))
             );
         }
     }
