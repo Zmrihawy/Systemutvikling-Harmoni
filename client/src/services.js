@@ -1521,6 +1521,7 @@ class UserService {
 
 
 function bufferToPicture(buffer: *) {
+    if (buffer == null) return '';
     let arrayBufferView = new Uint8Array(buffer.data);
     let blob = new Blob([arrayBufferView], {type: 'image'});
     let urlCreator = window.URL || window.webkitURL;
