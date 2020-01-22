@@ -273,7 +273,7 @@ export default class ViewProfile extends Component {
         if(document.getElementById("imgContainer") !== null && document.getElementById("redigerBtn") !==
         null && document.getElementById("bioLayer") !== null) {
             if(window.innerWidth >= 1000){
-                document.getElementById("imgContainer").style.left = "10%";
+                document.getElementById("imgContainer").style.left = "11%";
                 document.getElementById("bioLayer").style.left = "10%";
                 document.getElementById("redigerBtn").style.left = "calc(10% + 30px)";
             }

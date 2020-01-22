@@ -2,7 +2,8 @@
 }
 .editLayer {
     position: absolute;
-    left: 550px;
+    right: 10%;
+    height: 80%;
     background-color: white;
     border: 3px solid #ff9f43;
     border-radius: 30px;
@@ -18,7 +19,7 @@
 }
 .bioLayer{
     top: 450px;
-    left: calc(50% - 12vw);
+    left: 37.5%;
     position: absolute;
     background-color: white;
     border: 3px solid #ff9f43;
@@ -61,7 +62,7 @@
 .imgContainer {
     position: absolute;
     width: 22%;
-    left: calc(38%);
+    left: 38%;
     transition-duration: 0.5s;
 }
 .imgContainer:hover .overlay {
