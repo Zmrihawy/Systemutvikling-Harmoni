@@ -3,7 +3,6 @@
 .editLayer {
     position: absolute;
     right: 10%;
-    height: 80%;
     background-color: white;
     border: 3px solid #ff9f43;
     border-radius: 30px;
@@ -18,7 +17,7 @@
     padding: 5px 30px;
 }
 .bioLayer{
-    top: 450px;
+    bottom: 32.5%;
     left: 37.5%;
     position: absolute;
     background-color: white;
@@ -137,7 +136,7 @@ input:focus {
 }
 .redigerBtn {
     position: absolute;
-    top: 350px;
+    bottom: 40%;
     left: calc(50% - 120px);
     width: 65px;
     height: 65px;
