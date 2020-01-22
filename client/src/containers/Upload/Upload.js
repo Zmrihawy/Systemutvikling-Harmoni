@@ -25,16 +25,45 @@ class Upload extends Component {
         }));
     }
 
-    sendRequest(file) {
+    sendRequest(file, eventId, performanceId) {
         return new Promise((resolve, reject) => {
             const req = new XMLHttpRequest();
 
             const formData = new FormData();
             formData.append('file', file, file.name);
 
-            req.open('POST', 'http://localhost:8000/upload');
+            req.open(
+                'PUT',
+                '/api/event/' +
+                eventId +
+                '/performance/' +
+                performanceId +
+                '/contract'
+            );
+
+            req.setRequestHeader(
+                'x-access-token',
+                window.sessionStorage.getItem('jwt')
+            );
+
             req.send(formData);
         });
+    }
+
+    async uploadFiles() {
+        //this.setState({ uploadProgress: {}, uploading: true });
+        const promises = [];
+        this.state.files.forEach(file => {
+            promises.push(this.sendRequest(file, 1, 2));
+        });
+        try {
+            await Promise.all(promises);
+
+            // this.setState({ successfullUploaded: true, uploading: false });
+        } catch (e) {
+            // Not Production ready! Do some error handling here instead...
+            //this.setState({ successfullUploaded: true, uploading: false });
+        }
     }
 
     renderProgress(file) {
@@ -91,24 +120,6 @@ class Upload extends Component {
         }
     }
 
-    async uploadFiles() {
-        this.setState({ uploadProgress: {}, uploading: true });
-        const promises = [];
-        this.state.files.forEach(file => {
-            promises.push(this.sendRequest(file));
-        });
-        try {
-            await Promise.all(promises);
-
-            this.setState({ successfullUploaded: true, uploading: false });
-        } catch (e) {
-            // Not Production ready! Do some error handling here instead...
-            this.setState({ successfullUploaded: true, uploading: false });
-        }
-        console.log(this.state.successfullUploaded);
-        console.log(this.state.files);
-    }
-
     render() {
         //console.log(this.state.files.length);
 
@@ -143,6 +154,10 @@ class Upload extends Component {
             </div>
         );
     }
+}
+
+function refreshToken(jwt) {
+    window.sessionStorage.setItem('jwt', jwt);
 }
 
 export default Upload;

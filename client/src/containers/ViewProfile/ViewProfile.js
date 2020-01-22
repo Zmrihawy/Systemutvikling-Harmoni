@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classes from './ViewProfile.module.scss';
 import { userService } from '../../services';
 import profileHolder from '../../pictures/profileHolder.svg';
+
 export default class ViewProfile extends Component {
     constructor(props) {
         super(props);
@@ -11,16 +12,24 @@ export default class ViewProfile extends Component {
             email: null,
             phone: null,
             firstName: null,
-            surname: null
+            surname: null,
+            picture: null,
+            artist: null
         };
     }
     async componentDidMount() {
+        console.log(window.innerWidth);
         var intId = parseInt(this.props.match.params.id, 10);
         const user = await userService.getUser(intId);
         this.setState(user);
-        let picture = await userService.getPicture(intId)
-            .then(picLink => (document.getElementById("profileImg").src = picLink))
-        console.log(picture);
+        console.log(user);
+        console.log(this.state.picture);
+        document.getElementById("profileImg").src = this.state.picture;
+        if(this.state.artist === 0){
+            if(document.getElementById("titleP") !== null){
+                document.getElementById("titleP").innerHTML = "Arrangør";
+            }
+        }
     }
     render() {
         return (
@@ -32,6 +41,9 @@ export default class ViewProfile extends Component {
                                     className={classes.profile}
                                     id={'profileImg'}
                                     src={profileHolder}
+                                    onError={
+                                        this.fileError
+                                    }
                                     alt="Profile picture"
                                 />
                             </div>
@@ -49,7 +61,7 @@ export default class ViewProfile extends Component {
                                         this.state.surname +
                                         ''}
                                 </h1>
-                                <p>Artist</p>
+                                <p id="titleP">Artist</p>
                                 <div className={classes.p} id={'emailP'}>
                                     {this.state.email}
                                 </div>
@@ -249,9 +261,11 @@ export default class ViewProfile extends Component {
 
         if(document.getElementById("imgContainer") !== null && document.getElementById("redigerBtn") !==
             null && document.getElementById("bioLayer") !== null) {
-            document.getElementById("imgContainer").style.left = "540px";
-            document.getElementById("bioLayer").style.left = "540px";
-            document.getElementById("redigerBtn").style.left = "560px";
+            if(window.innerWidth >= 1000){
+                document.getElementById("imgContainer").style.left = "calc(50% - 11vw)";
+                document.getElementById("bioLayer").style.left = "calc(50% - 12vw)";
+                document.getElementById("redigerBtn").style.left = "calc(50% - 10vw)";
+            }
         }
 
     }
@@ -259,9 +273,13 @@ export default class ViewProfile extends Component {
     showEditForm() {
         if(document.getElementById("imgContainer") !== null && document.getElementById("redigerBtn") !==
         null && document.getElementById("bioLayer") !== null) {
-           document.getElementById("imgContainer").style.left = "100px";
-           document.getElementById("bioLayer").style.left = "100px";
-           document.getElementById("redigerBtn").style.left = "110px";
+            if(window.innerWidth >= 1000){
+                document.getElementById("imgContainer").style.left = "11%";
+                document.getElementById("bioLayer").style.left = "10%";
+                document.getElementById("redigerBtn").style.left = "calc(10% + 3vw)";
+            }
+            else{
+            }
         }
         if(document.getElementById("editLayer") !== null){
             document.getElementById("editLayer").style.visibility = 'visible';
@@ -271,6 +289,11 @@ export default class ViewProfile extends Component {
             document.getElementById("redigerBrukerBtn").style.visibility = 'hidden';
             document.getElementById("redigerBrukerBtn").style.pointerEvents = 'none';
 
+        }
+    }
+    fileError(){
+        if((document.getElementById('profileImg')) !== null){
+            document.getElementById('profileImg').src = profileHolder;
         }
     }
 }
