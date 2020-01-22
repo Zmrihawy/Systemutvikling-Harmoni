@@ -267,7 +267,7 @@ class EventService {
                 .then(json => {
                     if (json.jwt != undefined) refreshToken(json.jwt);
                     if (isError) return reject(json);
-                    resolve(handleGetPerformanceResponse(json.data[0]));
+                    resolve(handleGetPerformanceResponse(json.data));
                 })
                 .catch(error => console.error('Error: ', error));
         });
@@ -543,8 +543,8 @@ class EventService {
                         userId,
                         active,
                         data.location,
-                        data.longitude,
-                        data.latitude,
+                        0,
+                        0,
                         '',
                         data.start_time,
                         data.end_time,
@@ -1557,8 +1557,9 @@ function isErrorRequest(response: *): boolean {
 
     function printError(response: *, errorMsg: string): void {
         response.json().then(json => {
-            console.log(response.status + ': ' + errorMsg);
-            console.log(json.error);
+            // console.log(response.status + ': ' + errorMsg);
+            // console.log(json.error);
+            alert(response.status + ': ' + errorMsg + '\n' + json.error);
         });
     }
 }
