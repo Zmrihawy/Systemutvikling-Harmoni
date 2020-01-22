@@ -264,7 +264,7 @@ export default class ViewProfile extends Component {
             if(window.innerWidth >= 1000){
                 document.getElementById("imgContainer").style.left = "calc(50% - 11vw)";
                 document.getElementById("bioLayer").style.left = "calc(50% - 12vw)";
-                document.getElementById("redigerBtn").style.left = "calc(50% - 120px)";
+                document.getElementById("redigerBtn").style.left = "calc(50% - 10vw)";
             }
         }
 
@@ -276,7 +276,7 @@ export default class ViewProfile extends Component {
             if(window.innerWidth >= 1000){
                 document.getElementById("imgContainer").style.left = "11%";
                 document.getElementById("bioLayer").style.left = "10%";
-                document.getElementById("redigerBtn").style.left = "calc(10% + 30px)";
+                document.getElementById("redigerBtn").style.left = "calc(10% + 3vw)";
             }
             else{
             }
