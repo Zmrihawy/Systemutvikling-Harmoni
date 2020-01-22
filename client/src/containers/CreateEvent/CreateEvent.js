@@ -19,6 +19,7 @@ import classes from './CreateEvent.module.scss';
 
 import manWithFiles from '../../assets/images/manWithFiles.svg';
 import engineer from '../../assets/images/engineer.svg';
+import PdfReader from '../../components/PdfView/PdfViewPc';
 
 export default class CreateEvent extends Component {
     state = {
@@ -45,7 +46,8 @@ export default class CreateEvent extends Component {
             'Voksen',
             'Honnør',
             'VIP'
-        ]
+        ],
+        artistOptions: []
     };
 
     handleToggleBackdrop = () => {
@@ -130,18 +132,19 @@ export default class CreateEvent extends Component {
         let result;
         // Remove empty elements from the array
         if (select === 'artists') {
-            result = input.filter(el => el.name.trim() !== '');
+            this.setState({ artistOptions: input[1] });
+
+            result = input[0].filter(el => el.name.trim() !== '');
         } else if (select === 'staff') {
             result = input.filter(
-                el =>
-                    el.name.trim() !== '' &&
-                    el.profession.trim() !== '' &&
-                    el.contact.trim() !== ''
+                el => el.name.trim() !== '' && el.profession.trim() !== ''
             );
         } else if (select === 'tickets') {
             this.setState({ ticketOptions: input[1] });
 
-            result = input[0];
+            console.log(input[0]);
+
+            result = input[0].filter(el => el.amount !== '' && el.price !== '');
         } else if (select === 'riders') {
             input.forEach(el => {
                 el.riders = el.riders.filter(element => {
@@ -208,7 +211,6 @@ export default class CreateEvent extends Component {
                 current = (
                     <>
                         <LocationAdder
-                            key={this.state.currentPage}
                             title="Hvor skal arrangementet være?"
                             inputType="text"
                             value={this.state.newEvent.location}
@@ -238,6 +240,7 @@ export default class CreateEvent extends Component {
                 current = (
                     <ArtistAdder
                         artists={this.state.newEvent.artists}
+                        artistOptions={this.state.artistOptions}
                         save={this.handleSave}
                     />
                 );

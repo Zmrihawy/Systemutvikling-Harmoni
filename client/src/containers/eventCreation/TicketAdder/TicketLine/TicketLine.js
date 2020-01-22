@@ -20,7 +20,7 @@ const ticketLine = props => {
             </select>
             <input
                 className="Input"
-                type="text"
+                type="number"
                 name="amount"
                 onChange={props.changed}
                 placeholder="Antall"
@@ -28,7 +28,7 @@ const ticketLine = props => {
             />
             <input
                 className="Input"
-                type="text"
+                type="number"
                 name="price"
                 onChange={props.changed}
                 placeholder="Pris"

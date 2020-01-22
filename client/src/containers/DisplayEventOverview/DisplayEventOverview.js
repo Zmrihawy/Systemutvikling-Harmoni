@@ -49,7 +49,8 @@ export default class DisplayEventOverview extends Component {
             .then(serverEvents => {
                 this.setState({
                     archivedEvents: serverEvents,
-                    fullArchive: serverEvents
+                    fullArchive: serverEvents,
+                    loading: false
                 });
             })
             .catch(error => console.error(error));

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Modal from './../../../components/UI/Modal/Modal';
-import Upload from '../../Upload/Upload';
+import UploadFile from '../../Upload/UploadFile';
 
 export default class ContractAdder extends Component {
     state = {
@@ -30,7 +30,7 @@ export default class ContractAdder extends Component {
                         show={this.state.showModal}
                         closed={this.handleToggleModal}
                     >
-                        <Upload />
+                        <UploadFile />
                     </Modal>
                 </div>
             );

@@ -64,7 +64,7 @@ export default class RiderAdder extends Component {
                                         }
                                     />
                                     <input
-                                        type="text"
+                                        type="number"
                                         placeholder="Antall"
                                         name="amount"
                                         onChange={this.handleChange}

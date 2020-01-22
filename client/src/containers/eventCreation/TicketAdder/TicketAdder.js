@@ -15,17 +15,22 @@ export default class TicketAdder extends Component {
 
     handleNewTicket = () => {
         let tickets = [...this.state.tickets];
-        tickets.push({ description: 'Velg billett', amount: '', price: '' });
+        tickets.push({ description: 'Early Bird', amount: '', price: '' });
 
         this.setState({ tickets });
     };
 
     handleCustomTicketOption = () => {
         let ticketOptions = [...this.state.ticketOptions];
-        ticketOptions.push(this.state.ticketInput);
+        const ticketInput = this.state.ticketInput;
+        if (ticketInput.trim()) {
+            ticketOptions.push(this.state.ticketInput);
 
-        this.setState({ ticketOptions, ticketInput: '' });
-        this.handleToggleModal();
+            this.setState({ ticketOptions, ticketInput: '' });
+            this.handleToggleModal();
+        } else {
+            alert('En billettype kan ikke være tom!');
+        }
     };
 
     handleDeleteTickets = event => {
