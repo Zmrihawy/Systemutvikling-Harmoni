@@ -18,7 +18,7 @@ module.exports = class UserDao extends Dao {
     }
 
     getAllArtists(callback: (status: number, data : *) => void) :void {
-        super.query(`SELECT ${CONSTANTS.USER_ID}, ${CONSTANTS.USER_USERNAME} FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_ARTIST} = 1`, [], callback);
+        super.query(`SELECT ${CONSTANTS.USER_ID}, ${CONSTANTS.USER_FIRST_NAME}, ${CONSTANTS.USER_LAST_NAME} FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_ARTIST} = 1`, [], callback);
     }
 
     checkCred(sql: { username: string, email: string }, callback: (status: number, data: *) => void) :void {
