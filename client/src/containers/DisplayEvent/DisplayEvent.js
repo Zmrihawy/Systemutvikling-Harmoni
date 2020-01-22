@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import EventInfo from '../../components/EventInfo/EventInfo';
+import profileHolder from '../../pictures/profileHolder.svg';
 
 import {
     Event,
@@ -15,6 +16,7 @@ import { faCommentDollar } from '@fortawesome/free-solid-svg-icons';
 
 import { history } from '../App';
 
+//TODO: Fix text responsiveness 
 export default class DisplayEvent extends Component {
     state = {
         id: null,
@@ -27,6 +29,8 @@ export default class DisplayEvent extends Component {
         dateTo: null,
         longitude: 10.421906,
         latitude: 63.446827,
+        firstname: '',
+        lastname: '',
         artists: [
             {
                 id: '',
@@ -50,12 +54,13 @@ export default class DisplayEvent extends Component {
         ]
     };
 
+    //TODO: Clean up
     async componentDidMount() {
         let eventId = this.props.match.params.id;
+
         eventService
             .getEvent(eventId)
             .then(recivedEvent => {
-                console.log(recivedEvent);
                 this.setState({
                     id: recivedEvent.id,
                     title: recivedEvent.name,
@@ -68,7 +73,9 @@ export default class DisplayEvent extends Component {
                         .toUTCString()
                         .slice(0, -7),
                     longitude: recivedEvent.longitude,
-                    latitude: recivedEvent.latitude
+                    latitude: recivedEvent.latitude,
+                    firstname: recivedEvent.firstName, 
+                    lastname: recivedEvent.surname 
                 });
             })
             .catch((error: Error) => console.log(error));
@@ -121,11 +128,24 @@ export default class DisplayEvent extends Component {
                 this.setState({ staff: staff_array.map(staffConvert) });
             })
             .catch((error: Error) => console.error(error));
+
+        eventService
+            .getEventPerformances(eventId)
+            .then(artists => {
+                artists.forEach(artist => {
+                    if (artist.picture == '') artist.picture = profileHolder;
+                });
+                this.setState({ artists: artists });
+            })
+            .catch(error => console.error(error));
     }
 
-    handleRiderClick = e => {
+    handleRiderClick = (e, performanceId) => {
         e.preventDefault();
-        history.push('/arrangement/user/id/rider');
+
+        let eventId = this.props.match.params.id;
+
+        history.push('/arrangement/' + eventId + '/rediger/rider/' + performanceId);
     };
 
     handleEditClick = () =>
@@ -147,19 +167,6 @@ export default class DisplayEvent extends Component {
     };
 
     render() {
-        let artists = [
-            {
-                name: 'Steven Kvinlaug',
-                image:
-                    'https://www.kvinesdal24.no/images/4817c829-a1f7-45b7-90cf-f3cbd4a64109?fit=crop&q=80&w=580'
-            },
-            {
-                name: 'Torje Thorkildsen',
-                image:
-                    'https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/11745966_900217626718522_810341310080559599_n.jpg?_nc_cat=104&_nc_ohc=43mIm-b8EL4AQkdvkWV2NG2ICSHhTl1jD40ytTi-0VN5UbCq6TY7nF-uQ&_nc_ht=scontent-arn2-1.xx&oh=1584203c5b173c3f55c7eeb033e331e8&oe=5E93BB8F'
-            }
-        ];
-
         return (
             <EventInfo
                 title={this.state.title}
@@ -169,9 +176,9 @@ export default class DisplayEvent extends Component {
                 latitude={this.state.latitude}
                 dateFrom={this.state.dateFrom}
                 dateTo={this.state.dateTo}
-                host="Espen Kalleberg"
+                host={this.state.firstname + ' ' + this.state.lastname}
                 ticketAmount={this.state.ticketAmount}
-                artists={artists}
+                artists={this.state.artists}
                 handleRiderClick={this.handleRiderClick}
                 handleEditClick={this.handleEditClick}
                 tickets={this.state.tickets}

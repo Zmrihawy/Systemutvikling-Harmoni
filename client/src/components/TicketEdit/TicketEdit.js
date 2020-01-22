@@ -1,21 +1,21 @@
 import React from 'react';
 
-import classes from '../StaffEdit/StaffEdit.module.scss';
+import classes from '../TicketEdit/TicketEdit.module.scss';
 
-const staffEdit = props => {
+const ticketEdit = props => {
     return (
         <div className={classes.container}>
-            <h1 className={classes.title}>Rediger personell</h1>
+            <h1 className={classes.title}>Rediger billetter</h1>
 
             <div className={classes.desc__wrapper}>
                 <p className={classes.ph__name}>Navn</p>
-                <p className={classes.ph__profession}>Yrke</p>
-                <p className={classes.ph__contact}>Kontakt info</p>
+                <p className={classes.ph__price}>Pris</p>
+                <p className={classes.ph__amount}>Antall</p>
             </div>
             <form className={classes.form} onSubmit={props.handleButtonSubmitClick}>
-                <div className={classes.staff__list}>
-                    {props.staff.map((e, i) => (
-                        <div className={classes.staff__wrapper} key={i} id={i}>
+                <div className={classes.ticket__list}>
+                    {props.tickets.map((e, i) => (
+                        <div className={classes.ticket__wrapper} key={i} id={i}>
                             <input
                                 className={classes.input__name}
                                 type="text"
@@ -25,18 +25,18 @@ const staffEdit = props => {
                                 required
                             />
                             <input
-                                className={classes.input__profession}
+                                className={classes.input__price}
                                 type="text"
-                                name="profession"
-                                value={e.profession}
+                                name="price"
+                                value={e.price}
                                 onChange={props.handleChange}
                                 required
                             />
                              <input
-                                className={classes.input__contactInfo}
+                                className={classes.input__amount}
                                 type="text"
-                                name="contactInfo"
-                                value={e.contactInfo}
+                                name="amount"
+                                value={e.amount}
                                 onChange={props.handleChange}
                                 required
                             />
@@ -65,4 +65,4 @@ const staffEdit = props => {
     );
 };
 
-export default staffEdit;
+export default ticketEdit;

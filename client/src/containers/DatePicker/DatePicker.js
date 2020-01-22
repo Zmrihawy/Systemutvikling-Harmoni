@@ -82,7 +82,6 @@ export default class DatePicker extends Component {
                                 allowEmpty={false}
                                 minuteStep={5}
                                 id="timeFrom"
-                                style={{ width: 80 }}
                                 showSecond={false}
                                 className={classes.TimePicker}
                                 defaultValue={moment(this.state.timeFrom)}
@@ -90,7 +89,6 @@ export default class DatePicker extends Component {
                                     this.handleTimeChange(value, id)
                                 }
                             />
-
                             <TimePicker
                                 allowEmpty={false}
                                 minuteStep={5}

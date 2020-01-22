@@ -5,14 +5,15 @@ import { eventService } from '../../services';
 
 import { history } from '../App';
 
+//TODO: ADD TIMEPICKER (SVEIN?)
 export default class DisplayEventEdit extends Component {
     state = {
         event: {
             id: null,
-            startTime: '2020-02-01 00:00:00.000',
-            endTime: '2020-02-10 00:00:00.000',
             longitude: 10.421906,
-            latitude: 63.446827
+            latitude: 63.446827,
+            startTime: '2020-02-01 00:00:00.000',
+            endTime: '2020-02-10 00:00:00.000'
         }
     };
 
@@ -92,11 +93,11 @@ export default class DisplayEventEdit extends Component {
                 this.state.event.hostId,
                 this.state.event.active,
                 this.state.event.location,
+                this.state.event.longitude,
+                this.state.event.latitude,
                 this.state.event.description,
                 this.state.event.startTime,
-                this.state.event.endTime,
-                this.state.event.latitude,
-                this.state.event.longitude
+                this.state.event.endTime
             )
             .then(response =>
                 history.push('/arrangement/' + this.state.event.id)
