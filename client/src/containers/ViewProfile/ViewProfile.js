@@ -18,6 +18,7 @@ export default class ViewProfile extends Component {
         };
     }
     async componentDidMount() {
+        console.log(window.innerWidth);
         var intId = parseInt(this.props.match.params.id, 10);
         const user = await userService.getUser(intId);
         this.setState(user);
