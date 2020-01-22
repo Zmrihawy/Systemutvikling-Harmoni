@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import classes from './ViewProfile.module.scss';
 import { userService } from '../../services';
 import profileHolder from '../../pictures/profileHolder.svg';
-import UploadePic from '../Upload/UploadePic.js';
 
 export default class ViewProfile extends Component {
     constructor(props) {
@@ -49,7 +48,7 @@ export default class ViewProfile extends Component {
                                 />
                             </div>
                             <button
-                                className={classes.redigerBtn} id={"redigerBtn"} onClick={}
+                                className={classes.redigerBtn} id={"redigerBtn"}
                             >
                                 ✎
                             </button>
