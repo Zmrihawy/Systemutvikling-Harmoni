@@ -54,8 +54,8 @@ export default class DatePicker extends Component {
 
     render() {
         return (
-            <>
-                <div className="MediumTitle" style={{ marginBottom: '3rem' }}>
+            <div className={classes.DatePicker}>
+                <div className="MediumTitle">
                     <Type
                         strings="Når skal arrangementet være?"
                         loop={false}
@@ -64,6 +64,7 @@ export default class DatePicker extends Component {
                 </div>
                 <div className={classes.DatePicker__options}>
                     <Calendar
+                        className={classes.DatePicker__calendar}
                         selectRange={true}
                         minDate={new Date()}
                         value={[
@@ -133,7 +134,7 @@ export default class DatePicker extends Component {
                         Neste &rarr;
                     </button>
                 </div>
-            </>
+            </div>
         );
     }
 }

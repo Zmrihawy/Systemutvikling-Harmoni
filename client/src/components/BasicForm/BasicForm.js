@@ -6,7 +6,7 @@ import classes from './BasicForm.module.scss';
 const basicForm = props => {
     return (
         <>
-            <div className={classes.BasicForm__title}>
+            <div className="MediumTitle">
                 <Type strings={props.title} speed={50} />
             </div>
             <form className={classes.BasicForm} onSubmit={props.next}>

@@ -22,6 +22,31 @@ class Dropzone extends Component {
     onFilesAdded(evt) {
         if (this.props.disabled) return;
         const files = evt.target.files;
+        console.log(files[0] === 'undefined');
+        console.log(files);
+
+        if (files === null || files.length === 0) return;
+        else {
+            let filename = files[0].name;
+            let char =
+                filename.charAt(files[0].name.length - 4) +
+                filename.charAt(files[0].name.length - 3) +
+                filename.charAt(files[0].name.length - 2) +
+                filename.charAt(files[0].name.length - 1);
+
+            console.log(char);
+            console.log(char === '.pdf');
+            console.log(char === undefined);
+
+            if (!(char === '.pdf' || char === null)) return;
+        }
+
+        /* 
+        console.log(char);
+        console.log(char === '.pdf');
+        console.log(files[0].name);
+ */
+
         if (this.props.onFilesAdded) {
             const array = this.fileListToArray(files);
             this.props.onFilesAdded(array);
@@ -73,11 +98,6 @@ class Dropzone extends Component {
                 onClick={this.openFileDialog}
                 style={{ cursor: this.props.disabled ? 'default' : 'pointer' }}
             >
-                <img
-                    alt="upload"
-                    className="Icon"
-                    src="baseline-cloud_upload-24px.svg"
-                />
                 <input
                     ref={this.fileInputRef}
                     className="FileInput"

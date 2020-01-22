@@ -3,4 +3,50 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+
+    &__map {
+        height: 58vh;
+        width: 58vh;
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.7);
+
+        &__hint {
+            font-size: 2.4rem;
+        }
+    }
+}
+
+@media (max-width: 1000px) {
+    .LocationAdder {
+        padding-top: 2rem;
+
+        &__map {
+            height: 45vh;
+            width: 45vh;
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .LocationAdder {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &__input {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        &__map {
+            height: 38vh;
+            width: 38vh;
+
+            &__hint {
+                font-size: 2rem;
+            }
+        }
+    }
 }

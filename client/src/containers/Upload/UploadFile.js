@@ -8,62 +8,29 @@ class UploadFile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            files: [],
             uploading: false,
             uploadProgress: {},
             successfullUploaded: false
         };
 
-        this.onFilesAdded = this.onFilesAdded.bind(this);
-        this.uploadFiles = this.uploadFiles.bind(this);
-        this.sendRequest = this.sendRequest.bind(this);
-        this.renderActions = this.renderActions.bind(this);
-    }
-
-    onFilesAdded(files) {
-        this.setState(prevState => ({
-            files: prevState.files.concat(files)
-        }));
-    }
-
-    sendRequest(file, eventId, performanceId) {
-        return new Promise((resolve, reject) => {
-            const req = new XMLHttpRequest();
-
-            const formData = new FormData();
-            formData.append('file', file, file.name);
-
-            req.open(
-                'PUT',
-                '/api/event/' +
-                    eventId +
-                    '/performance/' +
-                    performanceId +
-                    '/contract'
-            );
-
-            req.setRequestHeader(
-                'x-access-token',
-                window.sessionStorage.getItem('jwt')
-            );
-
-            req.send(formData);
-        });
+        // this.onFilesAdded = this.onFilesAdded.bind(this);
+        //this.uploadFiles = this.uploadFiles.bind(this);
+        //this.sendRequest = this.sendRequest.bind(this);
+        //this.renderActions = this.renderActions.bind(this);
     }
 
     async uploadFiles() {
-        //this.setState({ uploadProgress: {}, uploading: true });
+        this.setState({ uploadProgress: {}, uploading: true });
         const promises = [];
-        this.state.files.forEach(file => {
+        this.props.files.forEach(file => {
             promises.push(this.sendRequest(file, 1, 2));
         });
         try {
             await Promise.all(promises);
 
-            // this.setState({ successfullUploaded: true, uploading: false });
+            this.setState({ successfullUploaded: true, uploading: false });
         } catch (e) {
-            // Not Production ready! Do some error handling here instead...
-            //this.setState({ successfullUploaded: true, uploading: false });
+            this.setState({ successfullUploaded: true, uploading: false });
         }
     }
 
@@ -77,60 +44,21 @@ class UploadFile extends Component {
                             uploadProgress ? uploadProgress.percentage : 0
                         }
                     />
-                    <img
-                        className="CheckIcon"
-                        alt="done"
-                        src="baseline-check_circle_outline-24px.svg"
-                        style={{
-                            opacity:
-                                uploadProgress &&
-                                uploadProgress.state === 'done'
-                                    ? 0.5
-                                    : 0
-                        }}
-                    />
                 </div>
             );
         }
     }
 
-    renderActions() {
-        if (this.state.successfullUploaded) {
-            return (
-                <button
-                    className="uploadButton"
-                    onClick={() =>
-                        this.setState({ files: [], successfullUploaded: false })
-                    }
-                >
-                    Clear
-                </button>
-            );
-        } else {
-            return (
-                <button
-                    className="uploadButton"
-                    disabled={
-                        this.state.files.length < 0 || this.state.uploading
-                    }
-                    onClick={this.uploadFiles}
-                >
-                    Upload
-                </button>
-            );
-        }
-    }
-
     render() {
-        //console.log(this.state.files.length);
-
         return (
             <div className="Upload">
-                <span className="Title">Upload file</span>
+                <p className="Title">
+                    Filtypen <em style={{ color: '#ff9f43' }}>må</em> være PDF
+                </p>
                 <div className="Content">
                     <div>
                         <Dropzone
-                            onFilesAdded={this.onFilesAdded}
+                            onFilesAdded={this.props.filesAdded}
                             disable={
                                 this.state.uploading ||
                                 this.state.successfullUploaded
@@ -138,20 +66,36 @@ class UploadFile extends Component {
                         />
                     </div>
                     <div className="Files">
-                        {this.state.files.map(file => {
-                            return (
-                                <div key={file.name} className="Row">
-                                    <span className="Filename">
-                                        {' '}
-                                        {file.name}
-                                    </span>
-                                    {this.renderProgress(file)}
-                                </div>
-                            );
-                        })}
+                        {this.props.files
+                            .filter((file, index) => {
+                                return index == this.props.callerID;
+                            })
+                            .map((file, i) => {
+                                console.log(this.props.callerID + ' ' + i);
+                                if (!file) return;
+                                if (file.length < 1) return;
+
+                                return (
+                                    <div key={file[0].name} className="Row">
+                                        <span className="Filename">
+                                            {' '}
+                                            {file[0].name}
+                                            <button
+                                                onClick={() =>
+                                                    this.props.clearFiles(i)
+                                                }
+                                            >
+                                                {' '}
+                                                X{' '}
+                                            </button>
+                                        </span>
+                                        {this.renderProgress(file)}
+                                    </div>
+                                );
+                            })}
                     </div>
                 </div>
-                <div className="Actions"> {this.renderActions()} </div>
+                {/* <div className="Actions"> {this.renderActions()} </div> */}
             </div>
         );
     }

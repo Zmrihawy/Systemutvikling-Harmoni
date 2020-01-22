@@ -1,0 +1,10 @@
+.StaffAdder {
+}
+
+@media (max-width: 500px) {
+    .StaffAdder {
+        & input {
+            width: 25% !important;
+        }
+    }
+}

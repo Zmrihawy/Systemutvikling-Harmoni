@@ -21,3 +21,13 @@
         }
     }
 }
+
+@media (max-width: 500px) {
+    .ArtistAdder {
+        width: 100%;
+
+        & > .MediumTitle {
+            height: 6rem !important;
+        }
+    }
+}

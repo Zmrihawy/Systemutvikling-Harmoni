@@ -61,7 +61,7 @@ export default class TicketAdder extends Component {
 
     render() {
         return (
-            <>
+            <div className={classes.TicketAdder}>
                 <div className="MediumTitle">
                     <Type
                         strings="Hvilke billettyper ønsker du?"
@@ -152,7 +152,7 @@ export default class TicketAdder extends Component {
                         Neste &rarr;
                     </button>
                 </div>
-            </>
+            </div>
         );
     }
 }
