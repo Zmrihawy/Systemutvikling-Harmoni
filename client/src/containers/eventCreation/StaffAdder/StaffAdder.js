@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import classes from '../TicketAdder/TicketAdder';
+import classes from './StaffAdder.module.scss';
 
 export default class StaffAdder extends Component {
     state = {
@@ -35,7 +35,7 @@ export default class StaffAdder extends Component {
 
     render() {
         return (
-            <>
+            <div className={classes.StaffAdder}>
                 <button
                     className="Button Button--add"
                     onClick={this.handleNewStaff}
@@ -104,7 +104,7 @@ export default class StaffAdder extends Component {
                         Opprett &#10004;
                     </button>
                 </div>
-            </>
+            </div>
         );
     }
 }

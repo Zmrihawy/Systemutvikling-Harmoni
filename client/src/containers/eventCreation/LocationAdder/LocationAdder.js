@@ -7,7 +7,7 @@ import classes from './LocationAdder.module.scss';
 const locationAdder = props => {
     return (
         <div className={classes.LocationAdder}>
-            <div>
+            <div className={classes.LocationAdder__input}>
                 <BasicForm
                     title={props.title}
                     inputType="text"
@@ -20,17 +20,18 @@ const locationAdder = props => {
                 />
             </div>
 
-            <div style={{ textAlign: 'center' }}>
-                <em style={{ fontSize: '2.5rem' }}>
+            <div
+                style={{
+                    textAlign: 'center',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                }}
+            >
+                <em className={classes.LocationAdder__map__hint}>
                     Plasser pekeren på ønsket sted
                 </em>
-                <div
-                    style={{
-                        height: '58vh',
-                        width: '58vh',
-                        boxShadow: '0 1rem 2rem rgba(0,0,0,0.7)'
-                    }}
-                >
+                <div className={classes.LocationAdder__map}>
                     <Map
                         zoom={false}
                         longitude={props.longitude}

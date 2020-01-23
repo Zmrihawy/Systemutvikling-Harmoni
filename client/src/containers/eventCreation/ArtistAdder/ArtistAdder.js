@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Modal from '../../../components/UI/Modal/Modal';
 import Spinner from '../../../components/UI/Spinner/Spinner';
+import Type from '../../../components/UI/Type/Type';
 
 import classes from './ArtistAdder.module.scss';
 import { userService } from '../../../services';
@@ -19,9 +20,6 @@ export default class ArtistAdder extends Component {
         userService
             .getAllArtists()
             .then(response => {
-                console.log('[Response] ArtistAdder:');
-                console.log(response);
-
                 const artistNames = response.map(artist => {
                     return {
                         id: artist.id,
@@ -30,9 +28,6 @@ export default class ArtistAdder extends Component {
                 });
 
                 this.setState({ artistOptions: artistNames, loading: false });
-            })
-            .then(el => {
-                console.log(this.state.artistOptions);
             })
             .catch(error => console.error(error));
     }
@@ -89,24 +84,32 @@ export default class ArtistAdder extends Component {
 
             this.setState({ newArtistOptions, artistInput: '' });
             this.handleToggleModal();
-            console.log(this.state.artists);
         } else {
             alert('En artist må ha et navn!');
         }
     };
 
     render() {
+        let selectedArtists = [];
+        if (this.state.artists) {
+            selectedArtists = this.state.artists.map(artist => {
+                return artist.name;
+            });
+        }
+
         let artistOptions;
         if (this.state.artistOptions) {
-            console.log(
-                this.state.artistOptions.concat(this.state.newArtistOptions)
-            );
-
             artistOptions = this.state.artistOptions
                 .concat(this.state.newArtistOptions)
                 .map((option, i) => {
+                    const chosen = selectedArtists.includes(option.name);
                     return (
-                        <option id={option.id} key={i} value={option.name}>
+                        <option
+                            id={option.id}
+                            key={i}
+                            value={option.name}
+                            disabled={chosen}
+                        >
                             {option.name}
                         </option>
                     );
@@ -116,8 +119,10 @@ export default class ArtistAdder extends Component {
         let artistsView;
         if (!this.state.loading) {
             artistsView = (
-                <>
-                    <div className="MediumTitle">Hvilke artister kommer?</div>
+                <div className={classes.ArtistAdder}>
+                    <div className="MediumTitle">
+                        <Type strings="Hvilke artister kommer?" speed={50} />
+                    </div>
                     <button
                         className="Button Button--add"
                         onClick={this.handleNewArtist}
@@ -181,7 +186,7 @@ export default class ArtistAdder extends Component {
                         style={{ marginTop: '2rem', fontSize: '1.4rem' }}
                         onClick={this.handleToggleModal}
                     >
-                        Ny artist
+                        Opprett artist
                     </button>
                     <div className={classes.ArtistAdder__buttons}>
                         <button
@@ -216,7 +221,7 @@ export default class ArtistAdder extends Component {
                             Neste &rarr;
                         </button>
                     </div>
-                </>
+                </div>
             );
         } else {
             artistsView = <Spinner />;

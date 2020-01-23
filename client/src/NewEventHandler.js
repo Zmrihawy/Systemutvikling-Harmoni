@@ -74,17 +74,77 @@ class NewEventHandler {
             console.log('Riders:');
             console.log(riderSuccess);
 
-            eventID &&
-            ticketsSuccess &&
-            crewSuccess &&
-            riderSuccess &&
-            performanceIDs
-                ? console.log('Arrangement opprettet')
-                : console.log('Failed arrangementoppretting');
+            // Upload contracts to the given artists.
+            if (newEvent.files) {
+                this.uploadFiles(newEvent.contracts, eventID, performanceIDs);
+            }
+
+            return (
+                eventID &&
+                ticketsSuccess &&
+                crewSuccess &&
+                riderSuccess &&
+                performanceIDs
+            );
         } catch (err) {
             console.log(err);
         }
     };
+
+    async uploadFiles(files, eventID, performanceIDs) {
+        // this.setState({ uploadProgress: {}, uploading: true });
+
+        const promises = [];
+        files.forEach((file, index) => {
+            if (file) {
+                promises.push(
+                    this.sendRequest(file[0], eventID, performanceIDs[index])
+                );
+            }
+        });
+        if (promises.length > 0) {
+            try {
+                console.log('Promises');
+                console.log(promises);
+                await Promise.all(promises);
+
+                //this.setState({ successfullUploaded: true, uploading: false });
+            } catch (e) {
+                //this.setState({ successfullUploaded: true, uploading: false });
+            }
+        } else {
+            return 1;
+        }
+    }
+
+    sendRequest(file, eventId, performanceId) {
+        console.log('Request:');
+        console.log(file);
+        console.log(eventId);
+        console.log(performanceId);
+        return new Promise((resolve, reject) => {
+            const req = new XMLHttpRequest();
+
+            const formData = new FormData();
+            formData.append('file', file, file.name);
+
+            req.open(
+                'PUT',
+                '/api/event/' +
+                    eventId +
+                    '/performance/' +
+                    performanceId +
+                    '/contract'
+            );
+
+            req.setRequestHeader(
+                'x-access-token',
+                window.sessionStorage.getItem('jwt')
+            );
+
+            req.send(formData);
+        });
+    }
 
     saveEvent = async (
         id,
@@ -146,14 +206,12 @@ class NewEventHandler {
     getData = async (artists, eventID, startTime, endTime) => {
         return Promise.all(
             artists.map(async artist => {
-                let userID, artistName;
+                let userID;
 
                 if (!(artist.id > -1)) {
                     userID = null;
-                    artistName = artist.name;
                 } else {
                     userID = parseInt(artist.id);
-                    artistName = null;
                 }
 
                 const performance = await eventService.createPerformance(
@@ -161,7 +219,7 @@ class NewEventHandler {
                     eventID,
                     startTime,
                     endTime,
-                    artistName
+                    artist.name
                 );
 
                 return performance.data.insertId;

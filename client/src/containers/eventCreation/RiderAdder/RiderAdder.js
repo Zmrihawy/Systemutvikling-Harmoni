@@ -88,7 +88,7 @@ export default class RiderAdder extends Component {
         });
 
         return (
-            <>
+            <div className={classes.RiderAdder}>
                 <div className="MediumTitle">Har artistene riders?</div>
                 <div className="Scroll">{artists}</div>
 
@@ -103,7 +103,7 @@ export default class RiderAdder extends Component {
                             )
                         }
                     >
-                        Tilbake
+                        &larr; Tilbake
                     </button>
                     <button
                         autoFocus
@@ -116,10 +116,10 @@ export default class RiderAdder extends Component {
                             )
                         }
                     >
-                        Neste
+                        Neste &rarr;
                     </button>
                 </div>
-            </>
+            </div>
         );
     }
 }

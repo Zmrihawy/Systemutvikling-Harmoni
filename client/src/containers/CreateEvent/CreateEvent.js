@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import NewEventHandler from '../../NewEventHandler';
 import moment from 'moment';
+import { history } from '../App';
+import NewEventHandler from '../../NewEventHandler';
 import Modal from '../../components/UI/Modal/Modal';
 import BasicForm from '../../components/BasicForm/BasicForm';
 import DatePicker from '../DatePicker/DatePicker';
@@ -13,13 +14,13 @@ import RiderAdder from '../eventCreation/RiderAdder/RiderAdder';
 import ContractAdder from '../../containers/eventCreation/ContractAdder/ContractAdder';
 import pdfReader from '../../components/PdfView/PdfViewPc';
 import CreateEventSummary from './CreateEventSummary/CreateEventSummary';
+import NoArtists from '../../components/NoArtists/NoArtists';
 import Type from '../../components/UI/Type/Type';
-
-import classes from './CreateEvent.module.scss';
-
 import manWithFiles from '../../assets/images/manWithFiles.svg';
 import engineer from '../../assets/images/engineer.svg';
 import PdfReader from '../../components/PdfView/PdfViewPc';
+
+import classes from './CreateEvent.module.scss';
 
 export default class CreateEvent extends Component {
     state = {
@@ -36,6 +37,7 @@ export default class CreateEvent extends Component {
                 moment().format('YYYY-MM-DD hh:mm:ss')
             ],
             artists: [],
+            contracts: null,
             tickets: [],
             staff: []
         },
@@ -100,11 +102,21 @@ export default class CreateEvent extends Component {
         this.setState({ currentPage: --page });
     };
 
-    handleNewEvent = () => {
+    handleNewEvent = async () => {
         const newEvent = {
             ...this.state.newEvent
         };
-        NewEventHandler.handleNewEvent(newEvent);
+
+        // Lagre det nye eventet vha. NewEventHandler
+        const eventStatus = await NewEventHandler.handleNewEvent(newEvent);
+
+        if (eventStatus) {
+            // Arrangement registrert
+            history.push('/arrangement');
+        } else {
+            // Arrangement ikke registrert
+            alert('Arrangementet ble IKKE registrert :(');
+        }
     };
 
     handleSaveStaff = input => {
@@ -155,6 +167,9 @@ export default class CreateEvent extends Component {
             result = [...input];
         } else if (select === 'times') {
             result = [...input];
+        } else if (select === 'contracts') {
+            console.log(input);
+            result = [...input];
         }
 
         const newEvent = {
@@ -189,14 +204,13 @@ export default class CreateEvent extends Component {
                         />
                     </>
                 );
-                //<pdfReader url={'TEST URL'} />
                 break;
 
             case 1:
                 current = (
                     <>
                         <DescriptionAdder
-                            title="Hva skal beskrivelsen av arrangementet være?"
+                            title="Hva skal beskrivelsen være?"
                             value={this.state.newEvent.description}
                             name="description"
                             next={this.handleNext}
@@ -255,30 +269,11 @@ export default class CreateEvent extends Component {
                     );
                 } else {
                     current = (
-                        <>
-                            <div className="MediumTitle">Riders</div>
-                            <p>
-                                Ingen artister har blitt lagt til, gå{' '}
-                                <span style={{ color: '#8499f0' }}>
-                                    tilbake
-                                </span>
-                                &nbsp;for å endre.
-                            </p>
-                            <div>
-                                <button
-                                    className="Button Button--inverse"
-                                    onClick={this.handlePrevious}
-                                >
-                                    &larr; Tilbake
-                                </button>
-                                <button
-                                    className="Button"
-                                    onClick={this.handleNext}
-                                >
-                                    Neste &rarr;
-                                </button>
-                            </div>
-                        </>
+                        <NoArtists
+                            next={this.handleNext}
+                            previous={this.handlePrevious}
+                            title="Riders"
+                        />
                     );
                 }
                 break;
@@ -286,27 +281,19 @@ export default class CreateEvent extends Component {
             case 6:
                 if (this.state.newEvent.artists.length > 0) {
                     current = (
-                        <div className="FileUpload">
-                            <div className="Card">
-                                <ContractAdder
-                                    artists={this.state.newEvent.artists}
-                                    save={this.handleSave}
-                                />
-                            </div>
-                        </div>
+                        <ContractAdder
+                            artists={this.state.newEvent.artists}
+                            contracts={this.state.newEvent.contracts}
+                            save={this.handleSave}
+                        />
                     );
                 } else {
                     current = (
-                        <>
-                            <p>
-                                Ingen artister har blitt lagt til, gå tilbake
-                                for å endre.
-                            </p>
-                            <button onClick={this.handlePrevious}>
-                                Forrige
-                            </button>
-                            <button onClick={this.handleNext}>Videre</button>
-                        </>
+                        <NoArtists
+                            next={this.handleNext}
+                            previous={this.handlePrevious}
+                            title="Kontrakter"
+                        />
                     );
                 }
 
@@ -330,7 +317,7 @@ export default class CreateEvent extends Component {
                             closed={this.handleToggleBackdrop}
                         >
                             <div className="MediumTitle">
-                                Vil du opprette følgende arrangement?
+                                Vil du opprette arrangementet?
                             </div>
                             <CreateEventSummary event={this.state.newEvent} />
                             <div>
