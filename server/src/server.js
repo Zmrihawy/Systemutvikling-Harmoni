@@ -182,6 +182,8 @@ app.get("/api/event/:event_id", (req, res) => {
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
 
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
+
         if (checkEventAccess(data, req.userId)) {
             eventDao.getEvent(req.params.event_id, (status, data) => {
                 res.status(status).json({data, jwt: token});
@@ -216,6 +218,8 @@ app.get("/api/event/:event_id/performance", (req, res) => {
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
 
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
+
         if (checkEventAccess(data, req.userId)) {
             eventDao.getEventPerformances(req.params.event_id, (status, data) => {
                 res.status(status).json({data, jwt: token});
@@ -238,6 +242,8 @@ app.get("/api/event/:event_id/ticket", (req, res) => {
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
 
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
+
         if (checkEventAccess(data, req.userId)) {
             eventDao.getTickets(req.params.event_id, (status, data) => {
                 res.status(status).json({data, jwt: token});
@@ -259,6 +265,8 @@ app.get("/api/event/:event_id/performance/:performance_id", (req, res) => {
     });
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
+
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
 
         if (checkEventAccess(data, req.userId)) {
             eventDao.getRiders(req.params.performance_id, (status, data) => {
@@ -297,6 +305,8 @@ app.get('/api/event/:event_id/crew', (req, res) => {
     });
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
+
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
 
         if (checkEventAccess(data, req.userId)) {
             eventDao.getCrew(req.params.event_id, (status, data) => {
@@ -344,6 +354,8 @@ app.delete('/api/event/:event_id/performance/:performance_id/rider', (req, res) 
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
 
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
+
         if (data[0].host_id == req.userId) {
             eventDao.deleteRider({performanceId: req.params.performance_id, name: req.body.name}, (status, data) => {
                 res.status(status).json({data, jwt: token});
@@ -370,6 +382,8 @@ app.delete("/api/event/:event_id/ticket", (req, res) => {
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
 
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
+
         if (data[0].host_id == req.userId) {
             eventDao.deleteTicket({eventId: req.params.event_id, name: req.body.name}, (status, data) => {
                 res.status(status).json({data, jwt: token});
@@ -391,6 +405,8 @@ app.delete("/api/event/:event_id/performance/:performance_id", (req, res) => {
     });
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
+
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
 
         if (data[0].host_id == req.userId) {
             eventDao.deletePerformance(req.params.performance_id, (status, data) => {
@@ -456,6 +472,8 @@ app.delete("/api/event/:event_id", (req, res) => {
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
 
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
+
         if (data[0].host_id == req.userId) {
             eventDao.deleteEvent(req.params.event_id, (status, data) => {
                 res.status(status).json({data, jwt: token});
@@ -477,6 +495,8 @@ app.delete("/api/event/:event_id/crew", (req, res) => {
     });
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
+
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
 
         if (data[0].host_id == req.userId) {
             eventDao.deleteCrew(req.body.crewId, (status, data) => {
@@ -570,6 +590,8 @@ app.put('/api/event/:event_id/crew', (req, res) => {
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
 
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
+
         if (data[0].host_id == req.userId) {
             eventDao.updateCrew({
                     profession: req.body.profession,
@@ -605,6 +627,8 @@ app.put("/api/event/:event_id/performance/:performance_id", (req, res) => {
     });
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
+
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
 
         if (data[0].host_id == req.userId) {
             eventDao.updatePerformance({
@@ -649,6 +673,8 @@ app.put("/api/event/:event_id/ticket", (req, res) => {
     })
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
+
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
 
         if (data[0].host_id == req.userId) {
             eventDao.updateTicket({
@@ -702,6 +728,8 @@ app.put("/api/event/:event_id/performance/:performance_id/rider", (req, res) => 
     });
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
+
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
 
         if (data[0].host_id == req.userId) {
             eventDao.updateRider({
@@ -882,6 +910,8 @@ app.put("/api/event/:event_id", (req, res) => {
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
 
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
+
         if (data[0].host_id == req.userId) {
             eventDao.updateEvent({
                     eventName: req.body.eventName,
@@ -1037,6 +1067,8 @@ app.post("/api/event/:event_id/ticket", (req, res) => {
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
 
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
+
         if (data[0].host_id == req.userId) {
             eventDao.createTicket({
                     name: req.body.name,
@@ -1074,7 +1106,7 @@ app.post("/api/event/:event_id/performance", (req, res) => {
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
 
-        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no data received'});
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
 
         if (data[0].host_id == req.userId) {
             eventDao.createPerformance({
@@ -1109,6 +1141,8 @@ app.post("/api/event/:event_id/performance/:performance_id/rider", (req, res) =>
     });
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
+
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
 
         if (data[0].host_id == req.userId) {
             eventDao.createRider({
@@ -1159,6 +1193,8 @@ app.post('/api/event/:event_id/crew', (req, res) => {
     });
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
+
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
 
         if (data[0].host_id == req.userId) {
             eventDao.createCrew({
