@@ -41,6 +41,7 @@ app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 
+//Creates connection pool with two connections
 const pool: pool = mysql.createPool({
     connectionLimit: 2,
     host: "mysql.stud.iie.ntnu.no",
@@ -70,7 +71,6 @@ let publicKey: string;
 
 let privateKey = (publicKey = "arbeiderklassenrusteropptilvepnetrevolusjon");
 
-// middleware-functions
 app.use("/api", (req, res, next) => {
 
     var token = req.headers["x-access-token"];
@@ -138,6 +138,9 @@ app.post("/login", (req, res) => {
     });
 });
 
+/**
+ * This function creates new token
+ */
 export function thisFunctionCreatesNewToken(passedMail: string, userId: number): string {
 
     let newToken: string = jwt.sign({email: passedMail, userId: userId}, privateKey, {
@@ -306,6 +309,9 @@ app.get('/api/event/:event_id/crew', (req, res) => {
     });
 });
 
+/**
+ * This function checks if a specific user has access to a specitic event
+ */
 function checkEventAccess(data, userId: number) {
     if (data[0].host_id == userId) return true;
     else {
@@ -749,7 +755,10 @@ app.put("/user/:usermail", (req, res) => {
         }
     });
 
-    function sendMail(req, res, password) {
+    /**
+     * This function sends an email
+     */
+    function sendMail(req, res, password): void {
 
         let mailOptions = {
             from: 'noreply.harmoni.123@gmail.com',
@@ -1186,6 +1195,9 @@ app.put('/api/event/:event_id/picture', uploader.uploadEventPicture);
 // put user picture
 app.put('/api/user/:user_id/picture', uploader.uploadUserPicture);
 
+/**
+ * This function checks if items in the input-array are numbers or not
+ */
 function numberError(nums: Array<mixed>): boolean {
     for (let i = 0; i < nums.length; i++) {
         if (isNaN(nums[i])) return true;
@@ -1196,6 +1208,9 @@ function numberError(nums: Array<mixed>): boolean {
     return false;
 }
 
+/**
+ * This function checks if inputstring is a mailadress
+ */
 function sjekkMail(inc: string): boolean {
     const re = /\S+@\S+\.\S+/;
     return re.test(inc);
