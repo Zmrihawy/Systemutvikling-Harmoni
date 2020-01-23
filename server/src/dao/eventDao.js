@@ -34,8 +34,8 @@ module.exports = class ServerDao extends Dao {
      * This function gets all active or inactive events for a specific user from the database
      */
     getUserEvents(sql: { userId: string | number, active: string | number }, callback: (status: number, data: *) => void) :void {
-        super.query(`SELECT ${CONSTANTS.EVENT_NAME}, ${CONSTANTS.EVENT_ID},${CONSTANTS.EVENT_START_TIME}, ${CONSTANTS.EVENT_END_TIME}, ${CONSTANTS.EVENT_LOCATION} , a.${CONSTANTS.EVENT_PICTURE} FROM
-        ${CONSTANTS.EVENT_TABLE} a JOIN ${CONSTANTS.USER_TABLE} b ON a.${CONSTANTS.EVENT_HOST_ID} = b.${CONSTANTS.USER_ID} WHERE b.${CONSTANTS.USER_ID} = ? AND ${CONSTANTS.EVENT_ACTIVE} = ?`, [sql.userId, sql.active], callback);
+        super.query(`SELECT e.${CONSTANTS.EVENT_NAME}, e.${CONSTANTS.EVENT_ID}, e.${CONSTANTS.EVENT_START_TIME}, e.${CONSTANTS.EVENT_END_TIME}, ${CONSTANTS.EVENT_LOCATION}, ${CONSTANTS.EVENT_PICTURE} FROM
+        ${CONSTANTS.EVENT_TABLE} e JOIN ${CONSTANTS.PERFORMANCE_TABLE} p ON e.${CONSTANTS.EVENT_ID} = p.${CONSTANTS.PERFORMANCE_EVENT_ID} WHERE ((p.${CONSTANTS.PERFORMANCE_ARTIST_ID} = ? OR e.${CONSTANTS.EVENT_HOST_ID} = ?) AND ${CONSTANTS.EVENT_ACTIVE} = ?)`, [sql.userId, sql.userId, sql.active], callback);
     }
 
     /**
