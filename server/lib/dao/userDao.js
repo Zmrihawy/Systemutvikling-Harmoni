@@ -43,64 +43,89 @@ function (_Dao) {
 
   _createClass(UserDao, [{
     key: "getUser",
+
+    /**
+     * This function gets one user from the database
+     */
     value: function getUser(sql, callback) {
-      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT ".concat(CONSTANTS.USER_ID, ", ").concat(CONSTANTS.USER_USERNAME, ", ").concat(CONSTANTS.USER_EMAIL, ", ").concat(CONSTANTS.USER_PHONE, ", ").concat(CONSTANTS.USER_FIRST_NAME, ", ").concat(CONSTANTS.USER_LAST_NAME, " \n                    FROM ").concat(CONSTANTS.USER_TABLE, " WHERE ").concat(CONSTANTS.USER_ID, " = ?"), [sql], callback);
+      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT ".concat(CONSTANTS.USER_ID, ", ").concat(CONSTANTS.USER_USERNAME, ", ").concat(CONSTANTS.USER_EMAIL, ", ").concat(CONSTANTS.USER_PHONE, ", ").concat(CONSTANTS.USER_FIRST_NAME, ", ").concat(CONSTANTS.USER_LAST_NAME, ", ").concat(CONSTANTS.USER_ARTIST, ", ").concat(CONSTANTS.USER_PICTURE, "\n                    FROM ").concat(CONSTANTS.USER_TABLE, " WHERE ").concat(CONSTANTS.USER_ID, " = ?"), [sql], callback);
     }
-  }, {
-    key: "getUserByEmail",
-    value: function getUserByEmail(sql, callback) {
-      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT ".concat(CONSTANTS.USER_ID, ", ").concat(CONSTANTS.USER_USERNAME, ", ").concat(CONSTANTS.USER_EMAIL, ", ").concat(CONSTANTS.USER_PHONE, ", ").concat(CONSTANTS.USER_FIRST_NAME, ", ").concat(CONSTANTS.USER_LAST_NAME, " \n                    FROM ").concat(CONSTANTS.USER_TABLE, " WHERE ").concat(CONSTANTS.USER_EMAIL, " = ?"), [sql], callback);
-    }
-    /*getPassword(sql : string, callback: (status: number, data : *) => void) {
-        super.query(`SELECT ${CONSTANTS.USER_ID}, HEX(${CONSTANTS.USER_PASSWORD}) as ${CONSTANTS.USER_PASSWORD} , HEX(${CONSTANTS.USER_SALT}) as ${CONSTANTS.USER_SALT} FROM ${CONSTANTS.USER_TABLE} WHERE ${CONSTANTS.USER_EMAIL} = ?`, [sql], callback);
-    }*/
+    /**
+     * This function gets the password for a specific user
+     */
 
   }, {
     key: "getPassword",
     value: function getPassword(sql, callback) {
-      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT u.".concat(CONSTANTS.USER_ID, ", p.").concat(CONSTANTS.PASSWORD_ID, ", HEX(p.").concat(CONSTANTS.PASSWORD_PASSWORD, ") as ").concat(CONSTANTS.PASSWORD_PASSWORD, ", HEX(u.").concat(CONSTANTS.USER_SALT, ") as ").concat(CONSTANTS.USER_SALT, ", p.").concat(CONSTANTS.PASSWORD_AUTOGEN, " FROM ").concat(CONSTANTS.USER_TABLE, " u JOIN ").concat(CONSTANTS.PASSWORD_TABLE, " p ON \n        p.").concat(CONSTANTS.USER_ID, " = u.").concat(CONSTANTS.PASSWORD_USER_ID, " WHERE ").concat(CONSTANTS.USER_EMAIL, " = ? ORDER BY p.").concat(CONSTANTS.PASSWORD_AUTOGEN), [sql], callback);
+      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT u.".concat(CONSTANTS.USER_ID, ", u.").concat(CONSTANTS.USER_ARTIST, ", HEX(p.").concat(CONSTANTS.PASSWORD_PASSWORD, ") as ").concat(CONSTANTS.PASSWORD_PASSWORD, ", HEX(u.").concat(CONSTANTS.USER_SALT, ") as ").concat(CONSTANTS.USER_SALT, ", p.").concat(CONSTANTS.PASSWORD_AUTOGEN, " FROM ").concat(CONSTANTS.USER_TABLE, " u LEFT JOIN ").concat(CONSTANTS.PASSWORD_TABLE, " p ON \n        p.").concat(CONSTANTS.USER_ID, " = u.").concat(CONSTANTS.PASSWORD_USER_ID, " WHERE ").concat(CONSTANTS.USER_EMAIL, " = ? ORDER BY p.").concat(CONSTANTS.PASSWORD_AUTOGEN), [sql], callback);
     }
+    /**
+     * This function gets all artists from the database
+     */
+
   }, {
-    key: "getAllUsers",
-    value: function getAllUsers(callback) {
-      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT ".concat(CONSTANTS.USER_ID, ", ").concat(CONSTANTS.USER_USERNAME, " FROM ").concat(CONSTANTS.USER_TABLE), [], callback);
+    key: "getAllArtists",
+    value: function getAllArtists(callback) {
+      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT ".concat(CONSTANTS.USER_ID, ", ").concat(CONSTANTS.USER_USERNAME, ", ").concat(CONSTANTS.USER_FIRST_NAME, ", ").concat(CONSTANTS.USER_LAST_NAME, " FROM ").concat(CONSTANTS.USER_TABLE, " WHERE ").concat(CONSTANTS.USER_ARTIST, " = 1"), [], callback);
     }
+    /**
+     * This function gets username and useremail for a specific user identified by username or email
+     */
+
+  }, {
+    key: "checkCred",
+    value: function checkCred(sql, callback) {
+      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT DISTINCT ".concat(CONSTANTS.USER_USERNAME, ", ").concat(CONSTANTS.USER_EMAIL, " FROM ").concat(CONSTANTS.USER_TABLE, " WHERE ").concat(CONSTANTS.USER_USERNAME, " = ? OR ").concat(CONSTANTS.USER_EMAIL, " = ?"), [sql.username, sql.email], callback);
+    }
+    /**
+     * This function posts a new user to the database
+     */
+
   }, {
     key: "createUser",
     value: function createUser(sql, callback) {
-      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "INSERT INTO ".concat(CONSTANTS.USER_TABLE, " (").concat(CONSTANTS.USER_USERNAME, ", ").concat(CONSTANTS.USER_SALT, ",").concat(CONSTANTS.USER_EMAIL, ",").concat(CONSTANTS.USER_PHONE, ",").concat(CONSTANTS.USER_FIRST_NAME, ",").concat(CONSTANTS.USER_LAST_NAME, ") \n                    VALUES (?,UNHEX(?),?,?,?,?);\n                    INSERT INTO ").concat(CONSTANTS.PASSWORD_TABLE, " (").concat(CONSTANTS.PASSWORD_ID, ", ").concat(CONSTANTS.PASSWORD_PASSWORD, ", ").concat(CONSTANTS.PASSWORD_USER_ID, ", ").concat(CONSTANTS.PASSWORD_AUTOGEN, ")\n                    VALUES (DEFAULT, UNHEX(?), LAST_INSERT_ID(), 0)"), [sql.username, sql.salt, sql.email, sql.phone, sql.firstName, sql.lastName, sql.password], callback);
+      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "INSERT INTO ".concat(CONSTANTS.USER_TABLE, " (").concat(CONSTANTS.USER_USERNAME, ", ").concat(CONSTANTS.USER_SALT, ",").concat(CONSTANTS.USER_EMAIL, ",").concat(CONSTANTS.USER_PHONE, ",").concat(CONSTANTS.USER_FIRST_NAME, ",").concat(CONSTANTS.USER_LAST_NAME, ", ").concat(CONSTANTS.USER_ARTIST, ") \n                    VALUES (?,UNHEX(?),?,?,?,?,?);\n                    INSERT INTO ").concat(CONSTANTS.PASSWORD_TABLE, " (").concat(CONSTANTS.PASSWORD_ID, ", ").concat(CONSTANTS.PASSWORD_PASSWORD, ", ").concat(CONSTANTS.PASSWORD_USER_ID, ", ").concat(CONSTANTS.PASSWORD_AUTOGEN, ")\n                    VALUES (DEFAULT, UNHEX(?), LAST_INSERT_ID(), 0)"), [sql.username, sql.salt, sql.email, sql.phone, sql.firstName, sql.lastName, sql.artist, sql.password], callback);
     }
+    /**
+     * This function posts a new password to the database
+     */
+
   }, {
     key: "createPassword",
     value: function createPassword(sql, callback) {
       _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "INSERT INTO ".concat(CONSTANTS.PASSWORD_TABLE, " (").concat(CONSTANTS.PASSWORD_ID, ", ").concat(CONSTANTS.PASSWORD_PASSWORD, ", ").concat(CONSTANTS.PASSWORD_USER_ID, ", ").concat(CONSTANTS.PASSWORD_AUTOGEN, ")\n        VALUES(DEFAULT, UNHEX(?), ?,?)"), [sql.password, sql.userId, sql.autogen], callback);
     }
+    /**
+     * This function deletes a user from the database
+     */
+
   }, {
     key: "deleteUser",
     value: function deleteUser(sql, callback) {
       _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "DELETE FROM ".concat(CONSTANTS.USER_TABLE, " WHERE ").concat(CONSTANTS.USER_ID, " = ?"), [sql], callback);
     }
-    /*updatePassword(sql : {password : string, userId : string | number}, callback: (status: number, data : *) => void) {
-        super.query(`UPDATE ${CONSTANTS.USER_TABLE} SET ${CONSTANTS.USER_PASSWORD} = UNHEX(?) WHERE ${CONSTANTS.USER_ID} = ?`, [sql.password, sql.userId], callback);
-    }*/
+    /**
+     * This function updates a password in the database
+     */
 
   }, {
     key: "updatePassword",
     value: function updatePassword(sql, callback) {
       _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.PASSWORD_TABLE, " SET ").concat(CONSTANTS.PASSWORD_PASSWORD, " = UNHEX(?), ").concat(CONSTANTS.PASSWORD_AUTOGEN, " = ?  WHERE ").concat(CONSTANTS.PASSWORD_ID, " = ?"), [sql.password, sql.autogen, sql.passId], callback);
     }
+    /**
+     * This function updates a user in the database
+     */
+
   }, {
     key: "updateUser",
     value: function updateUser(sql, callback) {
-      console.log(sql);
-
       _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.USER_TABLE, " SET ").concat(CONSTANTS.USER_USERNAME, " = ?, ").concat(CONSTANTS.USER_EMAIL, " = ?, ").concat(CONSTANTS.USER_PHONE, " = ?, ").concat(CONSTANTS.USER_FIRST_NAME, " = ?, ").concat(CONSTANTS.USER_LAST_NAME, " = ? WHERE ").concat(CONSTANTS.USER_ID, " = ?"), [sql.username, sql.email, sql.phone, sql.firstName, sql.lastName, sql.userId], callback);
     }
-  }, {
-    key: "checkCred",
-    value: function checkCred(sql, callback) {
-      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT DISTINCT ".concat(CONSTANTS.USER_USERNAME, ", ").concat(CONSTANTS.USER_EMAIL, " FROM ").concat(CONSTANTS.USER_TABLE, " WHERE ").concat(CONSTANTS.USER_USERNAME, " = ? OR ").concat(CONSTANTS.USER_EMAIL, " = ?"), [sql.username, sql.email], callback);
-    }
+    /**
+     * This function deletes all the passwords of the user and then creates a single password for that same user
+     */
+
   }, {
     key: "setPassword",
     value: function setPassword(sql, callback) {
@@ -108,11 +133,10 @@ function (_Dao) {
     }
     /**UPLOADS AND DOWNLOADS*/
 
-  }, {
-    key: "downloadPicture",
-    value: function downloadPicture(userId, callback) {
-      _get(_getPrototypeOf(UserDao.prototype), "query", this).call(this, "SELECT ".concat(CONSTANTS.USER_PICTURE, " FROM ").concat(CONSTANTS.USER_TABLE, " WHERE ").concat(CONSTANTS.USER_ID, " = ?"), [userId], callback);
-    }
+    /**
+     * This function uploads a picture to the database
+     */
+
   }, {
     key: "uploadPicture",
     value: function uploadPicture(userId, picture, callback) {

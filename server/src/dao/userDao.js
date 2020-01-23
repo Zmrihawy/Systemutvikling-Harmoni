@@ -5,6 +5,9 @@ import Constants from "./databaseConsts.js";
 
 const CONSTANTS = new Constants();
 
+/**
+ * UserDao class
+ */
 module.exports = class UserDao extends Dao {
 
     /**

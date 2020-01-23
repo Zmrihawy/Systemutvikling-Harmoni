@@ -38,7 +38,7 @@ function () {
               console.log(err);
               callback(500, {
                 errno: err.errno,
-                sqlMessage: err.sqlMessage
+                error: err.sqlMessage
               });
             } else {
               console.log("dao: returning rows");

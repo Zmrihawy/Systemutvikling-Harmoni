@@ -42,42 +42,63 @@ function (_Dao) {
   }
 
   _createClass(ServerDao, [{
-    key: "getRiders",
+    key: "getEventParticipants",
 
-    /**GET*/
-    value: function getRiders(sql, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "SELECT ".concat(CONSTANTS.RIDER_NAME, ", ").concat(CONSTANTS.RIDER_AMOUNT, " FROM ").concat(CONSTANTS.RIDER_TABLE, " WHERE ").concat(CONSTANTS.RIDER_PERFORMANCE_ID, " = ?"), [sql], callback);
+    /**
+     * This function gets all users linked to an event from the database
+     */
+    value: function getEventParticipants(sql, callback) {
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "SELECT p.".concat(CONSTANTS.PERFORMANCE_ARTIST_ID, ", e.").concat(CONSTANTS.EVENT_HOST_ID, " FROM ").concat(CONSTANTS.EVENT_TABLE, " e LEFT JOIN ").concat(CONSTANTS.PERFORMANCE_TABLE, " p \n        ON p.").concat(CONSTANTS.PERFORMANCE_EVENT_ID, " = e.").concat(CONSTANTS.EVENT_ID, " WHERE e.").concat(CONSTANTS.EVENT_ID, " = ?"), [sql], callback);
     }
+    /**
+     * This function gets all riders for in a performance from the database.
+     */
+
+  }, {
+    key: "getRiders",
+    value: function getRiders(sql, callback) {
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "SELECT * FROM ".concat(CONSTANTS.RIDER_TABLE, " WHERE ").concat(CONSTANTS.RIDER_PERFORMANCE_ID, " = ?"), [sql], callback);
+    }
+    /**
+     * This function gets an event and the first name and last name of the host from the database
+     */
+
   }, {
     key: "getEvent",
     value: function getEvent(sql, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "SELECT * FROM ".concat(CONSTANTS.EVENT_TABLE, " WHERE ").concat(CONSTANTS.EVENT_ID, " = ?"), [sql], callback);
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "SELECT e.*, u.".concat(CONSTANTS.USER_FIRST_NAME, ", u.").concat(CONSTANTS.USER_LAST_NAME, " FROM ").concat(CONSTANTS.EVENT_TABLE, " as e \n        JOIN ").concat(CONSTANTS.USER_TABLE, " as u ON e.").concat(CONSTANTS.EVENT_HOST_ID, " = u.").concat(CONSTANTS.USER_ID, " WHERE ").concat(CONSTANTS.EVENT_ID, " = ?"), [sql], callback);
     }
+    /**
+     * This function gets all active or inactive events for a specific user from the database
+     */
+
   }, {
-    key: "getAllEvents",
-    value: function getAllEvents(callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "SELECT * FROM ".concat(CONSTANTS.EVENT_TABLE), [], callback);
+    key: "getUserEvents",
+    value: function getUserEvents(sql, callback) {
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "SELECT DISTINCT e.".concat(CONSTANTS.EVENT_NAME, ", e.").concat(CONSTANTS.EVENT_ID, ", e.").concat(CONSTANTS.EVENT_START_TIME, ", e.").concat(CONSTANTS.EVENT_END_TIME, ", ").concat(CONSTANTS.EVENT_LOCATION, ", ").concat(CONSTANTS.EVENT_PICTURE, " FROM\n         ").concat(CONSTANTS.EVENT_TABLE, " e JOIN ").concat(CONSTANTS.PERFORMANCE_TABLE, " p ON e.").concat(CONSTANTS.EVENT_ID, " = p.").concat(CONSTANTS.PERFORMANCE_EVENT_ID, " WHERE ((p.").concat(CONSTANTS.PERFORMANCE_ARTIST_ID, " = ? OR e.").concat(CONSTANTS.EVENT_HOST_ID, " = ?) AND ").concat(CONSTANTS.EVENT_ACTIVE, " = ?)"), [sql.userId, sql.userId, sql.active], callback);
     }
+    /**
+     * This function gets all performances in an event from the database
+     */
+
   }, {
-    key: "getUsersEvents",
-    value: function getUsersEvents(sql, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "SELECT ".concat(CONSTANTS.EVENT_NAME, ", ").concat(CONSTANTS.EVENT_ID, ",").concat(CONSTANTS.EVENT_START_TIME, ",").concat(CONSTANTS.EVENT_LOCATION, " FROM\n        ").concat(CONSTANTS.EVENT_TABLE, " a JOIN ").concat(CONSTANTS.USER_TABLE, " b ON a.").concat(CONSTANTS.EVENT_HOST_ID, " = b.").concat(CONSTANTS.USER_ID, " WHERE b.").concat(CONSTANTS.USER_ID, " = ? AND ").concat(CONSTANTS.EVENT_ACTIVE, " = ?"), [sql.userId, sql.active], callback);
+    key: "getEventPerformances",
+    value: function getEventPerformances(sql, callback) {
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "SELECT ".concat(CONSTANTS.USER_USERNAME, ", u.").concat(CONSTANTS.USER_ID, ", ").concat(CONSTANTS.PERFORMANCE_EVENT_ID, ", ").concat(CONSTANTS.USER_PICTURE, ", ").concat(CONSTANTS.PERFORMANCE_NAME, ", ").concat(CONSTANTS.PERFORMANCE_START_TIME, ", ").concat(CONSTANTS.PERFORMANCE_END_TIME, ", ").concat(CONSTANTS.PERFORMANCE_ID, " \n        FROM ").concat(CONSTANTS.PERFORMANCE_TABLE, " as p LEFT JOIN ").concat(CONSTANTS.USER_TABLE, " as u ON p.").concat(CONSTANTS.PERFORMANCE_ARTIST_ID, " = u.").concat(CONSTANTS.USER_ID, " WHERE ").concat(CONSTANTS.PERFORMANCE_EVENT_ID, " = ?"), [sql], callback);
     }
-  }, {
-    key: "getEventPerformancesHost",
-    value: function getEventPerformancesHost(sql, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "SELECT u.".concat(CONSTANTS.USER_PICTURE, ", u.").concat(CONSTANTS.USER_USERNAME, ", u.").concat(CONSTANTS.USER_ID, ", p.").concat(CONSTANTS.PERFORMANCE_NAME, ", p.").concat(CONSTANTS.PERFORMANCE_CONTRACT, ", p.").concat(CONSTANTS.PERFORMANCE_START_TIME, ", p.").concat(CONSTANTS.PERFORMANCE_END_TIME, ", p.").concat(CONSTANTS.PERFORMANCE_ID, " \n        FROM ").concat(CONSTANTS.PERFORMANCE_TABLE, " as p LEFT JOIN ").concat(CONSTANTS.USER_TABLE, " as u ON p.").concat(CONSTANTS.PERFORMANCE_ARTIST_ID, " = u.").concat(CONSTANTS.USER_ID, " WHERE p.").concat(CONSTANTS.PERFORMANCE_EVENT_ID, " = ?"), [sql], callback);
-    }
-  }, {
-    key: "getEventPerformancesArtist",
-    value: function getEventPerformancesArtist(sql, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "SELECT * FROM ((SELECT u.".concat(CONSTANTS.USER_PICTURE, ", u.").concat(CONSTANTS.USER_USERNAME, ", u.").concat(CONSTANTS.USER_ID, ", p.").concat(CONSTANTS.PERFORMANCE_NAME, ", p.").concat(CONSTANTS.PERFORMANCE_CONTRACT, ", p.").concat(CONSTANTS.PERFORMANCE_START_TIME, ", p.").concat(CONSTANTS.PERFORMANCE_END_TIME, ", p.").concat(CONSTANTS.PERFORMANCE_ID, " \n        FROM ").concat(CONSTANTS.PERFORMANCE_TABLE, " as p LEFT JOIN ").concat(CONSTANTS.USER_TABLE, " as u ON p.").concat(CONSTANTS.PERFORMANCE_ARTIST_ID, " = u.").concat(CONSTANTS.USER_ID, " WHERE p.").concat(CONSTANTS.PERFORMANCE_EVENT_ID, " = ? AND u.").concat(CONSTANTS.USER_ID, " = ?) \n        JOIN ( SELECT u2.").concat(CONSTANTS.USER_PICTURE, ", u2.").concat(CONSTANTS.USER_USERNAME, ", u2.").concat(CONSTANTS.USER_ID, ", p2.").concat(CONSTANTS.PERFORMANCE_NAME, ", p2.").concat(CONSTANTS.PERFORMANCE_CONTRACT, ", p2.").concat(CONSTANTS.PERFORMANCE_START_TIME, ", p2.").concat(CONSTANTS.PERFORMANCE_END_TIME, ", p2.").concat(CONSTANTS.PERFORMANCE_ID, " \n        FROM ").concat(CONSTANTS.PERFORMANCE_TABLE, " as p2 LEFT JOIN ").concat(CONSTANTS.USER_TABLE, " as u2 ON p2.").concat(CONSTANTS.PERFORMANCE_ARTIST_ID, " = u2.").concat(CONSTANTS.USER_ID, " WHERE p2.").concat(CONSTANTS.PERFORMANCE_EVENT_ID, " = ? AND u2.").concat(CONSTANTS.USER_ID, " IS NOT ?))"), [sql.eventId, sql.userId, sql.eventId, sql.userId], callback);
-    }
+    /**
+     * This function gets all tickets for a specific event from the database
+     */
+
   }, {
     key: "getTickets",
     value: function getTickets(sql, callback) {
       _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "SELECT * FROM ".concat(CONSTANTS.TICKET_TABLE, " WHERE ").concat(CONSTANTS.TICKET_EVENT_ID, " = ?"), [sql], callback);
     }
+    /**
+     * This function gets crew for a specific event from the database
+     */
+
   }, {
     key: "getCrew",
     value: function getCrew(sql, callback) {
@@ -85,26 +106,46 @@ function (_Dao) {
     }
     /**CREATE*/
 
+    /**
+     * This function posts a new event to the database
+     */
+
   }, {
     key: "createEvent",
     value: function createEvent(sql, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "INSERT INTO ".concat(CONSTANTS.EVENT_TABLE, " (").concat(CONSTANTS.EVENT_NAME, ",").concat(CONSTANTS.EVENT_HOST_ID, ",").concat(CONSTANTS.EVENT_LOCATION, ",").concat(CONSTANTS.EVENT_LONGITUDE, ",").concat(CONSTANTS.EVENT_LATITUDE, ",\n                    ").concat(CONSTANTS.EVENT_DESCRIPTION, ",").concat(CONSTANTS.EVENT_START_TIME, ",").concat(CONSTANTS.EVENT_END_TIME, ") \n                    VALUES (?,?,?,?,?,?,?,?) "), [sql.eventName, sql.userId, sql.location, Number(sql.longitude), Number(sql.latitude), sql.description, sql.startTime, sql.endTime], callback);
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "INSERT INTO ".concat(CONSTANTS.EVENT_TABLE, " (").concat(CONSTANTS.EVENT_NAME, ",").concat(CONSTANTS.EVENT_HOST_ID, ",").concat(CONSTANTS.EVENT_LOCATION, ",").concat(CONSTANTS.EVENT_LONGITUDE, ",").concat(CONSTANTS.EVENT_LATITUDE, ", ").concat(CONSTANTS.EVENT_PICTURE, ",\n                    ").concat(CONSTANTS.EVENT_DESCRIPTION, ",").concat(CONSTANTS.EVENT_START_TIME, ",").concat(CONSTANTS.EVENT_END_TIME, ",").concat(CONSTANTS.EVENT_ACTIVE, ") \n                    VALUES (?,?,?,?,?,?,?,?,?,1) "), [sql.eventName, sql.userId, sql.location, Number(sql.longitude), Number(sql.latitude), sql.picture, sql.description, sql.startTime, sql.endTime], callback);
     }
+    /**
+     * This function posts a new ticket to the database
+     */
+
   }, {
     key: "createTicket",
     value: function createTicket(sql, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "INSERT INTO ".concat(CONSTANTS.TICKET_TABLE, " (").concat(CONSTANTS.TICKET_NAME, ",").concat(CONSTANTS.TICKET_EVENT_ID, ",").concat(CONSTANTS.TICKET_PRICE, ",").concat(CONSTANTS.TICKET_DESCRIPTION, ",").concat(CONSTANTS.TICKET_AMOUNT, ") \n                    VALUES (?,?,?,?,?) "), [sql.name, sql.eventId, sql.price, sql.description, sql.amount], callback);
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "INSERT INTO ".concat(CONSTANTS.TICKET_TABLE, " (").concat(CONSTANTS.TICKET_NAME, ",").concat(CONSTANTS.TICKET_EVENT_ID, ",").concat(CONSTANTS.TICKET_PRICE, ",").concat(CONSTANTS.TICKET_AMOUNT, ") \n                    VALUES (?,?,?,?) "), [sql.name, sql.eventId, sql.price, sql.amount], callback);
     }
+    /**
+     * This function posts a new performance to the database
+     */
+
   }, {
     key: "createPerformance",
     value: function createPerformance(sql, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "INSERT INTO ".concat(CONSTANTS.PERFORMANCE_TABLE, " (").concat(CONSTANTS.PERFORMANCE_ARTIST_ID, ",").concat(CONSTANTS.PERFORMANCE_EVENT_ID, ",").concat(CONSTANTS.PERFORMANCE_START_TIME, ",").concat(CONSTANTS.PERFORMANCE_END_TIME, ",").concat(CONSTANTS.PERFORMANCE_NAME, ",\n                    ").concat(CONSTANTS.PERFORMANCE_CONTRACT, ") VALUES (?,?,?,?,?,?) "), [sql.artistId, sql.eventId, sql.startTime, sql.endTime, sql.name, sql.contract], callback);
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "INSERT INTO ".concat(CONSTANTS.PERFORMANCE_TABLE, " (").concat(CONSTANTS.PERFORMANCE_ARTIST_ID, ",").concat(CONSTANTS.PERFORMANCE_EVENT_ID, ",").concat(CONSTANTS.PERFORMANCE_START_TIME, ",").concat(CONSTANTS.PERFORMANCE_END_TIME, ",").concat(CONSTANTS.PERFORMANCE_NAME, ") VALUES (?,?,?,?,?) "), [sql.artistId, sql.eventId, sql.startTime, sql.endTime, sql.name], callback);
     }
+    /**
+     * This function posts a new rider to the database
+     */
+
   }, {
     key: "createRider",
     value: function createRider(sql, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "INSERT INTO ".concat(CONSTANTS.RIDER_TABLE, " VALUES (?,?,?) "), [sql.performanceId, sql.name, sql.amount], callback);
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "INSERT INTO ".concat(CONSTANTS.RIDER_TABLE, " VALUES (?,?,?,?) "), [sql.performanceId, sql.name, sql.amount, sql.confirmed], callback);
     }
+    /**
+     * This function posts a new crew to the database
+     */
+
   }, {
     key: "createCrew",
     value: function createCrew(sql, callback) {
@@ -112,26 +153,46 @@ function (_Dao) {
     }
     /**DELETE*/
 
+    /**
+     * This function deletes a rider from the database
+     */
+
   }, {
     key: "deleteRider",
     value: function deleteRider(sql, callback) {
       _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "DELETE FROM ".concat(CONSTANTS.RIDER_TABLE, " WHERE ").concat(CONSTANTS.RIDER_PERFORMANCE_ID, " = ? AND ").concat(CONSTANTS.RIDER_NAME, " = ?"), [sql.performanceId, sql.name], callback);
     }
+    /**
+     * This function deletes an event from the database
+     */
+
   }, {
     key: "deleteEvent",
     value: function deleteEvent(sql, callback) {
       _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "DELETE FROM ".concat(CONSTANTS.EVENT_TABLE, " WHERE ").concat(CONSTANTS.EVENT_ID, " = ?"), [sql], callback);
     }
+    /**
+     * This function deletes a ticket from the database
+     */
+
   }, {
     key: "deleteTicket",
     value: function deleteTicket(sql, callback) {
       _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "DELETE FROM ".concat(CONSTANTS.TICKET_TABLE, " WHERE ").concat(CONSTANTS.TICKET_NAME, " = ? AND ").concat(CONSTANTS.TICKET_EVENT_ID, " = ?"), [sql.name, sql.eventId], callback);
     }
+    /**
+     * This function deletes a performance from the database
+     */
+
   }, {
     key: "deletePerformance",
     value: function deletePerformance(sql, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "DELETE FROM ".concat(CONSTANTS.PERFORMANCE_TABLE, " WHERE ").concat(CONSTANTS.PERFORMANCE_ARTIST_ID, " = ?"), [sql], callback);
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "DELETE FROM ".concat(CONSTANTS.PERFORMANCE_TABLE, " WHERE ").concat(CONSTANTS.PERFORMANCE_ID, " = ?"), [sql], callback);
     }
+    /**
+     * This function deletes a crew from the database
+     */
+
   }, {
     key: "deleteCrew",
     value: function deleteCrew(sql, callback) {
@@ -139,26 +200,46 @@ function (_Dao) {
     }
     /**UPDATE*/
 
+    /**
+     * This function updates a ticket in the database
+     */
+
   }, {
     key: "updateTicket",
     value: function updateTicket(sql, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.TICKET_TABLE, " SET ").concat(CONSTANTS.TICKET_PRICE, " = ?, ").concat(CONSTANTS.TICKET_AMOUNT, " = ?, ").concat(CONSTANTS.TICKET_DESCRIPTION, " = ?  WHERE ").concat(CONSTANTS.TICKET_NAME, " = ? AND ").concat(CONSTANTS.TICKET_EVENT_ID, " = ? "), [sql.price, sql.amount, sql.description, sql.name, sql.eventId], callback);
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.TICKET_TABLE, " SET ").concat(CONSTANTS.TICKET_PRICE, " = ?, ").concat(CONSTANTS.TICKET_AMOUNT, " = ?, ").concat(CONSTANTS.TICKET_NAME, " = ? WHERE ").concat(CONSTANTS.TICKET_NAME, " = ? AND ").concat(CONSTANTS.TICKET_EVENT_ID, " = ? "), [sql.price, sql.amount, sql.name, sql.oldName, sql.eventId], callback);
     }
+    /**
+     * This function updates a rider in the database
+     */
+
   }, {
     key: "updateRider",
     value: function updateRider(sql, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.RIDER_TABLE, " SET ").concat(CONSTANTS.RIDER_NAME, " = ?, ").concat(CONSTANTS.RIDER_AMOUNT, " = ? WHERE ").concat(CONSTANTS.RIDER_PERFORMANCE_ID, " = ? and ").concat(CONSTANTS.RIDER_NAME, " = ?"), [sql.name, sql.amount, sql.performanceId, sql.oldName], callback);
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.RIDER_TABLE, " SET ").concat(CONSTANTS.RIDER_NAME, " = ?, ").concat(CONSTANTS.RIDER_AMOUNT, " = ? , ").concat(CONSTANTS.RIDER_CONFIRMED, " = ? WHERE ").concat(CONSTANTS.RIDER_PERFORMANCE_ID, " = ? and ").concat(CONSTANTS.RIDER_NAME, " = ?"), [sql.name, sql.amount, sql.confirmed, sql.performanceId, sql.oldName], callback);
     }
+    /**
+     * This function updates a performance in the database
+     */
+
   }, {
     key: "updatePerformance",
     value: function updatePerformance(sql, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.PERFORMANCE_TABLE, " SET ").concat(CONSTANTS.PERFORMANCE_START_TIME, " = ?, ").concat(CONSTANTS.PERFORMANCE_END_TIME, " = ?, ").concat(CONSTANTS.PERFORMANCE_NAME, " = ?, ").concat(CONSTANTS.PERFORMANCE_CONTRACT, " = ? WHERE ").concat(CONSTANTS.PERFORMANCE_ID, " = ?"), [sql.startTime, sql.endTime, sql.name, sql.contract, sql.performanceId], callback);
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.PERFORMANCE_TABLE, " SET ").concat(CONSTANTS.PERFORMANCE_START_TIME, " = ?, ").concat(CONSTANTS.PERFORMANCE_END_TIME, " = ?, ").concat(CONSTANTS.PERFORMANCE_NAME, " = ? WHERE ").concat(CONSTANTS.PERFORMANCE_ID, " = ?"), [sql.startTime, sql.endTime, sql.name, sql.performanceId], callback);
     }
+    /**
+     * This function updates an event in the database
+     */
+
   }, {
     key: "updateEvent",
     value: function updateEvent(sql, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.EVENT_TABLE, " SET ").concat(CONSTANTS.EVENT_NAME, " = ?, ").concat(CONSTANTS.EVENT_HOST_ID, " = ?, ").concat(CONSTANTS.EVENT_ACTIVE, " = ?, ").concat(CONSTANTS.EVENT_LOCATION, " = ?, ").concat(CONSTANTS.EVENT_LONGITUDE, " = ?, ").concat(CONSTANTS.EVENT_LATITUDE, " = ?,").concat(CONSTANTS.EVENT_DESCRIPTION, " = ?, \n            ").concat(CONSTANTS.EVENT_START_TIME, " = ?, ").concat(CONSTANTS.EVENT_END_TIME, " = ? WHERE ").concat(CONSTANTS.EVENT_ID, " = ?"), [sql.eventName, sql.hostId, sql.active, sql.location, Number(sql.longitude), Number(sql.latitude), sql.description, sql.startTime, sql.endTime, sql.eventId], callback);
+      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.EVENT_TABLE, " SET ").concat(CONSTANTS.EVENT_NAME, " = ?, ").concat(CONSTANTS.EVENT_ACTIVE, " = ?, ").concat(CONSTANTS.EVENT_LOCATION, " = ?, ").concat(CONSTANTS.EVENT_LONGITUDE, " = ?, ").concat(CONSTANTS.EVENT_LATITUDE, " = ?,").concat(CONSTANTS.EVENT_DESCRIPTION, " = ?, \n            ").concat(CONSTANTS.EVENT_START_TIME, " = ?, ").concat(CONSTANTS.EVENT_END_TIME, " = ? WHERE ").concat(CONSTANTS.EVENT_ID, " = ?"), [sql.eventName, sql.active, sql.location, Number(sql.longitude), Number(sql.latitude), sql.description, sql.startTime, sql.endTime, sql.eventId], callback);
     }
+    /**
+     * This function updates a crew in the database
+     */
+
   }, {
     key: "updateCrew",
     value: function updateCrew(sql, callback) {
@@ -166,25 +247,32 @@ function (_Dao) {
     }
     /**UPLOADS AND DOWNLOADS*/
 
+    /**
+     * This function uploads a crontract to the database
+     */
+
   }, {
     key: "uploadContract",
     value: function uploadContract(performanceId, contract, callback) {
       _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.PERFORMANCE_TABLE, " SET ").concat(CONSTANTS.PERFORMANCE_CONTRACT, " = ? WHERE ").concat(CONSTANTS.PERFORMANCE_ID, " = ?"), [contract, performanceId], callback);
     }
+    /**
+     * This function gets a contract from the database
+     */
+
   }, {
     key: "downloadContract",
     value: function downloadContract(performanceId, callback) {
       _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "SELECT ".concat(CONSTANTS.PERFORMANCE_CONTRACT, " FROM ").concat(CONSTANTS.PERFORMANCE_TABLE, " WHERE ").concat(CONSTANTS.PERFORMANCE_ID, " = ?"), [performanceId], callback);
     }
+    /**
+     * This function uploads a picture to the database
+     */
+
   }, {
     key: "uploadPicture",
     value: function uploadPicture(eventId, picture, callback) {
       _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "UPDATE ".concat(CONSTANTS.EVENT_TABLE, " SET ").concat(CONSTANTS.EVENT_PICTURE, " = ? WHERE ").concat(CONSTANTS.EVENT_ID, " = ?"), [picture, eventId], callback);
-    }
-  }, {
-    key: "downloadPicture",
-    value: function downloadPicture(eventId, callback) {
-      _get(_getPrototypeOf(ServerDao.prototype), "query", this).call(this, "SELECT ".concat(CONSTANTS.EVENT_PICTURE, " FROM ").concat(CONSTANTS.EVENT_TABLE, " WHERE ").concat(CONSTANTS.EVENT_ID, " = "), [eventId], callback);
     }
   }]);
 
