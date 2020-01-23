@@ -267,7 +267,7 @@ app.get("/api/event/:event_id/performance/:performance_id", (req, res) => {
         if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
 
         if (checkEventAccess(data, req.userId)) {
-            eventDao.getRiders(req.params.performance_id, (status, data) => {
+            eventDao.getRiders({performanceId: req.params.performance_id, userId: req.userId}, (status, data) => {
                 res.status(status).json({data, jwt: token});
             });
         } else {
@@ -1219,12 +1219,22 @@ app.get('/api/event/:event_id/performance/:performance_id/contract', (req, res) 
     console.log('Fikk get-request fra klient');
     let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
 
-    eventDao.downloadContract(req.params.performance_id, (status, data) => {
-        res.status(status);
+    eventDao.getEventParticipants(req.params.event_id, (status, data) => {
 
-        if (data[0] == undefined) return res.status(400).json({data: "No contract exists", jwt: token});
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
 
-        res.json({data: data[0].contract, jwt: token});
+        if (checkEventAccess(data, req.userId)) {
+            eventDao.downloadContract({performanceId: req.params.performance_id, userId: req.userId}, (status, data) => {
+                res.status(status);
+
+                if (data[0] == undefined) return res.status(400).json({data: "No contract exists", jwt: token});
+
+                res.json({data: data[0].contract, jwt: token});
+            });
+        }
+        else {
+            res.status(403).json({jwt: token, error: "Not authorized to access this information"});
+        }
     });
 });
 
