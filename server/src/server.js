@@ -119,7 +119,7 @@ app.post("/login", (req, res) => {
                 console.log("username & passord ok");
 
                 let token: string = jwt.sign({email: req.body.email, userId: login}, privateKey, {
-                    expiresIn: 50000
+                    expiresIn: 1800
                 });
                 return res.json({jwt: token, userId: login, artist: data[0].artist});
             }
@@ -256,12 +256,12 @@ app.get("/api/event/:event_id/performance/:performance_id", (req, res) => {
     if (numberError([req.params.performance_id])) return res.status(400).json({
         jwt: token,
         error: "number field cannot be string"
-    })
+    });
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
 
         if (checkEventAccess(data, req.userId)) {
-            eventDao.getRiders(req.params.performanceId, (status, data) => {
+            eventDao.getRiders(req.params.performance_id, (status, data) => {
                 res.status(status).json({data, jwt: token});
             });
         } else {
@@ -271,7 +271,7 @@ app.get("/api/event/:event_id/performance/:performance_id", (req, res) => {
 });
 
 //get all active/archived events for user
-app.get("/user/:user_id/event/:active", (req, res) => {
+app.get("/api/user/:user_id/event/:active", (req, res) => {
     console.log("fikk request get fra klient");
     let token = thisFunctionCreatesNewToken(req.email, req.userId);
 
@@ -279,7 +279,7 @@ app.get("/user/:user_id/event/:active", (req, res) => {
         jwt: token,
         error: "number field cannot be string"
     });
-    else if (req.params.user_id != req.userId) return res.status(401).json({jwt: token});
+    else if (req.params.user_id != req.userId) return res.status(401).json({jwt: token, error: 'You are not authorized'});
 
     eventDao.getUserEvents({userId: req.params.user_id, active: req.params.active}, (status, data) => {
         res.status(status).json({data, jwt: token});
@@ -696,6 +696,10 @@ app.put("/api/event/:event_id/performance/:performance_id/rider", (req, res) => 
         jwt: token,
         error: "number field is a string"
     });
+    else if (req.body.confirmed == undefined) return res.status(400).json({
+        jwt: token,
+        error: "bad request : missing confirmed - parameter"
+    });
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
 
@@ -704,6 +708,7 @@ app.put("/api/event/:event_id/performance/:performance_id/rider", (req, res) => 
                     name: req.body.name,
                     amount: req.body.amount,
                     performanceId: req.params.performance_id,
+                    confirmed: req.body.confirmed,
                     oldName: req.body.oldName
                 },
                 (status, data) => {

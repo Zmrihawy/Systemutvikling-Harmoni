@@ -41,7 +41,7 @@ test("get one event from database", done => {
     eventDao.getEvent(1, (status, data) => {
         expect(data.length).toBe(1);
         expect(data[0].name).toBe("testEvent");
-        expect(data[0].username).toBe("torstein");
+        expect(data[0].first_name).toBe("tor");
         done();
     });
 });
