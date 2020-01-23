@@ -481,7 +481,7 @@ class EventService {
 
         function handleGetPerformanceRidersResponse(json) {
             return json.map(
-                data => new Rider(data.rider_id, data.name, data.amount, data.confirmed)
+                data => new Rider(data.performance_id, data.name, data.amount, data.confirmed)
             );
         }
     }
