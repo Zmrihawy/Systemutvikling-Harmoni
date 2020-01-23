@@ -1243,6 +1243,7 @@ class UserService {
                 .then(json => {
                     if (json.jwt != undefined) refreshToken(json.jwt);
                     if (isError) return reject(json);
+                    setArtist(json.data[0].artist);
                     resolve(handleGetUserResponse(json.data[0]));
                 })
                 .catch(error => console.error('Error: ', error));
@@ -1578,7 +1579,6 @@ class UserService {
                     if (isError) return reject(json);
                     console.log(json);
                     setUser(Number(json.userId));
-                    setArtist(json.artist);
                     resolve(json);
                 })
                 .catch(error => console.error('Error: ', error));
