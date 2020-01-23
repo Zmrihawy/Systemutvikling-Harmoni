@@ -22,7 +22,7 @@ module.exports = class Dao {
             connection.release();
             if (err) {
               console.log(err);
-              callback(500, { errno: err.errno, sqlMessage: err.sqlMessage});
+              callback(500, { errno: err.errno, error: err.sqlMessage});
             } else {
               console.log("dao: returning rows");
               callback(200, rows);
