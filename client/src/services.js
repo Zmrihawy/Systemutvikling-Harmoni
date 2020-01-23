@@ -1578,6 +1578,7 @@ class UserService {
                     if (isError) return reject(json);
                     console.log(json);
                     setUser(Number(json.userId));
+                    setArtist(json.artist);
                     resolve(json);
                 })
                 .catch(error => console.error('Error: ', error));
@@ -1650,6 +1651,10 @@ function refreshToken(jwt) {
  */
 function setUser(userId: number) {
     window.sessionStorage.setItem('user', userId);
+}
+
+function setArtist(artist: number|string){
+    window.sessionStorage.setItem('artist', artist);
 }
 
 export let userService = new UserService();
