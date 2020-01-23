@@ -21,7 +21,7 @@ module.exports = class ServerDao extends Dao {
     /**
      * This function gets all riders for in a performance from the database.
      */
-    getRiders(sql: number, callback: (status: number, data: *) => void): void {
+    getRiders(sql: number, callback: (status: number, data: *) => void) :void {
         super.query(`SELECT r.*, p.${CONSTANTS.PERFORMANCE_NAME} as performance_name FROM ${CONSTANTS.RIDER_TABLE} r JOIN ${CONSTANTS.PERFORMANCE_TABLE} p
         ON p.${CONSTANTS.PERFORMANCE_ID} = r.${CONSTANTS.RIDER_PERFORMANCE_ID} WHERE r.${CONSTANTS.RIDER_PERFORMANCE_ID} = ?`, [sql], callback);
     }
@@ -46,8 +46,8 @@ module.exports = class ServerDao extends Dao {
      * This function gets all performances in an event from the database
      */
     getEventPerformances(sql: number, callback: (status: number, data: *) => void): void {
-        super.query(`SELECT ${CONSTANTS.PERFORMANCE_ARTIST_ID}, ${CONSTANTS.PERFORMANCE_EVENT_ID}, ${CONSTANTS.USER_PICTURE}, ${CONSTANTS.PERFORMANCE_NAME}, ${CONSTANTS.PERFORMANCE_START_TIME}, 
-            ${CONSTANTS.PERFORMANCE_END_TIME}, ${CONSTANTS.PERFORMANCE_ID} FROM ${CONSTANTS.PERFORMANCE_TABLE} WHERE ${CONSTANTS.PERFORMANCE_EVENT_ID} = ?`, [sql], callback);
+        super.query(`SELECT p.${CONSTANTS.PERFORMANCE_ARTIST_ID}, ${CONSTANTS.PERFORMANCE_EVENT_ID}, ${CONSTANTS.USER_PICTURE}, ${CONSTANTS.PERFORMANCE_NAME}, ${CONSTANTS.PERFORMANCE_START_TIME}, ${CONSTANTS.PERFORMANCE_END_TIME}, ${CONSTANTS.PERFORMANCE_ID} 
+        FROM ${CONSTANTS.PERFORMANCE_TABLE} as p LEFT JOIN ${CONSTANTS.USER_TABLE} as u ON p.${CONSTANTS.PERFORMANCE_ARTIST_ID} = u.${CONSTANTS.USER_ID} WHERE ${CONSTANTS.PERFORMANCE_EVENT_ID} = ?`, [sql], callback);
     }
 
     /**

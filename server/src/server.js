@@ -252,7 +252,7 @@ app.get("/api/event/:event_id/ticket", (req, res) => {
     });
 });
 
-//Get all raiders for one user
+//Get all riders for one user
 app.get("/api/event/:event_id/performance/:performance_id", (req, res) => {
     console.log("fikk GET-request fra klient");
     let token = thisFunctionCreatesNewToken(req.email, req.userId);
