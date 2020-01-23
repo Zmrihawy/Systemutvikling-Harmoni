@@ -272,7 +272,7 @@ app.get("/api/event/:event_id/performance/:performance_id", (req, res) => {
 });
 
 //get all active/archived events for user
-app.get("/api/user/:user_id/event/:active", (req, res) => {
+app.get("/user/:user_id/event/:active", (req, res) => {
     console.log("fikk request get fra klient");
     let token = thisFunctionCreatesNewToken(req.email, req.userId);
 
@@ -916,6 +916,7 @@ app.post("/user", (req, res) => {
     else if (req.body.firstName == undefined) return res.status(400).json({error: "request missing first name"});
     else if (req.body.lastName == undefined) return res.status(400).json({error: "request missing last name"});
     else if (req.body.phone == undefined) return res.status(400).json({error: "request missing phone"});
+    else if (req.body.artist == undefined) return res.status(400).json({error: "request missing artist"});
     else if (!sjekkMail(req.body.email)) return res.status(400).json({error: "parameter email is not a valid email"});
     else if (numberError([req.body.phone])) return res.status(400).json({error: "number field is a string"});
 
@@ -1183,7 +1184,7 @@ app.get('/api/event/:event_id/performance/:performance_id/contract', (req, res) 
     eventDao.downloadContract(req.params.performance_id, (status, data) => {
         res.status(status);
 
-        if (data[0] == undefined) return res.json({data: "No contract exists", jwt: token});
+        if (data[0] == undefined) return res.status(400).json({data: "No contract exists", jwt: token});
 
         res.json({data: data[0].contract, jwt: token});
     });

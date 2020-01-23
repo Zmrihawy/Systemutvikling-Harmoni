@@ -5,25 +5,25 @@ const runSQL = require("./runSQL.js");
 // GitLab CI Pool
 
 
-/*let pool = mysql.createPool({
+
+let pool = mysql.createPool({
      connectionLimit: 2,
      host: "mysql-ait.stud.idi.ntnu.no",
-     user: "kwgulake",
-     password: "qra2ZQqh",
-     database: "kwgulake",
+     user: "tdthorki",
+     password: "21PFqYLh",
+     database: "tdthorki",
      debug: false,
      multipleStatements: true
-});*/
-
-var pool = mysql.createPool({
-    connectionLimit: 1,
-    host: "mysql",
-    user: "root",
-    password: "",
-    database: "School",
-    debug: false,
-    multipleStatements: true
 });
+// var pool = mysql.createPool({
+//     connectionLimit: 1,
+//     host: "mysql",
+//     user: "root",
+//     password: "",
+//     database: "School",
+//     debug: false,
+//     multipleStatements: true
+// });
 
 let eventDao = new EventDao(pool);
 
