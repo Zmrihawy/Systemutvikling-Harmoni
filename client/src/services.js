@@ -16,6 +16,9 @@ export class Event {
     endTime: string;
     picture: string;
 
+    firstName:string;
+    surname:string;
+
     constructor(
         id: number,
         name: string,
@@ -73,6 +76,8 @@ export class Rider {
     name: string;
     amount: number;
     confirmed: number;
+
+    performanceName: string;
 
     constructor(id: number, name: string, amount: number, confirmed: number) {
         this.id = id;
@@ -226,8 +231,8 @@ class EventService {
                 json.end_time,
                 pictureUrl
             );
-            event['firstName'] = json.first_name;
-            event['surname'] = json.surname;
+            event.firstName = json.first_name;
+            event.surname = json.surname;
             return event;
         }
     }
@@ -483,7 +488,7 @@ class EventService {
             return json.map(
                 data => {
                     let rider: Rider = new Rider(data.performance_id, data.name, data.amount, data.confirmed);
-                    rider['performanceName'] = data.performance_name;
+                    rider.performanceName = data.performance_name;
                     return rider;
                 }
             );
