@@ -1,3 +1,4 @@
+//@flow
 const fs = require('fs');
 const IncomingForm = require('formidable').IncomingForm;
 const filePath = './saved/';
@@ -5,13 +6,18 @@ const filePath = './saved/';
 import {eventDao, userDao} from './server';
 import {thisFunctionCreatesNewToken} from "./server";
 
-
+/**
+ * Uploader class
+ */
 module.exports = class Uploader {
 
-    uploadContract(req, res) {
+    /**
+     * This function uploads a contract to the database via eventDao
+     */
+    uploadContract(req, res): void {
         console.log("Saving POSTed contract");
 
-        let form = new IncomingForm();
+        let form: IncomingForm = new IncomingForm();
 
         form.on('file', (field, file) => {
             // Do something with the file
@@ -50,32 +56,15 @@ module.exports = class Uploader {
         });
 
         form.parse(req);
-
-        function createFilePath(startName) {
-            let number = 0;
-            while (number < 20) {
-                try {
-                    let name = number.toString() + startName;
-                    if (fs.existsSync(filePath + name)) {
-                        number++;
-                        console.log("The file exists.");
-                    } else {
-                        console.log('The file does not exist.');
-                        return name;
-                    }
-                } catch (err) {
-                    console.error(err);
-                    return (Math.random() * 99999999).toString();
-                }
-            }
-            return (Math.random() * 99999999).toString();
-        }
     };
 
-    uploadEventPicture(req, res) {
+    /**
+     * This function uploads an eventpicture to the database via eventDao
+     */
+    uploadEventPicture(req, res): void {
         console.log("Saving POSTed event picture");
 
-        let form = new IncomingForm();
+        let form: IncomingForm = new IncomingForm();
 
         form.on('file', (field, file) => {
             fs.readFile(file.path, (err, data) => {
@@ -89,16 +78,19 @@ module.exports = class Uploader {
 
         });
         form.on('end', () => {
-            let token = thisFunctionCreatesNewToken(req.email, req.userId);
+            let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
             res.json({message: 'Uploaded event picture!', jwt: token});
         });
         form.parse(req);
     }
 
-    uploadUserPicture(req, res) {
+    /**
+     * This function uploads a profilepicture to the database via eventDao
+     */
+    uploadUserPicture(req, res): void {
         console.log("Saving POSTed user picture");
 
-        let form = new IncomingForm();
+        let form: IncomingForm = new IncomingForm();
 
         form.on('file', (field, file) => {
             fs.readFile(file.path, (err, data) => {

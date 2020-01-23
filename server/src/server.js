@@ -37,8 +37,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use(cors(corsOptions));
-
 app.use(bodyParser.json());
 
 //Creates connection pool with two connections

@@ -5,6 +5,9 @@ import Constants from "./databaseConsts.js";
 const CONSTANTS = new Constants();
 import Dao from "./dao.js";
 
+/**
+ * EventDao class
+ */
 module.exports = class ServerDao extends Dao {
 
     /**
