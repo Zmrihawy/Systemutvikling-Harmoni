@@ -3,11 +3,11 @@
 }
 
 .loginBg{
-    background-image: url('../../pictures/may_the_force.svg');
+    background-image: url('../../pictures/festive.svg');
     background-repeat: no-repeat;
     background-size: cover;
     height: calc(100vh - 5rem);
-    background-position: center;
+    background-position: bottom;
 }
 
 .login-page {
@@ -93,3 +93,19 @@
         width: 300px;;
     }
 }
+  
+
+.radioDiv label{
+    font-size: 15px;
+}
+  
+  input[type=radio]{
+
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+    
+  }

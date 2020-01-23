@@ -4,18 +4,6 @@ import { User, userService } from '../../services.js';
 import { history } from '../App';
 import ShowPassword from '../Password/Password';
 
-/*
-const validatedEmailRegex = /\S+@\S+\.\S+/;
-const regUserName = /^[\s0-9a-zæøåA-ZÆØÅ]+$/;
-const regName = /^[a-zæøåA-ZÆØÅ]*$/;
-const regPhone = /^[+0-9]*$/;
-*/
-
-const validateForm = errors => {
-    let valid = true;
-    Object.values(errors).forEach(val => val.length > 0 && (valid = false));
-    return valid;
-};
 
 export default class Registration extends Component {
     constructor(props) {
@@ -32,65 +20,23 @@ export default class Registration extends Component {
                     <form className="register-form" onSubmit={this.register}>
                         <p id="error"></p>
                         <br />
-                        <input
-                            type="text"
-                            required
-                            name="username"
-                            placeholder="Brukernavn"
-                            value={this.state.username}
-                            onChange={this.onChange}
-                        />
+                        <input type="text" required name="username" placeholder="Brukernavn" value={this.state.username} onChange={this.onChange} />
                         <ShowPassword id = {"pw1"}/>
                         <ShowPassword id = {"pw2"}/>
+                        <input type="text" required name="firstName" placeholder="Fornavn" value={this.state.firstname} onChange={this.onChange}/>
+                        <input type="text" required name="lastName" placeholder="Etternavn" value={this.state.surname} onChange={this.onChange}/>
                         <input
-                            type="text"
-                            required
-                            name="firstName"
-                            placeholder="Fornavn"
-                            value={this.state.firstname}
-                            onChange={this.onChange}
-                        />
-                        <input
-                            type="text"
-                            required
-                            name="lastName"
-                            placeholder="Etternavn"
-                            value={this.state.surname}
-                            onChange={this.onChange}
-                        />
-                        <input
-                            type="email"
-                            required
-                            name="email"
-                            placeholder="E-post"
-                            value={this.state.email}
-                            onChange={this.onChange}
-                        />
-
-                        <input
-                            type="text"
-                            required
-                            name="phone"
-                            placeholder="Phone"
-                            value={this.state.phone}
-                            onChange={this.onChange}
-                        />
-                        <label>
-                            <input
-                                type="radio"
-                                name="artist"
-                                value="0"
-                                onChange={this.onChange}
-                            />
-                            <a>Arrangør</a>
-                            <input
-                                type="radio"
-                                name="artist"
-                                value="1"
-                                onChange={this.onChange}
-                            />
-                            <a>Artist</a>
-                        </label>
+                            type="email" required name="email" placeholder="E-post" value={this.state.email} onChange={this.onChange}/>
+                        <input type="text" required name="phone" placeholder="Phone" value={this.state.phone} onChange={this.onChange}/>
+                        <div className="radioDiv" onChange={this.onChange}>
+                        <label for="0">
+                            <input type="radio" value="0" defaultChecked name="artist"/> 
+                                 Arrangør </label><br></br>
+                                 <label for="1">
+                            <input type="radio" value="1" name="artist"/>
+                                 Artist </label>
+                        </div>
+                        <br></br><br></br>
 
                         {/*<label for="avatar">Choose a profile picture:</label>
                 <input type="file" accept="image/*" id="avatar" />*/}
