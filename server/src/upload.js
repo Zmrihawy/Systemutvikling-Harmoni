@@ -14,7 +14,7 @@ module.exports = class Uploader {
     /**
      * This function uploads a contract to the database via eventDao
      */
-    uploadContract(req, res): void {
+    uploadContract(req: *, res: *): void {
         console.log("Saving POSTed contract");
 
         let form: IncomingForm = new IncomingForm();
@@ -61,7 +61,7 @@ module.exports = class Uploader {
     /**
      * This function uploads an eventpicture to the database via eventDao
      */
-    uploadEventPicture(req, res): void {
+    uploadEventPicture(req: *, res: *): void {
         console.log("Saving POSTed event picture");
 
         let form: IncomingForm = new IncomingForm();
@@ -87,7 +87,7 @@ module.exports = class Uploader {
     /**
      * This function uploads a profilepicture to the database via eventDao
      */
-    uploadUserPicture(req, res): void {
+    uploadUserPicture(req: *, res: *): void {
         console.log("Saving POSTed user picture");
 
         let form: IncomingForm = new IncomingForm();
