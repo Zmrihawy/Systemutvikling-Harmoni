@@ -474,7 +474,7 @@ class EventService {
                 .then(json => {
                     if (json.jwt != undefined) refreshToken(json.jwt);
                     if (isError) return reject(json);
-                    resolve(handleGetPerformanceRidersResponse(json));
+                    resolve(handleGetPerformanceRidersResponse(json.data));
                 })
                 .catch(error => console.error('Error: ', error));
         });
