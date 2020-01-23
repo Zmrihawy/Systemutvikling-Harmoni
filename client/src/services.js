@@ -186,7 +186,7 @@ class EventService {
     //GET
 
     /**
-     * This function gets an event from the server
+     * This function gets an event from the database via server
      */
     getEvent(id: number): Promise<any> {
         let isError: boolean = false;
@@ -234,7 +234,7 @@ class EventService {
 
     //har
     /**
-     * This function gets all performances for a specific event from the server
+     * This function gets all performances for a specific event from the database via server
      */
     getEventPerformances(eventId: number): Promise<any> {
         let isError: boolean = false;
@@ -278,7 +278,7 @@ class EventService {
     }
 
     /**
-     * This function gets an eventpicture from the server
+     * This function gets an eventpicture from the database via server
      */
     getPicture(eventId: number): Promise<any> {
         let isError: boolean = false;
@@ -310,7 +310,7 @@ class EventService {
     }
 
     /**
-     * This function gets a contract from the server
+     * This function gets a contract from the database via server
      */
     getContract(eventId: number, performanceId: number): Promise<any> {
         let isError: boolean = false;
@@ -346,7 +346,7 @@ class EventService {
     }
 
     /**
-     * This function gets all riders in an event from the server
+     * This function gets all riders in an event from the database via server
      */
     getAllRiders(eventId: number): Promise<any> {
         let isError: boolean = false;
@@ -379,7 +379,7 @@ class EventService {
     }
 
     /**
-     * This function gets all contracts in an event from the server
+     * This function gets all contracts in an event from the database via server
      */
     getEventContracts(eventId: number): Promise<any> {
         let isError: boolean = false;
@@ -411,7 +411,7 @@ class EventService {
 
     //har
     /**
-     * This function gets all tickets in an event from the server
+     * This function gets all tickets in an event from the database via server
      */
     getEventTickets(eventId: number): Promise<any> {
         let isError: boolean = false;
@@ -451,7 +451,7 @@ class EventService {
 
     //har
     /**
-     * This function gets all riders in a performance from the server
+     * This function gets all riders in a performance from the database via server
      */
     getPerformanceRiders(
         eventId: number,
@@ -488,7 +488,7 @@ class EventService {
 
     //har
     /**
-     * This function gets all events linked to a specific user from the server
+     * This function gets all events linked to a specific user from the databse via server
      */
     getUsersEvents(userId: number, active: number): Promise<any> {
         let isError: boolean = false;
@@ -535,6 +535,9 @@ class EventService {
     }
 
     //har
+    /**
+     * This function gets all crews in an event from the database via server
+     */
     getCrew(eventId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
@@ -574,6 +577,9 @@ class EventService {
 
     //POST
     //HAR
+    /**
+     * This function sends a new event to the database via server
+     */
     createEvent(
         userId: number,
         eventName: string,
@@ -620,6 +626,9 @@ class EventService {
     }
 
     //HAR
+    /**
+     * This function sends a new ticket to the database via server
+     */
     createTicket(
         name: string,
         eventId: number,
@@ -657,6 +666,9 @@ class EventService {
     }
 
     //HAR
+    /**
+     * This function sends a performance to the database via server
+     */
     createPerformance(
         userId: number,
         eventId: number,
@@ -696,6 +708,9 @@ class EventService {
     }
 
     //HAR
+    /**
+     * This function sends a new rider to the database via server
+     */
     createRider(
         performanceId: number,
         eventId: number,
@@ -729,6 +744,9 @@ class EventService {
     }
 
     //HAR
+    /**
+     * This function sends a new crew to the datbase via server
+     */
     createCrew(
         eventId: number,
         profession: string,
@@ -767,6 +785,9 @@ class EventService {
 
     //DELETE
     //HAR
+    /**
+     * This function deletes a crew from the database via the server
+     */
     deleteCrew(eventId: number, crewId: number): Promise<any> {
         let isError: boolean = false;
         let data = {crewId: crewId};
@@ -795,6 +816,9 @@ class EventService {
     }
 
     //HAR
+    /**
+     * This function deletes a rider from the database via the server
+     */
     deleteRider(
         eventId: number,
         performanceId: number,
@@ -826,6 +850,9 @@ class EventService {
         });
     }
 
+    /**
+     * This function deletes an event from the database via the server
+     */
     deleteEvent(eventId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
@@ -853,6 +880,9 @@ class EventService {
 
     //PUT
     //har
+    /**
+     * This function updates a ticket in the database via the server
+     */
     updateTicket(
         oldName: string,
         name: string,
@@ -892,6 +922,9 @@ class EventService {
     }
 
     //HAR
+    /**
+     * This function updates a rider in the database via the server
+     */
     updateRider(
         oldName: string,
         performanceId: number,
@@ -929,6 +962,9 @@ class EventService {
         });
     }
 
+    /**
+     * This function updates an eventpicture in the database via the server
+     */
     updatePicture(file: File, eventId: number): Promise<any> {
         return new Promise(resolve => {
             const req: XMLHttpRequest = new XMLHttpRequest();
@@ -953,6 +989,9 @@ class EventService {
     }
 
     //HAR
+    /**
+     * This function updates an event in the database via the server
+     */
     updateEvent(
         eventId: number,
         name: string,
@@ -1002,6 +1041,9 @@ class EventService {
         });
     }
 
+    /**
+     * This function updates a contract in the database via the server
+     */
     updateContract(file: File, eventId: number, performanceId: number): Promise<any> {
         return new Promise(resolve => {
             const req: XMLHttpRequest = new XMLHttpRequest();
@@ -1026,6 +1068,9 @@ class EventService {
     }
 
     //HAR
+    /**
+     * This function updates a performance in the database via the server
+     */
     updatePerformance(
         performanceId: number,
         eventId: number,
@@ -1064,6 +1109,9 @@ class EventService {
     }
 
     //har
+    /**
+     * This function updates a crew in the database via the server
+     */
     updateCrew(
         oldName: string,
         eventId: number,
@@ -1105,6 +1153,9 @@ class EventService {
     }
 
     //har
+    /**
+     * This function delets a ticket from the database via the server
+     */
     deleteTicket(name: string, eventId: number): Promise<any> {
         let data = {name: name, eventId: eventId};
         let isError: boolean = false;
@@ -1132,6 +1183,9 @@ class EventService {
         });
     }
 
+    /**
+     * This function deletes a performance from the database via the server
+     */
     deletePerformance(
         eventId: number,
         performanceId: number
@@ -1166,6 +1220,9 @@ class EventService {
 class UserService {
     //GET
     //har
+    /**
+     * This function gets a user from the database via server
+     */
     getUser(userId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
@@ -1204,6 +1261,9 @@ class UserService {
         }
     }
 
+    /**
+     * This function gets a profilepicture from the database via server
+     */
     getPicture(userId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
@@ -1233,6 +1293,9 @@ class UserService {
         }
     }
 
+    /**
+     * This function gets all artists from the database via the server
+     */
     getAllArtists(): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
@@ -1275,6 +1338,9 @@ class UserService {
 
     //DELETE
     //har
+    /**
+     * This function deletes a user from the database via server
+     */
     deleteUser(userId: number, password: string): Promise<any> {
         let isError: boolean = false;
         let data = {password: password};
@@ -1303,6 +1369,9 @@ class UserService {
 
     //PUT
     //har
+    /**
+     * This function updates a user in the database via the server
+     */
     updateUser(
         userId: number,
         username: string,
@@ -1346,6 +1415,9 @@ class UserService {
         });
     }
 
+    /**
+     * This function tells the server to send a new autogenerated password by email
+     */
     forgotPassword(email: string): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
@@ -1365,6 +1437,9 @@ class UserService {
         });
     }
 
+    /**
+     * This function updates a password in the database via the server
+     */
     updatePassword(userId: string, oldPassword: string, newPassword: string): Promise<any> {
         let data = {
             oldPassword: oldPassword,
@@ -1395,6 +1470,9 @@ class UserService {
         });
     }
 
+    /**
+     * This function updates a profilepicture in the database via server
+     */
     updatePicture(file: File, userId: number): Promise<any> {
         return new Promise(resolve => {
             const req: XMLHttpRequest = new XMLHttpRequest();
@@ -1421,6 +1499,9 @@ class UserService {
 
     //POST
     //HAR
+    /**
+     * This function posts a new user to the database via the server
+     */
     createUser(
         username: string,
         password: string,
@@ -1464,6 +1545,9 @@ class UserService {
     }
 
     //har
+    /**
+     * This function logs in a user via server
+     */
     loginUser(password: string, email: string): Promise<any> {
         let data = {
             password: password,
@@ -1499,6 +1583,9 @@ class UserService {
     }
 }
 
+/**
+ * This function converts a buffer to a picture
+ */
 function bufferToPicture(buffer: *) {
     if (buffer == null) return '';
     let arrayBufferView = new Uint8Array(buffer.data);
@@ -1509,6 +1596,9 @@ function bufferToPicture(buffer: *) {
     return pictureUrl;
 }
 
+/**
+ * This function returns error messages
+ */
 function isErrorRequest(response: *): boolean {
     //TODO use the error component here instead of the return true?
     switch (response.status) {
@@ -1536,6 +1626,7 @@ function isErrorRequest(response: *): boolean {
             return false;
     }
 
+
     function printError(response: *, errorMsg: string): void {
         response.json().then(json => {
             // console.log(response.status + ': ' + errorMsg);
@@ -1545,10 +1636,16 @@ function isErrorRequest(response: *): boolean {
     }
 }
 
+/**
+ * This function refreshes the passed token
+ */
 function refreshToken(jwt) {
     window.sessionStorage.setItem('jwt', jwt);
 }
 
+/**
+ * This function sets user in sessionstorage
+ */
 function setUser(userId: number) {
     window.sessionStorage.setItem('user', userId);
 }
