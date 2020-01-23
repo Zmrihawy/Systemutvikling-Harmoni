@@ -24,7 +24,7 @@ export default class ForgotPassword extends Component {
                             <a onClick={() => history.push('/registrer')}>Lag en bruker</a>
                         </p>
                         <p className="message">
-                            Allerede registrert? <a href="#">Logg inn</a>
+                            <a href="#">Logg inn</a>
                         </p>
                     </form>
                 </div>
