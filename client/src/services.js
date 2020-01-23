@@ -188,7 +188,7 @@ class EventService {
 
         function handleGetEventResponse(json) {
             let pictureUrl: string = bufferToPicture(json.picture);
-            let event:Event = new Event(
+            let event: Event = new Event(
                 json.event_id,
                 json.name,
                 json.host_id,
@@ -201,7 +201,7 @@ class EventService {
                 json.end_time,
                 pictureUrl
             );
-            event['firstName'] = json.firstName;
+            event['firstName'] = json.first_name;
             event['surname'] = json.surname;
             return event;
         }
@@ -1533,7 +1533,7 @@ function bufferToPicture(buffer: *) {
 }
 
 function isErrorRequest(response: *): boolean {
-    //TODO use the error component here insted of the return true?
+    //TODO use the error component here instead of the return true?
     switch (response.status) {
         case 200:
             console.log(response.status + ': Successful request');
@@ -1542,7 +1542,8 @@ function isErrorRequest(response: *): boolean {
             printError(response, 'Bad request');
             return true;
         case 401:
-            printError(response, 'You are unauthorized');
+            // printError(response, 'You are unauthorized');
+            console.log('Unauthorised!');
             return true;
         case 403:
             printError(response, 'Forbidden request!');
