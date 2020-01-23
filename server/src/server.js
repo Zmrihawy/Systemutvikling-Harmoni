@@ -331,6 +331,7 @@ app.delete('/api/event/:event_id/performance/:performance_id/rider', (req, res) 
         jwt: token,
         error: "number field cannot be string"
     });
+
     if (req.body.name == undefined) return res.status(400).json({
         jwt: token,
         error: "bad request missing body-parameter name"
@@ -402,9 +403,9 @@ app.delete("/api/user/:user_id", (req, res) => {
 
     if (numberError([req.params.user_id])) return res.status(400).json({error: "url parameter user_id must be a number"});
     else if (req.body.password == undefined) return res.status(400).json({error: "request missing password"});
-    else if (req.params.userId != req.userId) return res.status(403).json({error: "not your user"});
+    else if (req.params.user_id != req.userId) return res.status(403).json({error: "not your user"});
 
-    userDao.getPassword(req.params.email, (status, data) => {
+    userDao.getPassword(req.email, (status, data) => {
 
         let pw = req.body.password;
 
@@ -422,16 +423,18 @@ app.delete("/api/user/:user_id", (req, res) => {
                     res.status(st);
                     return res.json(dt);
                 });
+            } else {
+                return res.json(403).json({error: "Wrong password"});
             }
-            return res.json(403).json({error: "Wrong password"});
         } else {
             if (data[0].password_hex.toString() === pass.toUpperCase()) {
                 userDao.deleteUser(req.params.user_id, (st, dt) => {
                     res.status(st);
                     return res.json(dt);
                 });
+            } else {
+                return res.json(403).json({error: "Wrong password"});
             }
-            return res.json(403).json({error: "Wrong password"});
         }
     })
 });

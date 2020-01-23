@@ -18,7 +18,7 @@ module.exports = class ServerDao extends Dao {
     }
 
     getEvent(sql: number, callback: (status: number, data: *) => void) :void {
-        super.query(`SELECT e.*, u.${CONSTANTS.USER_USERNAME} FROM ${CONSTANTS.EVENT_TABLE} as e 
+        super.query(`SELECT e.*, u.${CONSTANTS.USER_FIRST_NAME}, u.${CONSTANTS.USER_LAST_NAME} FROM ${CONSTANTS.EVENT_TABLE} as e 
         JOIN ${CONSTANTS.USER_TABLE} as u ON e.${CONSTANTS.EVENT_HOST_ID} = u.${CONSTANTS.USER_ID} WHERE ${CONSTANTS.EVENT_ID} = ?`, [sql], callback);
     }
 
@@ -28,7 +28,7 @@ module.exports = class ServerDao extends Dao {
     }
 
     getEventPerformances(sql: number, callback: (status: number, data: *) => void) :void {
-        super.query(`SELECT ${CONSTANTS.USER_USERNAME}, u.${CONSTANTS.USER_ID}, ${CONSTANTS.USER_PICTURE}, ${CONSTANTS.PERFORMANCE_NAME}, ${CONSTANTS.PERFORMANCE_START_TIME}, ${CONSTANTS.PERFORMANCE_END_TIME}, ${CONSTANTS.PERFORMANCE_ID} 
+        super.query(`SELECT ${CONSTANTS.USER_USERNAME}, u.${CONSTANTS.USER_ID}, ${CONSTANTS.PERFORMANCE_EVENT_ID}, ${CONSTANTS.USER_PICTURE}, ${CONSTANTS.PERFORMANCE_NAME}, ${CONSTANTS.PERFORMANCE_START_TIME}, ${CONSTANTS.PERFORMANCE_END_TIME}, ${CONSTANTS.PERFORMANCE_ID} 
         FROM ${CONSTANTS.PERFORMANCE_TABLE} as p LEFT JOIN ${CONSTANTS.USER_TABLE} as u ON p.${CONSTANTS.PERFORMANCE_ARTIST_ID} = u.${CONSTANTS.USER_ID} WHERE ${CONSTANTS.PERFORMANCE_EVENT_ID} = ?`, [sql], callback);
     }
 
@@ -81,7 +81,7 @@ module.exports = class ServerDao extends Dao {
     }
 
     deletePerformance(sql: string, callback: (status: number, data: *) => void) :void {
-        super.query(`DELETE FROM ${CONSTANTS.PERFORMANCE_TABLE} WHERE ${CONSTANTS.PERFORMANCE_ARTIST_ID} = ?`, [sql], callback);
+        super.query(`DELETE FROM ${CONSTANTS.PERFORMANCE_TABLE} WHERE ${CONSTANTS.PERFORMANCE_ID} = ?`, [sql], callback);
     }
 
     deleteCrew(sql: string, callback: (status: number, data: *) => void) :void {

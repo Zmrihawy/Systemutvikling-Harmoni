@@ -48,8 +48,8 @@ CREATE TABLE `event` (
 CREATE TABLE ticket (
   name varchar(100) NOT NULL,
   event_id int(11) NOT NULL,
-  price DOUBLE NOT NULL,
-  amount FLOAT(6, 2),
+  price FLOAT(8, 2) NOT NULL,
+  amount int(11),
   PRIMARY KEY (name, event_id),
   FOREIGN KEY (event_id) REFERENCES event(event_id) ON DELETE CASCADE
 );
