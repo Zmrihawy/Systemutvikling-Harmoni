@@ -121,17 +121,16 @@ app.post("/login", (req, res) => {
                 let token: string = jwt.sign({email: req.body.email, userId: login}, privateKey, {
                     expiresIn: 50000
                 });
-                return res.json({jwt: token, userId: login});
+                return res.json({jwt: token, userId: login, artist: data[0].artist});
             }
             return res.status(401).json({error: "wrong password"});
         } else {
-            if (data[0] === undefined) return res.json('user undefined');
             if (pass.toUpperCase() === data[0].password_hex.toString()) {
                 console.log("User ID:", login);
                 console.log("username & passord ok");
 
                 let token: string = thisFunctionCreatesNewToken(req.body.email, login);
-                return res.json({jwt: token, userId: login});
+                return res.json({jwt: token, userId: login, artist: data[0].artist});
             }
         }
         return res.status(401).json({error: "wrong password"});
