@@ -59,6 +59,48 @@ export default class NavBar extends Component {
                 </div>
             </div>
         );
+
+        if(window.sessionStorage.getItem('artist') == 1){
+            if(this.state.width/this.state.height < 1 || this.state.width < 750)
+            return(
+            <>
+                <div className={classes.navBar}>
+                <div className={classes.mobilNavLinkR} id="logLink" onClick={event => {this.changePage('logLink');}}>
+                        Logg Ut
+                    </div>
+
+                    <div className={classes.mobilNavLinkL} onClick={this.show}>
+                        <img src={meny} className={classes.mobileMenu}/>
+                    </div>                    
+                </div>
+                {this.state.show ? (
+                    <div className={classes.mobilNavLink}>
+                        <div className={classes.mobilNavLink} id="profileLink" onClick={event => this.changePage('profileLink')}>
+                            Min Profil
+                        </div>
+                        <div className={classes.mobilNavLink} id="eventLink" onClick={event => { this.changePage('eventLink'); }} >
+                            Mine Arrangement
+                        </div>
+                    </div>
+                    ) : (null) }
+            </>);
+            else return (
+                <div className={classes.navBar}>
+                    <div className={classes.navLinkR} id="logLink" onClick={event => {this.changePage('logLink');}}>
+                        Logg Ut
+                    </div>
+                    <div className={classes.logo} id="logo" onClick={ event => this.changePage('logo')}>
+                        <img src ={icon} alt = "logo" className={classes.logoImg}/>
+                    </div>
+                    <div className={classes.activeLink} id="eventLink" onClick={event => { this.changePage('eventLink'); }} >
+                        Mine Arrangement
+                    </div>
+                    <div className={classes.navLinkL} id="profileLink" onClick={event => this.changePage('profileLink')}>
+                        Min Profil
+                    </div>
+                </div>
+        );
+        }
         
         if(this.state.width/this.state.height < 1)
             return(
