@@ -188,7 +188,7 @@ class EventService {
 
         function handleGetEventResponse(json) {
             let pictureUrl: string = bufferToPicture(json.picture);
-            return new Event(
+            let event:Event = new Event(
                 json.event_id,
                 json.name,
                 json.host_id,
@@ -199,10 +199,11 @@ class EventService {
                 json.description,
                 json.start_time,
                 json.end_time,
-                pictureUrl,
-                json.first_name,
-                json.surname
+                pictureUrl
             );
+            event['firstName'] = json.firstName;
+            event['surname'] = json.surname;
+            return event;
         }
     }
 
