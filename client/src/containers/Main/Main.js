@@ -7,10 +7,12 @@ import Login from '../Login/Login';
 import Registration from '../Registration/Registration';
 import CreateEvent from '../CreateEvent/CreateEvent';
 import DisplayEvent from '../DisplayEvent/DisplayEvent';
-import DisplayRider from '../DisplayRider/DisplayRider';
+import DisplayRiderEdit from '../DisplayRiderEdit/DisplayRiderEdit';
 import ViewProfile from '../ViewProfile/ViewProfile';
 import DisplayEventEdit from '../DisplayEventEdit/DisplayEventEdit';
 import DisplayStaffEdit from '../DisplayStaffEdit/DisplayStaffEdit';
+import DisplayTicketEdit from '../DisplayTicketEdit/DisplayTicketEdit';
+import DisplayArtistEdit from '../DisplayArtistEdit/DisplayArtistEdit';
 import Header from '../../components/Header/Header';
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
@@ -36,8 +38,8 @@ export default class Main extends Component {
                 />
                 <Route
                     exact
-                    path="/arrangement/user/id/rider"
-                    component={DisplayRider}
+                    path="/arrangement/:eventId/rediger/rider/:performanceId"
+                    component={DisplayRiderEdit}
                 />
 
                 <Route
@@ -50,12 +52,12 @@ export default class Main extends Component {
                 <Route
                     exact
                     path="/arrangement/:id/rediger/artister"
-                    component={DisplayStaffEdit}
+                    component={DisplayArtistEdit}
                 />
                 <Route
                     exact
                     path="/arrangement/:id/rediger/billetter"
-                    component={DisplayStaffEdit}
+                    component={DisplayTicketEdit}
                 />
                 <Route
                     exact

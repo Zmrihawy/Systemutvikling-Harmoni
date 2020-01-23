@@ -19,8 +19,8 @@
 .desc__wrapper {
     grid-area: desc__wrapper;
     display: grid;
-    grid-template-areas: 'ph__name ph__profession ph__contact margin';
-    grid-template-columns: 1fr 1fr 1fr 50px;
+    grid-template-areas: 'ph__desc ph__amount ph__status margin';
+    grid-template-columns: 1fr 80px repeat(2, 50px);
     place-items: center center;
     width: 100%;
 }
@@ -30,16 +30,16 @@
     font-weight: bold;
 }
 
-.ph__name {
-    grid-area: ph__name;
+.ph__desc {
+    grid-area: ph__desc;
 }
 
-.ph__contact {
-    grid-area: ph__contact;
+.ph__amount {
+    grid-area: ph__amount;
 }
 
-.ph__profession {
-    grid-area: ph__profession;
+.ph__status {
+    grid-area: ph__status;
 }
 
 .form {
@@ -53,7 +53,7 @@
     width: 100%;
 }
 
-.staff__list {
+.rider__list {
     display: grid;
     grid-area: staff__list;
     grid-gap: 15px;
@@ -61,10 +61,10 @@
     place-items: center center;
 }
 
-.staff__wrapper {
+.rider__wrapper {
     display: grid;
-    grid-template-areas: 'input__name input__profession input__contact button__delete';
-    grid-template-columns: 1fr 1fr 1fr 50px;
+    grid-template-areas: 'input__name input__amount input__confirmed button__delete';
+    grid-template-columns: 1fr 80px repeat(2, 50px);
     grid-gap: 5px;
     width: 100%;
 }
@@ -73,12 +73,14 @@
     grid-area: input__name;
 }
 
-.input__contactInfo {
-    grid-area: input__contact;
+.input__amount {
+    grid-area: input__amount;
+    text-align: center;
 }
 
-.input__profession {
-    grid-area: input__profession;
+.input__confirmed {
+    grid-area: input__confirmed;
+    place-self: center center;
 }
 
 .button__delete {
@@ -102,7 +104,7 @@
     border: 1px solid lightgray;
 }
 
-.staff__wrapper > input {
+.rider__wrapper > input {
     padding: 15px;
     font-size: 1.4em;
     background-color: #fdfdfd;

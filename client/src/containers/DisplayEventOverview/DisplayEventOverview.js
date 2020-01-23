@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import EventOverview from '../../components/EventOverview/EventOverview';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import eventHolder from '../../pictures/eventPlaceholder.svg'; 
 
 import { history } from '../App';
 
@@ -36,6 +37,11 @@ export default class DisplayEventOverview extends Component {
         eventService
             .getUsersEvents(id, 1)
             .then(serverEvents => {
+                serverEvents.forEach(event => {
+                    if(event.picture == '') 
+                        event.picture = eventHolder;
+                })
+
                 this.setState({
                     activeEvents: serverEvents,
                     fullActive: serverEvents,
@@ -47,6 +53,11 @@ export default class DisplayEventOverview extends Component {
         eventService
             .getUsersEvents(id, 0)
             .then(serverEvents => {
+                serverEvents.forEach(event => {
+                    if(event.picture == '') 
+                        event.picture = eventHolder;
+                })
+
                 this.setState({
                     archivedEvents: serverEvents,
                     fullArchive: serverEvents,
