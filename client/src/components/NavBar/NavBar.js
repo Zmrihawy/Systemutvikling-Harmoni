@@ -52,7 +52,7 @@ export default class NavBar extends Component {
 
 
     render() {
-        if(window.sessionStorage.getItem('jwt') == undefined) return (
+        if(window.sessionStorage.getItem('jwt') == undefined || window.sessionStorage.getItem('jwt') === '') return (
             <div className={classes.navBar}>
                 <div className={classes.logo} id="logo" onClick={ event => this.changePage('logo')}>
                     <img src ={icon2} alt = "logo" className={classes.logoImgText}/>

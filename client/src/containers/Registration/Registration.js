@@ -3,6 +3,7 @@ import '../Login/Login.scss';
 import { User, userService } from '../../services.js';
 import { history } from '../App';
 import ShowPassword from '../Password/Password';
+import { RadioButton, RadioGroup } from 'react-radio-buttons';
 
 
 export default class Registration extends Component {
@@ -10,6 +11,8 @@ export default class Registration extends Component {
         super(props);
         this.state = new User();
         this.state.email = window.sessionStorage.getItem('email');
+        this.state.artist = undefined;
+        this.setArtist = this.setArtist.bind(this);
     }
 
     render() {
@@ -28,18 +31,33 @@ export default class Registration extends Component {
                         <input
                             type="email" required name="email" placeholder="E-post" value={this.state.email} onChange={this.onChange}/>
                         <input type="text" required name="phone" placeholder="Phone" value={this.state.phone} onChange={this.onChange}/>
-                        <div className="radioDiv">
+                        {/*<div className="radioDiv">
                         <label for="0">
-                            <input type="radio" value="0" defaultChecked onChange={this.onChange} name="artist"/> 
+                            <input type="radio" value="0"  onChange={this.onChange} name="artist"/> 
                                  Arrangør </label><br></br>
                                  <label for="1">
                             <input type="radio" value="1" onChange={this.onChange} name="artist"/>
                                  Artist </label>
-                        </div>
+        </div>*/}
+                 
+                                    
+                    <RadioGroup onChange={ this.setArtist } horizontal>
+                        <RadioButton value="0">
+                            <a className="knapptekst">Arrangør</a>
+                        </RadioButton>
+                        <RadioButton value="1">
+                            <a className="knapptekst">Artist</a>
+                        </RadioButton>
+                    </RadioGroup>
+                    
+                 
+                 
+                 
                         <br></br><br></br>
 
                         {/*<label for="avatar">Choose a profile picture:</label>
                 <input type="file" accept="image/*" id="avatar" />*/}
+
 
                         <input className="Button" type="submit" value="Registrer"></input>
                         <p className="message">
@@ -52,12 +70,20 @@ export default class Registration extends Component {
         );
     }
 
+    setArtist(e){
+        this.setState({
+            artist : e
+        })
+    }
+
     register = event => {
         event.preventDefault();
 
         if(document.querySelector("#pw2").value !== document.querySelector("#pw1").value) return document.querySelector('#error').innerHTML = "Passord-felter matcher ikke";
 
         console.log(this.state.artist);
+
+        if(this.state.artist === undefined) return document.querySelector('#error').innerHTML = "Velg brukertype";
 
         userService
             .createUser(
@@ -85,14 +111,14 @@ export default class Registration extends Component {
 
                 if (data.error === undefined)
                     return (err.innerHTML =
-                        'Internal Server Error, please try again later.');
+                        'Internal Server Error, prøv igjen senere.');
                 if (data.error === 'mail and username')
                     return (err.innerHTML =
-                        'Username and email is already in use.');
+                        'Brukernavn og email er allerede i bruk.');
                 if (data.error === 'mail')
-                    return (err.innerHTML = 'Mail is already in use');
+                    return (err.innerHTML = 'E-mail er allerede i bruk');
                 if (data.error === 'username')
-                    return (err.innerHTML = 'Username is already taken');
+                    return (err.innerHTML = 'Brukernavn er allerede tatt');
             });
     };
 
