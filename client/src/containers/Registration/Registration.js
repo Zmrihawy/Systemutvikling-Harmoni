@@ -28,12 +28,12 @@ export default class Registration extends Component {
                         <input
                             type="email" required name="email" placeholder="E-post" value={this.state.email} onChange={this.onChange}/>
                         <input type="text" required name="phone" placeholder="Phone" value={this.state.phone} onChange={this.onChange}/>
-                        <div className="radioDiv" onChange={this.onChange}>
+                        <div className="radioDiv">
                         <label for="0">
-                            <input type="radio" value="0" defaultChecked name="artist"/> 
+                            <input type="radio" value="0" defaultChecked onChange={this.onChange} name="artist"/> 
                                  Arrangør </label><br></br>
                                  <label for="1">
-                            <input type="radio" value="1" name="artist"/>
+                            <input type="radio" value="1" onChange={this.onChange} name="artist"/>
                                  Artist </label>
                         </div>
                         <br></br><br></br>
@@ -57,6 +57,8 @@ export default class Registration extends Component {
 
         if(document.querySelector("#pw2").value !== document.querySelector("#pw1").value) return document.querySelector('#error').innerHTML = "Passord-felter matcher ikke";
 
+        console.log(this.state.artist);
+
         userService
             .createUser(
                 this.state.username,
@@ -70,12 +72,10 @@ export default class Registration extends Component {
             .then(() =>
                 userService
                     .loginUser(document.querySelector("#pw1").value, this.state.email)
-                    .then(() =>
-                        history.push(
-                            '/user/' + window.sessionStorage.getItem('user')
-                        )
-                    )
-            )
+                    .then(() =>{
+                        window.sessionStorage.removeItem("email");
+                        history.push('/user/' + window.sessionStorage.getItem('user'));
+                    }))
             .then(() => {
                 history.push('/user/' + window.sessionStorage.getItem('user'));
             })
@@ -97,9 +97,9 @@ export default class Registration extends Component {
     };
 
     onChange = event => {
-        if (event.target.name === 'email')
-            window.sessionStorage.setItem('email', event.target.value);
-        this.setState({
+        if (event.target.name === 'email') window.sessionStorage.setItem('email', event.target.value);
+        if(event.target.name === "artist") this.setState({artist : event.target.value});
+        else this.setState({
             [event.target.name]: event.target.value
         });
     };
