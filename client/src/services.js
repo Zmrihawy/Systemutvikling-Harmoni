@@ -483,7 +483,7 @@ class EventService {
             return json.map(
                 data => {
                     let rider: Rider = new Rider(data.performance_id, data.name, data.amount, data.confirmed);
-                    rider['performanceName'] = data.performanceName;
+                    rider['performanceName'] = data.performance_name;
                     return rider;
                 }
             );
