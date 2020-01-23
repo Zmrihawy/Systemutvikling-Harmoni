@@ -1,5 +1,8 @@
 //@flow
 
+/**
+ * Event class
+ */
 export class Event {
     id: number;
     name: string;
@@ -40,6 +43,9 @@ export class Event {
     }
 }
 
+/**
+ * Ticket class
+ */
 export class Ticket {
     name: string;
     eventId: number;
@@ -59,6 +65,9 @@ export class Ticket {
     }
 }
 
+/**
+ * Rider class
+ */
 export class Rider {
     id: number;
     name: string;
@@ -73,6 +82,9 @@ export class Rider {
     }
 }
 
+/**
+ * Performance class
+ */
 export class Performance {
     id: number;
     userId: number;
@@ -108,6 +120,9 @@ export class Performance {
     }
 }
 
+/**
+ * User class
+ */
 export class User {
     id: number;
     username: string;
@@ -139,6 +154,9 @@ export class User {
     }
 }
 
+/**
+ * crew class
+ */
 export class Crew {
     id: number;
     profession: string;
@@ -161,8 +179,15 @@ export class Crew {
     }
 }
 
+/**
+ * EventService class
+ */
 class EventService {
     //GET
+
+    /**
+     * This function gets an event from the server
+     */
     getEvent(id: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
@@ -207,51 +232,10 @@ class EventService {
         }
     }
 
-    getAllEvents(): Promise<any> {
-        let isError: boolean = false;
-        return new Promise((resolve, reject) => {
-            fetch('/api/event', {
-                method: 'GET',
-                headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    isError = isErrorRequest(response);
-                    return response.json();
-                })
-                .then(json => {
-                    if (json.jwt != undefined) refreshToken(json.jwt);
-                    if (isError) return reject(json);
-                    resolve(handleGetAllEventsResponse(json));
-                })
-                .catch(error => console.error('Error: ', error));
-        });
-
-        function handleGetAllEventsResponse(json) {
-            return json.map(data => {
-                    let pictureUrl: string = bufferToPicture(data.picture);
-                    return new Event(
-                        data.event_id,
-                        data.name,
-                        data.host_id,
-                        data.active,
-                        data.location,
-                        data.longitude,
-                        data.latitude,
-                        data.description,
-                        data.start_time,
-                        data.end_time,
-                        pictureUrl
-                    )
-                }
-            );
-        }
-    }
-
     //har
+    /**
+     * This function gets all performances for a specific event from the server
+     */
     getEventPerformances(eventId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
@@ -293,6 +277,9 @@ class EventService {
         }
     }
 
+    /**
+     * This function gets an eventpicture from the server
+     */
     getPicture(eventId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
@@ -322,7 +309,9 @@ class EventService {
         }
     }
 
-
+    /**
+     * This function gets a contract from the server
+     */
     getContract(eventId: number, performanceId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
@@ -356,6 +345,9 @@ class EventService {
         }
     }
 
+    /**
+     * This function gets all riders in an event from the server
+     */
     getAllRiders(eventId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
@@ -386,34 +378,9 @@ class EventService {
         }
     }
 
-    getContract(eventId: number, artistId: number): Promise<any> {
-        let isError: boolean = false;
-        return new Promise((resolve, reject) => {
-            fetch('/api/event/' + eventId + '/user/' + artistId + '/contract', {
-                method: 'GET',
-                headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    isError = isErrorRequest(response);
-                    return response.json();
-                })
-                .then(json => {
-                    if (json.jwt != undefined) refreshToken(json.jwt);
-                    if (isError) return reject(json);
-                    resolve(handleGetContractResponse(json.data[0]));
-                })
-                .catch(error => console.error('Error: ', error));
-        });
-
-        function handleGetContractResponse(json) {
-            return JSON.stringify(json);
-        }
-    }
-
+    /**
+     * This function gets all contracts in an event from the server
+     */
     getEventContracts(eventId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
@@ -443,6 +410,9 @@ class EventService {
     }
 
     //har
+    /**
+     * This function gets all tickets in an event from the server
+     */
     getEventTickets(eventId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
@@ -480,6 +450,9 @@ class EventService {
     }
 
     //har
+    /**
+     * This function gets all riders in a performance from the server
+     */
     getPerformanceRiders(
         eventId: number,
         performanceId: number
@@ -514,6 +487,9 @@ class EventService {
     }
 
     //har
+    /**
+     * This function gets all events linked to a specific user from the server
+     */
     getUsersEvents(userId: number, active: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
@@ -1184,10 +1160,11 @@ class EventService {
         });
     }
 }
-
+/**
+ * UserService class
+ */
 class UserService {
     //GET
-
     //har
     getUser(userId: number): Promise<any> {
         let isError: boolean = false;
@@ -1284,7 +1261,7 @@ class UserService {
                 data =>
                     new User(
                         data.user_id,
-                        '',
+                        data.username,
                         '',
                         '',
                         data.first_name,
@@ -1549,7 +1526,7 @@ function isErrorRequest(response: *): boolean {
             printError(response, 'Forbidden request!');
             return true;
         case 409:
-            printError(response, 'Conflict error');
+            // printError(response, 'Conflict error');
             return true;
         case 500:
             printError(response, 'SQL-error!');
