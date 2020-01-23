@@ -930,12 +930,14 @@ class EventService {
         performanceId: number,
         eventId: number,
         name: string,
-        amount: number
+        amount: number,
+        confirmed: number
     ): Promise<any> {
         let data = {
             oldName: oldName,
             name: name,
-            amount: amount
+            amount: amount,
+            confirmed: confirmed
         };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
