@@ -481,7 +481,11 @@ class EventService {
 
         function handleGetPerformanceRidersResponse(json) {
             return json.map(
-                data => new Rider(data.performance_id, data.name, data.amount, data.confirmed)
+                data => {
+                    let rider: Rider = new Rider(data.performance_id, data.name, data.amount, data.confirmed);
+                    rider['performanceName'] = data.performanceName;
+                    return rider;
+                }
             );
         }
     }
@@ -1216,6 +1220,7 @@ class EventService {
         });
     }
 }
+
 /**
  * UserService class
  */
@@ -1653,7 +1658,7 @@ function setUser(userId: number) {
     window.sessionStorage.setItem('user', userId);
 }
 
-function setArtist(artist: number|string){
+function setArtist(artist: number | string) {
     window.sessionStorage.setItem('artist', artist);
 }
 
