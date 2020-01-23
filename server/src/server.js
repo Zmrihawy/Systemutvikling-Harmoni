@@ -97,7 +97,7 @@ app.post("/login", (req, res) => {
 
     if (req.body.email == undefined) return res.status(400).json({error: "bad request : missing email parameter"});
     else if (req.body.password == undefined) return res.status(400).json({error: " bad request : missing password parameter"});
-    else if (!sjekkMail(req.body.email)) return res.status(400).json({error: "parameter email is not a valid email"});
+    else if (!checkEmail(req.body.email)) return res.status(400).json({error: "parameter email is not a valid email"});
 
     userDao.getPassword(req.body.email, (status, data) => {
 
@@ -545,7 +545,7 @@ app.put("/api/user/:user_id", (req, res) => {
         jwt: token,
         error: "Missing parameter lastName"
     });
-    else if (!sjekkMail(req.body.email)) return res.status(400).json({
+    else if (!checkEmail(req.body.email)) return res.status(400).json({
         jwt: token,
         error: "inc mail is not valid"
     });
@@ -751,7 +751,7 @@ app.put("/api/event/:event_id/performance/:performance_id/rider", (req, res) => 
 app.put("/user/:usermail", (req, res) => {
     console.log("Fikk PUT-request fra klienten");
 
-    if (!sjekkMail(req.params.usermail)) return res.status(400).json({error: "given mail is not a valid mail"});
+    if (!checkEmail(req.params.usermail)) return res.status(400).json({error: "given mail is not a valid mail"});
 
     userDao.getPassword(req.params.usermail, (status, data) => {
 
@@ -949,7 +949,7 @@ app.post("/user", (req, res) => {
     else if (req.body.lastName == undefined) return res.status(400).json({error: "request missing last name"});
     else if (req.body.phone == undefined) return res.status(400).json({error: "request missing phone"});
     else if (req.body.artist == undefined) return res.status(400).json({error: "request missing artist"});
-    else if (!sjekkMail(req.body.email)) return res.status(400).json({error: "parameter email is not a valid email"});
+    else if (!checkEmail(req.body.email)) return res.status(400).json({error: "parameter email is not a valid email"});
     else if (numberError([req.body.phone])) return res.status(400).json({error: "number field is a string"});
 
     userDao.checkCred({username: req.body.username, email: req.body.email}, (status, data) => {
@@ -1250,7 +1250,7 @@ function numberError(nums: Array<mixed>): boolean {
 /**
  * This function checks if inputstring is a mailadress
  */
-function sjekkMail(inc: string): boolean {
+function checkEmail(inc: string): boolean {
     const re = /\S+@\S+\.\S+/;
     return re.test(inc);
 }

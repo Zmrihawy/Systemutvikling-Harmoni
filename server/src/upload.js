@@ -19,6 +19,11 @@ module.exports = class Uploader {
 
         let form: IncomingForm = new IncomingForm();
 
+        form.on('error', err =>{
+            console.log('UPLOAD CANCELLED');
+            console.log(err);
+        });
+
         form.on('file', (field, file) => {
             // Do something with the file
             // e.g. save it to the database
@@ -66,6 +71,11 @@ module.exports = class Uploader {
 
         let form: IncomingForm = new IncomingForm();
 
+        form.on('error', err =>{
+            console.log('UPLOAD CANCELLED');
+            console.log(err);
+        });
+
         form.on('file', (field, file) => {
             fs.readFile(file.path, (err, data) => {
                 if (err) return console.log(err);
@@ -91,6 +101,12 @@ module.exports = class Uploader {
         console.log("Saving POSTed user picture");
 
         let form: IncomingForm = new IncomingForm();
+
+        form.on('error', err =>{
+            console.log('UPLOAD CANCELLED');
+            console.log(err);
+        });
+
 
         form.on('file', (field, file) => {
             fs.readFile(file.path, (err, data) => {
