@@ -19,7 +19,7 @@ module.exports = class ServerDao extends Dao {
      * This function gets all riders for in a performance from the database.
      */
     getRiders(sql: number, callback: (status: number, data: *) => void) :void {
-        super.query(`SELECT r.*, p.${CONSTANTS.PERFORMANCE_NAME} FROM ${CONSTANTS.RIDER_TABLE} JOIN ${CONSTANTS.PERFORMANCE_TABLE}
+        super.query(`SELECT r.*, p.${CONSTANTS.PERFORMANCE_NAME} as performance_name FROM ${CONSTANTS.RIDER_TABLE} r JOIN ${CONSTANTS.PERFORMANCE_TABLE} p
         ON p.${CONSTANTS.PERFORMANCE_ID} = r.${CONSTANTS.RIDER_PERFORMANCE_ID} WHERE r.${CONSTANTS.RIDER_PERFORMANCE_ID} = ?`, [sql], callback);
     }
 
