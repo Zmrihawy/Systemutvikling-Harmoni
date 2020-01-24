@@ -152,8 +152,16 @@ export default class DisplayStaffEdit extends Component {
             return promise;
         }); 
 
-        //Redirects to the event page 
-        Promise.all(promises).then(history.push('/arrangement/' + eventId));
+        //Redirects to the event page
+        Promise.all(promises)
+            .then(() => {
+                window.alert('Endringene ble lagret!');
+                history.push('/arrangement/' + eventId);
+            })
+            .catch(() => {
+                window.alert('Teknisk feil!');
+                history.push('/arrangement/' + eventId); 
+            });
     };
 
     render() {

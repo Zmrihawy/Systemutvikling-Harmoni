@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import RiderEdit from '../../components/RiderEdit/RiderEdit';
 
 import { eventService } from '../../services';
+import { history } from '../App';
 
 /**
     Container for displaying the rider edit 
@@ -170,6 +171,17 @@ export default class DisplayRiderEdit extends Component {
 
             return promise;
         });
+
+        //Redirects to the event page
+        Promise.all(promises)
+            .then(() => {
+                window.alert('Endringene ble lagret!');
+                history.push('/arrangement/' + eventId);
+            })
+            .catch(() => {
+                window.alert('Teknisk feil!');
+                history.push('/arrangement/' + eventId); 
+            });
     };
 
     render() {

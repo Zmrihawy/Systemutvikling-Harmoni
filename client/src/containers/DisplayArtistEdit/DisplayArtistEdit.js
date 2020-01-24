@@ -244,7 +244,15 @@ export default class DisplayArtistEdit extends Component {
         });
 
         //Redirects to the event page
-        Promise.all(promises).then(history.push('/arrangement/' + eventId));
+        Promise.all(promises)
+            .then(() => {
+                window.alert('Endringene ble lagret!');
+                history.push('/arrangement/' + eventId);
+            })
+            .catch(() => {
+                window.alert('Teknisk feil!');
+                history.push('/arrangement/' + eventId); 
+            });
     };
 
     render() {
