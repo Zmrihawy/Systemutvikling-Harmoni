@@ -474,20 +474,24 @@ app.delete("/api/user/:user_id", (req, res) => {
         if (data.length === 2) {
             if (data[0].password_hex.toString() === pass.toUpperCase() || data[1].password_hex.toString() === pass.toUpperCase()) {
                 userDao.deleteUser(req.params.user_id, (st, dt) => {
+
                     res.status(st);
                     return res.json(dt);
                 });
             } else {
-                return res.json(403).json({error: "Wrong password"});
+                return res.status(403).json({error: "Wrong password"});
             }
         } else {
+
             if (data[0].password_hex.toString() === pass.toUpperCase()) {
+
                 userDao.deleteUser(req.params.user_id, (st, dt) => {
+
                     res.status(st);
                     return res.json(dt);
                 });
             } else {
-                return res.json(403).json({error: "Wrong password"});
+                return res.status(403).json({error: "Wrong password"});
             }
         }
     })
