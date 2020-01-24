@@ -67,10 +67,14 @@ export default class DisplayEventOverview extends Component {
         return !this.state.loading ? (
             <EventOverview
                 activeEvents={this.state.activeEvents.filter(str =>
-                    str.name.toLowerCase().includes(this.state.keyword)
+                    str.name
+                        .toLowerCase()
+                        .includes(this.state.keyword.toLowerCase())
                 )}
                 archivedEvents={this.state.archivedEvents.filter(str =>
-                    str.name.toLowerCase().includes(this.state.keyword)
+                    str.name
+                        .toLowerCase()
+                        .includes(this.state.keyword.toLowerCase())
                 )}
                 handleButtonClick={this.handleButtonClick}
                 handleSearch={this.handleSearch}
