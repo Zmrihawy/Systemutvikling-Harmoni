@@ -55,7 +55,7 @@ export default class EventInfo extends Component {
                 <div className={classes.top__section}>
                     <h1 className={classes.title}>{this.props.title}</h1>
                     <button
-                        className={classes.button__edit}
+                        className={[classes.button__edit, 'Button'].join(' ')}
                         onClick={this.props.handleEditClick}
                         style={{
                             visibility:
@@ -64,7 +64,7 @@ export default class EventInfo extends Component {
                                     : 'visible'
                         }}
                     >
-                        Rediger arrangement
+                        &#9986;&nbsp; Rediger
                     </button>
                 </div>
                 <div className={classes.desc}>

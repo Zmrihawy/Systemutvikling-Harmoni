@@ -25,7 +25,7 @@ import classes from './CreateEvent.module.scss';
 export default class CreateEvent extends Component {
     state = {
         showBackdrop: false,
-        currentPage: 3,
+        currentPage: 0,
         newEvent: {
             title: '',
             description: '',
@@ -315,6 +315,12 @@ export default class CreateEvent extends Component {
                             <div className="MediumTitle">
                                 Vil du opprette arrangementet?
                             </div>
+                            <p style={{ fontSize: '80%' }}>
+                                <em>
+                                    * Alternativer med tomme felter har blitt
+                                    fjernet
+                                </em>
+                            </p>
                             <CreateEventSummary event={this.state.newEvent} />
                             <div>
                                 <button

@@ -15,20 +15,27 @@ export default class DatePicker extends Component {
 
     handleTimeChange = (value, id) => {
         let error = false;
+        let stateTimes = [this.state.timeFrom, this.state.timeTo];
         let times = [
-            this.state.timeFrom.split(' ')[1].replace(/:/g, ''),
-            this.state.timeTo.split(' ')[1].replace(/:/g, '')
+            stateTimes[0].split(' ')[1].replace(/:/g, ''),
+            stateTimes[1].split(' ')[1].replace(/:/g, '')
         ];
         let time = this.state[id].split(' ');
         time[1] = value.format('HH:mm:ss');
         let newTime = time.join(' ');
 
         if (id === 'timeFrom') {
-            if (time[1].replace(/:/g, '') > times[1]) {
+            if (
+                time[1].replace(/:/g, '') > times[1] &&
+                time[0] === stateTimes[1].split(' ')[0]
+            ) {
                 error = true;
             }
         } else if (id === 'timeTo') {
-            if (time[1].replace(/:/g, '') < times[0]) {
+            if (
+                time[1].replace(/:/g, '') < times[0] &&
+                time[0] === stateTimes[0].split(' ')[0]
+            ) {
                 error = true;
             }
         }
@@ -97,6 +104,7 @@ export default class DatePicker extends Component {
                                 allowEmpty={false}
                                 minuteStep={5}
                                 id="timeFrom"
+                                style={{ width: 80 }}
                                 showSecond={false}
                                 className={classes.TimePicker}
                                 value={moment(this.state.timeFrom)}

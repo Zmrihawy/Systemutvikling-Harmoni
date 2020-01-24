@@ -32,23 +32,29 @@
 
 .button__edit {
     grid-area: button__edit;
-    border: none;
-    background: #404040;
-    color: #ffffff !important;
-    font-weight: 100;
-    padding: 20px;
-    text-transform: uppercase;
-    border-radius: 6px;
     display: inline-block;
-    transition: all 0.3s ease 0s;
+    transition: all 0.3s ease;
     transform: translateY(25%);
 }
 
-.button__edit:hover {
-    color: #ffffff !important;
-    background: #fa983a;
-    border-color: #fa983a !important;
-    transition: all 0.4s ease 0s;
+.artist__button,
+.ticket__button,
+.staff__button {
+    justify-self: center;
+    padding: 0.4rem 2rem;
+    background-color: #ff9f43;
+    color: #fff;
+    border: none;
+    border-radius: 0.4rem;
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.3);
+    transition: all 0.3s;
+    cursor: pointer;
+
+    &:hover {
+        transform: scale(1.1);
+        color: #000;
+        background-color: #ca680c;
+    }
 }
 
 .subtitle {
@@ -102,7 +108,7 @@
     grid-area: info__icon;
     justify-self: end;
     font-size: 2.5em;
-    color: #272727;
+    color: #ff932e;
     margin: 0;
 }
 
@@ -159,39 +165,43 @@
     justify-self: center;
 }
 
-.artist__button {
-    grid-area: artist__edit;
-    padding: 0;
-    border: none;
-    font-size: 1.2em;
-}
-.artist__list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-gap: 10px;
-}
+.artist {
+    &__button {
+        grid-area: artist__edit;
+    }
 
-.artist__wrapper {
-    background-color: rgb(243, 243, 243);
-    display: grid;
-    justify-content: center;
-    text-align: center;
-    font-weight: bold;
-    grid-gap: 5px;
-    border-radius: 10px;
-    border: 1px solid lightgray;
-    padding: 10px;
-}
+    &__list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-gap: 2rem;
+        margin-top: 1rem;
+    }
 
-.artist__image {
-    overflow: hidden;
-    display: grid;
-    place-content: center center;
-    border-radius: 50%;
-}
+    &__wrapper {
+        display: grid;
+        justify-content: center;
+        text-align: center;
+        font-weight: bold;
+        grid-gap: 1rem;
+        border: 1px solid lightgray;
+        padding: 2rem 0;
+        box-shadow: 0 0.6rem 1rem rgba(0, 0, 0, 0.2);
+        transition: all 0.3s;
 
-.artist__image > img {
-    height: 150px;
+        &:hover {
+            transform: translateY(-0.5rem);
+        }
+    }
+
+    &__image {
+        overflow: hidden;
+        display: grid;
+        place-content: center center;
+        border-radius: 50%;
+        & > img {
+            height: 150px;
+        }
+    }
 }
 
 .button__contract {
@@ -247,9 +257,6 @@
 
 .ticket__button {
     grid-area: ticket__edit;
-    padding: 0;
-    border: none;
-    font-size: 1.2em;
 }
 
 .tickets > h1 {
@@ -266,58 +273,19 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 10px;
+    margin-top: 1rem;
 }
 
 .ticket__wrapper {
     border: 1px solid lightgray;
-    border-radius: 12px;
     padding: 5px;
     text-align: center;
-    background: rgba(255, 255, 255, 1);
-    background: -moz-linear-gradient(
-        -45deg,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(252, 252, 252, 1) 34%,
-        rgba(246, 246, 246, 1) 95%,
-        rgba(242, 242, 242, 1) 100%
-    );
-    background: -webkit-gradient(
-        left top,
-        right bottom,
-        color-stop(0%, rgba(255, 255, 255, 1)),
-        color-stop(34%, rgba(252, 252, 252, 1)),
-        color-stop(95%, rgba(246, 246, 246, 1)),
-        color-stop(100%, rgba(242, 242, 242, 1))
-    );
-    background: -webkit-linear-gradient(
-        -45deg,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(252, 252, 252, 1) 34%,
-        rgba(246, 246, 246, 1) 95%,
-        rgba(242, 242, 242, 1) 100%
-    );
-    background: -o-linear-gradient(
-        -45deg,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(252, 252, 252, 1) 34%,
-        rgba(246, 246, 246, 1) 95%,
-        rgba(242, 242, 242, 1) 100%
-    );
-    background: -ms-linear-gradient(
-        -45deg,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(252, 252, 252, 1) 34%,
-        rgba(246, 246, 246, 1) 95%,
-        rgba(242, 242, 242, 1) 100%
-    );
-    background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(252, 252, 252, 1) 34%,
-        rgba(246, 246, 246, 1) 95%,
-        rgba(242, 242, 242, 1) 100%
-    );
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f2f2f2', GradientType=1 );
+    box-shadow: 0 0.8rem 1rem rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+
+    &:hover {
+        transform: translateY(-0.5rem);
+    }
 }
 
 .staff {
@@ -332,9 +300,6 @@
 
 .staff__button {
     grid-area: edit__staff;
-    padding: 0;
-    border: none;
-    font-size: 1.2em;
 }
 
 .staff > h1 {
@@ -363,58 +328,20 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 10px;
+    margin-top: 1rem;
 }
 
 .staff__wrapper {
     text-align: center;
     border: 1px solid lightgray;
-    border-radius: 12px;
     padding: 5px;
-    background: rgba(255, 255, 255, 1);
-    background: -moz-linear-gradient(
-        -45deg,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(252, 252, 252, 1) 34%,
-        rgba(246, 246, 246, 1) 95%,
-        rgba(242, 242, 242, 1) 100%
-    );
-    background: -webkit-gradient(
-        left top,
-        right bottom,
-        color-stop(0%, rgba(255, 255, 255, 1)),
-        color-stop(34%, rgba(252, 252, 252, 1)),
-        color-stop(95%, rgba(246, 246, 246, 1)),
-        color-stop(100%, rgba(242, 242, 242, 1))
-    );
-    background: -webkit-linear-gradient(
-        -45deg,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(252, 252, 252, 1) 34%,
-        rgba(246, 246, 246, 1) 95%,
-        rgba(242, 242, 242, 1) 100%
-    );
-    background: -o-linear-gradient(
-        -45deg,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(252, 252, 252, 1) 34%,
-        rgba(246, 246, 246, 1) 95%,
-        rgba(242, 242, 242, 1) 100%
-    );
-    background: -ms-linear-gradient(
-        -45deg,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(252, 252, 252, 1) 34%,
-        rgba(246, 246, 246, 1) 95%,
-        rgba(242, 242, 242, 1) 100%
-    );
-    background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(252, 252, 252, 1) 34%,
-        rgba(246, 246, 246, 1) 95%,
-        rgba(242, 242, 242, 1) 100%
-    );
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f2f2f2', GradientType=1 );
+    box-shadow: 0 0.8rem 1rem rgba(0, 0, 0, 0.2);
+
+    transition: all 0.3s;
+
+    &:hover {
+        transform: translateY(-0.5rem);
+    }
 }
 
 @media only screen and (max-width: 1250px) {
@@ -464,6 +391,6 @@
 
     .subtitle::before,
     .subtitle::after {
-        display: none; 
+        display: none;
     }
 }

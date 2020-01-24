@@ -32,9 +32,10 @@ export default class ArtistAdder extends Component {
             .catch(error => console.error(error));
     }
 
-    handleNewArtist = inputName => {
+    handleNewArtist = (event, inputName) => {
         let name;
         let artists = [...this.state.artists];
+
         inputName ? (name = inputName) : (name = '');
 
         artists.push({ id: -1, name, riders: [] });
@@ -84,7 +85,7 @@ export default class ArtistAdder extends Component {
                 id: -1,
                 name: this.state.artistInput
             });
-            this.handleNewArtist(this.state.artistInput);
+            this.handleNewArtist(null, this.state.artistInput);
 
             this.setState({ newArtistOptions, artistInput: '' });
             this.handleToggleModal();
