@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ArtistEdit from '../../components/ArtistEdit/ArtistEdit';
 import moment from 'moment';
 
+import Spinner from '../../components/UI/Spinner/Spinner';
 import { eventService, userService } from '../../services';
 import { history } from '../App';
 
@@ -18,7 +19,8 @@ export default class DisplayArtistEdit extends Component {
     state = {
         registeredArtists: [],
         unregisteredArtists: [],
-        databaseArtists: []
+        databaseArtists: [], 
+        loading: true 
     };
 
     //Fetches artists from the database
@@ -41,7 +43,8 @@ export default class DisplayArtistEdit extends Component {
 
                 this.setState({
                     registeredArtists: registeredArtists,
-                    unregisteredArtists: unregisteredArtists
+                    unregisteredArtists: unregisteredArtists, 
+                    loading: false
                 });
 
                 this.initialArtists = JSON.parse(JSON.stringify(this.state));
@@ -147,6 +150,8 @@ export default class DisplayArtistEdit extends Component {
         if (!window.confirm('Er du sikker på at du vil lagre endringene?'))
             return;
 
+        this.setState({ loading: true });
+
         let eventId = this.props.match.params.id;
 
         let oldArtists = this.initialArtists.unregisteredArtists.concat(
@@ -244,11 +249,23 @@ export default class DisplayArtistEdit extends Component {
         });
 
         //Redirects to the event page
-        Promise.all(promises).then(history.push('/arrangement/' + eventId));
+        Promise.all(promises)
+            .then(() => {
+                window.alert('Endringene ble lagret!');
+                history.push('/arrangement/' + eventId);
+            })
+            .catch(error => {
+                console.error(error);
+                window.alert('Teknisk feil!');
+                history.push('/arrangement/' + eventId); 
+            });
     };
 
     render() {
-        return (
+       let output;
+
+        return !this.state.loading ? (
+            (output = (
             <ArtistEdit
                 registeredArtists={this.state.registeredArtists}
                 unregisteredArtists={this.state.unregisteredArtists}
@@ -260,6 +277,7 @@ export default class DisplayArtistEdit extends Component {
                 handleInputChange={this.handleInputChange}
                 handleSelectChange={this.handleSelectChange}
             />
-        );
+        ))
+        ) : <Spinner />
     }
 }
