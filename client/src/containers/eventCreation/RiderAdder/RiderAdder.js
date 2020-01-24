@@ -10,6 +10,7 @@ export default class RiderAdder extends Component {
     handleChange = event => {
         const artists = [...this.state.artists];
         const id = event.target.parentNode.id;
+        // Get the correct input fields given the name
         artists[id.split(' ')[0]].riders[id.split(' ')[1]][event.target.name] =
             event.target.value;
 
@@ -65,6 +66,7 @@ export default class RiderAdder extends Component {
                                     />
                                     <input
                                         type="number"
+                                        min="0"
                                         placeholder="Antall"
                                         name="amount"
                                         onChange={this.handleChange}

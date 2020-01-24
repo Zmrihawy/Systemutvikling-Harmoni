@@ -25,7 +25,7 @@ import classes from './CreateEvent.module.scss';
 export default class CreateEvent extends Component {
     state = {
         showBackdrop: false,
-        currentPage: 0,
+        currentPage: 3,
         newEvent: {
             title: '',
             description: '',
@@ -120,13 +120,11 @@ export default class CreateEvent extends Component {
     };
 
     handleSaveStaff = input => {
-        console.log('staffd');
         this.handleSave(input, 'staff', '');
         this.handleToggleBackdrop();
     };
 
     handleMapClick = (map, e) => {
-        console.log('Map clicked');
         let longitude = e.lngLat.lng;
         let latitude = e.lngLat.lat;
 
@@ -153,8 +151,6 @@ export default class CreateEvent extends Component {
             );
         } else if (select === 'tickets') {
             this.setState({ ticketOptions: input[1] });
-
-            console.log(input[0]);
 
             result = input[0].filter(el => el.amount !== '' && el.price !== '');
         } else if (select === 'riders') {
@@ -339,7 +335,7 @@ export default class CreateEvent extends Component {
                             <Type
                                 strings="Skal arrangementet ha personell?"
                                 loop={false}
-                                speed={50}
+                                speed={35}
                             />
                         </div>
                         <StaffAdder

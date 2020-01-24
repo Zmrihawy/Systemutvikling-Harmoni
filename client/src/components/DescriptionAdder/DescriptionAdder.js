@@ -7,7 +7,7 @@ const descriptionAdder = props => {
     return (
         <div className={classes.DescriptionAdder}>
             <div className="MediumTitle">
-                <Type strings={props.title} speed={50} />
+                <Type strings={props.title} speed={35} />
             </div>
             <form onSubmit={props.next}>
                 <textarea

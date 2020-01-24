@@ -21,6 +21,7 @@ const ticketLine = props => {
             <input
                 className="Input"
                 type="number"
+                min="0"
                 name="amount"
                 onChange={props.changed}
                 placeholder="Antall"
@@ -29,6 +30,7 @@ const ticketLine = props => {
             <input
                 className="Input"
                 type="number"
+                min="0"
                 name="price"
                 onChange={props.changed}
                 placeholder="Pris"
