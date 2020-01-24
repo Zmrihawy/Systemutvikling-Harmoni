@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-
+import classes from './ErrorComponent.module.scss';
 
 
 export default class ErrorComponent extends Component {
@@ -22,7 +21,7 @@ export default class ErrorComponent extends Component {
     render(){
         return (
             <div>
-            <div >{this.renderSwitch(window.location.href)}</div>
+            <div className={classes.error}><span>Sorry : </span>{this.renderSwitch(window.location.href)}</div>
             </div>
             );
     };

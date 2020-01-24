@@ -71,14 +71,9 @@ export default class Login extends Component {
                 history.push('/user/' + window.sessionStorage.getItem('user'));
             })
             .catch(data => {
-                // <Redirect to="../../component/Erorrcomponent/ErorrComponent" />
-                // window.location.href="../../component/Erorrcomponent/ErorrComponent"
                 console.log(window.location.href);
                 history.push('/ErrorComponent/Login');
                 
-               
-
-
                 // document.querySelector('#error').innerHTML =
                 //     'Wrong e-mail or password';
             });
