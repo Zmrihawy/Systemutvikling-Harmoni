@@ -20,6 +20,8 @@ import engineer from '../../assets/images/engineer.svg';
 
 import classes from './CreateEvent.module.scss';
 
+// The main component for event creation.
+// Handles all major variables and serves the main state.
 export default class CreateEvent extends Component {
     state = {
         showBackdrop: false,

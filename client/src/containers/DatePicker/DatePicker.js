@@ -7,6 +7,8 @@ import moment from 'moment';
 import classes from './Datepicker.module.scss';
 import Type from '../../components/UI/Type/Type';
 
+// A component part of event registration that handles the date and time of the event.
+
 export default class DatePicker extends Component {
     state = {
         timeFrom: this.props.timeFrom,
@@ -85,6 +87,7 @@ export default class DatePicker extends Component {
                     />
                 </div>
                 <div className={classes.DatePicker__options}>
+                    {/* A calendar component installed with NPM for awesome date selection */}
                     <Calendar
                         className={classes.DatePicker__calendar}
                         selectRange={true}
@@ -100,6 +103,7 @@ export default class DatePicker extends Component {
                             Klokkeslett <i>til/fra</i>
                         </div>
                         <div>
+                            {/* An awesome time picker component to simplify the process of selecting a time range */}
                             <TimePicker
                                 allowEmpty={false}
                                 minuteStep={5}

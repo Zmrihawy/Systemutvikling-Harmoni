@@ -6,6 +6,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 
 import classes from './ContractAdder.module.scss';
 
+// A component part of event registration that handles the contracts for the already added artists
 export default class ContractAdder extends Component {
     state = {
         showModal: false,

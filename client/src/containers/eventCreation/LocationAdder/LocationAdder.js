@@ -4,6 +4,7 @@ import BasicForm from '../../../components/BasicForm/BasicForm';
 import Map from '../../../components/Map/Map';
 import classes from './LocationAdder.module.scss';
 
+// A component part of event registration that handles the description
 const locationAdder = props => {
     return (
         <div className={classes.LocationAdder}>
@@ -32,6 +33,7 @@ const locationAdder = props => {
                     Plasser pekeren på ønsket sted
                 </em>
                 <div className={classes.LocationAdder__map}>
+                    {/* An installed component that will show locations on a map in order to help the user */}
                     <Map
                         zoom={false}
                         longitude={props.longitude}

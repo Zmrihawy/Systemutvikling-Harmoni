@@ -6,6 +6,7 @@ import Type from '../../../components/UI/Type/Type';
 import classes from './ArtistAdder.module.scss';
 import { userService } from '../../../services';
 
+// A component part of event registration that handles the Artists
 export default class ArtistAdder extends Component {
     state = {
         showModal: false,
@@ -78,6 +79,7 @@ export default class ArtistAdder extends Component {
     };
 
     handleCustomArtist = () => {
+        // Code that helps us disable options that are already selected.
         let newArtistOptions = [...this.state.newArtistOptions];
         const artistInput = this.state.artistInput;
         if (artistInput.trim()) {

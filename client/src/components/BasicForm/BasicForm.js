@@ -3,6 +3,16 @@ import Type from '../UI/Type/Type';
 
 import classes from './BasicForm.module.scss';
 
+// A basic form that is being reused
+
+// Props:
+//
+// title: The title
+// inputType: what type of input field will it have
+// value: the value from a state
+// name: the name for the input element, which is needed by the onChange handler
+// last: function to be called when user presses 'back'
+// next: function to be called when user pressed 'next'
 const basicForm = props => {
     return (
         <>

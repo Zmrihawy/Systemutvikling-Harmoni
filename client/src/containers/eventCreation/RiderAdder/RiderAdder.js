@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import classes from './RiderAdder.module.scss';
 
+// A component part of event registration that handles the riders for the already added artists
 export default class RiderAdder extends Component {
     state = {
         artists: this.props.artists

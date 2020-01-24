@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Progress from './Progress/Progress';
 import Dropzone from './Dropzone/Dropzone';
-import './Upload.css';
+import './Upload.scss';
 
 const userId = window.sessionStorage.getItem('user');
 class UploadPic extends Component {
@@ -93,7 +93,7 @@ class UploadPic extends Component {
                         this.setState({ files: [], successfullUploaded: false })
                     }
                 >
-                    Clear
+                    Fjern
                 </button>
             );
         } else {
@@ -105,18 +105,16 @@ class UploadPic extends Component {
                     }
                     onClick={this.uploadFiles}
                 >
-                    Upload
+                    Last opp
                 </button>
             );
         }
     }
 
     render() {
-        //console.log(this.state.files.length);
-
         return (
             <div className="Upload">
-                <h1>Laste opp bilde, må være på gyldig format!</h1>
+                <h1>Last opp fil, må være et bildeformat!</h1>
                 <div className="Content">
                     <div>
                         <Dropzone

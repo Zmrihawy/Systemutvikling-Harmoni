@@ -5,6 +5,7 @@ import Type from '../../../components/UI/Type/Type';
 
 import classes from './TicketAdder.module.scss';
 
+// A component part of event registration that handles the tickets
 export default class TicketAdder extends Component {
     state = {
         tickets: this.props.tickets,

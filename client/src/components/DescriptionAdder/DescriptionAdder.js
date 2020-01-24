@@ -3,6 +3,7 @@ import React from 'react';
 import Type from '../UI/Type/Type';
 import classes from './DescriptionAdder.module.scss';
 
+// A component part of event registration that handles the description
 const descriptionAdder = props => {
     return (
         <div className={classes.DescriptionAdder}>

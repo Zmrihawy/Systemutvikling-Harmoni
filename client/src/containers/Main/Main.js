@@ -15,6 +15,7 @@ import DisplayTicketEdit from '../DisplayTicketEdit/DisplayTicketEdit';
 import DisplayArtistEdit from '../DisplayArtistEdit/DisplayArtistEdit';
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
+// The main component which handles all the routing of our website.
 export default class Main extends Component {
     render() {
         return (

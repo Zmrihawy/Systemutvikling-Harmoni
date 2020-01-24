@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Dropzone.css';
+import './Dropzone.scss';
 
 class Dropzone extends Component {
     constructor(props) {
@@ -94,7 +94,7 @@ class Dropzone extends Component {
                     multiple
                     onChange={this.onFilesAdded}
                 />
-                <span>Upload Files</span>
+                <span>Velg filer</span>
             </div>
         );
     }

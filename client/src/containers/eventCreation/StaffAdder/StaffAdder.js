@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import classes from './StaffAdder.module.scss';
 
+// A component part of event registration that handles the staff that needs to be added to the event
 export default class StaffAdder extends Component {
     state = {
         staff: this.props.staff

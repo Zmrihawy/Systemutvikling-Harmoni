@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Progress from './Progress/Progress';
 import Dropzone from './Dropzone/Dropzone';
-import './Upload.css';
+import './Upload.scss';
 
 class UpdateFile extends Component {
     constructor(props) {

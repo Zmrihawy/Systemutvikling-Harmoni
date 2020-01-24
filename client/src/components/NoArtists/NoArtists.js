@@ -1,5 +1,7 @@
 import React from 'react';
 
+// A component to notify the user that no artist have been added.
+// Also includes buttons to go back in the event creation process.
 const noArtists = props => {
     return (
         <>

@@ -3,6 +3,7 @@ import React from 'react';
 import Backdrop from '../Backdrop/Backdrop';
 import classes from './Modal.module.scss';
 
+// This is a component that serves as a pop up box
 const modal = props => {
     return (
         <>

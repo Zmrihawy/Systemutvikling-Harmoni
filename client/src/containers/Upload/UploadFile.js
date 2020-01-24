@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Progress from './Progress/Progress';
 import Dropzone from './Dropzone/Dropzone';
-import './Upload.css';
+import './Upload.scss';
 
 class UploadFile extends Component {
     constructor(props) {
@@ -65,7 +65,6 @@ class UploadFile extends Component {
                                 return index == this.props.callerID;
                             })
                             .map((file, i) => {
-                                console.log(this.props.callerID + ' ' + i);
                                 if (!file) return;
                                 if (file.length < 1) return;
 
