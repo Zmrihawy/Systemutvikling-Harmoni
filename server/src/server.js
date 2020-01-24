@@ -64,17 +64,17 @@ export let userDao: UserDao = new UserDao(pool);
 let uploader: Uploader = new Uploader();
 
 
-// let publicKey: string;
-// let privateKey: string = (publicKey = "arbeiderklassenrusteropptilvepnetrevolusjon");
+ let publicKey: string;
+ let privateKey: string = (publicKey = "arbeiderklassenrusteropptilvepnetrevolusjon");
 
 
-let publicKey: string = fs.readFileSync('./src/keys/public.key', 'utf8');
-let privateKey: string = fs.readFileSync('./src/keys/private.key', 'utf8');
+//let publicKey: string = fs.readFileSync('./src/keys/public.key', 'utf8');
+//let privateKey: string = fs.readFileSync('./src/keys/private.key', 'utf8');
 
-let tokenOptions: Object = {
+/*let tokenOptions: Object = {
     expiresIn: 5000,
     algorithm: "RS256"
-};
+};*/
 
 
 app.use("/api", (req, res, next) => {
@@ -148,7 +148,10 @@ app.post("/login", (req, res) => {
  */
 export function thisFunctionCreatesNewToken(passedMail: string, userId: number): string {
 
-    let newToken: string = jwt.sign({email: passedMail, userId: userId}, privateKey, tokenOptions);
+        let newToken: string = jwt.sign({email: passedMail, userId: userId}, privateKey, {
+        expiresIn: 5000
+    });
+
     return newToken;
 }
 
