@@ -86,7 +86,7 @@ app.use("/api", (req, res, next) => {
         return res.status(400).json({error: "missing access token header"});
     }
 
-    jwt.verify(token, publicKey, (err, decoded) => {
+    jwt.verify(token, privateKey, (err, decoded) => {
         if (err) {
             console.log("Token IKKE ok");
             res.status(401).json({error: "Not authorized -> Token Expired"});
