@@ -24,7 +24,7 @@ const riderEdit = props => {
                     {props.riders.map((e, i) => (
                         <div className={classes.rider__wrapper} key={i} id={i}>
                             <input
-                                className={classes.input__name}
+                                className={`${classes.input__name} ${'Input'}`}
                                 type="text"
                                 name="name"
                                 value={e.name}
@@ -32,7 +32,7 @@ const riderEdit = props => {
                                 required
                             />
                             <input
-                                className={classes.input__amount}
+                                className={`${classes.input__amount} ${'Input'}`}
                                 type="number"
                                 name="amount"
                                 value={e.amount}
@@ -49,7 +49,7 @@ const riderEdit = props => {
                                 disabled={props.artistToken === 1}
                             />
                             <input
-                                className={classes.button__delete}
+                                className={`${classes.button__delete} ${'Button'}`}
                                 onClick={props.handleButtonDeleteClick}
                                 type="button"
                                 value="-"
@@ -58,13 +58,13 @@ const riderEdit = props => {
                     ))}
                 </div>
                 <input
-                    className={classes.button__add}
+                    className={`${classes.button__add} ${'Button'}`}
                     onClick={props.handleButtonAddClick}
                     type="button"
                     value="+"
                 />
                 <input
-                    className={classes.button__submit}
+                    className={`${classes.button__submit} ${'Button'}`}
                     type="submit"
                     value="Lagre endringer"
                 />

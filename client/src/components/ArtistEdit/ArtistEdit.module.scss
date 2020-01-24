@@ -149,7 +149,8 @@
     border: 1px solid lightgray;
 }
 
-.artist__wrapper > input, .artist__wrapper > select {
+.artist__wrapper > input,
+.artist__wrapper > select {
     padding: 15px 5px;
     font-size: 1.4em;
     background-color: #fdfdfd;
@@ -163,17 +164,17 @@
     }
 
     .desc__wrapper {
-        width: 100%; 
+        width: 100%;
         grid-template-columns: 4fr 2fr repeat(2, 1fr);
     }
 
     .rider__wrapper {
-        width: 100%; 
+        width: 100%;
         grid-template-columns: 4fr 2fr repeat(2, 1fr);
     }
 
     .subtitle::before,
-.subtitle::after {
-    display: none;
-}
+    .subtitle::after {
+        display: none;
+    }
 }

@@ -21,13 +21,13 @@
     grid-area: desc__wrapper;
     display: grid;
     grid-template-areas: 'ph__desc ph__amount ph__status margin';
-    grid-template-columns: 1fr 80px repeat(2, 50px);
+    grid-template-columns: 1fr 80px repeat(2, 100px);
     place-items: center center;
     width: 100%;
 }
 
 .desc__wrapper > p {
-    font-size: 1.6em;
+    font-size: 1.8em;
     font-weight: bold;
 }
 
@@ -50,7 +50,6 @@
         'staff__list'
         'button__add'
         'button__submit';
-    grid-gap: 15px;
     width: 100%;
 }
 
@@ -65,7 +64,7 @@
 .rider__wrapper {
     display: grid;
     grid-template-areas: 'input__name input__amount input__confirmed button__delete';
-    grid-template-columns: 1fr 80px repeat(2, 50px);
+    grid-template-columns: 1fr 80px repeat(2, 100px);
     grid-gap: 5px;
     width: 100%;
 }
@@ -99,20 +98,18 @@
 .button__submit,
 .button__add {
     width: 100%;
-    padding: 15px;
-    font-size: 1.4em;
-    background-color: #fdfdfd;
-    border: 1px solid lightgray;
 }
 
 .rider__wrapper > input {
-    padding: 15px 5px;
-    font-size: 1.4em;
-    background-color: #fdfdfd;
-    border: 1px solid lightgray;
     min-width: 0px;
+    margin: 0; 
+    font-size: 1.8em;
+    height: 50px;
 }
 
+.rider__wrapper > input:focus {
+    transform: none;
+}
 
 @media only screen and (max-width: 800px) {
     .container {
