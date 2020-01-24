@@ -41,10 +41,12 @@
 
 .timepicker__start {
     grid-area: timepicker__start; 
+    transform: scale(1.7);
 }
 
 .timepicker__end {
     grid-area: timepicker__end; 
+    transform: scale(1.7);
 }
 
 .map {
