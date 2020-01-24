@@ -2,13 +2,19 @@ import React from 'react';
 
 import classes from '../EventEdit/EventEdit.module.scss';
 
-import DatePicker from '../../containers/DatePicker/DatePicker';
+import 'rc-time-picker/assets/index.css';
+import TimePicker from 'rc-time-picker';
 import Calendar from 'react-calendar';
 import Map from '../Map/Map';
+import moment from 'moment';
 
+//Component for editing an event 
 const eventEdit = props => {
     return (
-        <form className={classes.container} onSubmit={props.handleButtonSubmitClick}>
+        <form
+            className={classes.container}
+            onSubmit={props.handleButtonSubmitClick}
+        >
             <h1 className={classes.title}>Rediger arrangement</h1>
 
             <input
@@ -30,12 +36,35 @@ const eventEdit = props => {
                 selectRange={true}
                 minDate={new Date()}
                 value={[
-                    new Date(props.startTime.replace(/-/g, '/')),
-                    new Date(props.endTime.replace(/-/g, '/'))
+                    new Date(props.event.startTime.replace(/-/g, '/')),
+                    new Date(props.event.endTime.replace(/-/g, '/'))
                 ]}
                 onChange={props.handleDateChange}
             />
-
+            <TimePicker
+                className={classes.timepicker__start}
+                allowEmpty={false}
+                minuteStep={5}
+                id="startTime"
+                showSecond={false}
+                value={moment(props.event.startTime)}
+                defaultValue={moment(props.event.startTime)}
+                onChange={(value, id = 'startTime') =>
+                    props.handleTimeChange(value, id)
+                }
+            />
+            <TimePicker
+                className={classes.timepicker__end}
+                allowEmpty={false}
+                minuteStep={5}
+                id="startTime"
+                showSecond={false}
+                value={moment(props.event.endTime)}
+                defaultValue={moment(props.event.endTime)}
+                onChange={(value, id = 'endTime') =>
+                    props.handleTimeChange(value, id)
+                }
+            />
             <div className={classes.map}>
                 <Map
                     longitude={props.longitude}
@@ -50,18 +79,26 @@ const eventEdit = props => {
                 value={props.event.description}
                 onChange={props.handleChange}
             />
-
             <input
-                className={classes.button__submit}
-                type="submit"
-                value="Endre arrangement"
+                className={classes.button__archive}
+                type="button"
+                value={
+                    props.event.active === 1
+                        ? 'Arkiver arrangement'
+                        : 'Gjenopprett arrangement'
+                }
+                onClick={props.handleButtonArchiveClick}
             />
-
             <input
                 className={classes.button__delete}
                 type="button"
                 value="Slett arrangement"
                 onClick={props.handleButtonDeleteClick}
+            />
+            <input
+                className={classes.button__submit}
+                type="submit"
+                value="Endre arrangement"
             />
         </form>
     );

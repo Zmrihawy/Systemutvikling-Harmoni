@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
+
 import RiderEdit from '../../components/RiderEdit/RiderEdit';
 
 import { eventService } from '../../services';
-import { history } from '../App';
 
+/**
+    Container for displaying the rider edit 
+    The host of the event and the artist have access rights 
+ */
 export default class DisplayRiderEdit extends Component {
     initialRiders = {
         riders: []
     };
 
     state = {
-        name: '',
+        name: 'artist',
         riders: []
     };
 
+    //Fetches the riders from the database
     async componentDidMount() {
         let eventId = this.props.match.params.eventId;
         let performanceId = this.props.match.params.performanceId;
@@ -33,94 +38,20 @@ export default class DisplayRiderEdit extends Component {
             .catch(error => console.error(error));
     }
 
-    handleButtonSubmitClick = e => {
-        e.preventDefault();
+    //Triggered when an input field or checkbox is changed
+    handleChange = e => {
+        const newRiders = [...this.state.riders];
 
-        let eventId = this.props.match.params.eventId;
-        let performanceId = this.props.match.params.performanceId;
-
-        let oldRiders = this.initialRiders;
-        let newRiders = this.state.riders;
-
-        let addList = newRiders.filter(rider => rider.id == null);
-
-        let updateList = [];
-        oldRiders.forEach(oldRider => {
-            newRiders.forEach(newRider => {
-                if (oldRider.localId == newRider.localId) {
-                    if (
-                        oldRider.name != newRider.name ||
-                        oldRider.proffesion != newRider.proffesion ||
-                        oldRider.confirmed != newRider.confirmed
-                    ) {
-                        newRider.oldName = oldRider.name;
-                        updateList.push(newRider);
-                    }
-                }
-            });
-        });
-
-        console.log(this.state); 
-
-        let deleteList = [];
-        oldRiders.forEach(oldRider => {
-            let shouldDelete = true;
-
-            newRiders.forEach(newRider => {
-                if (oldRider.localId == newRider.localId) {
-                    shouldDelete = false;
-                }
-            });
-
-            if (shouldDelete) deleteList.push(oldRider);
-        });
-
-        let promises = [];
-
-        addList.map(rider => {
-            let promise = eventService.createRider(
-                performanceId,
-                eventId,
-                rider.name,
-                rider.amount
-            );
-
-            promises.push(promise);
-        });
-
-        updateList.map(rider => {
-            let promise = eventService.updateRider(
-                rider.oldName,
-                performanceId,
-                eventId,
-                rider.name,
-                rider.amount,
-                rider.confirmed
-            );
-
-            promises.push(promise);
-        });
-
-        deleteList.map(rider => {
-            let promise = eventService.deleteRider(
-                eventId,
-                performanceId,
-                rider.name
-            );
-            promises.push(promise);
-        });
-    };
-
-    handleButtonDeleteClick = e => {
-        e.preventDefault();
-
-        let riders = this.state.riders;
         const id = e.target.parentNode.id;
-        riders.splice(id, 1);
 
-        this.setState({ riders: riders });
+        if (e.target.type === 'checkbox')
+            newRiders[id][e.target.name] = e.target.checked;
+        else newRiders[id][e.target.name] = e.target.value;
+
+        this.setState({ riders: newRiders });
     };
 
+    //Triggered when the user clicks the '+' button
     handleButtonAddClick = e => {
         e.preventDefault();
 
@@ -138,17 +69,107 @@ export default class DisplayRiderEdit extends Component {
         this.setState({ riders: riders });
     };
 
-    handleChange = e => {
-        const newRiders = [...this.state.riders];
+    //Triggered when the user clicks the '-' button
+    handleButtonDeleteClick = e => {
+        e.preventDefault();
 
+        let riders = this.state.riders;
         const id = e.target.parentNode.id;
+        riders.splice(id, 1);
 
-        if(e.target.type == 'checkbox')
-            newRiders[id][e.target.name] = e.target.checked;
-        else 
-            newRiders[id][e.target.name] = e.target.value;
+        this.setState({ riders: riders });
+    };
 
-        this.setState({ riders: newRiders });
+    //Triggered when the user clicks the 'Lagre endringer' button
+    handleButtonSubmitClick = e => {
+        e.preventDefault();
+
+        if (!window.confirm('Er du sikker på at du vil lagre endringene?'))
+            return;
+
+        let eventId = this.props.match.params.eventId;
+        let performanceId = this.props.match.params.performanceId;
+
+        let oldRiders = this.initialRiders.length > 0 ? this.initialRiders : [];
+        let newRiders = this.state.riders;
+
+        //List of users to add to the database
+        let addList = newRiders.filter(rider => rider.id === null);
+
+        //List of users to update in the database
+        let updateList = [];
+        oldRiders.forEach(oldRider => {
+            newRiders.forEach(newRider => {
+                if (oldRider.localId === newRider.localId) {
+                    if (
+                        oldRider.name !== newRider.name ||
+                        oldRider.proffesion !== newRider.proffesion ||
+                        oldRider.confirmed !== newRider.confirmed
+                    ) {
+                        newRider.oldName = oldRider.name;
+                        updateList.push(newRider);
+                    }
+                }
+            });
+        });
+
+        //List of users to delete from the database
+        let deleteList = [];
+        oldRiders.forEach(oldRider => {
+            let shouldDelete = true;
+
+            newRiders.forEach(newRider => {
+                if (oldRider.localId === newRider.localId) {
+                    shouldDelete = false;
+                }
+            });
+
+            if (shouldDelete) deleteList.push(oldRider);
+        });
+
+        let promises = [];
+
+        //Adds the new artists to the database
+        addList.map(rider => {
+            let promise = eventService.createRider(
+                performanceId,
+                eventId,
+                rider.name,
+                rider.amount
+            );
+
+            promises.push(promise);
+
+            return promise;
+        });
+
+        //Updates the artist who's attributes where changed
+        updateList.map(rider => {
+            let promise = eventService.updateRider(
+                rider.oldName,
+                performanceId,
+                eventId,
+                rider.name,
+                rider.amount,
+                rider.confirmed
+            );
+
+            promises.push(promise);
+
+            return promise;
+        });
+
+        //Deletes the artists who were removed from the database
+        deleteList.map(rider => {
+            let promise = eventService.deleteRider(
+                eventId,
+                performanceId,
+                rider.name
+            );
+            promises.push(promise);
+
+            return promise;
+        });
     };
 
     render() {
@@ -156,11 +177,11 @@ export default class DisplayRiderEdit extends Component {
             <RiderEdit
                 riders={this.state.riders}
                 name={this.state.name}
-                addNewRider={this.addNewRider}
-                handleButtonAddClick={this.handleButtonAddClick}
-                handleButtonSubmitClick={this.handleButtonSubmitClick}
-                handleButtonDeleteClick={this.handleButtonDeleteClick}
                 handleChange={this.handleChange}
+                handleButtonAddClick={this.handleButtonAddClick}
+                handleButtonDeleteClick={this.handleButtonDeleteClick}
+                handleButtonSubmitClick={this.handleButtonSubmitClick}
+                artistToken={sessionStorage.getItem('artist')}
             />
         );
     }

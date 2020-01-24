@@ -2,6 +2,10 @@ import React from 'react';
 
 import classes from '../StaffEdit/StaffEdit.module.scss';
 
+/**
+    Component for editing, adding and deleting staff for an event
+    Only the host of the event has access rights 
+ */
 const staffEdit = props => {
     return (
         <div className={classes.container}>

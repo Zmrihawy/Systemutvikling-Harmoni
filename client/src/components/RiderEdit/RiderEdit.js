@@ -2,6 +2,10 @@ import React from 'react';
 
 import classes from '../RiderEdit/RiderEdit.module.scss';
 
+/**
+    Component for editing, adding and deleting riders for an artist 
+    Only the host of the event or the artist himself has access right
+ */
 const riderEdit = props => {
     return (
         <div className={classes.container}>
@@ -12,7 +16,10 @@ const riderEdit = props => {
                 <p className={classes.ph__amount}>Mengde</p>
                 <p className={classes.ph__status}>Status</p>
             </div>
-            <form className={classes.form} onSubmit={props.handleButtonSubmitClick}>
+            <form
+                className={classes.form}
+                onSubmit={props.handleButtonSubmitClick}
+            >
                 <div className={classes.rider__list}>
                     {props.riders.map((e, i) => (
                         <div className={classes.rider__wrapper} key={i} id={i}>
@@ -26,19 +33,20 @@ const riderEdit = props => {
                             />
                             <input
                                 className={classes.input__amount}
-                                type="text"
+                                type="number"
                                 name="amount"
                                 value={e.amount}
                                 onChange={props.handleChange}
                                 required
                             />
-                             <input
+                            <input
                                 className={classes.input__confirmed}
                                 type="checkbox"
                                 name="confirmed"
                                 value={e.confirmed}
                                 checked={e.confirmed}
                                 onChange={props.handleChange}
+                                disabled={props.artistToken === 1}
                             />
                             <input
                                 className={classes.button__delete}

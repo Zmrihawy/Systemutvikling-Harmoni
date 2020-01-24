@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import classes from './EventOverview.module.scss';
 
+//Compenent for displaying all events for a host or artist
 const eventOverview = props => {
     return (
         <div className={classes.container}>
@@ -22,6 +23,7 @@ const eventOverview = props => {
                             <img
                                 className={classes.image}
                                 src={event.picture}
+                                alt={event.name}
                             />
 
                             <div className={classes.text}>
@@ -56,6 +58,7 @@ const eventOverview = props => {
                             <img
                                 className={classes.image}
                                 src={event.picture}
+                                alt={event.name}
                             />
 
                             <div className={classes.text}>

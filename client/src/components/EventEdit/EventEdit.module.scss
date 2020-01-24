@@ -1,13 +1,14 @@
 .container {
     display: grid;
     grid-template-areas:
-        'title              title'
-        'input__name        input__name'
-        'calendar           map'
-        'calendar           input__location'
-        'input__description input__description'
-        'button__submit     button__delete';
-    grid-template-columns: 1fr 1fr;
+        'title              title              title'
+        'input__name        input__name        input__name'
+        'calendar           calendar           map'
+        'timepicker__start  timepicker__end    input__location'
+        'input__description input__description input__description'
+        'button__archive     button__archive   button__delete'
+        'button__submit     button__submit     button__submit'; 
+    grid-template-columns: 1fr 1fr 2fr;
     grid-gap: 15px;
     margin: 50px auto;
     place-items: center center;
@@ -37,6 +38,14 @@
     overflow: hidden;
 }
 
+.timepicker__start {
+    grid-area: timepicker__start; 
+}
+
+.timepicker__end {
+    grid-area: timepicker__end; 
+}
+
 .map {
     grid-area: map;
     width: 100%;
@@ -59,6 +68,10 @@
 
 .button__delete {
     grid-area: button__delete;
+}
+
+.button__archive { 
+    grid-area: button__archive; 
 }
 
 .container > input,

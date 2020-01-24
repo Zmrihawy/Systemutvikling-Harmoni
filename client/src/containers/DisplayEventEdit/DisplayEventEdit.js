@@ -1,29 +1,34 @@
 import React, { Component } from 'react';
+
 import EventEdit from '../../components/EventEdit/EventEdit';
 
 import { eventService } from '../../services';
-
 import { history } from '../App';
 
-//TODO: ADD TIMEPICKER (SVEIN?)
+/**
+    Container for displaying the event edit 
+    The host of the event has access rights 
+ */
 export default class DisplayEventEdit extends Component {
     state = {
         event: {
             id: null,
             longitude: 10.421906,
             latitude: 63.446827,
-            startTime: '2020-02-01 00:00:00.000',
-            endTime: '2020-02-10 00:00:00.000'
+            startTime: '2020-02-01 00:00:00',
+            endTime: '2020-02-10 00:00:00'
         }
     };
 
+    //fethces the event from the database
     async componentDidMount() {
         eventService
             .getEvent(this.props.match.params.id)
             .then(event => {
                 event.startTime = event.startTime
                     .replace('Z', '')
-                    .replace('T', ' ');
+                    .replace('T', ' ')
+                    .slice(0, -4);
                 event.endTime = event.endTime
                     .replace('Z', '')
                     .replace('T', ' ');
@@ -33,6 +38,7 @@ export default class DisplayEventEdit extends Component {
             .catch(error => console.error(error));
     }
 
+    //Handles input change
     handleChange = e => {
         const event = {
             ...this.state.event,
@@ -41,6 +47,7 @@ export default class DisplayEventEdit extends Component {
         this.setState({ event });
     };
 
+    //Handles date change in the calendar
     handleDateChange = dates => {
         let event = {
             ...this.state.event
@@ -55,9 +62,28 @@ export default class DisplayEventEdit extends Component {
         event.startTime = startTime;
         event.endTime = endTime;
 
-        this.setState({ event });
+        this.setState({ event: event });
     };
 
+    //Handles time change in the time picker
+    handleTimeChange = (value, id) => {
+        let event = this.state.event;
+        let time =
+            id === 'startTime'
+                ? event.startTime.split(' ')
+                : event.endTime.split(' ');
+
+        time[1] = value.format('HH:mm:ss');
+        let newTime = time.join(' ');
+
+        id === 'startTime'
+            ? (event.startTime = newTime)
+            : (event.endTime = newTime);
+
+        this.setState({ event: event });
+    };
+
+    //Formats the date correctly
     formatDate(date) {
         var d = new Date(date),
             month = '' + (d.getMonth() + 1),
@@ -70,6 +96,11 @@ export default class DisplayEventEdit extends Component {
         return [year, month, day].join('-');
     }
 
+    /**
+        Handles map click 
+        I.e. puts a pin on the map on the
+        location of the click 
+     */
     handleMapClick = (map, e) => {
         let longitude = e.lngLat.lng;
         let latitude = e.lngLat.lat;
@@ -84,8 +115,56 @@ export default class DisplayEventEdit extends Component {
         this.setState({ event: event });
     };
 
+    //Triggered the user clicks the 'Slett arrangement' button
+    handleButtonDeleteClick = e => {
+        e.preventDefault();
+
+        if (!window.confirm('Er du sikker på at du vil slette arrangementet?'))
+            return;
+
+        eventService
+            .deleteEvent(this.state.event.id)
+            .then(responce => history.push('/arrangement'))
+            .catch(error => console.error(error));
+    };
+
+    //Triggered the user clicks the 'Arkiver/Gjenopprett arrangement' button
+    handleButtonArchiveClick = e => {
+        e.preventDefault();
+
+        if (
+            !window.confirm('Er du sikker på at du vil arkivere arrangementet?')
+        )
+            return;
+
+        let event = this.state.event;
+        this.state.event.active === 1 ? (event.active = 0) : (event.active = 1);
+        this.setState({ event: event });
+
+        eventService
+            .updateEvent(
+                this.state.event.id,
+                this.state.event.name,
+                this.state.event.hostId,
+                this.state.event.active,
+                this.state.event.location,
+                this.state.event.longitude,
+                this.state.event.latitude,
+                this.state.event.description,
+                this.state.event.startTime,
+                this.state.event.endTime
+            )
+            .then(response => history.push('/arrangement'))
+            .catch(error => console.error(error));
+    };
+
+    //Triggered the user clicks the 'Lagre endringer' button
     handleButtonSubmitClick = e => {
         e.preventDefault();
+
+        if (!window.confirm('Er du sikker på at du vil lagre endringene?'))
+            return;
+
         eventService
             .updateEvent(
                 this.state.event.id,
@@ -105,28 +184,20 @@ export default class DisplayEventEdit extends Component {
             .catch(error => console.error(error));
     };
 
-    handleButtonDeleteClick = e => {
-        e.preventDefault();
-        eventService
-            .deleteEvent(this.state.event.id)
-            .then(responce => history.push('/arrangement'))
-            .catch(error => console.error(error));
-    };
-
     render() {
         return (
             <EventEdit
-                startTime={this.state.event.startTime}
-                endTime={this.state.event.endTime}
                 event={this.state.event}
                 handleButtonSubmitClick={this.handleButtonSubmitClick}
                 handleButtonDeleteClick={this.handleButtonDeleteClick}
+                handleButtonArchiveClick={this.handleButtonArchiveClick}
                 handleDateChange={this.handleDateChange}
+                handleTimeChange={this.handleTimeChange}
                 handleChange={this.handleChange}
+                handleMapClick={this.handleMapClick}
                 longitude={this.state.event.longitude}
                 latitude={this.state.event.latitude}
                 location={this.state.event.location}
-                handleMapClick={this.handleMapClick}
             />
         );
     }

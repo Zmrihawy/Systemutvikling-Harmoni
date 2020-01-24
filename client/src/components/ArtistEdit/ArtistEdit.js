@@ -2,6 +2,12 @@ import React from 'react';
 
 import classes from '../ArtistEdit/ArtistEdit.module.scss';
 
+/**
+    Component for adding and deleting artists from an event 
+    There are two types of artists: with or without account 
+    You can edit the names of artists without an account, 
+    the ones with account you can only add or delete 
+ */
 const artistEdit = props => {
     return (
         <div className={classes.container}>
@@ -89,7 +95,7 @@ const artistEdit = props => {
                 <input
                     className={classes.button__submit}
                     type="submit"
-                    value="Endre artister"
+                    value="Lagre endringer"
                 />
             </form>
         </div>
