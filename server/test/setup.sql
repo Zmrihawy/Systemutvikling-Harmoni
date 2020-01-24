@@ -42,7 +42,7 @@ CREATE TABLE `event` (
   end_time datetime NOT NULL,
   picture longblob,
   PRIMARY KEY (event_id),
-  FOREIGN KEY (host_id) REFERENCES user(user_id)
+  FOREIGN KEY (host_id) REFERENCES user(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE ticket (
