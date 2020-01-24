@@ -141,7 +141,7 @@ export default class EventInfo extends Component {
                         <h2 className={classes.info__title}>Dato</h2>
                         <p className={classes.info__description}>
                             {' '}
-                            Til: {this.props.dateFrom} <br /> Fra:{' '}
+                            Fra: {this.props.dateFrom} <br /> Til:{' '}
                             {this.props.dateTo}
                         </p>
                         <FontAwesomeIcon
