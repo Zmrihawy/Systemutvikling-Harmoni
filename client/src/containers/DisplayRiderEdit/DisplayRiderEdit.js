@@ -197,21 +197,17 @@ export default class DisplayRiderEdit extends Component {
     };
 
     render() {
-        let output;
-
         return !this.state.loading ? (
-            (output = (
-                <RiderEdit
-                    riders={this.state.riders}
-                    name={this.state.name}
-                    handleChange={this.handleChange}
-                    handleButtonBackClick={this.handleButtonBackClick}
-                    handleButtonAddClick={this.handleButtonAddClick}
-                    handleButtonDeleteClick={this.handleButtonDeleteClick}
-                    handleButtonSubmitClick={this.handleButtonSubmitClick}
-                    artistToken={parseInt(sessionStorage.getItem('artist'))}
-                />
-            ))
+            <RiderEdit
+                riders={this.state.riders}
+                name={this.state.name}
+                handleChange={this.handleChange}
+                handleButtonBackClick={this.handleButtonBackClick}
+                handleButtonAddClick={this.handleButtonAddClick}
+                handleButtonDeleteClick={this.handleButtonDeleteClick}
+                handleButtonSubmitClick={this.handleButtonSubmitClick}
+                artistToken={parseInt(sessionStorage.getItem('artist'))}
+            />
         ) : (
             <Spinner />
         );

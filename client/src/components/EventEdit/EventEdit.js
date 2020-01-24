@@ -8,14 +8,14 @@ import Calendar from 'react-calendar';
 import Map from '../Map/Map';
 import moment from 'moment';
 
-//Component for editing an event 
+//Component for editing an event
 const eventEdit = props => {
     return (
         <form
             className={classes.container}
             onSubmit={props.handleButtonSubmitClick}
         >
-             <input
+            <input
                 className={`${classes.button__back} ${'Button'}`}
                 type="button"
                 value="Gå tilbake"
@@ -63,7 +63,7 @@ const eventEdit = props => {
                 className={classes.timepicker__end}
                 allowEmpty={false}
                 minuteStep={5}
-                id="startTime"
+                id="endTime"
                 showSecond={false}
                 value={moment(props.event.endTime)}
                 defaultValue={moment(props.event.endTime)}

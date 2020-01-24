@@ -64,21 +64,19 @@ export default class DisplayEventOverview extends Component {
     };
 
     render() {
-        let output;
-
         return !this.state.loading ? (
-            (output = (
-                <EventOverview
-                    activeEvents={this.state.activeEvents.filter(str =>
-                        str.name.toLowerCase().includes(this.state.keyword)
-                    )}
-                    archivedEvents={this.state.archivedEvents.filter(str =>
-                        str.name.toLowerCase().includes(this.state.keyword)
-                    )}
-                    handleButtonClick={this.handleButtonClick}
-                    handleSearch={this.handleSearch}
-                />
-            ))
-        ) : <Spinner />
+            <EventOverview
+                activeEvents={this.state.activeEvents.filter(str =>
+                    str.name.toLowerCase().includes(this.state.keyword)
+                )}
+                archivedEvents={this.state.archivedEvents.filter(str =>
+                    str.name.toLowerCase().includes(this.state.keyword)
+                )}
+                handleButtonClick={this.handleButtonClick}
+                handleSearch={this.handleSearch}
+            />
+        ) : (
+            <Spinner />
+        );
     }
 }

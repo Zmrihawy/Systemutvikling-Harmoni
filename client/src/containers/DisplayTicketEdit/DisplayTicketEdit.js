@@ -183,19 +183,15 @@ export default class DisplayTicketEdit extends Component {
     };
 
     render() {
-        let output;
-
         return !this.state.loading ? (
-            (output = (
-                <TicketEdit
-                    tickets={this.state.tickets}
-                    handleChange={this.handleChange}
-                    handleButtonBackClick={this.handleButtonBackClick}
-                    handleButtonAddClick={this.handleButtonAddClick}
-                    handleButtonSubmitClick={this.handleButtonSubmitClick}
-                    handleButtonDeleteClick={this.handleButtonDeleteClick}
-                />
-            ))
+            <TicketEdit
+                tickets={this.state.tickets}
+                handleChange={this.handleChange}
+                handleButtonBackClick={this.handleButtonBackClick}
+                handleButtonAddClick={this.handleButtonAddClick}
+                handleButtonSubmitClick={this.handleButtonSubmitClick}
+                handleButtonDeleteClick={this.handleButtonDeleteClick}
+            />
         ) : (
             <Spinner />
         );

@@ -32,11 +32,11 @@ const artistEdit = props => {
                                 value={artist.userId}
                                 onChange={props.handleSelectChange}
                             >
-                                <option value="" selected disabled hidden>
+                                <option value="" disabled hidden>
                                     Velg artist
                                 </option>
                                 {props.databaseArtists.map((dbArtist, i) => (
-                                    <option value={dbArtist.id}>
+                                    <option value={dbArtist.id} key={i}>
                                         {dbArtist.firstName +
                                             ' ' +
                                             dbArtist.surname}

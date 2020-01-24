@@ -27,7 +27,7 @@ export default class DisplayArtistEdit extends Component {
     async componentDidMount() {
         let eventId = this.props.match.params.id;
 
-        const getEvent = eventService
+        eventService
             .getEventPerformances(eventId)
             .then(serverArtists => {
                 serverArtists.forEach((artist, i) => {
@@ -86,7 +86,6 @@ export default class DisplayArtistEdit extends Component {
         let registeredArtists = [...this.state.registeredArtists];
         let databaseArtists = [...this.state.databaseArtists];
 
-        let oldArtist = registeredArtists[id];
         let newArtist = databaseArtists.filter(
             artist => artist.id == e.target.value
         )[0];
@@ -205,7 +204,7 @@ export default class DisplayArtistEdit extends Component {
         let promises = [];
 
         //Adds the new artists to the database
-        addList.map(artist => {
+        addList.forEach(artist => {
             artist.localId = 0;
 
             if (artist.name == null)
@@ -222,10 +221,12 @@ export default class DisplayArtistEdit extends Component {
                     .slice(0, -6),
                 artist.name
             );
+
+            promises.push(promise);
         });
 
         //Updates the artist who's attributes where changed
-        updateList.map(artist => {
+        updateList.forEach(artist => {
             let promise = eventService.updatePerformance(
                 artist.id,
                 eventId,
@@ -242,7 +243,7 @@ export default class DisplayArtistEdit extends Component {
         });
 
         //Delete the artist who were removed from the database
-        deleteList.map(artist => {
+        deleteList.forEach(artist => {
             let promise = eventService.deletePerformance(eventId, artist.id);
 
             promises.push(promise);
@@ -269,10 +270,7 @@ export default class DisplayArtistEdit extends Component {
     };
 
     render() {
-        let output;
-
         return !this.state.loading ? (
-            (output = (
                 <ArtistEdit
                     registeredArtists={this.state.registeredArtists}
                     unregisteredArtists={this.state.unregisteredArtists}
@@ -285,7 +283,6 @@ export default class DisplayArtistEdit extends Component {
                     handleInputChange={this.handleInputChange}
                     handleSelectChange={this.handleSelectChange}
                 />
-            ))
         ) : (
             <Spinner />
         );

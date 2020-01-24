@@ -25,7 +25,7 @@ export default class DisplayEvent extends Component {
         latitude: 63.446827,
         firstname: '',
         lastname: '',
-        loading: true, 
+        loading: true,
         artists: [
             {
                 id: '',
@@ -53,87 +53,77 @@ export default class DisplayEvent extends Component {
     async componentDidMount() {
         let eventId = this.props.match.params.id;
 
+        //Fetches event from database
         eventService
             .getEvent(eventId)
-            .then(recivedEvent => {
+            .then(serverEvent => {
                 this.setState({
-                    id: recivedEvent.id,
-                    title: recivedEvent.name,
-                    description: recivedEvent.description,
-                    location: recivedEvent.location,
-                    dateFrom: new Date(recivedEvent.startTime)
+                    id: serverEvent.id,
+                    title: serverEvent.name,
+                    description: serverEvent.description,
+                    location: serverEvent.location,
+                    dateFrom: new Date(serverEvent.startTime)
                         .toUTCString()
                         .slice(0, -7),
-                    dateTo: new Date(recivedEvent.endTime)
+                    dateTo: new Date(serverEvent.endTime)
                         .toUTCString()
                         .slice(0, -7),
-                    longitude: recivedEvent.longitude,
-                    latitude: recivedEvent.latitude,
-                    firstname: recivedEvent.firstName,
-                    lastname: recivedEvent.surname,
+                    longitude: serverEvent.longitude,
+                    latitude: serverEvent.latitude,
+                    firstname: serverEvent.firstName,
+                    lastname: serverEvent.surname,
                     loading: false
                 });
             })
             .catch((error: Error) => console.error(error));
 
-        const getTickets = tickets => {
-            Promise.all(tickets.map(ticketConvert));
-        };
-
-        eventService
-            .getEventTickets(eventId)
-            .then(ticket_array => {
-                this.setState({ tickets: ticket_array.map(ticketConvert) });
-                let ticketCount = ticketcounter(ticket_array);
-                this.setState({ ticketAmount: ticketCount });
-            })
-            .catch((error: Error) => console.error(error));
-
-        function ticketcounter(tickets) {
-            let ticketCount = 0;
-            tickets.map(ticket => (ticketCount += ticket.amount));
-            return ticketCount;
-        }
-
-        function ticketConvert(ticket) {
-            return {
-                description: ticket.name,
-                amount: ticket.amount,
-                price: ticket.price
-            };
-        }
-
-        const getStaff = serv_staff => {
-            Promise.all(staff.map(staffConvert));
-        };
-
-        let serv_staff = eventService.getCrew(eventId);
-        let staff;
-
-        function staffConvert(staff) {
-            return {
-                name: staff.name,
-                profession: staff.profession,
-                number: staff.contactInfo
-            };
-        }
-
-        eventService
-            .getCrew(eventId)
-            .then(staff_array => {
-                this.setState({ staff: staff_array.map(staffConvert) });
-            })
-            .catch((error: Error) => console.error(error));
-
+        //Fetches performanes (artists) from database
         eventService
             .getEventPerformances(eventId)
-            .then(artists => {
-                artists.forEach(artist => {
+            .then(serverArtists => {
+                serverArtists.forEach(artist => {
                     if (artist.picture === '') artist.picture = profileHolder;
                 });
-                this.setState({ artists: artists });
+
+                this.setState({ artists: serverArtists });
             })
             .catch(error => console.error(error));
+
+        //Fetches tickets from database
+        eventService
+            .getEventTickets(eventId)
+            .then(serverTickets => {
+                this.setState({
+                    tickets: serverTickets.map(ticket => {
+                        return {
+                            description: ticket.name,
+                            amount: ticket.amount,
+                            price: ticket.price
+                        };
+                    })
+                });
+
+                let ticketAmount = 0;
+                serverTickets.forEach(ticket => (ticketAmount += ticket.amount));
+                this.setState({ ticketAmount: ticketAmount });
+            })
+            .catch((error: Error) => console.error(error));
+
+        //Fetches staff from database
+        eventService
+            .getCrew(eventId)
+            .then(serverStaff => {
+                this.setState({
+                    staff: serverStaff.map(staff => {
+                        return {
+                            name: staff.name,
+                            profession: staff.profession,
+                            number: staff.contactInfo
+                        };
+                    })
+                });
+            })
+            .catch((error: Error) => console.error(error));
     }
 
     //Triggered when the user clicks the 'Rider' button
@@ -168,11 +158,8 @@ export default class DisplayEvent extends Component {
     };
 
     render() {
-        let output;
-
         return !this.state.loading ? (
-            (output = (
-                <EventInfo
+            <EventInfo
                 title={this.state.title}
                 description={this.state.description}
                 location={this.state.location}
@@ -193,9 +180,8 @@ export default class DisplayEvent extends Component {
                 artistToken={parseInt(sessionStorage.getItem('artist'))}
                 eventId={this.state.id}
             />
-            ))
-        ) : <Spinner />
+        ) : (
+            <Spinner />
+        );
     }
 }
-
-

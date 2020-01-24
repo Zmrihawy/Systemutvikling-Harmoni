@@ -178,19 +178,15 @@ export default class DisplayStaffEdit extends Component {
     };
 
     render() {
-        let output;
-
         return !this.state.loading ? (
-            (output = (
-                <StaffEdit
-                    staff={this.state.staff}
-                    handleChange={this.handleChange}
-                    handleButtonBackClick={this.handleButtonBackClick}
-                    handleButtonAddClick={this.handleButtonAddClick}
-                    handleButtonDeleteClick={this.handleButtonDeleteClick}
-                    handleButtonSubmitClick={this.handleButtonSubmitClick}
-                />
-            ))
+            <StaffEdit
+                staff={this.state.staff}
+                handleChange={this.handleChange}
+                handleButtonBackClick={this.handleButtonBackClick}
+                handleButtonAddClick={this.handleButtonAddClick}
+                handleButtonDeleteClick={this.handleButtonDeleteClick}
+                handleButtonSubmitClick={this.handleButtonSubmitClick}
+            />
         ) : (
             <Spinner />
         );

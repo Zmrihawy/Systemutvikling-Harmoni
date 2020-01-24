@@ -18,7 +18,7 @@ export default class DisplayEventEdit extends Component {
             latitude: 63.446827,
             startTime: '2020-02-01 00:00:00',
             endTime: '2020-02-10 00:00:00'
-        }, 
+        },
         loading: true
     };
 
@@ -124,7 +124,7 @@ export default class DisplayEventEdit extends Component {
         if (!window.confirm('Er du sikker på at du vil slette arrangementet?'))
             return;
 
-        this.setState({ loading: true }); 
+        this.setState({ loading: true });
 
         eventService
             .deleteEvent(this.state.event.id)
@@ -143,12 +143,10 @@ export default class DisplayEventEdit extends Component {
     handleButtonArchiveClick = e => {
         e.preventDefault();
 
-        if (
-            !window.confirm('Er du sikker på at du vil endre arrangementet?')
-        )
+        if (!window.confirm('Er du sikker på at du vil endre arrangementet?'))
             return;
 
-        this.setState({ loading: true }); 
+        this.setState({ loading: true });
 
         let event = this.state.event;
         this.state.event.active === 1 ? (event.active = 0) : (event.active = 1);
@@ -167,7 +165,7 @@ export default class DisplayEventEdit extends Component {
                 this.state.event.startTime,
                 this.state.event.endTime
             )
-           .then(() => {
+            .then(() => {
                 window.alert('Arrangementet ble endret!');
                 history.push('/arrangement');
             })
@@ -185,7 +183,7 @@ export default class DisplayEventEdit extends Component {
         if (!window.confirm('Er du sikker på at du vil lagre endringene?'))
             return;
 
-        this.setState({ loading: true }); 
+        this.setState({ loading: true });
 
         eventService
             .updateEvent(
@@ -200,7 +198,7 @@ export default class DisplayEventEdit extends Component {
                 this.state.event.startTime,
                 this.state.event.endTime
             )
-           .then(() => {
+            .then(() => {
                 window.alert('Endringene ble lagret!');
                 history.push('/arrangement/' + this.state.event.id);
             })
@@ -213,16 +211,13 @@ export default class DisplayEventEdit extends Component {
 
     //Triggered the user clicks the 'Gå tilbake' button
     handleButtonBackClick = e => {
-        e.preventDefault(); 
+        e.preventDefault();
 
-        history.goBack(); 
-    }
+        history.goBack();
+    };
 
     render() {
-        let output;
-
         return !this.state.loading ? (
-            (output = (
             <EventEdit
                 event={this.state.event}
                 handleButtonBackClick={this.handleButtonBackClick}
@@ -237,7 +232,8 @@ export default class DisplayEventEdit extends Component {
                 latitude={this.state.event.latitude}
                 location={this.state.event.location}
             />
-        ))
-        ) : <Spinner />
+        ) : (
+            <Spinner />
+        );
     }
 }
