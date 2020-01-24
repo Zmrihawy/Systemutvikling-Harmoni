@@ -1,0 +1,310 @@
+.viewProfile{
+}
+.editLayer {
+    position: absolute;
+    right: 10%;
+    background-color: white;
+    border: 3px solid #ff9f43;
+    border-radius: 30px;
+    pointer-events: none;
+    visibility: hidden;
+    color: #2f2e41;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
+    transition: 0.5s;
+    font-size: 10px;
+    width: 50%;
+    text-align: center;
+    padding: 5px 30px;
+}
+.deleteButton{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 60px;
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.4);
+    border-radius: 0.5rem;
+    background: linear-gradient(to left, #ff9f43 50%, #2f2e41 50%);
+    border: none;
+    background-position: right bottom;
+    background-size: 200% 100%;
+    font-family: 'Lato', sans-serif;
+    transition: background-position 0.5s ease-in-out, transform 0.4s,
+    box-shadow 0.4s, color 0.4s;
+    cursor: pointer;
+}
+.deleteButton:hover{
+    color: #ff9f43;
+    background-position: left bottom;
+    transform: translateY(-0.6rem) scale(1.03);
+    box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.45);
+}
+.deleteButton:active{
+    color: #ff9f43;
+    background-position: left bottom;
+    transform: translateY(-0.6rem) scale(1.03);
+    box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.45);
+}
+
+.passwordDeleteInp{
+    position: absolute;
+    top: 10px;
+    right: 90px;
+    visibility: hidden;
+    pointer-events: none;
+    background-color:  rgb(245, 245, 245);
+    border-radius: 3px;
+    border: 3px solid  rgb(245, 245, 245);
+}
+.bioLayer{
+    visibility: visible;
+    pointer-events: all;
+    top: 22vw + 8vw;
+    left: 36.5%;
+    position: absolute;
+    background-color: white;
+    border: 3px solid #ff9f43;
+    border-radius: 30px;
+    color: #2f2e41;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
+    transition: 0.5s;
+    font-size: 20px;
+    width: 24%;
+    height: auto;
+    text-align: center;
+    padding: 5px 30px;
+}
+.bioLayer:hover{
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
+}
+.redigerBrukerBtn{
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.4);
+    border-radius: 0.6rem;
+    background: linear-gradient(to left, #ff9f43 50%, #2f2e41 50%);
+    border: none;
+    background-position: right bottom;
+    background-size: 200% 100%;
+    margin-top: 2.6rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.5rem;
+    padding: 1rem 4.5rem;
+    transition: background-position 0.5s ease-in-out, transform 0.4s,
+    box-shadow 0.4s, color 0.4s;
+    cursor: pointer;
+}
+.redigerBrukerBtn:hover{
+    color: #ff9f43;
+    background-position: left bottom;
+    transform: translateY(-0.6rem) scale(1.03);
+    box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.45);
+}
+.redigerBrukerBtn:active{
+    color: #ff9f43;
+    background-position: left bottom;
+    transform: translateY(-0.6rem) scale(1.03);
+    box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.45);
+}
+.icon {
+    color: white;
+    font-size: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+}
+.fadeUser:hover {
+    color: #eee;
+}
+.imgContainer {
+    position: absolute;
+    width: 21vw;
+    height: 21vw;
+    left: 38%;
+    transition-duration: 0.5s;
+}
+.imgContainer:hover .overlay {
+    opacity: 1;
+}
+.errorMessage {
+    position: absolute;
+    color: darkred;
+    top: 80%;
+    left: 15%;
+}
+.editLayer:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
+}
+.editHeader {
+    font-family: "Agency FB";
+    font-size: 30px;
+}
+.editTitle {
+    font-family: 'Agency FB';
+    font-size: x-large;
+    color: #2f2e41;
+}
+.input{
+  background-color:  rgb(245, 245, 245);
+  border-radius: 3px;
+  border: 3px solid  rgb(245, 245, 245);
+}
+
+.input:focus {
+    outline: none;
+}
+.profile {
+    width: 22vw;
+    height: 22vw;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #ff9f43;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
+    transition: 0.3s;
+}
+.profile:hover{
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
+}
+.h1 {
+    font-family: 'Agency FB';
+    color: #2f2e41;
+    font-size: 40px;
+}
+.p {
+    font-size: 25px;
+}
+.button {
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.4);
+    border-radius: 0.6rem;
+    background: linear-gradient(to left, #ff9f43 50%, #2f2e41 50%);
+    border: none;
+    background-position: right bottom;
+    background-size: 200% 100%;
+    margin-top: 2.6rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 2rem;
+    padding: 1rem 4.5rem;
+    transition: background-position 0.5s ease-in-out, transform 0.4s,
+    box-shadow 0.4s, color 0.4s;
+    cursor: pointer;
+}
+.button:hover {
+    color: #ff9f43;
+    background-position: left bottom;
+    transform: translateY(-0.6rem) scale(1.03);
+    box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.45);
+}
+.button:active {
+    color: #ff9f43;
+    background-position: left bottom;
+    transform: translateY(-0.6rem) scale(1.03);
+    box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.45);
+}
+.column {
+    float: left;
+    padding-left: 10px;
+    width: 33.3%;
+}
+.row {
+    padding-top: 50px;
+}
+.row:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+.redigerBtn {
+    position: absolute;
+    bottom: 55vh;
+    left: 37vw;
+    top: 24vw;
+    width: 65px;
+    height: 65px;
+    background-color: whitesmoke;
+    border: 3px solid #ff9f43;
+    border-radius: 50%;
+    color: #2f2e41;
+    padding: 7.5px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 3px 1.5px;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+.redigerBtn:hover {
+    background-color: #2f2e41;
+    color: #ff9f43;
+}
+.imgBtn {
+    width: 90px;
+    position: absolute;
+    background-color: #2f2e41;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 7.5px 16px;
+    left: 100px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 3px 1.5px;
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+.imgBtn:hover {
+    background-color: #2f2e41;
+    color: #ff9f43;
+}
+@media only screen and (max-width: 1000px){
+    .imgContainer{
+        left: 0;
+    }
+    .bioLayer{
+        left: 0;
+        top: 22vw + 14vw;
+        overflow: scroll;
+    }
+    .editLayer{
+        top: 80vw;
+        left: 0;
+    }
+    .errorMessage{
+      top: 90%;
+    }
+}
+@media only screen and (max-width: 890px){
+    .imgContainer{
+        height: 50vw;
+        width: 50vw;
+        left: 50%
+    }
+    .bioLayer{
+        pointer-events: none;
+        visibility: hidden;
+    }
+    .editLayer{
+        visibility: visible;
+        pointer-events: all;
+        top: 60vw;
+        width: 100vw;
+    }
+    .deleteButton{
+        width: 12vw;
+        font-size: 3vw;
+        text-align: center;
+        padding: 0;
+    }
+    .redigerBrukerBtn{
+        width: 12vw;
+        font-size: 3vw;
+        text-align: center;
+        padding: 0;
+    }
+    .button{
+        width: 12vw;
+        font-size: 3vw;
+        text-align: center;
+        padding: 0;
+    }
+}

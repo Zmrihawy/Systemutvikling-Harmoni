@@ -1,0 +1,10 @@
+.TicketAdder {
+}
+
+@media (max-width: 500px) {
+    .TicketAdder {
+        & input {
+            width: 25% !important;
+        }
+    }
+}

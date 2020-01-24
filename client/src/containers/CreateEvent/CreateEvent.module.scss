@@ -1,0 +1,116 @@
+.CreateEvent__container {
+    background: linear-gradient(to right, #2f2e41, #4c4a69);
+    clip-path: polygon(0 90%, 100% 60%, 100% 100%, 0% 100%);
+    position: absolute;
+    width: 100%;
+    height: calc(100vh - 5rem);
+}
+
+.CreateEvent {
+    height: calc(100vh - 5rem);
+    font-size: 2rem;
+    width: 100%;
+    padding: 5rem 7rem;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    position: relative;
+
+    & > form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__image {
+        height: 50%;
+        width: auto;
+        position: absolute;
+        right: 3%;
+        top: 31%;
+
+        @media (max-width: 1000px) {
+            & {
+                display: none;
+            }
+        }
+    }
+
+    .Card {
+        background-color: white;
+        padding: 32px;
+        width: 50%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
+            0 5px 15px 0 rgba(0, 0, 0, 0.08);
+        box-sizing: border-box;
+    }
+
+    .FileUpload {
+        text-align: center;
+        background-color: rgb(206, 213, 223);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: calc(10px + 2vmin);
+    }
+}
+
+@media (max-width: 1000px) {
+    .CreateEvent {
+        padding: 3.2rem 5rem;
+        align-items: center;
+        text-align: center;
+
+        &__container {
+            clip-path: polygon(0 90%, 100% 70%, 100% 100%, 0% 100%);
+        }
+
+        & > form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .CreateEvent {
+        padding: 2.6rem 4.4rem;
+        align-items: center;
+        text-align: center;
+
+        & > form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .CreateEvent {
+        padding: 2rem 4rem;
+        &__container {
+            clip-path: polygon(0 92%, 100% 80%, 100% 100%, 0% 100%);
+        }
+
+        & form input {
+            &[type='submit'] {
+                width: auto;
+            }
+
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: 400px) {
+    .CreateEvent {
+        padding: 2rem 0.6rem;
+    }
+}

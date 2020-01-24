@@ -1,0 +1,131 @@
+.container {
+    display: grid;
+    grid-template-areas:
+        'title '
+        'desc__wrapper'
+        'form';
+    grid-gap: 15px;
+    margin: 50px auto;
+    place-items: center center;
+    width: 60%;
+}
+
+.title {
+    grid-area: title;
+    font-size: 4em;
+    font-weight: bolder;
+}
+
+.desc__wrapper {
+    grid-area: desc__wrapper;
+    display: grid;
+    grid-template-areas: 'ph__name ph__price ph__amount margin';
+    grid-template-columns: 1fr 1fr 1fr 50px;
+    place-items: center center;
+    width: 100%;
+}
+
+.desc__wrapper > p {
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+.ph__name {
+    grid-area: ph__name;
+}
+
+.ph__price {
+    grid-area: ph__price;
+}
+
+.ph__amount {
+    grid-area: ph__amount;
+
+}
+
+.form {
+    grid-area: form;
+    display: grid;
+    grid-template-areas:
+        'ticket__list'
+        'button__add'
+        'button__submit';
+    width: 100%;
+}
+
+.ticket__list {
+    display: grid;
+    grid-area: ticket__list;
+    grid-gap: 15px;
+    width: 100%;
+    place-items: center center;
+}
+
+.ticket__wrapper {
+    display: grid;
+    grid-template-areas: 'input__name input__price input__amount button__delete';
+    grid-template-columns: 1fr 1fr 1fr 50px;
+    grid-gap: 5px;
+    width: 100%;
+}
+
+.input__name {
+    grid-area: input__name;
+}
+
+.input__price{
+    grid-area: input__price;
+}
+
+.input__amount {
+    grid-area: input__amount;
+}
+
+.button__delete {
+    grid-area: button__delete;
+}
+
+.button__add {
+    grid-area: button__add;
+}
+
+.button__submit {
+    grid-area: button__submit;
+}
+
+.button__submit,
+.button__add {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.4em;
+    background-color: #fdfdfd;
+    border: 1px solid lightgray;
+}
+
+.ticket__wrapper > input {
+    min-width: 0px;
+    margin: 0; 
+    font-size: 1.8em;
+    height: 50px;
+    padding: 1rem;
+}
+
+.ticket__wrapper > input:focus {
+    transform: none;
+}
+
+@media only screen and (max-width: 800px) {
+    .container {
+        width: 90%;
+    }
+
+    .desc__wrapper {
+        width: 100%; 
+        grid-template-columns: 4fr 2fr 2r 1fr;
+    }
+
+    .ticket__wrapper {
+        width: 100%; 
+        grid-template-columns: 4fr 2fr 2fr 1fr;
+    }
+}

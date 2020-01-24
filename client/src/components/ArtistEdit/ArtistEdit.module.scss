@@ -1,0 +1,174 @@
+.container {
+    display: grid;
+    grid-template-areas:
+        'title'
+        'registered__artists'
+        'unregistered__artists'
+        'form';
+    grid-gap: 20px;
+    margin: 50px auto;
+    place-items: center center;
+    width: 60%;
+}
+
+.title {
+    grid-area: title;
+    font-size: 4em;
+    font-weight: bolder;
+}
+
+.subtitle {
+    font-size: 3em;
+}
+
+.registered__artists {
+    display: grid;
+    grid-template-areas:
+        'registered__title'
+        'registered__list'
+        'button__registered__add';
+    width: 100%;
+    place-items: center center;
+}
+
+.artist__wrapper {
+    display: grid;
+    grid-template-areas: 'artist__name button__delete';
+    grid-template-columns: 1fr 50px;
+    grid-gap: 5px;
+    width: 100%;
+}
+
+.select__name {
+    grid-area: artist__name;
+}
+
+.registered__title {
+    grid-area: registered__title;
+    margin-bottom: 20px;
+}
+
+.registered__list {
+    display: grid;
+    grid-area: registered__list;
+    grid-gap: 15px;
+    width: 100%;
+    place-items: center center;
+}
+
+.button__registered__delete {
+    grid-area: button__delete;
+}
+
+.button__registered__add {
+    grid-area: button__registered__add;
+}
+
+.select__name {
+    grid-area: artist__name;
+}
+
+.unregistered__artists {
+    grid-area: unregistered__artists;
+    display: grid;
+    grid-template-areas:
+        'unregistered__title'
+        'unregistered__list'
+        'button__unregistered__add'
+        'button__submit';
+    width: 100%;
+    place-items: center center;
+}
+
+.unregistered__title {
+    grid-area: unregistered__title;
+    margin-bottom: 20px;
+}
+
+.unregistered__list {
+    display: grid;
+    grid-area: unregistered__list;
+    grid-gap: 15px;
+    width: 100%;
+    place-items: center center;
+}
+
+.input__name {
+    grid-area: artist__name;
+}
+
+.rc-time-picker-input {
+    height: 100px;
+}
+
+.startTime {
+    grid-area: startTime;
+}
+
+.endTime {
+    grid-area: endTime;
+}
+
+.input__contactInfo {
+    grid-area: input__contact;
+}
+
+.input__profession {
+    grid-area: input__profession;
+}
+
+.button__delete {
+    grid-area: button__delete;
+}
+
+.button__unregistered__add {
+    grid-area: button__unregistered__add;
+}
+
+.button__submit {
+    grid-area: button__submit;
+}
+
+.button__submit,
+.button__unregistered__add,
+.button__registered__add {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.4em;
+    background-color: #fdfdfd;
+    border: 1px solid lightgray;
+}
+
+.artist__wrapper > input,
+.artist__wrapper > select {
+    min-width: 0px;
+    margin: 0; 
+    font-size: 1.8em;
+    height: 50px;
+    padding: 1rem;
+}
+
+.artist__wrapper > input:focus {
+    transform: none;
+}
+
+@media only screen and (max-width: 800px) {
+    .container {
+        width: 90%;
+    }
+
+    .desc__wrapper {
+        width: 100%;
+        grid-template-columns: 4fr 2fr repeat(2, 1fr);
+    }
+
+    .rider__wrapper {
+        width: 100%;
+        grid-template-columns: 4fr 2fr repeat(2, 1fr);
+    }
+
+    .subtitle::before,
+    .subtitle::after {
+        display: none;
+    }
+}

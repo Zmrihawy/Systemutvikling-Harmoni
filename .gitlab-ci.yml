@@ -13,7 +13,8 @@ variables:
   MYSQL_HOST : mysql
 
 before_script:
-  - cd server && npm install
+  - cd client && npm install
+  - cd ../server && npm install
 
 
 # Run JEST tests
@@ -22,3 +23,5 @@ run_tests:
   script:
     - npm run flow
     - npm test
+    - cd ../client
+    - npm run flow

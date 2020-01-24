@@ -1,0 +1,61 @@
+.TimePicker {
+    transform: scale(1.25);
+
+    &:first-of-type {
+        margin-right: 4rem;
+    }
+}
+
+.DatePicker {
+    &__buttons {
+        align-self: stretch;
+        display: flex;
+        justify-content: start;
+
+        & button:first-of-type {
+            margin-right: 3rem;
+        }
+    }
+
+    &__options {
+        margin-top: 3rem;
+        display: flex;
+    }
+
+    &__times {
+        margin-left: 2rem;
+    }
+}
+
+@media (max-width: 1000px) {
+    .DatePicker {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &__buttons {
+            align-self: center;
+        }
+    }
+}
+
+@media (max-width: 700px) {
+    .DatePicker {
+        &__options {
+            margin-top: 1rem;
+            flex-direction: column;
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .DatePicker {
+        &__options {
+            margin-top: 0rem;
+        }
+
+        &__calendar {
+            width: 100%;
+        }
+    }
+}

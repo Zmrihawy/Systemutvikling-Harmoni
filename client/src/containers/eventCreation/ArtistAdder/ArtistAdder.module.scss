@@ -1,0 +1,33 @@
+.ArtistAdder {
+    &__fields {
+        direction: rtl;
+        overflow-x: hidden;
+        overflow-y: auto;
+        max-height: 35vh;
+
+        & div {
+            direction: ltr;
+
+            & select {
+                margin-top: 1rem;
+                font-size: 1.6rem;
+
+                &:hover,
+                &:focus {
+                    transform: none;
+                    outline: none;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .ArtistAdder {
+        width: 100%;
+
+        & > .MediumTitle {
+            height: 6rem !important;
+        }
+    }
+}

@@ -1,0 +1,36 @@
+.BasicForm {
+    width: 50%;
+
+    &__buttons {
+        display: flex;
+        width: max-content;
+
+        & button {
+            margin-right: 5rem;
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .BasicForm {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 80%;
+
+        &__buttons {
+            display: flex;
+            width: max-content;
+
+            & button {
+                margin-right: 2rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .BasicForm {
+        width: 100%;
+    }
+}

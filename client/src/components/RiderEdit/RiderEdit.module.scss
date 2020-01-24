@@ -1,0 +1,129 @@
+.container {
+    display: grid;
+    grid-template-areas:
+        'title '
+        'desc__wrapper'
+        'form';
+    grid-gap: 15px;
+    margin: 50px auto;
+    place-items: center center;
+    width: 60%;
+}
+
+.title {
+    grid-area: title;
+    font-size: 4em;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.desc__wrapper {
+    grid-area: desc__wrapper;
+    display: grid;
+    grid-template-areas: 'ph__desc ph__amount ph__status margin';
+    grid-template-columns: 1fr 80px repeat(2, 100px);
+    place-items: center center;
+    width: 100%;
+}
+
+.desc__wrapper > p {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.ph__desc {
+    grid-area: ph__desc;
+}
+
+.ph__amount {
+    grid-area: ph__amount;
+}
+
+.ph__status {
+    grid-area: ph__status;
+}
+
+.form {
+    grid-area: form;
+    display: grid;
+    grid-template-areas:
+        'staff__list'
+        'button__add'
+        'button__submit';
+    width: 100%;
+}
+
+.rider__list {
+    display: grid;
+    grid-area: staff__list;
+    grid-gap: 15px;
+    width: 100%;
+    place-items: center center;
+}
+
+.rider__wrapper {
+    display: grid;
+    grid-template-areas: 'input__name input__amount input__confirmed button__delete';
+    grid-template-columns: 1fr 80px repeat(2, 100px);
+    grid-gap: 5px;
+    width: 100%;
+}
+
+.input__name {
+    grid-area: input__name;
+}
+
+.input__amount {
+    grid-area: input__amount;
+    text-align: center;
+}
+
+.input__confirmed {
+    grid-area: input__confirmed;
+    place-self: center center;
+}
+
+.button__delete {
+    grid-area: button__delete;
+}
+
+.button__add {
+    grid-area: button__add;
+}
+
+.button__submit {
+    grid-area: button__submit;
+}
+
+.button__submit,
+.button__add {
+    width: 100%;
+}
+
+.rider__wrapper > input {
+    min-width: 0px;
+    margin: 0; 
+    font-size: 1.8em;
+    height: 50px;
+    padding: 1rem;
+}
+
+.rider__wrapper > input:focus {
+    transform: none;
+}
+
+@media only screen and (max-width: 800px) {
+    .container {
+        width: 90%;
+    }
+
+    .desc__wrapper {
+        width: 100%; 
+        grid-template-columns: 4fr 2fr repeat(2, 1fr);
+    }
+
+    .rider__wrapper {
+        width: 100%; 
+        grid-template-columns: 4fr 2fr repeat(2, 1fr);
+    }
+}

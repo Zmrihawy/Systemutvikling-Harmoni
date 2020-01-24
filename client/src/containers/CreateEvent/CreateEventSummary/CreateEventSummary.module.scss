@@ -1,0 +1,9 @@
+.CreateEventSummary {
+    & p {
+        color: #ff9f43;
+    }
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 0 6rem;
+}

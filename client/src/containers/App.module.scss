@@ -1,0 +1,213 @@
+.App {
+    text-align: center;
+    display: grid;
+    grid-template-rows: 7rem 100vh;
+}
+
+:global {
+    .Button {
+        box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.4);
+        border-radius: 0.6rem;
+        background: linear-gradient(to left, #ff9f43 50%, #2f2e41 50%);
+        border: none;
+        background-position: right bottom;
+        background-size: 200% 100%;
+        margin-top: 2.6rem;
+        font-family: 'Lato', sans-serif;
+        font-size: 2rem;
+        padding: 1rem 4.5rem;
+        transition: background-position 0.5s ease-in-out, transform 0.4s,
+            box-shadow 0.4s, color 0.4s;
+        cursor: pointer;
+
+        &:hover,
+        &:active {
+            color: #ff9f43;
+            background-position: left bottom;
+            transform: translateY(-0.6rem) scale(1.03);
+            box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.45);
+        }
+
+        &--inverse {
+            margin-right: 2rem;
+            background: linear-gradient(to left, #2f2e41 50%, #ff9f43 50%);
+            background-position: left bottom;
+            background-size: 200% 100%;
+
+            &:hover,
+            &:active {
+                background-position: right bottom;
+                transform: translateY(-0.8rem) scale(1.03);
+                box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.45);
+            }
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &--add {
+            border-radius: 0;
+            margin-top: 1rem;
+            padding: 0.8rem 2.5rem;
+            font-size: 1.6rem;
+            background: linear-gradient(
+                to right bottom,
+                #2ecc71 30%,
+                #27ae60 70%
+            );
+            transition: all 0.2s;
+
+            &:hover,
+            &:active {
+                transform: scale(1.02);
+                color: #fff;
+            }
+        }
+    }
+
+    .Input {
+        position: relative;
+        border-radius: 1rem;
+        font-family: 'Lato', sans-serif;
+        font-size: 2.5rem;
+        margin-top: 1rem;
+        border: none;
+        border-bottom: 1px solid #333;
+        background-color: rgb(245, 245, 245);
+        transition: all 0.4s;
+        padding: 1rem 5rem;
+
+        &--small {
+            font-size: 1.8rem;
+            border: none;
+        }
+
+        &:focus {
+            transform: scale(1.1);
+        }
+    }
+
+    .MediumTitle {
+        line-height: 1.2;
+        font-weight: 400;
+        font-size: 4rem;
+    }
+
+    .Deleter {
+        vertical-align: middle;
+        margin-left: 1rem;
+        display: inline-block;
+        color: rgb(219, 7, 7);
+        font-size: 2.8rem;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover {
+            transform: translateX(-0.4rem);
+        }
+    }
+
+    .Adder {
+        direction: rtl;
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 35vh;
+
+        & input,
+        & select {
+            box-sizing: border-box;
+            font-size: 1.4rem;
+            padding: 0.6rem 1.5rem;
+            margin-top: 1rem;
+            border-radius: 0;
+
+            &:not(:last-of-type) {
+                border-right: 1px solid #000;
+            }
+        }
+
+        & select {
+            outline: none;
+            transform: scale(0.949045);
+
+            &:hover,
+            &:focus {
+                transform: scale(0.949045);
+            }
+        }
+
+        & input {
+            width: 28%;
+
+            &:hover,
+            &:focus {
+                transform: none;
+            }
+        }
+    }
+
+    .Spinner {
+        position: absolute;
+        margin-top: 1400px;
+    }
+
+    .Scroll {
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 45vh;
+
+        & input {
+            font-size: 1.4rem;
+            padding: 0.6rem 1.5rem;
+            margin-top: 1rem;
+        }
+    }
+
+    @media (max-width: 1000px) {
+        .MediumTitle {
+            font-weight: 400;
+            font-size: 3rem;
+        }
+
+        .Button {
+            margin-bottom: 1rem;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .MediumTitle {
+            font-weight: 400;
+            font-size: 2.6rem;
+            height: 7rem;
+        }
+
+        .Input {
+            font-size: 2.2rem;
+            margin-top: 1rem;
+            padding: 1rem 1.2rem;
+        }
+
+        .Button {
+            margin-top: 2rem;
+            font-size: 1.8rem;
+            padding: 0.8rem 2.2rem;
+
+            &--inverse {
+                margin-right: 2rem;
+            }
+
+            &--add {
+                margin-top: 1rem;
+                padding: 0.8rem 2.5rem;
+                font-size: 1.6rem;
+            }
+        }
+    }
+
+    @media (max-width: 400px) {
+        .MediumTitle {
+            height: 9rem;
+        }
+    }
+}
