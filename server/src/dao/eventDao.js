@@ -47,7 +47,7 @@ module.exports = class ServerDao extends Dao {
      */
     getUserEvents(sql: { userId: string | number, active: string | number }, callback: (status: number, data: *) => void): void {
         super.query(`SELECT DISTINCT e.${CONSTANTS.EVENT_NAME}, e.${CONSTANTS.EVENT_ID}, e.${CONSTANTS.EVENT_START_TIME}, e.${CONSTANTS.EVENT_END_TIME}, ${CONSTANTS.EVENT_LOCATION}, ${CONSTANTS.EVENT_PICTURE} FROM
-         ${CONSTANTS.EVENT_TABLE} e JOIN ${CONSTANTS.PERFORMANCE_TABLE} p ON e.${CONSTANTS.EVENT_ID} = p.${CONSTANTS.PERFORMANCE_EVENT_ID} WHERE ((p.${CONSTANTS.PERFORMANCE_ARTIST_ID} = ? OR e.${CONSTANTS.EVENT_HOST_ID} = ?) AND ${CONSTANTS.EVENT_ACTIVE} = ?)`, [sql.userId, sql.userId, sql.active], callback);
+         ${CONSTANTS.EVENT_TABLE} e LEFT JOIN ${CONSTANTS.PERFORMANCE_TABLE} p ON e.${CONSTANTS.EVENT_ID} = p.${CONSTANTS.PERFORMANCE_EVENT_ID} WHERE ((p.${CONSTANTS.PERFORMANCE_ARTIST_ID} = ? OR e.${CONSTANTS.EVENT_HOST_ID} = ?) AND ${CONSTANTS.EVENT_ACTIVE} = ?)`, [sql.userId, sql.userId, sql.active], callback);
     }
 
     /**
@@ -81,7 +81,7 @@ module.exports = class ServerDao extends Dao {
     createEvent(sql: { eventName: string, userId: string | number, location: string, latitude: number, longitude: number, description: string, startTime: string, endTime: string, picture: string }, callback: (status: number, data: *) => void): void {
         super.query(`INSERT INTO ${CONSTANTS.EVENT_TABLE} (${CONSTANTS.EVENT_NAME},${CONSTANTS.EVENT_HOST_ID},${CONSTANTS.EVENT_LOCATION},${CONSTANTS.EVENT_LONGITUDE},${CONSTANTS.EVENT_LATITUDE}, ${CONSTANTS.EVENT_PICTURE},
                     ${CONSTANTS.EVENT_DESCRIPTION},${CONSTANTS.EVENT_START_TIME},${CONSTANTS.EVENT_END_TIME},${CONSTANTS.EVENT_ACTIVE}) 
-                    VALUES (?,?,?,?,?,?,?,?,?,1) `, [sql.eventName, sql.userId, sql.location, Number(sql.longitude), Number(sql.latitude), sql.picture, sql.description, sql.startTime, sql.endTime], callback);
+                    VALUES (?,?,?,?,?,?,?,CONVERT_TZ(CAST(? AS DATETIME), @@session.time_zone, '+02:00' ),CONVERT_TZ(CAST(? AS DATETIME), @@session.time_zone, '+02:00' ),1)` , [sql.eventName, sql.userId, sql.location, Number(sql.longitude), Number(sql.latitude), sql.picture, sql.description, sql.startTime, sql.endTime], callback);
     }
 
     /**
