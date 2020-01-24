@@ -24,8 +24,8 @@ export default class Registration extends Component {
                         <p id="error"></p>
                         <br />
                         <input type="text" required name="username" placeholder="Brukernavn" value={this.state.username} onChange={this.onChange} />
-                        <ShowPassword id = {"pw1"}/>
-                        <ShowPassword id = {"pw2"}/>
+                        <ShowPassword id = {"pw1"} strength={true}/>
+                        <ShowPassword id = {"pw2"} strength={true}/>
                         <input type="text" required name="firstName" placeholder="Fornavn" value={this.state.firstname} onChange={this.onChange}/>
                         <input type="text" required name="lastName" placeholder="Etternavn" value={this.state.surname} onChange={this.onChange}/>
                         <input

@@ -27,7 +27,7 @@ export default class Login extends Component {
                             placeholder="E-post"
                             onChange={this.onChange}
                         />
-                        <ShowPassword id={"pw"} />
+                        <ShowPassword id={"pw"} strength={false} />
                         <button  className="Button" type="submit" value="Logg inn">
                         Logg Inn </button>
                         <p className="message">
