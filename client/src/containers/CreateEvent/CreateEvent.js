@@ -25,7 +25,7 @@ import classes from './CreateEvent.module.scss';
 export default class CreateEvent extends Component {
     state = {
         showBackdrop: false,
-        currentPage: 3,
+        currentPage: 0,
         newEvent: {
             title: '',
             description: '',
