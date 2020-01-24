@@ -126,6 +126,14 @@ module.exports = class ServerDao extends Dao {
     }
 
     /**
+     * This function deletes a rider from the database
+     */
+    deleteRiderArtist(sql: { performanceId: string | number, name: string, userId: string | number }, callback: (status: number, data: *) => void): void {
+        super.query(`DELETE FROM ${CONSTANTS.RIDER_TABLE} WHERE ${CONSTANTS.RIDER_NAME} IN (SELECT r.${CONSTANTS.RIDER_NAME} FROM ${CONSTANTS.RIDER} r 
+            JOIN ${CONSTANTS.PERFORMANCE_TABLE} p ON p.${CONSTANTS.PERFORMANCE_ID} = r.${CONSTANTS.RIDER_PERFORMANCE_ID} WHERE r.${CONSTANTS.RIDER_NAME} = ? AND p.${CONSTANTS.PERFORMANCE_ARTIST_ID} = ?)`, [sql.performanceId, sql.name, sql.userId], callback);
+    }
+
+    /**
      * This function deletes an event from the database
      */
     deleteEvent(sql: string, callback: (status: number, data: *) => void): void {
@@ -169,6 +177,14 @@ module.exports = class ServerDao extends Dao {
     updateRider(sql: { name: string, amount: string | number, performanceId: string | number, confirmed: string | number, oldName: string }, callback: (status: number, data: *) => void): void {
         super.query(`UPDATE ${CONSTANTS.RIDER_TABLE} SET ${CONSTANTS.RIDER_NAME} = ?, ${CONSTANTS.RIDER_AMOUNT} = ? , ${CONSTANTS.RIDER_CONFIRMED} = ? WHERE ${CONSTANTS.RIDER_PERFORMANCE_ID} = ? and ${CONSTANTS.RIDER_NAME} = ?`,
             [sql.name, sql.amount, sql.confirmed, sql.performanceId, sql.oldName], callback);
+    }
+
+       /**
+     * This function updates a rider in the database
+     */
+    updateRiderArtist(sql: { name: string, amount: string | number, performanceId: string | number, confirmed: string | number, oldName: string, userId: string | number }, callback: (status: number, data: *) => void): void {
+        super.query(`UPDATE ${CONSTANTS.RIDER_TABLE} r JOIN ${CONSTANTS.PERFORMANCE_TABLE} p ON r.${CONSTANTS.RIDER_PERFORMANCE_ID} = p.${CONSTANTS.PERFORMANCE_ID} SET r.${CONSTANTS.RIDER_NAME} = ?, r.${CONSTANTS.RIDER_AMOUNT} = ? , r.${CONSTANTS.RIDER_CONFIRMED} = ? 
+        WHERE r.${CONSTANTS.RIDER_PERFORMANCE_ID} = ? AND r.${CONSTANTS.RIDER_NAME} = ? AND p.${CONSTANTS.PERFORMANCE_ARTIST_ID} = ?`, [sql.name, sql.amount, sql.confirmed, sql.performanceId, sql.oldName, sql.userId], callback);
     }
 
     /**

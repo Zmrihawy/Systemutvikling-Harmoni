@@ -370,7 +370,13 @@ app.delete('/api/event/:event_id/performance/:performance_id/rider', (req, res) 
             eventDao.deleteRider({performanceId: req.params.performance_id, name: req.body.name}, (status, data) => {
                 res.status(status).json({data, jwt: token});
             });
-        } else {
+        } 
+        else if (checkEventAccess(data, req.userId)){
+            eventDao.deleteRiderArtist({performanceId: req.params.performance_id, name: req.body.name, userId: req.body.userId}, (status, data) => {
+                res.status(status).json({data, jwt: token});
+            });        
+        }
+        else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -755,7 +761,20 @@ app.put("/api/event/:event_id/performance/:performance_id/rider", (req, res) => 
                 (status, data) => {
                     res.status(status).json({data, jwt: token});
                 });
-        } else {
+        }
+        else if (checkEventAccess(data, req.userId)){
+            eventDao.updateRiderArtist({
+                name: req.body.name,
+                amount: req.body.amount,
+                performanceId: req.params.performance_id,
+                confirmed: req.body.confirmed,
+                oldName: req.body.oldName,
+                userId: req.userId
+                }, (status, data) => {
+                    res.status(status).json({data, jwt: token});
+                });
+        } 
+        else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
