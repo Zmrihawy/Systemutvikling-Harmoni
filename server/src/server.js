@@ -65,9 +65,19 @@ export let eventDao: EventDao = new EventDao(pool);
 export let userDao: UserDao = new UserDao(pool);
 let uploader: Uploader = new Uploader();
 
-let publicKey: string;
 
-let privateKey = (publicKey = "arbeiderklassenrusteropptilvepnetrevolusjon");
+// let publicKey: string;
+// let privateKey: string = (publicKey = "arbeiderklassenrusteropptilvepnetrevolusjon");
+
+
+let publicKey: string = fs.readFileSync('./src/keys/public.key', 'utf8');
+let privateKey: string = fs.readFileSync('./src/keys/private.key', 'utf8');
+
+let tokenOptions: Object = {
+    expiresIn: 5000,
+    algorithm: "RS256"
+};
+
 
 app.use("/api", (req, res, next) => {
 
@@ -140,9 +150,7 @@ app.post("/login", (req, res) => {
  */
 export function thisFunctionCreatesNewToken(passedMail: string, userId: number): string {
 
-    let newToken: string = jwt.sign({email: passedMail, userId: userId}, privateKey, {
-        expiresIn: 5000
-    });
+    let newToken: string = jwt.sign({email: passedMail, userId: userId}, privateKey, tokenOptions);
     return newToken;
 }
 
@@ -332,6 +340,10 @@ app.get('/api/event/:event_id/crew', (req, res) => {
  * This function checks if a specific user has access to a specitic event
  */
 function checkEventAccess(data, userId: number) {
+    if (data[0] == undefined) {
+        console.log('checkEventAccess: data[0] is undefined');
+        return false;
+    }
     if (data[0].host_id == userId) return true;
     else {
         for (var i = 0; i < data.length; i++) {
@@ -1254,7 +1266,7 @@ app.put('/api/event/:event_id/performance/:performance_id/contract', (req, res) 
 
         if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
 
-        if(data[0].host_id == req.userId) uploader.uploadContract(req, res);
+        if (data[0].host_id == req.userId) uploader.uploadContract(req, res);
         else res.status(403).json({jwt: token, error: "Not authorized to access this information"});
     });
 });
@@ -1269,16 +1281,20 @@ app.get('/api/event/:event_id/performance/:performance_id/contract', (req, res) 
         if (data.length == 0) return res.status(400).json({jwt: token, error: 'no event participants data received'});
 
         if (checkEventAccess(data, req.userId)) {
-            eventDao.downloadContract({
-                performanceId: req.params.performance_id,
-                userId: req.userId
-            }, (status, data) => {
-                res.status(status);
-
-                if (data[0] == undefined) return res.status(400).json({data: "No contract exists", jwt: token});
-
-                res.json({data: data[0].contract, jwt: token});
-            });
+            if (data[0].host_id == req.userId) {
+                eventDao.downloadContractHost(req.params.performance_id, (status, data) => {
+                    if (data[0] == undefined) return res.status(400).json({data: "No contract exists", jwt: token});
+                    res.status(status).json({data: data[0].contract, jwt: token});
+                });
+            } else {
+                eventDao.downloadContractArtist({
+                    performanceId: req.params.performance_id,
+                    userId: req.userId
+                }, (status, data) => {
+                    if (data[0] == undefined) return res.status(400).json({data: "No contract exists", jwt: token});
+                    res.status(status).res.json({data: data[0].contract, jwt: token});
+                });
+            }
         } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
@@ -1294,7 +1310,7 @@ app.put('/api/event/:event_id/picture', (req, res) => {
 
         if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
 
-        if(data[0].host_id == req.userId) uploader.uploadEventPicture(req, res);
+        if (data[0].host_id == req.userId) uploader.uploadEventPicture(req, res);
         else res.status(403).json({jwt: token, error: "Not authorized to access this information"});
     });
 });

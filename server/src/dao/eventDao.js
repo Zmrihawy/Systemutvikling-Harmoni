@@ -225,8 +225,12 @@ module.exports = class ServerDao extends Dao {
     /**
      * This function gets a contract from the database
      */
-    downloadContract(sql: { performanceId: string | number, userId: string | number }, callback: (status: number, data: *) => void): void {
+    downloadContractArtist(sql: { performanceId: string | number, userId: string | number }, callback: (status: number, data: *) => void): void {
         super.query(`SELECT ${CONSTANTS.PERFORMANCE_CONTRACT} FROM ${CONSTANTS.PERFORMANCE_TABLE} WHERE ${CONSTANTS.PERFORMANCE_ID} = ? AND ${CONSTANTS.PERFORMANCE_ARTIST_ID} = ?`, [sql.performanceId, sql.userId], callback);
+    }
+
+    downloadContractHost(sql: string | number, callback: (status: number, data: *) => void): void {
+        super.query(`SELECT ${CONSTANTS.PERFORMANCE_CONTRACT} FROM ${CONSTANTS.PERFORMANCE_TABLE} WHERE ${CONSTANTS.PERFORMANCE_ID} = ?`, [sql], callback);
     }
 
     /**
