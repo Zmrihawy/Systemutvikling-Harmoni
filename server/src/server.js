@@ -1227,7 +1227,18 @@ app.post('/api/event/:event_id/crew', (req, res) => {
 
 
 // put contract
-app.put('/api/event/:event_id/performance/:performance_id/contract', uploader.uploadContract);
+app.put('/api/event/:event_id/performance/:performance_id/contract', (req, res) => {
+    console.log('Fikk PUT-request fra klient');
+    let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
+
+    eventDao.getEventParticipants(req.params.event_id, (status, data) => {
+
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
+
+        if(data[0].host_id == req.userId) uploader.uploadContract(req, res);
+        else res.status(403).json({jwt: token, error: "Not authorized to access this information"});
+    });
+});
 
 // get contract
 app.get('/api/event/:event_id/performance/:performance_id/contract', (req, res) => {
@@ -1256,7 +1267,18 @@ app.get('/api/event/:event_id/performance/:performance_id/contract', (req, res) 
 });
 
 // put event picture
-app.put('/api/event/:event_id/picture', uploader.uploadEventPicture);
+app.put('/api/event/:event_id/picture', (req, res) => {
+    console.log('Fikk PUT-request fra klient');
+    let token: string = thisFunctionCreatesNewToken(req.email, req.userId);
+
+    eventDao.getEventParticipants(req.params.event_id, (status, data) => {
+
+        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
+
+        if(data[0].host_id == req.userId) uploader.uploadEventPicture(req, res);
+        else res.status(403).json({jwt: token, error: "Not authorized to access this information"});
+    });
+});
 
 // put user picture
 app.put('/api/user/:user_id/picture', uploader.uploadUserPicture);
