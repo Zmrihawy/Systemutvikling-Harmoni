@@ -41,12 +41,12 @@
 
 .timepicker__start {
     grid-area: timepicker__start; 
-    transform: scale(1.5);
+    width: 100%;
 }
 
 .timepicker__end {
     grid-area: timepicker__end; 
-    transform: scale(1.5);
+    width: 100%;
 }
 
 .map {
@@ -87,7 +87,8 @@
     width: 100%;
 }
 
-.container > input:focus {
+.container > input:focus,
+.container > textArea:focus {
     transform: none;
 }
 
