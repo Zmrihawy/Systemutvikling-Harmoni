@@ -188,8 +188,6 @@
     display: grid;
     place-content: center center;
     border-radius: 50%;
-    width: 150px;
-    height: 150px;
 }
 
 .artist__image > img {
@@ -266,7 +264,7 @@
 
 .ticket__list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 10px;
 }
 
@@ -453,6 +451,7 @@
         grid-template-columns: repeat(1, 1fr);
         font-size: 1.5em;
         height: fit-content;
+        margin: 20px 20px 100px 20px;
     }
 
     .info {
@@ -461,5 +460,10 @@
             'host ticketAmount';
         grid-row-gap: 20px;
         font-size: 0.8em;
+    }
+
+    .subtitle::before,
+    .subtitle::after {
+        display: none; 
     }
 }
