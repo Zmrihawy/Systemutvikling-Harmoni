@@ -50,8 +50,7 @@ class UploadPic extends Component {
             promises.push(this.sendRequest(file, userId));
         });
         try {
-            Promise.all(promises);
-            window.location.reload();
+            await Promise.all(promises).then(setTimeout(()=>window.location.reload(),1000));
         } catch (e) {
             console.log(e.error);
         }
