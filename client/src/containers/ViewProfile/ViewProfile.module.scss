@@ -8,22 +8,47 @@
     border-radius: 30px;
     pointer-events: none;
     visibility: hidden;
-    color: #333333;
+    color: #2f2e41;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
     transition: 0.5s;
-    font-size: 20px;
+    font-size: 10px;
     width: 50%;
     text-align: center;
     padding: 5px 30px;
 }
+.deleteButton{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: whitesmoke;
+    border-radius: 5px;
+    border: solid 2px #2f2e41;
+    background-color: #2f2e41;
+}
+.deleteButton:hover{
+    color: #ff9f43;
+}
+
+.passwordDeleteInp{
+    position: absolute;
+    top: 10px;
+    right: 90px;
+    visibility: hidden;
+    pointer-events: none;
+    background-color:  rgb(245, 245, 245);
+    border-radius: 3px;
+    border: 3px solid  rgb(245, 245, 245);
+}
 .bioLayer{
-    top: 50vh;
-    left: 37.5%;
+    visibility: visible;
+    pointer-events: all;
+    top: 22vw + 10vw;
+    left: 36.5%;
     position: absolute;
     background-color: white;
     border: 3px solid #ff9f43;
     border-radius: 30px;
-    color: #333333;
+    color: #2f2e41;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
     transition: 0.5s;
     font-size: 20px;
@@ -35,7 +60,7 @@
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
 }
 .redigerBrukerBtn{
-    background-color: #333333;
+    background-color: #2f2e41;
     border: none;
     border-radius: 20px;
     color: whitesmoke;
@@ -68,6 +93,12 @@
 .imgContainer:hover .overlay {
     opacity: 1;
 }
+.errorMessage {
+    position: absolute;
+    color: darkred;
+    top: 80%;
+    left: 15%;
+}
 .editLayer:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
 }
@@ -78,15 +109,20 @@
 .editTitle {
     font-family: 'Agency FB';
     font-size: x-large;
-    color: #333333;
+    color: #2f2e41;
 }
-.input:focus,
-input:focus {
+.input{
+  background-color:  rgb(245, 245, 245);
+  border-radius: 3px;
+  border: 3px solid  rgb(245, 245, 245);
+}
+
+.input:focus {
     outline: none;
 }
 .profile {
-    width: 100%;
-    max-height: 100%;
+    width: 22vw;
+    height: 22vw;
     object-fit: cover;
     border-radius: 50%;
     border: 3px solid #ff9f43;
@@ -98,14 +134,14 @@ input:focus {
 }
 .h1 {
     font-family: 'Agency FB';
-    color: #333333;
+    color: #2f2e41;
     font-size: 40px;
 }
 .p {
     font-size: 25px;
 }
 .button {
-    background-color: #333333;
+    background-color: #2f2e41;
     border: none;
     border-radius: 20px;
     color: whitesmoke;
@@ -120,7 +156,7 @@ input:focus {
     transition-duration: 0.3s;
 }
 .button:hover {
-    background-color: #333333;
+    background-color: #2f2e41;
     color: #ff9f43;
 }
 .column {
@@ -139,13 +175,14 @@ input:focus {
 .redigerBtn {
     position: absolute;
     bottom: 55vh;
-    left: calc(50% - 10vw);
+    left: 37vw;
+    top: 24vw;
     width: 65px;
     height: 65px;
     background-color: whitesmoke;
     border: 3px solid #ff9f43;
     border-radius: 50%;
-    color: #333333;
+    color: #2f2e41;
     padding: 7.5px 16px;
     text-align: center;
     text-decoration: none;
@@ -156,13 +193,13 @@ input:focus {
     transition-duration: 0.5s;
 }
 .redigerBtn:hover {
-    background-color: #333333;
+    background-color: #2f2e41;
     color: #ff9f43;
 }
 .imgBtn {
     width: 90px;
     position: absolute;
-    background-color: #333333;
+    background-color: #2f2e41;
     border: none;
     border-radius: 20px;
     color: white;
@@ -177,43 +214,40 @@ input:focus {
     transition-duration: 0.3s;
 }
 .imgBtn:hover {
-    background-color: #333333;
+    background-color: #2f2e41;
     color: #ff9f43;
 }
-@media only screen and (max-width: 600px){
+@media only screen and (max-width: 1000px){
+    .imgContainer{
+        left: 0;
+    }
     .bioLayer{
-        left: 15px;
-        top: 500px;
+        left: 0;
+        top: 22vw + 15vw;
+        overflow: scroll;
     }
     .editLayer{
-        left: 15px;
-        top: 500px;
+        top: 80vw;
+        left: 0;
+    }
+    .errorMessage{
+      top: 90%;
     }
 }
-@media only screen and (max-width: 1000px) {
-    .bioLayer {
-        left: 0;
-        top: 350px;
-        width: 100%;
-    }
-    .editLayer {
-        left: 0;
-        top: 600px;
-        width: 100%;
-    }
+@media only screen and (max-width: 890px){
     .imgContainer{
-        width: 50%;
-        
+        height: 100vw;
+        width: 100vw;
+        left: 50%
     }
-    .redigerBtn {
-        top: 250px;
+    .bioLayer{
+        pointer-events: none;
+        visibility: hidden;
     }
-}
-@media only screen and (max-width: 1600px){
-    .bioLayer {
-        top: 65vh;
-    }
-    .redigerBtn {
-        top: 52.5vh;
+    .editLayer{
+        visibility: visible;
+        pointer-events: all;
+        top: 60vw;
+        width: 100vw;
     }
 }

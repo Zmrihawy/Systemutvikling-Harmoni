@@ -39,7 +39,8 @@ export default class ShowPassword extends Component {
     }
 
     render() {
-        if (document.URL.indexOf('registrer') >= 0)
+
+        if(this.props.strength === true){
             return (
                 <label className="password">
                     <input
@@ -57,9 +58,8 @@ export default class ShowPassword extends Component {
                         data-score={this.state.score}
                     />
                 </label>
-            );
-        else
-            return (
+            )
+        }else return (
                 <label className="password">
                     <input
                         type={this.state.type}

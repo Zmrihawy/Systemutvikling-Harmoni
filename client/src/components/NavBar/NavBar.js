@@ -154,9 +154,6 @@ export default class NavBar extends Component {
     changePage(id) {
         if (document.getElementsByClassName('' + classes.activeLink + '') !== null) {
             if (document.getElementById(id) !== null) {
-                //document.getElementsByClassName(classes.activeLink)[0].className = '' + classes.navLink + '';
-                //document.getElementById(id).className ='' + classes.activeLink + '';
-
                 switch (id) {
                     case 'profileLink':
                         history.push('/user/' + window.sessionStorage.getItem('user'));

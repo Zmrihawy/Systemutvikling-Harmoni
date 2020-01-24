@@ -26,7 +26,12 @@ class Dropzone extends Component {
         console.log(files);
 
         if (files === null || files.length === 0) return;
+<<<<<<< HEAD
         else if (this.props.picture) {
+=======
+        else if(this.props.picture) {
+
+>>>>>>> 7f074423bae432e1ee505abc850574b1657025c4
         } else {
             let filename = files[0].name;
             let char =

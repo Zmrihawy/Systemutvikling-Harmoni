@@ -237,7 +237,7 @@ class EventService {
         }
     }
 
-    //har
+    
     /**
      * This function gets all performances for a specific event from the database via server
      */
@@ -283,38 +283,6 @@ class EventService {
     }
 
     /**
-     * This function gets an eventpicture from the database via server
-     */
-    getPicture(eventId: number): Promise<any> {
-        let isError: boolean = false;
-        return new Promise((resolve, reject) => {
-            fetch('/api/event/' + eventId + '/picture', {
-                method: 'GET',
-                headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    isError = isErrorRequest(response);
-                    return response.json();
-                })
-                .then(json => {
-                    if (json.jwt != undefined) refreshToken(json.jwt);
-                    if (isError) return reject(json);
-                    resolve(handleGetPictureResponse(json.data));
-                })
-                .catch(error => console.error('Error: ', error));
-        });
-
-        function handleGetPictureResponse(json) {
-            let pictureUrl: string = bufferToPicture(json.picture);
-            return pictureUrl;
-        }
-    }
-
-    /**
      * This function gets a contract from the database via server
      */
     getContract(eventId: number, performanceId: number): Promise<any> {
@@ -350,71 +318,6 @@ class EventService {
         }
     }
 
-    /**
-     * This function gets all riders in an event from the database via server
-     */
-    getAllRiders(eventId: number): Promise<any> {
-        let isError: boolean = false;
-        return new Promise((resolve, reject) => {
-            fetch('/api/event/' + eventId + '/rider', {
-                method: 'GET',
-                headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    isError = isErrorRequest(response);
-                    return response.json();
-                })
-                .then(json => {
-                    if (json.jwt != undefined) refreshToken(json.jwt);
-                    if (isError) return reject(json);
-                    resolve(handleGetAllRidersResponse(json));
-                })
-                .catch(error => console.error('Error: ', error));
-        });
-
-        function handleGetAllRidersResponse(json) {
-            return json.map(
-                data => new Rider(data.rider_id, data.name, data.amount, 0)
-            );
-        }
-    }
-
-    /**
-     * This function gets all contracts in an event from the database via server
-     */
-    getEventContracts(eventId: number): Promise<any> {
-        let isError: boolean = false;
-        return new Promise((resolve, reject) => {
-            fetch('/api/event/' + eventId + '/contracts', {
-                method: 'GET',
-                headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    isError = isErrorRequest(response);
-                    return response.json();
-                })
-                .then(json => {
-                    if (json.jwt != undefined) refreshToken(json.jwt);
-                    if (isError) return reject(json);
-                    resolve(handleGetEventContractsResponse(json));
-                })
-                .catch(error => console.error('Error: ', error));
-        });
-
-        function handleGetEventContractsResponse(json) {
-            return json.map(data => String(JSON.stringify(data)));
-        }
-    }
-
-    //har
     /**
      * This function gets all tickets in an event from the database via server
      */
@@ -454,7 +357,7 @@ class EventService {
         }
     }
 
-    //har
+    
     /**
      * This function gets all riders in a performance from the database via server
      */
@@ -495,7 +398,7 @@ class EventService {
         }
     }
 
-    //har
+    
     /**
      * This function gets all events linked to a specific user from the databse via server
      */
@@ -543,7 +446,7 @@ class EventService {
         }
     }
 
-    //har
+    
     /**
      * This function gets all crews in an event from the database via server
      */
@@ -585,7 +488,7 @@ class EventService {
     }
 
     //POST
-    //HAR
+    
     /**
      * This function sends a new event to the database via server
      */
@@ -634,7 +537,7 @@ class EventService {
         });
     }
 
-    //HAR
+    
     /**
      * This function sends a new ticket to the database via server
      */
@@ -674,7 +577,7 @@ class EventService {
         });
     }
 
-    //HAR
+    
     /**
      * This function sends a performance to the database via server
      */
@@ -716,7 +619,7 @@ class EventService {
         });
     }
 
-    //HAR
+    
     /**
      * This function sends a new rider to the database via server
      */
@@ -752,7 +655,7 @@ class EventService {
         });
     }
 
-    //HAR
+    
     /**
      * This function sends a new crew to the datbase via server
      */
@@ -793,7 +696,7 @@ class EventService {
     }
 
     //DELETE
-    //HAR
+    
     /**
      * This function deletes a crew from the database via the server
      */
@@ -824,7 +727,7 @@ class EventService {
         });
     }
 
-    //HAR
+    
     /**
      * This function deletes a rider from the database via the server
      */
@@ -888,7 +791,7 @@ class EventService {
     }
 
     //PUT
-    //har
+    
     /**
      * This function updates a ticket in the database via the server
      */
@@ -930,7 +833,7 @@ class EventService {
         });
     }
 
-    //HAR
+    
     /**
      * This function updates a rider in the database via the server
      */
@@ -999,7 +902,7 @@ class EventService {
         });
     }
 
-    //HAR
+    
     /**
      * This function updates an event in the database via the server
      */
@@ -1078,7 +981,7 @@ class EventService {
         });
     }
 
-    //HAR
+    
     /**
      * This function updates a performance in the database via the server
      */
@@ -1119,7 +1022,7 @@ class EventService {
         });
     }
 
-    //har
+    
     /**
      * This function updates a crew in the database via the server
      */
@@ -1163,7 +1066,7 @@ class EventService {
         });
     }
 
-    //har
+    
     /**
      * This function delets a ticket from the database via the server
      */
@@ -1231,7 +1134,7 @@ class EventService {
  */
 class UserService {
     //GET
-    //har
+    
     /**
      * This function gets a user from the database via server
      */
@@ -1271,38 +1174,6 @@ class UserService {
                 json.artist,
                 pictureUrl
             );
-        }
-    }
-
-    /**
-     * This function gets a profilepicture from the database via server
-     */
-    getPicture(userId: number): Promise<any> {
-        let isError: boolean = false;
-        return new Promise((resolve, reject) => {
-            fetch('/api/user/' + userId + '/picture', {
-                method: 'GET',
-                headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    isError = isErrorRequest(response);
-                    return response.json();
-                })
-                .then(json => {
-                    if (json.jwt != undefined) refreshToken(json.jwt);
-                    if (isError) return reject(json);
-                    resolve(handleGetPictureResponse(json.data));
-                })
-                .catch(error => console.error('Error: ', error));
-        });
-
-        function handleGetPictureResponse(json: *) {
-            let pictureUrl: string = bufferToPicture(json.picture);
-            return pictureUrl;
         }
     }
 
@@ -1350,7 +1221,7 @@ class UserService {
     }
 
     //DELETE
-    //har
+    
     /**
      * This function deletes a user from the database via server
      */
@@ -1381,7 +1252,7 @@ class UserService {
     }
 
     //PUT
-    //har
+    
     /**
      * This function updates a user in the database via the server
      */
@@ -1511,7 +1382,7 @@ class UserService {
 
 
     //POST
-    //HAR
+    
     /**
      * This function posts a new user to the database via the server
      */
@@ -1557,7 +1428,7 @@ class UserService {
         });
     }
 
-    //har
+    
     /**
      * This function logs in a user via server
      */
