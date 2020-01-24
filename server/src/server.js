@@ -24,8 +24,6 @@ import EventDao from './dao/eventDao.js';
 
 import Uploader from './upload';
 
-import discord from './discord-bot'
-
 const apiRoutes = express.Router();
 
 const app = express();
