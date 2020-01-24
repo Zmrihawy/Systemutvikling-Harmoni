@@ -30,7 +30,10 @@ export default class DisplayStaffEdit extends Component {
                 this.initialStaff = JSON.parse(JSON.stringify(serverStaff));
                 this.setState({ staff: serverStaff, loading: false });
             })
-            .catch(error => console.error(error));
+            .catch(error => {
+                console.error(error);
+                window.alert('Kunne ikke hente data!');
+            });
     }
 
     //Triggered when an input field is changed
@@ -98,7 +101,7 @@ export default class DisplayStaffEdit extends Component {
                         oldPerson.profession !== newPerson.profession ||
                         oldPerson.contactInfo !== newPerson.contactInfo
                     ) {
-                        newPerson.oldName = oldPerson.name; 
+                        newPerson.oldName = oldPerson.name;
                         updateList.push(newPerson);
                     }
                 }

@@ -104,6 +104,12 @@ export default class EventInfo extends Component {
                     </div>
                 </Modal>
                 <div className={classes.top__section}>
+                    <input
+                        className={`${classes.button__back} ${'Button'}`}
+                        type="button"
+                        value="&larr; Tilbake"
+                        onClick={this.props.handleButtonBackClick}
+                    />
                     <h1 className={classes.title}>{this.props.title}</h1>
                     <button
                         className={[classes.button__edit, 'Button'].join(' ')}

@@ -37,7 +37,10 @@ export default class DisplayEventEdit extends Component {
 
                 this.setState({ event: event, loading: false });
             })
-            .catch(error => console.error(error));
+            .catch(error => {
+                console.error(error);
+                window.alert('Kunne ikke hente data!');
+            });
     }
 
     //Handles input change

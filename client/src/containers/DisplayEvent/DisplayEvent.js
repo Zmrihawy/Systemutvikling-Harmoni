@@ -52,9 +52,10 @@ export default class DisplayEvent extends Component {
     //Fetches event, artists, staff and tickets from the database
     async componentDidMount() {
         let eventId = this.props.match.params.id;
+        let promises = []; 
 
         //Fetches event from database
-        eventService
+        promises.push(eventService
             .getEvent(eventId)
             .then(serverEvent => {
                 this.setState({
@@ -75,10 +76,10 @@ export default class DisplayEvent extends Component {
                     loading: false
                 });
             })
-            .catch((error: Error) => console.error(error));
+            .catch((error: Error) => console.error(error)));
 
         //Fetches performanes (artists) from database
-        eventService
+        promises.push(eventService
             .getEventPerformances(eventId)
             .then(serverArtists => {
                 serverArtists.forEach(artist => {
@@ -87,10 +88,10 @@ export default class DisplayEvent extends Component {
 
                 this.setState({ artists: serverArtists });
             })
-            .catch(error => console.error(error));
+            .catch(error => console.error(error)));
 
         //Fetches tickets from database
-        eventService
+        promises.push(eventService
             .getEventTickets(eventId)
             .then(serverTickets => {
                 this.setState({
@@ -101,16 +102,18 @@ export default class DisplayEvent extends Component {
                             price: ticket.price
                         };
                     })
-                });
+                })
 
                 let ticketAmount = 0;
-                serverTickets.forEach(ticket => (ticketAmount += ticket.amount));
+                serverTickets.forEach(
+                    ticket => (ticketAmount += ticket.amount)
+                );
                 this.setState({ ticketAmount: ticketAmount });
             })
-            .catch((error: Error) => console.error(error));
+            .catch((error: Error) => console.error(error)));
 
         //Fetches staff from database
-        eventService
+        promises.push(eventService
             .getCrew(eventId)
             .then(serverStaff => {
                 this.setState({
@@ -123,7 +126,14 @@ export default class DisplayEvent extends Component {
                     })
                 });
             })
-            .catch((error: Error) => console.error(error));
+            .catch((error: Error) => console.error(error)));
+
+        Promise.all(promises)
+            .then(() => this.setState({ loading: false }))
+            .catch(error => {
+                console.error(error);
+                window.alert('Kunne ikke hente data!');
+            });
     }
 
     //Triggered when the user clicks the 'Rider' button
@@ -157,6 +167,13 @@ export default class DisplayEvent extends Component {
         history.push('/arrangement/' + this.state.id + '/rediger/personell');
     };
 
+     //Triggered the user clicks the 'Gå tilbake' button
+    handleButtonBackClick = e => {
+        e.preventDefault();
+
+        history.goBack();
+    };
+
     render() {
         return !this.state.loading ? (
             <EventInfo
@@ -177,6 +194,7 @@ export default class DisplayEvent extends Component {
                 handleArtistEditClick={this.handleArtistEditClick}
                 handleTicketEditClick={this.handleTicketEditClick}
                 handleStaffEditClick={this.handleStaffEditClick}
+                handleButtonBackClick={this.handleButtonBackClick}
                 artistToken={parseInt(sessionStorage.getItem('artist'))}
                 eventId={this.state.id}
             />

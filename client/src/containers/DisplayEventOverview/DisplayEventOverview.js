@@ -19,38 +19,50 @@ export default class DisplayEventOverview extends Component {
     //Fetches the events fro the database
     async componentDidMount() {
         let id = window.sessionStorage.getItem('user');
+        let promises = [];
 
         //Acitve events
-        eventService
-            .getUsersEvents(id, 1)
-            .then(serverEvents => {
-                serverEvents.forEach(event => {
-                    if (event.picture === '') event.picture = eventHolder;
-                });
+        promises.push(
+            eventService
+                .getUsersEvents(id, 1)
+                .then(serverEvents => {
+                    serverEvents.forEach(event => {
+                        if (event.picture === '') event.picture = eventHolder;
+                    });
 
-                this.setState({
-                    activeEvents: serverEvents,
-                    fullActive: serverEvents,
-                    loading: false
-                });
-            })
-            .catch(error => console.error(error));
+                    this.setState({
+                        activeEvents: serverEvents,
+                        fullActive: serverEvents,
+                        loading: false
+                    });
+                })
+                .catch(error => console.error(error))
+        );
 
         //Archived events
-        eventService
-            .getUsersEvents(id, 0)
-            .then(serverEvents => {
-                serverEvents.forEach(event => {
-                    if (event.picture === '') event.picture = eventHolder;
-                });
+        promises.push(
+            eventService
+                .getUsersEvents(id, 0)
+                .then(serverEvents => {
+                    serverEvents.forEach(event => {
+                        if (event.picture === '') event.picture = eventHolder;
+                    });
 
-                this.setState({
-                    archivedEvents: serverEvents,
-                    fullArchive: serverEvents,
-                    loading: false
-                });
-            })
-            .catch(error => console.error(error));
+                    this.setState({
+                        archivedEvents: serverEvents,
+                        fullArchive: serverEvents,
+                        loading: false
+                    });
+                })
+                .catch(error => console.error(error))
+        );
+
+        Promise.all(promises)
+            .then(() => this.setState({ loading: false }))
+            .catch(error => {
+                console.error(error);
+                window.alert('Kunne ikke hente data!');
+            });
     }
 
     //Triggered when the user types a keyword in the searchbar

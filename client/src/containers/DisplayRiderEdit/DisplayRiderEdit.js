@@ -40,7 +40,10 @@ export default class DisplayRiderEdit extends Component {
 
                 this.setState({ loading: false });
             })
-            .catch(error => console.error(error));
+            .catch(error => {
+                console.error(error);
+                window.alert('Kunne ikke hente data!');
+            });
     }
 
     //Triggered when an input field or checkbox is changed

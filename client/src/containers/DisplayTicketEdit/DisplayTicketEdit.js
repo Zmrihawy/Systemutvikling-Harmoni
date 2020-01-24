@@ -34,7 +34,10 @@ export default class DisplayTicketEdit extends Component {
                 this.setState({ tickets: serverTickets });
                 this.setState({ loading: false });
             })
-            .catch(error => console.error(error));
+            .catch(error => {
+                console.error(error);
+                window.alert('Kunne ikke hente data!');
+            });
     }
 
     //Triggered when an input field is changed

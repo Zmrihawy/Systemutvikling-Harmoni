@@ -17,17 +17,15 @@
 .top__section {
     grid-area: top__section;
     display: grid;
-    grid-template-areas: 'title button__edit';
+    grid-template-areas: 'button__back title button__edit';
     place-items: center center;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: auto 1fr auto;
     margin: 0px 40px;
 }
 
-.title {
-    margin-top: 30px;
-    grid-area: title;
-    font-size: 3em;
-    text-align: center;
+.button__back {
+    grid-area: button__back;
+    height: 40px !important;
 }
 
 .button__edit {
@@ -35,6 +33,13 @@
     display: inline-block;
     transition: all 0.3s ease;
     transform: translateY(25%);
+}
+
+.title {
+    margin-top: 30px;
+    grid-area: title;
+    font-size: 3em;
+    text-align: center;
 }
 
 .artist__button,
@@ -362,7 +367,9 @@
     .top__section {
         grid-template-areas:
             'title'
+            'button__back'
             'button__edit';
+        justify-self: center;
     }
 }
 

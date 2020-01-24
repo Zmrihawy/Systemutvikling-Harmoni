@@ -27,36 +27,50 @@ export default class DisplayArtistEdit extends Component {
     async componentDidMount() {
         let eventId = this.props.match.params.id;
 
-        eventService
-            .getEventPerformances(eventId)
-            .then(serverArtists => {
-                serverArtists.forEach((artist, i) => {
-                    artist.localId = i;
-                });
+        let promises = [];
 
-                let unregisteredArtists = serverArtists.filter(
-                    artist => artist.userId == undefined
-                );
-                let registeredArtists = serverArtists.filter(
-                    artist => artist.userId != undefined
-                );
+        promises.push(
+            eventService
+                .getEventPerformances(eventId)
+                .then(serverArtists => {
+                    serverArtists.forEach((artist, i) => {
+                        artist.localId = i;
+                    });
 
-                this.setState({
-                    registeredArtists: registeredArtists,
-                    unregisteredArtists: unregisteredArtists,
-                    loading: false
-                });
+                    let unregisteredArtists = serverArtists.filter(
+                        artist => artist.userId == undefined
+                    );
+                    let registeredArtists = serverArtists.filter(
+                        artist => artist.userId != undefined
+                    );
 
-                this.initialArtists = JSON.parse(JSON.stringify(this.state));
-            })
-            .catch(error => console.error(error));
+                    this.setState({
+                        registeredArtists: registeredArtists,
+                        unregisteredArtists: unregisteredArtists
+                    });
 
-        userService
-            .getAllArtists()
-            .then(serverArtists => {
-                this.setState({ databaseArtists: serverArtists });
-            })
-            .catch(error => console.error(error));
+                    this.initialArtists = JSON.parse(
+                        JSON.stringify(this.state)
+                    );
+                })
+                .catch(error => console.error(error))
+        );
+
+        promises.push(
+            userService
+                .getAllArtists()
+                .then(serverArtists => {
+                    this.setState({ databaseArtists: serverArtists });
+                })
+                .catch(error => console.error(error))
+        );
+
+        Promise.all(promises)
+            .then(() => this.setState({ loading: false }))
+            .catch(error => {
+                console.error(error);
+                window.alert('Kunne ikke hente data!'); 
+            });
     }
 
     /**
@@ -271,18 +285,18 @@ export default class DisplayArtistEdit extends Component {
 
     render() {
         return !this.state.loading ? (
-                <ArtistEdit
-                    registeredArtists={this.state.registeredArtists}
-                    unregisteredArtists={this.state.unregisteredArtists}
-                    databaseArtists={this.state.databaseArtists}
-                    handleButtonBackClick={this.handleButtonBackClick}
-                    handleButtonAddClick={this.handleButtonAddClick}
-                    handleButtonDeleteClick={this.handleButtonDeleteClick}
-                    handleButtonSubmitClick={this.handleButtonSubmitClick}
-                    handleTimeChange={this.handleTimeChange}
-                    handleInputChange={this.handleInputChange}
-                    handleSelectChange={this.handleSelectChange}
-                />
+            <ArtistEdit
+                registeredArtists={this.state.registeredArtists}
+                unregisteredArtists={this.state.unregisteredArtists}
+                databaseArtists={this.state.databaseArtists}
+                handleButtonBackClick={this.handleButtonBackClick}
+                handleButtonAddClick={this.handleButtonAddClick}
+                handleButtonDeleteClick={this.handleButtonDeleteClick}
+                handleButtonSubmitClick={this.handleButtonSubmitClick}
+                handleTimeChange={this.handleTimeChange}
+                handleInputChange={this.handleInputChange}
+                handleSelectChange={this.handleSelectChange}
+            />
         ) : (
             <Spinner />
         );
