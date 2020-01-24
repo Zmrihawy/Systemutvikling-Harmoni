@@ -12,7 +12,7 @@ const ticketEdit = props => {
             <input
                 className={`${classes.button__back} ${'Button'}`}
                 type="button"
-                value="Gå tilbake"
+                value="&larr; Tilbake"
                 onClick={props.handleButtonBackClick}
             />
             <h1 className={classes.title}>Rediger billetter</h1>
