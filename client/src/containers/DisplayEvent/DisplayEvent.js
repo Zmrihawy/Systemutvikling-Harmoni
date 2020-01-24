@@ -74,7 +74,7 @@ export default class DisplayEvent extends Component {
                     loading: false
                 });
             })
-            .catch((error: Error) => console.log(error));
+            .catch((error: Error) => console.error(error));
 
         const getTickets = tickets => {
             Promise.all(tickets.map(ticketConvert));

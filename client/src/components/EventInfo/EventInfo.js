@@ -35,7 +35,6 @@ export default class EventInfo extends Component {
     };
 
     handleContractView = (performanceId, index) => {
-        console.log(performanceId);
         this.setState({
             callerID: performanceId,
             showModal: true,

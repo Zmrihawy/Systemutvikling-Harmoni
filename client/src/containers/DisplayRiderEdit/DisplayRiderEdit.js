@@ -61,7 +61,6 @@ export default class DisplayRiderEdit extends Component {
         e.preventDefault();
 
         let riders = this.state.riders;
-        console.log(riders);
 
         riders.push({
             id: null,
