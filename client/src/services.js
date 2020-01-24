@@ -1513,7 +1513,7 @@ function isErrorRequest(response: *): boolean {
             // printError(response, 'Conflict error');
             return true;
         case 500:
-            printError(response, 'SQL-error!');
+            printError(response, 'Error!');
             return true;
         default:
             console.log(
