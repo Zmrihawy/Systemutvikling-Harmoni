@@ -23,6 +23,15 @@ module.exports = class Uploader {
             console.log(err);
         });
 
+        form.onPart = part => {
+            form.handlePart(part);
+            if (part.filename !== undefined) {
+                form.openedFiles[form.openedFiles.length - 1]._writeStream.on('error', err => {
+                    form.emit('error', err);
+                });
+            }
+        };
+
         form.on('file', (field, file) => {
             // Do something with the file
             // e.g. save it to the database
@@ -40,15 +49,6 @@ module.exports = class Uploader {
                     // console.log(response);
                     console.log('UPLOADED');
                 });
-
-                console.log(data);
-
-
-                // fs.writeFile(filePath + fileName, data, err => {
-                //     console.log(fileName);
-                //     if (err) return console.log('Error writing file');
-                //     console.log('File saved!')
-                // });
             });
 
         });
@@ -74,6 +74,15 @@ module.exports = class Uploader {
             console.log('UPLOAD CANCELLED');
             console.log(err);
         });
+
+        form.onPart = part => {
+            form.handlePart(part);
+            if (part.filename !== undefined) {
+                form.openedFiles[form.openedFiles.length - 1]._writeStream.on('error', err => {
+                    form.emit('error', err);
+                });
+            }
+        };
 
         form.on('file', (field, file) => {
             fs.readFile(file.path, (err, data) => {
@@ -106,6 +115,14 @@ module.exports = class Uploader {
             console.log(err);
         });
 
+        form.onPart = part => {
+            form.handlePart(part);
+            if (part.filename !== undefined) {
+                form.openedFiles[form.openedFiles.length - 1]._writeStream.on('error', err => {
+                    form.emit('error', err);
+                });
+            }
+        };
 
         form.on('file', (field, file) => {
             fs.readFile(file.path, (err, data) => {

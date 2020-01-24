@@ -41,7 +41,7 @@ app.use(bodyParser.json());
 
 //Creates connection pool with two connections
 const pool: pool = mysql.createPool({
-    connectionLimit: 2,
+    connectionLimit: 10,
     host: "mysql.stud.iie.ntnu.no",
     user: "kwgulake",
     password: "qra2ZQqh",
@@ -382,13 +382,15 @@ app.delete('/api/event/:event_id/performance/:performance_id/rider', (req, res) 
             eventDao.deleteRider({performanceId: req.params.performance_id, name: req.body.name}, (status, data) => {
                 res.status(status).json({data, jwt: token});
             });
-        } 
-        else if (checkEventAccess(data, req.userId)){
-            eventDao.deleteRiderArtist({performanceId: req.params.performance_id, name: req.body.name, userId: req.body.userId}, (status, data) => {
+        } else if (checkEventAccess(data, req.userId)) {
+            eventDao.deleteRiderArtist({
+                performanceId: req.params.performance_id,
+                name: req.body.name,
+                userId: req.body.userId
+            }, (status, data) => {
                 res.status(status).json({data, jwt: token});
-            });        
-        }
-        else {
+            });
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -773,8 +775,7 @@ app.put("/api/event/:event_id/performance/:performance_id/rider", (req, res) => 
                 (status, data) => {
                     res.status(status).json({data, jwt: token});
                 });
-        }
-        else if (checkEventAccess(data, req.userId)){
+        } else if (checkEventAccess(data, req.userId)) {
             eventDao.updateRiderArtist({
                 name: req.body.name,
                 amount: req.body.amount,
@@ -782,11 +783,10 @@ app.put("/api/event/:event_id/performance/:performance_id/rider", (req, res) => 
                 confirmed: req.body.confirmed,
                 oldName: req.body.oldName,
                 userId: req.userId
-                }, (status, data) => {
-                    res.status(status).json({data, jwt: token});
-                });
-        } 
-        else {
+            }, (status, data) => {
+                res.status(status).json({data, jwt: token});
+            });
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });
@@ -1292,7 +1292,8 @@ app.get('/api/event/:event_id/performance/:performance_id/contract', (req, res) 
                     userId: req.userId
                 }, (status, data) => {
                     if (data[0] == undefined) return res.status(400).json({data: "No contract exists", jwt: token});
-                    res.status(status).res.json({data: data[0].contract, jwt: token});
+
+                    res.status(status).json({data: data[0].contract, jwt: token});
                 });
             }
         } else {
