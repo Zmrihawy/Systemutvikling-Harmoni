@@ -13,6 +13,7 @@ import DisplayEventEdit from '../DisplayEventEdit/DisplayEventEdit';
 import DisplayStaffEdit from '../DisplayStaffEdit/DisplayStaffEdit';
 import Header from '../../components/Header/Header';
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
+import ErrorComponent from '../../components/Errorcomponent/ErrorComponent';
 
 export default class Main extends Component {
     render() {
@@ -23,6 +24,7 @@ export default class Main extends Component {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/registrer" component={Registration} />
                 <Route exact path="/glemt" component={ForgotPassword} />
+                <Route path="/ErrorComponent" component={ErrorComponent} />
                 <Route
                     exact
                     path="/arrangement"

@@ -3,6 +3,8 @@ import './Login.scss';
 import { User, userService } from '../../services';
 import { history } from '../App';
 import ShowPassword from '../Password/Password';
+import { Redirect } from 'react-router-dom'
+
 
 export default class Login extends Component {
     constructor(props) {
@@ -69,8 +71,16 @@ export default class Login extends Component {
                 history.push('/user/' + window.sessionStorage.getItem('user'));
             })
             .catch(data => {
-                document.querySelector('#error').innerHTML =
-                    'Wrong e-mail or password';
+                // <Redirect to="../../component/Erorrcomponent/ErorrComponent" />
+                // window.location.href="../../component/Erorrcomponent/ErorrComponent"
+                console.log(window.location.href);
+                history.push('/ErrorComponent/Login');
+                
+               
+
+
+                // document.querySelector('#error').innerHTML =
+                //     'Wrong e-mail or password';
             });
     };
 }

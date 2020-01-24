@@ -51,7 +51,9 @@ export default class ForgotPassword extends Component {
             .forgotPassword(this.state.email)
             .then(() => history.push('/login'))
             .catch(data => {
-                document.querySelector("#error").innerHTML = 'E-mail ikke registrert';
+                   history.push('/ErrorComponent/ForgetPassword');
+                
+                // document.querySelector("#error").innerHTML = 'E-mail ikke registrert';
             });
     };
 }
