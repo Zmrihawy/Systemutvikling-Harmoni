@@ -18,14 +18,14 @@ const eventEdit = props => {
             <h1 className={classes.title}>Rediger arrangement</h1>
 
             <input
-                className={classes.input__name}
+                className={`${classes.input__name} ${'Input'}`}
                 type="text"
                 name="name"
                 value={props.event.name}
                 onChange={props.handleChange}
             />
             <input
-                className={classes.input__location}
+                className={`${classes.input__location} ${'Input'}`}
                 type="text"
                 name="location"
                 value={props.event.location}
@@ -74,13 +74,13 @@ const eventEdit = props => {
                 />
             </div>
             <textarea
-                className={classes.input__description}
+                className={`${classes.input__description} ${'Input'}`}
                 name="description"
                 value={props.event.description}
                 onChange={props.handleChange}
             />
             <input
-                className={classes.button__archive}
+                className={`${classes.button__archive} ${'Button'}`}
                 type="button"
                 value={
                     props.event.active === 1
@@ -90,13 +90,13 @@ const eventEdit = props => {
                 onClick={props.handleButtonArchiveClick}
             />
             <input
-                className={classes.button__delete}
+                className={`${classes.button__delete} ${'Button'}`}
                 type="button"
                 value="Slett arrangement"
                 onClick={props.handleButtonDeleteClick}
             />
             <input
-                className={classes.button__submit}
+                className={`${classes.button__submit} ${'Button'}`}
                 type="submit"
                 value="Endre arrangement"
             />
