@@ -7,7 +7,8 @@ const MapBox = ReactMapboxGl({
         'pk.eyJ1Ijoia3ZpbmxhdWdsb3ZlcjY0IiwiYSI6ImNrNTVid25kYTBld20zZnJ1bWQ5ODF1bXEifQ.8Ui5ppovKsFXEpf4hGM9Qw',
     scrollZoom: false
 });
-//map
+
+//Compoenent for displaying a map
 const map = props => {
     return (
         <MapBox

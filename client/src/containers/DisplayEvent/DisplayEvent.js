@@ -1,22 +1,15 @@
 import React, { Component } from 'react';
+
 import EventInfo from '../../components/EventInfo/EventInfo';
+
 import profileHolder from '../../pictures/profileHolder.svg';
-
-import {
-    Event,
-    Ticket,
-    Crew,
-    Performance,
-    User,
-    eventService,
-    userService
-} from '../../services';
-
-import { faCommentDollar } from '@fortawesome/free-solid-svg-icons';
-
+import { eventService } from '../../services';
 import { history } from '../App';
 
-//TODO: Fix text responsiveness 
+/**
+    Container for displaying an event
+    The host of the event and artists have access rights
+ */
 export default class DisplayEvent extends Component {
     state = {
         id: null,
@@ -54,7 +47,7 @@ export default class DisplayEvent extends Component {
         ]
     };
 
-    //TODO: Clean up
+    //Fetches event, artists, staff and tickets from the database
     async componentDidMount() {
         let eventId = this.props.match.params.id;
 
@@ -74,8 +67,8 @@ export default class DisplayEvent extends Component {
                         .slice(0, -7),
                     longitude: recivedEvent.longitude,
                     latitude: recivedEvent.latitude,
-                    firstname: recivedEvent.firstName, 
-                    lastname: recivedEvent.surname 
+                    firstname: recivedEvent.firstName,
+                    lastname: recivedEvent.surname
                 });
             })
             .catch((error: Error) => console.log(error));
@@ -133,34 +126,39 @@ export default class DisplayEvent extends Component {
             .getEventPerformances(eventId)
             .then(artists => {
                 artists.forEach(artist => {
-                    if (artist.picture == '') artist.picture = profileHolder;
+                    if (artist.picture === '') artist.picture = profileHolder;
                 });
                 this.setState({ artists: artists });
             })
             .catch(error => console.error(error));
     }
 
+    //Triggered when the user clicks the 'Rider' button
     handleRiderClick = (e, performanceId) => {
         e.preventDefault();
 
         let eventId = this.props.match.params.id;
 
-        history.push('/arrangement/' + eventId + '/rediger/rider/' + performanceId);
+        history.push(
+            '/arrangement/' + eventId + '/rediger/rider/' + performanceId
+        );
     };
 
+    //Triggered when the user clicks the 'Rediger arrangement' button
     handleEditClick = () =>
         history.push('/arrangement/' + this.state.id + '/rediger');
 
+    //Triggered when the user clicks the 'Rediger' artister button
     handleArtistEditClick = e => {
         e.preventDefault();
         history.push('/arrangement/' + this.state.id + '/rediger/artister');
     };
-
+    //Triggered when the user clicks the 'Rediger' ticket button
     handleTicketEditClick = e => {
         e.preventDefault();
         history.push('/arrangement/' + this.state.id + '/rediger/billetter');
     };
-
+    //Triggered when the user clicks the 'Rediger' staff button
     handleStaffEditClick = e => {
         e.preventDefault();
         history.push('/arrangement/' + this.state.id + '/rediger/personell');
@@ -186,6 +184,8 @@ export default class DisplayEvent extends Component {
                 handleArtistEditClick={this.handleArtistEditClick}
                 handleTicketEditClick={this.handleTicketEditClick}
                 handleStaffEditClick={this.handleStaffEditClick}
+                artistToken={parseInt(sessionStorage.getItem('artist'))}
+                eventId={this.state.id}
             />
         );
     }

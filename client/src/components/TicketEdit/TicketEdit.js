@@ -2,6 +2,10 @@ import React from 'react';
 
 import classes from '../TicketEdit/TicketEdit.module.scss';
 
+/**
+    Component for editing, adding and deleting tickets for an event
+    Only the host of the event has access right
+ */
 const ticketEdit = props => {
     return (
         <div className={classes.container}>
@@ -12,7 +16,10 @@ const ticketEdit = props => {
                 <p className={classes.ph__price}>Pris</p>
                 <p className={classes.ph__amount}>Antall</p>
             </div>
-            <form className={classes.form} onSubmit={props.handleButtonSubmitClick}>
+            <form
+                className={classes.form}
+                onSubmit={props.handleButtonSubmitClick}
+            >
                 <div className={classes.ticket__list}>
                     {props.tickets.map((e, i) => (
                         <div className={classes.ticket__wrapper} key={i} id={i}>
@@ -26,15 +33,15 @@ const ticketEdit = props => {
                             />
                             <input
                                 className={classes.input__price}
-                                type="text"
+                                type="number"
                                 name="price"
                                 value={e.price}
                                 onChange={props.handleChange}
                                 required
                             />
-                             <input
+                            <input
                                 className={classes.input__amount}
-                                type="text"
+                                type="number"
                                 name="amount"
                                 value={e.amount}
                                 onChange={props.handleChange}
