@@ -386,7 +386,7 @@ app.delete('/api/event/:event_id/performance/:performance_id/rider', (req, res) 
             eventDao.deleteRiderArtist({
                 performanceId: req.params.performance_id,
                 name: req.body.name,
-                userId: req.body.userId
+                userId: req.userId
             }, (status, data) => {
                 res.status(status).json({data, jwt: token});
             });

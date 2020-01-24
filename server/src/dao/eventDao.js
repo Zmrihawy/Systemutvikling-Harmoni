@@ -30,7 +30,7 @@ module.exports = class ServerDao extends Dao {
      * This function gets all riders for in a performance from the database.
      */
     getRidersArtist(sql: { performanceId: string | number, userId: string | number }, callback: (status: number, data: *) => void): void {
-        super.query(`SELECT r.*, p.${CONSTANTS.PERFORMANCE_NAME} as performance_name FROM ${CONSTANTS.RIDER_TABLE} r JOIN ${CONSTANTS.PERFORMANCE_TABLE} p
+        super.query(`SELECT r.*, p.${CONSTANTS.PERFORMANCE_NAME} as performance_name FROM ${CONSTANTS.RIDER_TABLE} r RIGHT JOIN ${CONSTANTS.PERFORMANCE_TABLE} p
         ON p.${CONSTANTS.PERFORMANCE_ID} = r.${CONSTANTS.RIDER_PERFORMANCE_ID} WHERE r.${CONSTANTS.RIDER_PERFORMANCE_ID} = ? AND p.${CONSTANTS.PERFORMANCE_ARTIST_ID} = ?`, [sql.performanceId, sql.userId], callback);
     }
 
@@ -129,8 +129,9 @@ module.exports = class ServerDao extends Dao {
      * This function deletes a rider from the database
      */
     deleteRiderArtist(sql: { performanceId: string | number, name: string, userId: string | number }, callback: (status: number, data: *) => void): void {
-        super.query(`DELETE FROM ${CONSTANTS.RIDER_TABLE} WHERE ${CONSTANTS.RIDER_NAME} IN (SELECT r.${CONSTANTS.RIDER_NAME} FROM ${CONSTANTS.RIDER_TABLE} r 
-            JOIN ${CONSTANTS.PERFORMANCE_TABLE} p ON p.${CONSTANTS.PERFORMANCE_ID} = r.${CONSTANTS.RIDER_PERFORMANCE_ID} WHERE r.${CONSTANTS.RIDER_NAME} = ? AND p.${CONSTANTS.PERFORMANCE_ARTIST_ID} = ?)`, [sql.performanceId, sql.name, sql.userId], callback);
+        super.query(`DELETE FROM ${CONSTANTS.RIDER_TABLE} WHERE ${CONSTANTS.RIDER_NAME} IN (SELECT ${CONSTANTS.RIDER_NAME} FROM (SELECT r.${CONSTANTS.RIDER_NAME} FROM ${CONSTANTS.RIDER_TABLE} r 
+            JOIN ${CONSTANTS.PERFORMANCE_TABLE} p ON p.${CONSTANTS.PERFORMANCE_ID} = r.${CONSTANTS.RIDER_PERFORMANCE_ID} WHERE r.${CONSTANTS.RIDER_NAME} = ? 
+            AND p.${CONSTANTS.PERFORMANCE_ARTIST_ID} = ? AND r.${CONSTANTS.PERFORMANCE_ID} = ?) AS help)`, [sql.name, sql.userId, sql.performanceId], callback);
     }
 
     /**

@@ -64,7 +64,7 @@ CREATE TABLE performance (
   contract longblob,
   PRIMARY KEY (performance_id),
   FOREIGN KEY (event_id) REFERENCES event(event_id) ON DELETE CASCADE,
-  FOREIGN KEY (user_id) REFERENCES user(user_id)
+  FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE rider (
