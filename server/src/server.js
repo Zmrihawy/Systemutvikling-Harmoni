@@ -600,7 +600,13 @@ app.put("/api/user/:user_id", (req, res) => {
         },
         (status, data) => {
             res.status(status);
-            res.json({data, jwt: token});
+            let obj:Object;
+            if(status == 500){
+                obj = {data, jwt: token, error: 'Username is already used by someone'};
+            }else {
+                obj = {data, jwt: token};
+            }
+            res.json(obj);
         });
 });
 
