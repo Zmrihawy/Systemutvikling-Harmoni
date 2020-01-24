@@ -19,8 +19,8 @@ export default class DisplayArtistEdit extends Component {
     state = {
         registeredArtists: [],
         unregisteredArtists: [],
-        databaseArtists: [], 
-        loading: true 
+        databaseArtists: [],
+        loading: true
     };
 
     //Fetches artists from the database
@@ -43,7 +43,7 @@ export default class DisplayArtistEdit extends Component {
 
                 this.setState({
                     registeredArtists: registeredArtists,
-                    unregisteredArtists: unregisteredArtists, 
+                    unregisteredArtists: unregisteredArtists,
                     loading: false
                 });
 
@@ -257,27 +257,37 @@ export default class DisplayArtistEdit extends Component {
             .catch(error => {
                 console.error(error);
                 window.alert('Teknisk feil!');
-                history.push('/arrangement/' + eventId); 
+                history.push('/arrangement/' + eventId);
             });
     };
 
+    //Triggered the user clicks the 'Gå tilbake' button
+    handleButtonBackClick = e => {
+        e.preventDefault();
+
+        history.goBack();
+    };
+
     render() {
-       let output;
+        let output;
 
         return !this.state.loading ? (
             (output = (
-            <ArtistEdit
-                registeredArtists={this.state.registeredArtists}
-                unregisteredArtists={this.state.unregisteredArtists}
-                databaseArtists={this.state.databaseArtists}
-                handleButtonAddClick={this.handleButtonAddClick}
-                handleButtonDeleteClick={this.handleButtonDeleteClick}
-                handleButtonSubmitClick={this.handleButtonSubmitClick}
-                handleTimeChange={this.handleTimeChange}
-                handleInputChange={this.handleInputChange}
-                handleSelectChange={this.handleSelectChange}
-            />
-        ))
-        ) : <Spinner />
+                <ArtistEdit
+                    registeredArtists={this.state.registeredArtists}
+                    unregisteredArtists={this.state.unregisteredArtists}
+                    databaseArtists={this.state.databaseArtists}
+                    handleButtonBackClick={this.handleButtonBackClick}
+                    handleButtonAddClick={this.handleButtonAddClick}
+                    handleButtonDeleteClick={this.handleButtonDeleteClick}
+                    handleButtonSubmitClick={this.handleButtonSubmitClick}
+                    handleTimeChange={this.handleTimeChange}
+                    handleInputChange={this.handleInputChange}
+                    handleSelectChange={this.handleSelectChange}
+                />
+            ))
+        ) : (
+            <Spinner />
+        );
     }
 }

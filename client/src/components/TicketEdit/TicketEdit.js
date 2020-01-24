@@ -9,6 +9,12 @@ import classes from '../TicketEdit/TicketEdit.module.scss';
 const ticketEdit = props => {
     return (
         <div className={classes.container}>
+            <input
+                className={`${classes.button__back} ${'Button'}`}
+                type="button"
+                value="Gå tilbake"
+                onClick={props.handleButtonBackClick}
+            />
             <h1 className={classes.title}>Rediger billetter</h1>
 
             <div className={classes.desc__wrapper}>
@@ -40,7 +46,9 @@ const ticketEdit = props => {
                                 required
                             />
                             <input
-                                className={`${classes.input__amount} ${'Input'}`}
+                                className={`${
+                                    classes.input__amount
+                                } ${'Input'}`}
                                 type="number"
                                 name="amount"
                                 value={e.amount}
@@ -48,7 +56,9 @@ const ticketEdit = props => {
                                 required
                             />
                             <input
-                                className={`${classes.button__delete} ${'Button'}`}
+                                className={`${
+                                    classes.button__delete
+                                } ${'Button'}`}
                                 onClick={props.handleButtonDeleteClick}
                                 type="button"
                                 value="-"

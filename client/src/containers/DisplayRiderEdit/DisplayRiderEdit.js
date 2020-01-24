@@ -89,7 +89,7 @@ export default class DisplayRiderEdit extends Component {
     handleButtonSubmitClick = e => {
         e.preventDefault();
 
-        this.setState({ loading: true }); 
+        this.setState({ loading: true });
 
         if (!window.confirm('Er du sikker på at du vil lagre endringene?'))
             return;
@@ -190,6 +190,13 @@ export default class DisplayRiderEdit extends Component {
             });
     };
 
+    //Triggered the user clicks the 'Gå tilbake' button
+    handleButtonBackClick = e => {
+        e.preventDefault();
+
+        history.goBack();
+    };
+
     render() {
         let output;
 
@@ -199,6 +206,7 @@ export default class DisplayRiderEdit extends Component {
                     riders={this.state.riders}
                     name={this.state.name}
                     handleChange={this.handleChange}
+                    handleButtonBackClick={this.handleButtonBackClick}
                     handleButtonAddClick={this.handleButtonAddClick}
                     handleButtonDeleteClick={this.handleButtonDeleteClick}
                     handleButtonSubmitClick={this.handleButtonSubmitClick}

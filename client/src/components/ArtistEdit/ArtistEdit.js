@@ -11,6 +11,12 @@ import classes from '../ArtistEdit/ArtistEdit.module.scss';
 const artistEdit = props => {
     return (
         <div className={classes.container}>
+            <input
+                className={`${classes.button__back} ${'Button'}`}
+                type="button"
+                value="Gå tilbake"
+                onClick={props.handleButtonBackClick}
+            />
             <h1 className={classes.title}>Rediger artister</h1>
             <div className={classes.registered__artists}>
                 <h2
@@ -38,7 +44,9 @@ const artistEdit = props => {
                                 ))}
                             </select>
                             <input
-                                className={`${classes.button__registered__delete} ${'Button'}`}
+                                className={`${
+                                    classes.button__registered__delete
+                                } ${'Button'}`}
                                 onClick={event =>
                                     props.handleButtonDeleteClick(event, true)
                                 }
@@ -76,7 +84,9 @@ const artistEdit = props => {
                                 required
                             />
                             <input
-                                className={`${classes.button__delete} ${'Button'}`}
+                                className={`${
+                                    classes.button__delete
+                                } ${'Button'}`}
                                 onClick={event =>
                                     props.handleButtonDeleteClick(event, false)
                                 }
@@ -87,7 +97,9 @@ const artistEdit = props => {
                     ))}
                 </div>
                 <input
-                    className={`${classes.button__unregistered__add} ${'Button'}`}
+                    className={`${
+                        classes.button__unregistered__add
+                    } ${'Button'}`}
                     onClick={event => props.handleButtonAddClick(event, false)}
                     type="button"
                     value="+"

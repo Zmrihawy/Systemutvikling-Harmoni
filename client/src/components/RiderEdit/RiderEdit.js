@@ -9,6 +9,12 @@ import classes from '../RiderEdit/RiderEdit.module.scss';
 const riderEdit = props => {
     return (
         <div className={classes.container}>
+            <input
+                className={`${classes.button__back} ${'Button'}`}
+                type="button"
+                value="Gå tilbake"
+                onClick={props.handleButtonBackClick}
+            />
             <h1 className={classes.title}>Rediger rider for {props.name}</h1>
 
             <div className={classes.desc__wrapper}>
@@ -32,7 +38,9 @@ const riderEdit = props => {
                                 required
                             />
                             <input
-                                className={`${classes.input__amount} ${'Input'}`}
+                                className={`${
+                                    classes.input__amount
+                                } ${'Input'}`}
                                 type="number"
                                 name="amount"
                                 value={e.amount}
@@ -49,7 +57,9 @@ const riderEdit = props => {
                                 disabled={props.artistToken === 1}
                             />
                             <input
-                                className={`${classes.button__delete} ${'Button'}`}
+                                className={`${
+                                    classes.button__delete
+                                } ${'Button'}`}
                                 onClick={props.handleButtonDeleteClick}
                                 type="button"
                                 value="-"

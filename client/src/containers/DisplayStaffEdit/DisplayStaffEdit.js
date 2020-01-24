@@ -78,8 +78,8 @@ export default class DisplayStaffEdit extends Component {
         if (!window.confirm('Er du sikker på at du vil lagre endringene?'))
             return;
 
-        this.setState({ loading: true }); 
-        
+        this.setState({ loading: true });
+
         let eventId = this.props.match.params.id;
 
         let oldStaff = this.initialStaff;
@@ -170,6 +170,13 @@ export default class DisplayStaffEdit extends Component {
             });
     };
 
+    //Triggered the user clicks the 'Gå tilbake' button
+    handleButtonBackClick = e => {
+        e.preventDefault();
+
+        history.goBack();
+    };
+
     render() {
         let output;
 
@@ -178,6 +185,7 @@ export default class DisplayStaffEdit extends Component {
                 <StaffEdit
                     staff={this.state.staff}
                     handleChange={this.handleChange}
+                    handleButtonBackClick={this.handleButtonBackClick}
                     handleButtonAddClick={this.handleButtonAddClick}
                     handleButtonDeleteClick={this.handleButtonDeleteClick}
                     handleButtonSubmitClick={this.handleButtonSubmitClick}

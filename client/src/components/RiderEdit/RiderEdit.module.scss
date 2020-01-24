@@ -1,6 +1,7 @@
 .container {
     display: grid;
     grid-template-areas:
+        'button__back'
         'title '
         'desc__wrapper'
         'form';
@@ -8,6 +9,12 @@
     margin: 50px auto;
     place-items: center center;
     width: 60%;
+}
+
+.button__back {
+    grid-area: button__back;
+    height: 40px !important;
+    justify-self: start;
 }
 
 .title {
@@ -102,7 +109,7 @@
 
 .rider__wrapper > input {
     min-width: 0px;
-    margin: 0; 
+    margin: 0;
     font-size: 1.8em;
     height: 50px;
     padding: 1rem;
@@ -118,12 +125,12 @@
     }
 
     .desc__wrapper {
-        width: 100%; 
+        width: 100%;
         grid-template-columns: 4fr 2fr repeat(2, 1fr);
     }
 
     .rider__wrapper {
-        width: 100%; 
+        width: 100%;
         grid-template-columns: 4fr 2fr repeat(2, 1fr);
     }
 }

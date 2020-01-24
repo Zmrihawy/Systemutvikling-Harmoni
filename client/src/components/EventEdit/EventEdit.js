@@ -15,6 +15,12 @@ const eventEdit = props => {
             className={classes.container}
             onSubmit={props.handleButtonSubmitClick}
         >
+             <input
+                className={`${classes.button__back} ${'Button'}`}
+                type="button"
+                value="Gå tilbake"
+                onClick={props.handleButtonBackClick}
+            />
             <h1 className={classes.title}>Rediger arrangement</h1>
 
             <input

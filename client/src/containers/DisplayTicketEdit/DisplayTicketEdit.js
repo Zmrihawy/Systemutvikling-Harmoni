@@ -16,8 +16,8 @@ export default class DisplayTicketEdit extends Component {
     };
 
     state = {
-        tickets: [], 
-        loading: true 
+        tickets: [],
+        loading: true
     };
 
     //Fetches tickets from the database
@@ -37,7 +37,7 @@ export default class DisplayTicketEdit extends Component {
             .catch(error => console.error(error));
     }
 
-    //Triggered when an input field is changed 
+    //Triggered when an input field is changed
     handleChange = e => {
         const newTickets = [...this.state.tickets];
 
@@ -79,10 +79,10 @@ export default class DisplayTicketEdit extends Component {
     handleButtonSubmitClick = e => {
         e.preventDefault();
 
+        if (!window.confirm('Er du sikker på at du vil lagre endringene?'))
+            return;
 
-        if (!window.confirm('Er du sikker på at du vil lagre endringene?')) return;
-
-        this.setState({ loading: true }); 
+        this.setState({ loading: true });
 
         let eventId = this.props.match.params.id;
 
@@ -124,7 +124,7 @@ export default class DisplayTicketEdit extends Component {
         });
 
         let promises = [];
-        
+
         //Adds the new artists to the database
         addList.map(ticket => {
             let promise = eventService.createTicket(
@@ -171,8 +171,15 @@ export default class DisplayTicketEdit extends Component {
             .catch(error => {
                 console.error(error);
                 window.alert('Teknisk feil!');
-                history.push('/arrangement/' + eventId); 
+                history.push('/arrangement/' + eventId);
             });
+    };
+
+    //Triggered the user clicks the 'Gå tilbake' button
+    handleButtonBackClick = e => {
+        e.preventDefault();
+
+        history.goBack();
     };
 
     render() {
@@ -180,14 +187,17 @@ export default class DisplayTicketEdit extends Component {
 
         return !this.state.loading ? (
             (output = (
-            <TicketEdit
-                tickets={this.state.tickets}
-                handleChange={this.handleChange}
-                handleButtonAddClick={this.handleButtonAddClick}
-                handleButtonSubmitClick={this.handleButtonSubmitClick}
-                handleButtonDeleteClick={this.handleButtonDeleteClick}
-            />
-       ))
-        ) : <Spinner/>
+                <TicketEdit
+                    tickets={this.state.tickets}
+                    handleChange={this.handleChange}
+                    handleButtonBackClick={this.handleButtonBackClick}
+                    handleButtonAddClick={this.handleButtonAddClick}
+                    handleButtonSubmitClick={this.handleButtonSubmitClick}
+                    handleButtonDeleteClick={this.handleButtonDeleteClick}
+                />
+            ))
+        ) : (
+            <Spinner />
+        );
     }
 }

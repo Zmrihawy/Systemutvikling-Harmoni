@@ -9,6 +9,12 @@ import classes from '../StaffEdit/StaffEdit.module.scss';
 const staffEdit = props => {
     return (
         <div className={classes.container}>
+            <input
+                className={`${classes.button__back} ${'Button'}`}
+                type="button"
+                value="Gå tilbake"
+                onClick={props.handleButtonBackClick}
+            />
             <h1 className={classes.title}>Rediger personell</h1>
 
             <div className={classes.desc__wrapper}>
@@ -16,7 +22,10 @@ const staffEdit = props => {
                 <p className={classes.ph__profession}>Yrke</p>
                 <p className={classes.ph__contact}>Kontakt info</p>
             </div>
-            <form className={classes.form} onSubmit={props.handleButtonSubmitClick}>
+            <form
+                className={classes.form}
+                onSubmit={props.handleButtonSubmitClick}
+            >
                 <div className={classes.staff__list}>
                     {props.staff.map((e, i) => (
                         <div className={classes.staff__wrapper} key={i} id={i}>
@@ -29,15 +38,19 @@ const staffEdit = props => {
                                 required
                             />
                             <input
-                                className={`${classes.input__proffesion} ${'Input'}`}
+                                className={`${
+                                    classes.input__proffesion
+                                } ${'Input'}`}
                                 type="text"
                                 name="profession"
                                 value={e.profession}
                                 onChange={props.handleChange}
                                 required
                             />
-                             <input
-                                className={`${classes.input__contactInfo} ${'Input'}`}
+                            <input
+                                className={`${
+                                    classes.input__contactInfo
+                                } ${'Input'}`}
                                 type="text"
                                 name="contactInfo"
                                 value={e.contactInfo}
@@ -45,7 +58,9 @@ const staffEdit = props => {
                                 required
                             />
                             <input
-                                className={`${classes.button__delete} ${'Button'}`}
+                                className={`${
+                                    classes.button__delete
+                                } ${'Button'}`}
                                 onClick={props.handleButtonDeleteClick}
                                 type="button"
                                 value="-"

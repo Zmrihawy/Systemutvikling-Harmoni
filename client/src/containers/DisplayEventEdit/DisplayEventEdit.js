@@ -211,6 +211,13 @@ export default class DisplayEventEdit extends Component {
             });
     };
 
+    //Triggered the user clicks the 'Gå tilbake' button
+    handleButtonBackClick = e => {
+        e.preventDefault(); 
+
+        history.goBack(); 
+    }
+
     render() {
         let output;
 
@@ -218,6 +225,7 @@ export default class DisplayEventEdit extends Component {
             (output = (
             <EventEdit
                 event={this.state.event}
+                handleButtonBackClick={this.handleButtonBackClick}
                 handleButtonSubmitClick={this.handleButtonSubmitClick}
                 handleButtonDeleteClick={this.handleButtonDeleteClick}
                 handleButtonArchiveClick={this.handleButtonArchiveClick}

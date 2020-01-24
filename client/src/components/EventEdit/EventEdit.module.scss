@@ -1,6 +1,7 @@
 .container {
     display: grid;
     grid-template-areas:
+        'button__back       -                  -'
         'title              title              title'
         'input__name        input__name        input__name'
         'calendar           calendar           map'
@@ -13,6 +14,11 @@
     margin: 50px auto;
     place-items: center center;
     width: 60%;
+}
+
+.button__back {
+    grid-area: button__back;
+    height: 40px !important;
 }
 
 .title {

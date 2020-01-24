@@ -1,6 +1,7 @@
 .container {
     display: grid;
     grid-template-areas:
+        'button__back'
         'title'
         'registered__artists'
         'unregistered__artists'
@@ -9,6 +10,12 @@
     margin: 50px auto;
     place-items: center center;
     width: 60%;
+}
+
+.button__back {
+    grid-area: button__back;
+    height: 40px !important;
+    justify-self: start;
 }
 
 .title {
