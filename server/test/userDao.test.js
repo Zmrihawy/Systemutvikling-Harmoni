@@ -3,7 +3,6 @@ const UserDao = require("../src/dao/userDao.js");
 const runSQL = require("./runSQL.js");
 
 // GitLab CI Pool
-
 // /*let pool = mysql.createPool({
 //      connectionLimit: 2,
 //      host: "mysql-ait.stud.idi.ntnu.no",
