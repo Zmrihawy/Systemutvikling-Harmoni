@@ -79,8 +79,6 @@ export default class DisplayEventOverview extends Component {
                     handleSearch={this.handleSearch}
                 />
             ))
-        ) : (
-            <Spinner />
-        );
+        ) : <Spinner />
     }
 }

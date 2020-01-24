@@ -19,6 +19,7 @@
     grid-area: title;
     font-size: 4em;
     font-weight: bolder;
+    text-align: center;
 }
 
 .input__name {
@@ -83,3 +84,48 @@
     border: 1px solid lightgray;
     width: 100%;
 }
+
+@media only screen and (max-width: 1000px) {
+    .container {
+        display: grid;
+        grid-template-areas:
+            'title              title'
+            'input__name        input__name'
+            'calendar           calendar'
+            'timepicker__start  timepicker__end'
+            'map                map'
+            'input__location    input__location'
+            'input__description input__description'
+            'button__archive    button__archive'
+            'button__delete     button__delete'
+            'button__submit     button__submit'; 
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 15px;
+        margin: 50px auto;
+        place-items: center center;
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        display: grid;
+        grid-template-areas:
+            'title              title'
+            'input__name        input__name'
+            'calendar           calendar'
+            'timepicker__start  timepicker__end'
+            'map                map'
+            'input__location    input__location'
+            'input__description input__description'
+            'button__archive    button__archive'
+            'button__delete     button__delete'
+            'button__submit     button__submit'; 
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 15px;
+        margin: 50px auto;
+        place-items: center center;
+        width: 90%;
+    }
+}
+
