@@ -4,16 +4,25 @@ const runSQL = require("./runSQL.js");
 
 // GitLab CI Pool
 
-
-var pool = mysql.createPool({
-    connectionLimit: 1,
-    host: "mysql",
-    user: "root",
-    password: "",
-    database: "School",
+let pool = mysql.createPool({
+    connectionLimit: 2,
+    host: "mysql-ait.stud.idi.ntnu.no",
+    user: "tdthorki",
+    password: "21PFqYLh",
+    database: "tdthorki",
     debug: false,
     multipleStatements: true
 });
+
+// var pool = mysql.createPool({
+//     connectionLimit: 1,
+//     host: "mysql",
+//     user: "root",
+//     password: "",
+//     database: "School",
+//     debug: false,
+//     multipleStatements: true
+// });
 
 let eventDao = new EventDao(pool);
 
@@ -51,7 +60,7 @@ test("get all tickets involved in a specific event", done => {
 });
 
 test("get all riders for one specific performance", done => {
-    eventDao.getRiders(3, (status, data) => {
+    eventDao.getRidersArtist({performanceId: 3, userId: 2}, (status, data) => {
         expect(data.length).toBe(1);
         done();
     });
@@ -87,7 +96,7 @@ test("add an event to database", done => {
             userId: 2,
             description: "Fest",
             location: "Trondheim",
-            longitude : 63.4090508,
+            longitude: 63.4090508,
             latitude: 10.4528865,
             startTime: "2020-12-05 19:00:00",
             endTime: "2020-12-06 00:00:00",
@@ -252,7 +261,7 @@ test("update rider in database", done => {
     };
 
     eventDao.updateRider(param, () => {
-        eventDao.getRiders(2, (status, data) => {
+        eventDao.getRidersArtist({performanceId: 2, userId: 3}, (status, data) => {
             expect(data[0].name).toBe("Oppdatert rider");
             expect(data[0].amount).toBe(3);
             expect(data[0].confirmed).toBe(1);
@@ -267,7 +276,7 @@ test("update event in database", done => {
         eventName: "Endret navn",
         active: 0,
         description: "Ny kategoi",
-        longitude : 0,
+        longitude: 0,
         latitude: 0,
         location: "Ny lokasjon",
         startTime: "2020-12-05 22:30:00",
@@ -288,7 +297,7 @@ test("update event in database", done => {
 test("update performance in database", done => {
 
     let param = {
-        startTime: "2020-10-03 20:15:00",  
+        startTime: "2020-10-03 20:15:00",
         endTime: "2020-10-03 21:00:00",
         contract: "Dette er en ny kontrakt",
         performanceId: 3
@@ -303,9 +312,9 @@ test("update performance in database", done => {
 test("update crew in database", done => {
 
     let param = {
-        profession: "lysmann", 
-        name: "Bjørn", 
-        contactInfo: "bjørn@schreiner.no", 
+        profession: "lysmann",
+        name: "Bjørn",
+        contactInfo: "bjørn@schreiner.no",
         crewId: 1
     };
 

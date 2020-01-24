@@ -267,9 +267,18 @@ app.get("/api/event/:event_id/performance/:performance_id", (req, res) => {
         if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
 
         if (checkEventAccess(data, req.userId)) {
-            eventDao.getRiders({performanceId: req.params.performance_id, userId: req.userId}, (status, data) => {
-                res.status(status).json({data, jwt: token});
-            });
+            if (data[0].host_id == req.userId) {
+                eventDao.getRidersHost(req.params.performance_id, (status, data) => {
+                    res.status(status).json({data, jwt: token});
+                });
+            } else {
+                eventDao.getRidersArtist({
+                    performanceId: req.params.performance_id,
+                    userId: req.userId
+                }, (status, data) => {
+                    res.status(status).json({data, jwt: token});
+                });
+            }
         } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
@@ -285,7 +294,10 @@ app.get("/api/user/:user_id/event/:active", (req, res) => {
         jwt: token,
         error: "number field cannot be string"
     });
-    else if (req.params.user_id != req.userId) return res.status(401).json({jwt: token, error: 'You are not authorized'});
+    else if (req.params.user_id != req.userId) return res.status(401).json({
+        jwt: token,
+        error: 'You are not authorized'
+    });
 
     eventDao.getUserEvents({userId: req.params.user_id, active: req.params.active}, (status, data) => {
         res.status(status).json({data, jwt: token});
@@ -425,6 +437,9 @@ app.delete("/api/user/:user_id", (req, res) => {
     else if (req.params.user_id != req.userId) return res.status(403).json({error: "not your user"});
 
     userDao.getPassword(req.email, (status, data) => {
+        console.log(req.email, data);
+
+        if (data[0] == undefined) return res.status(400).json({error: "data is undefined"});
 
         let pw = req.body.password;
 
@@ -1221,18 +1236,20 @@ app.get('/api/event/:event_id/performance/:performance_id/contract', (req, res) 
 
     eventDao.getEventParticipants(req.params.event_id, (status, data) => {
 
-        if (data.length == 0) return res.status(200).json({jwt: token, error: 'no event participants data received'});
+        if (data.length == 0) return res.status(400).json({jwt: token, error: 'no event participants data received'});
 
         if (checkEventAccess(data, req.userId)) {
-            eventDao.downloadContract({performanceId: req.params.performance_id, userId: req.userId}, (status, data) => {
+            eventDao.downloadContract({
+                performanceId: req.params.performance_id,
+                userId: req.userId
+            }, (status, data) => {
                 res.status(status);
 
                 if (data[0] == undefined) return res.status(400).json({data: "No contract exists", jwt: token});
 
                 res.json({data: data[0].contract, jwt: token});
             });
-        }
-        else {
+        } else {
             res.status(403).json({jwt: token, error: "Not authorized to access this information"});
         }
     });

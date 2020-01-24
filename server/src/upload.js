@@ -1,7 +1,6 @@
 //@flow
 const fs = require('fs');
 const IncomingForm = require('formidable').IncomingForm;
-const filePath = './saved/';
 
 import {eventDao, userDao} from './server';
 import {thisFunctionCreatesNewToken} from "./server";
