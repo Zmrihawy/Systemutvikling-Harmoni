@@ -14,13 +14,28 @@ export default class DatePicker extends Component {
     };
 
     handleTimeChange = (value, id) => {
+        let error = false;
+        let times = [
+            this.state.timeFrom.split(' ')[1].replace(/:/g, ''),
+            this.state.timeTo.split(' ')[1].replace(/:/g, '')
+        ];
         let time = this.state[id].split(' ');
         time[1] = value.format('HH:mm:ss');
         let newTime = time.join(' ');
 
         if (id === 'timeFrom') {
+            if (time[1].replace(/:/g, '') > times[1]) {
+                error = true;
+            }
+        } else if (id === 'timeTo') {
+            if (time[1].replace(/:/g, '') < times[0]) {
+                error = true;
+            }
+        }
+
+        if (id === 'timeFrom' && !error) {
             this.setState({ timeFrom: newTime });
-        } else {
+        } else if (id === 'timeTo' && !error) {
             this.setState({ timeTo: newTime });
         }
     };
@@ -59,7 +74,7 @@ export default class DatePicker extends Component {
                     <Type
                         strings="Når skal arrangementet være?"
                         loop={false}
-                        speed={50}
+                        speed={35}
                     />
                 </div>
                 <div className={classes.DatePicker__options}>
@@ -84,7 +99,7 @@ export default class DatePicker extends Component {
                                 id="timeFrom"
                                 showSecond={false}
                                 className={classes.TimePicker}
-                                defaultValue={moment(this.state.timeFrom)}
+                                value={moment(this.state.timeFrom)}
                                 onChange={(value, id = 'timeFrom') =>
                                     this.handleTimeChange(value, id)
                                 }
@@ -96,7 +111,7 @@ export default class DatePicker extends Component {
                                 style={{ width: 80 }}
                                 showSecond={false}
                                 className={classes.TimePicker}
-                                defaultValue={moment(this.state.timeTo)}
+                                value={moment(this.state.timeTo)}
                                 onChange={(value, id = 'timeTo') =>
                                     this.handleTimeChange(value, id)
                                 }

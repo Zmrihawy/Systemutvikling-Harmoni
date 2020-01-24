@@ -7,7 +7,7 @@ const basicForm = props => {
     return (
         <>
             <div className="MediumTitle">
-                <Type strings={props.title} speed={50} />
+                <Type strings={props.title} speed={35} />
             </div>
             <form className={classes.BasicForm} onSubmit={props.next}>
                 <input

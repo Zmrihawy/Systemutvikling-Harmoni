@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Modal from './../../../components/UI/Modal/Modal';
 import UploadFile from '../../Upload/UploadFile';
 import Type from '../../../components/UI/Type/Type';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 
 import classes from './ContractAdder.module.scss';
 
@@ -70,7 +71,15 @@ export default class ContractAdder extends Component {
                                 clearFiles={this.handleClearFiles}
                                 callerID={this.state.callerID}
                             />
-                        ) : null}
+                        ) : (
+                            <Spinner />
+                        )}
+                        <button
+                            className="Button"
+                            onClick={this.handleToggleModal}
+                        >
+                            Lukk
+                        </button>
                     </Modal>
                 </div>
             );
@@ -78,7 +87,7 @@ export default class ContractAdder extends Component {
         return (
             <div className={classes.ContractAdder}>
                 <div className="MediumTitle">
-                    <Type strings="Vil du laste opp kontrakter?" speed={50} />
+                    <Type strings="Vil du laste opp kontrakter?" speed={35} />
                 </div>
                 {artists}
                 <div className={classes.ContractAdder__buttons}>

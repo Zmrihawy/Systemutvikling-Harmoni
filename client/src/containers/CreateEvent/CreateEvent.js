@@ -25,7 +25,7 @@ import classes from './CreateEvent.module.scss';
 export default class CreateEvent extends Component {
     state = {
         showBackdrop: false,
-        currentPage: 0,
+        currentPage: 3,
         newEvent: {
             title: '',
             description: '',
@@ -335,7 +335,7 @@ export default class CreateEvent extends Component {
                             <Type
                                 strings="Skal arrangementet ha personell?"
                                 loop={false}
-                                speed={50}
+                                speed={35}
                             />
                         </div>
                         <StaffAdder
