@@ -20,8 +20,6 @@ class NewEventHandler {
                 newEvent.times[0],
                 newEvent.times[1]
             );
-            console.log('Event:');
-            console.log(eventID);
 
             if (!eventID) this.handleError('Registering event failed');
 
@@ -34,8 +32,6 @@ class NewEventHandler {
             } else {
                 ticketsSuccess = true;
             }
-            console.log('Tickets:');
-            console.log(ticketsSuccess);
 
             let crewSuccess;
             if (newEvent.staff.length > 0) {
@@ -44,17 +40,12 @@ class NewEventHandler {
                 crewSuccess = true;
             }
 
-            console.log('Crew:');
-            console.log(crewSuccess);
-
             const performanceIDs = await this.savePerformance(
                 newEvent.artists,
                 eventID,
                 newEvent.times[0],
                 newEvent.times[1]
             );
-
-            console.log(performanceIDs);
 
             let riders = false;
             let riderSuccess;
@@ -71,8 +62,6 @@ class NewEventHandler {
             } else {
                 riderSuccess = true;
             }
-            console.log('Riders:');
-            console.log(riderSuccess);
 
             // Upload contracts to the given artists.
             if (newEvent.contracts) {

@@ -120,13 +120,11 @@ export default class CreateEvent extends Component {
     };
 
     handleSaveStaff = input => {
-        console.log('staffd');
         this.handleSave(input, 'staff', '');
         this.handleToggleBackdrop();
     };
 
     handleMapClick = (map, e) => {
-        console.log('Map clicked');
         let longitude = e.lngLat.lng;
         let latitude = e.lngLat.lat;
 
@@ -153,8 +151,6 @@ export default class CreateEvent extends Component {
             );
         } else if (select === 'tickets') {
             this.setState({ ticketOptions: input[1] });
-
-            console.log(input[0]);
 
             result = input[0].filter(el => el.amount !== '' && el.price !== '');
         } else if (select === 'riders') {
