@@ -103,8 +103,25 @@
 }
 
 .staff__wrapper > input {
-    padding: 15px;
+    padding: 15px 5px;
     font-size: 1.4em;
     background-color: #fdfdfd;
     border: 1px solid lightgray;
+    min-width: 0px;
+}
+
+@media only screen and (max-width: 800px) {
+    .container {
+        width: 90%;
+    }
+
+    .desc__wrapper {
+        width: 100%; 
+        grid-template-columns: 4fr 2fr repeat(2, 1fr);
+    }
+
+    .staff__wrapper {
+        width: 100%; 
+        grid-template-columns: 4fr 2fr repeat(2, 1fr);
+    }
 }
