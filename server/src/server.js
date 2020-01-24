@@ -782,7 +782,7 @@ app.put("/api/event/:event_id/performance/:performance_id/rider", (req, res) => 
                 name: req.body.name,
                 amount: req.body.amount,
                 performanceId: req.params.performance_id,
-                confirmed: req.body.confirmed,
+                confirmed: 0,
                 oldName: req.body.oldName,
                 userId: req.userId
             }, (status, data) => {
