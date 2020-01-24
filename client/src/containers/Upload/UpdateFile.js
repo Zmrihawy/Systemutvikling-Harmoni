@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Progress from './Progress/Progress';
 import Dropzone from './Dropzone/Dropzone';
 import './Upload.css';
-import { eventService } from './../../services';
 
 class UpdateFile extends Component {
     constructor(props) {
@@ -52,7 +51,6 @@ class UpdateFile extends Component {
     }
 
     async uploadFiles() {
-        this.props.toggleModal();
         this.setState({ uploadProgress: {}, uploading: true });
         const promises = [];
         this.state.files.forEach(file => {
@@ -65,13 +63,16 @@ class UpdateFile extends Component {
             );
         });
         try {
-            await Promise.all(promises);
-            window.location.reload();
+            Promise.all(promises);
+            /* this.props.toggleModal(); */
 
             this.setState({ successfullUploaded: true, uploading: false });
+            console.log('javell');
         } catch (e) {
+            console.log(e);
             this.setState({ successfullUploaded: true, uploading: false });
         }
+        window.location.reload();
     }
 
     renderProgress(file) {

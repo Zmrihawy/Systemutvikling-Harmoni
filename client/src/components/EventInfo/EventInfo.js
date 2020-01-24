@@ -24,7 +24,7 @@ export default class EventInfo extends Component {
         showModal: false,
         url: 'TOM',
         callerID: null,
-        hasContract: new Array(this.props.artists.length)
+        noData: false
     };
 
     handleToggleModal = () => {
@@ -35,18 +35,21 @@ export default class EventInfo extends Component {
     };
 
     handleContractView = (performanceId, index) => {
-        this.setState({ callerID: performanceId, showModal: true });
+        console.log(performanceId);
+        this.setState({
+            callerID: performanceId,
+            showModal: true,
+            url: 'TOM',
+            noData: false
+        });
         eventService
             .getContract(this.props.eventId, performanceId)
             .then(data => {
-                let contracts = [...this.state.hasContract];
                 if (!data) {
-                    contracts[index] = 0;
-                    this.setState({ hasContract: contracts });
-                    return;
+                    this.setState({ noData: true });
+                } else {
+                    this.setState({ url: data });
                 }
-                contracts[index] = 1;
-                this.setState({ url: data, hasContract: contracts });
             });
         this.handleToggleModal();
     };
@@ -66,7 +69,11 @@ export default class EventInfo extends Component {
                 >
                     {this.state.url !== 'TOM' && !this.state.newContract ? (
                         <PdfView url={this.state.url} />
-                    ) : this.state.newContract ? null : (
+                    ) : this.state.newContract ? null : this.state.noData ? (
+                        <div className="MediumTitle">
+                            Denne artisten har ingen kontrakt
+                        </div>
+                    ) : (
                         <Spinner />
                     )}
                     {this.state.newContract ? (

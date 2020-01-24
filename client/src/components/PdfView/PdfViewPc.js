@@ -34,7 +34,7 @@ class PdfView extends Component {
         } else {
             return (
                 <div className={classes.PDF}>
-                    <PDFReader width={720} url={this.props.url} />
+                    <PDFReader showAllPage width={720} url={this.props.url} />
                 </div>
             );
         }
