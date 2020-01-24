@@ -3,9 +3,9 @@ import Progress from './Progress/Progress';
 import Dropzone from './Dropzone/Dropzone';
 import './Upload.css';
 import { UserService } from './../../services';
+import { history } from '../App';
 
 const userId = window.sessionStorage.getItem('user');
-
 class UploadPic extends Component {
     constructor(props) {
         super(props);
@@ -28,7 +28,7 @@ class UploadPic extends Component {
         }));
     }
 
-    sendRequest(file, userId) {
+    sendRequest(file,userId) {
         return new Promise((resolve, reject) => {
             const req = new XMLHttpRequest();
 
@@ -53,7 +53,11 @@ class UploadPic extends Component {
             promises.push(this.sendRequest(file, userId));
         });
         try {
-            await Promise.all(promises);
+            this.props.handleModal();
+            await Promise.all(promises)
+                .then(window.location.reload())
+
+
 
             // this.setState({ successfullUploaded: true, uploading: false });
         } catch (e) {
@@ -121,10 +125,11 @@ class UploadPic extends Component {
 
         return (
             <div className="Upload">
-                <span className="Title">Upload file</span>
+                <h1>Laste opp bilde, må være på gyldig format!</h1>
                 <div className="Content">
                     <div>
                         <Dropzone
+                            picture
                             onFilesAdded={this.onFilesAdded}
                             disable={
                                 this.state.uploading ||
