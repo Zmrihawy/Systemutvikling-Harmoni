@@ -104,7 +104,7 @@ const eventEdit = props => {
             <input
                 className={`${classes.button__submit} ${'Button'}`}
                 type="submit"
-                value="Endre arrangement"
+                value="Lagre endringer"
             />
         </form>
     );

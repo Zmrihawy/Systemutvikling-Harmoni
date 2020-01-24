@@ -95,9 +95,10 @@ export default class DisplayStaffEdit extends Component {
                 if (oldPerson.id === newPerson.id) {
                     if (
                         oldPerson.name !== newPerson.name ||
-                        oldPerson.proffesion !== newPerson.proffesion ||
+                        oldPerson.profession !== newPerson.profession ||
                         oldPerson.contactInfo !== newPerson.contactInfo
                     ) {
+                        newPerson.oldName = oldPerson.name; 
                         updateList.push(newPerson);
                     }
                 }
@@ -121,7 +122,7 @@ export default class DisplayStaffEdit extends Component {
         let promises = [];
 
         //Adds the new artists to the database
-        addList.map(person => {
+        addList.forEach(person => {
             let promise = eventService.createCrew(
                 eventId,
                 person.profession,
@@ -130,14 +131,12 @@ export default class DisplayStaffEdit extends Component {
             );
 
             promises.push(promise);
-
-            return promise;
         });
 
         //Updates the artist who's attributes where changed
-        updateList.map(person => {
+        updateList.forEach(person => {
             let promise = eventService.updateCrew(
-                'old',
+                person.oldName,
                 eventId,
                 person.id,
                 person.profession,
@@ -146,15 +145,12 @@ export default class DisplayStaffEdit extends Component {
             );
 
             promises.push(promise);
-
-            return promise;
         });
 
         //Deletes the artists who were removed from the database
-        deleteList.map(person => {
+        deleteList.forEach(person => {
             let promise = eventService.deleteCrew(eventId, person.id);
             promises.push(promise);
-            return promise;
         });
 
         //Redirects to the event page

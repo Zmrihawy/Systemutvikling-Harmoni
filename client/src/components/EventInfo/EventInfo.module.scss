@@ -43,7 +43,7 @@
     justify-self: center;
     padding: 0.4rem 2rem;
     background-color: #ff9f43;
-    color: #fff;
+    font-size: 1em;
     border: none;
     border-radius: 0.4rem;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.3);
@@ -52,7 +52,7 @@
 
     &:hover {
         transform: scale(1.1);
-        color: #000;
+        color: #fff;
         background-color: #ca680c;
     }
 }
