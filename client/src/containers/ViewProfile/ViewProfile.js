@@ -44,7 +44,9 @@ export default class ViewProfile extends Component {
         this.setState({
             loading: false
         });
-        document.getElementById("profileImg").src = this.state.picture;
+        if(document.getElementById("profileImg") !== null && this.state !== null){
+            document.getElementById("profileImg").src = this.state.picture;
+        }
         if(this.state.artist === 0){
             if(document.getElementById("titleP") !== null){
                 document.getElementById("titleP").innerHTML = "Arrangør";

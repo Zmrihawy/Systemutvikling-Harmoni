@@ -30,7 +30,7 @@ export default class Registration extends Component {
                         <input type="text" required name="lastName" placeholder="Etternavn" value={this.state.surname} onChange={this.onChange}/>
                         <input
                             type="email" required name="email" placeholder="E-post" value={this.state.email} onChange={this.onChange}/>
-                        <input type="text" required name="phone" placeholder="Phone" value={this.state.phone} onChange={this.onChange}/>
+                        <input type="text" required name="phone" placeholder="Telefon" value={this.state.phone} onChange={this.onChange}/>
                         {/*<div className="radioDiv">
                         <label for="0">
                             <input type="radio" value="0"  onChange={this.onChange} name="artist"/> 

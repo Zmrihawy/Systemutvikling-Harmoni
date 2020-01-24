@@ -5,7 +5,7 @@
         'registered__artists'
         'unregistered__artists'
         'form';
-    grid-gap: 15px;
+    grid-gap: 20px;
     margin: 50px auto;
     place-items: center center;
     width: 60%;
@@ -21,23 +21,12 @@
     font-size: 3em;
 }
 
-.subtitle::before,
-.subtitle::after {
-    display: inline-block;
-    content: '';
-    border-top: 0.3rem solid black;
-    width: 3rem;
-    margin: 0 1rem;
-    transform: translateY(-1rem);
-}
-
 .registered__artists {
     display: grid;
     grid-template-areas:
         'registered__title'
         'registered__list'
         'button__registered__add';
-    grid-gap: 15px;
     width: 100%;
     place-items: center center;
 }
@@ -56,6 +45,7 @@
 
 .registered__title {
     grid-area: registered__title;
+    margin-bottom: 20px;
 }
 
 .registered__list {
@@ -86,13 +76,13 @@
         'unregistered__list'
         'button__unregistered__add'
         'button__submit';
-    grid-gap: 15px;
     width: 100%;
     place-items: center center;
 }
 
 .unregistered__title {
     grid-area: unregistered__title;
+    margin-bottom: 20px;
 }
 
 .unregistered__list {
@@ -151,11 +141,15 @@
 
 .artist__wrapper > input,
 .artist__wrapper > select {
-    padding: 15px 5px;
-    font-size: 1.4em;
-    background-color: #fdfdfd;
-    border: 1px solid lightgray;
     min-width: 0px;
+    margin: 0; 
+    font-size: 1.8em;
+    height: 50px;
+    padding: 1rem;
+}
+
+.artist__wrapper > input:focus {
+    transform: none;
 }
 
 @media only screen and (max-width: 800px) {

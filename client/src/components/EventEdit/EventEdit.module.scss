@@ -9,7 +9,7 @@
         'button__archive     button__archive   button__delete'
         'button__submit     button__submit     button__submit'; 
     grid-template-columns: 1fr 1fr 2fr;
-    grid-gap: 15px;
+    grid-gap: 20px;
     margin: 50px auto;
     place-items: center center;
     width: 60%;
@@ -60,7 +60,7 @@
 
 .input__description {
     grid-area: input__description;
-    height: 500px;
+    min-height: 300px;
 }
 
 .button__submit {
@@ -75,14 +75,18 @@
     grid-area: button__archive; 
 }
 
-.container > input,
-.container > textarea {
-    padding: 15px;
-    font-size: 1.4em;
-    background-color: #fdfdfd;
-    border-radius: 15px;
-    border: 1px solid lightgray;
+.container > input, 
+.container > textArea {
+    min-width: 0px;
+    margin: 0; 
+    font-size: 1.8em;
+    height: 50px;
+    padding: 1rem;
     width: 100%;
+}
+
+.container > input:focus {
+    transform: none;
 }
 
 @media only screen and (max-width: 1000px) {

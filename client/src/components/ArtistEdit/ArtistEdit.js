@@ -38,7 +38,7 @@ const artistEdit = props => {
                                 ))}
                             </select>
                             <input
-                                className={classes.button__registered__delete}
+                                className={`${classes.button__registered__delete} ${'Button'}`}
                                 onClick={event =>
                                     props.handleButtonDeleteClick(event, true)
                                 }
@@ -49,7 +49,7 @@ const artistEdit = props => {
                     ))}
                 </div>
                 <input
-                    className={classes.button__registered__add}
+                    className={`${classes.button__registered__add} ${'Button'}`}
                     onClick={event => props.handleButtonAddClick(event, true)}
                     type="button"
                     value="+"
@@ -68,7 +68,7 @@ const artistEdit = props => {
                     {props.unregisteredArtists.map((artist, i) => (
                         <div className={classes.artist__wrapper} key={i} id={i}>
                             <input
-                                className={classes.input__name}
+                                className={`${classes.input__name} ${'Input'}`}
                                 type="text"
                                 name="name"
                                 value={artist.name}
@@ -76,7 +76,7 @@ const artistEdit = props => {
                                 required
                             />
                             <input
-                                className={classes.button__delete}
+                                className={`${classes.button__delete} ${'Button'}`}
                                 onClick={event =>
                                     props.handleButtonDeleteClick(event, false)
                                 }
@@ -87,13 +87,13 @@ const artistEdit = props => {
                     ))}
                 </div>
                 <input
-                    className={classes.button__unregistered__add}
+                    className={`${classes.button__unregistered__add} ${'Button'}`}
                     onClick={event => props.handleButtonAddClick(event, false)}
                     type="button"
                     value="+"
                 />
                 <input
-                    className={classes.button__submit}
+                    className={`${classes.button__submit} ${'Button'}`}
                     type="submit"
                     value="Lagre endringer"
                 />

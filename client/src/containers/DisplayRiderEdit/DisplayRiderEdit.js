@@ -181,7 +181,7 @@ export default class DisplayRiderEdit extends Component {
                 handleButtonAddClick={this.handleButtonAddClick}
                 handleButtonDeleteClick={this.handleButtonDeleteClick}
                 handleButtonSubmitClick={this.handleButtonSubmitClick}
-                artistToken={sessionStorage.getItem('artist')}
+                artistToken={parseInt(sessionStorage.getItem('artist'))}
             />
         );
     }
