@@ -125,6 +125,7 @@ class UploadPic extends Component {
                 <div className="Content">
                     <div>
                         <Dropzone
+                            picture
                             onFilesAdded={this.onFilesAdded}
                             disable={
                                 this.state.uploading ||

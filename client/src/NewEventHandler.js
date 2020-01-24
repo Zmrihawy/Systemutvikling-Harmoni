@@ -75,7 +75,7 @@ class NewEventHandler {
             console.log(riderSuccess);
 
             // Upload contracts to the given artists.
-            if (newEvent.files) {
+            if (newEvent.contracts) {
                 this.uploadFiles(newEvent.contracts, eventID, performanceIDs);
             }
 

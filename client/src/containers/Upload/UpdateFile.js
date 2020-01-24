@@ -52,13 +52,21 @@ class UpdateFile extends Component {
     }
 
     async uploadFiles() {
+        this.props.toggleModal();
         this.setState({ uploadProgress: {}, uploading: true });
         const promises = [];
         this.state.files.forEach(file => {
-            promises.push(this.sendRequest(file, 1, 2));
+            promises.push(
+                this.sendRequest(
+                    file,
+                    this.props.eventId,
+                    this.props.performanceId
+                )
+            );
         });
         try {
             await Promise.all(promises);
+            window.location.reload();
 
             this.setState({ successfullUploaded: true, uploading: false });
         } catch (e) {
@@ -69,24 +77,13 @@ class UpdateFile extends Component {
     renderProgress(file) {
         const uploadProgress = this.state.uploadProgress[file.name];
         if (this.state.uploading || this.state.successfullUploaded) {
+            console.log(uploadProgress);
             return (
                 <div className="ProgressWrapper">
                     <Progress
                         progress={
                             uploadProgress ? uploadProgress.percentage : 0
                         }
-                    />
-                    <img
-                        className="CheckIcon"
-                        alt="done"
-                        src="baseline-check_circle_outline-24px.svg"
-                        style={{
-                            opacity:
-                                uploadProgress &&
-                                uploadProgress.state === 'done'
-                                    ? 0.5
-                                    : 0
-                        }}
                     />
                 </div>
             );
@@ -114,7 +111,7 @@ class UpdateFile extends Component {
                     }
                     onClick={this.uploadFiles}
                 >
-                    Upload
+                    Last opp
                 </button>
             );
         }
@@ -125,7 +122,9 @@ class UpdateFile extends Component {
 
         return (
             <div className="Upload">
-                <span className="Title">Upload file, må vere en PDF</span>
+                <span className="Title">
+                    Filtype <em style={{ color: '#ff9f43' }}>må</em> være PDF
+                </span>
                 <div className="Content">
                     <div>
                         <Dropzone

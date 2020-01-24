@@ -3,9 +3,10 @@ import { PDFReader } from 'react-read-pdf';
 import { eventService } from './../../services';
 import Modal from './../UI/Modal/Modal';
 
-class PdfReader extends Component {
+import classes from './PdfView.module.scss';
+
+class PdfView extends Component {
     state = {
-        URL: 'TOM',
         showBackdrop: false
     };
 
@@ -16,23 +17,27 @@ class PdfReader extends Component {
     };
 
     componentDidMount() {
-        let url = eventService
+        /* console.log('info');
+        console.log(this.props.eventId);
+        console.log(this.props.artist); */
+        /* let url = eventService
             .getContract(this.props.eventId, this.props.performanceId)
             .then(data => {
+                if (!data) return;
                 this.setState({ URL: data });
-            });
+            }); */
     }
 
     render() {
-        if (this.state.URL === 'TOM') {
+        if (this.props.url === 'TOM') {
             return <div>Loading...</div>;
         } else {
             return (
-                <>
-                    <PDFReader url={this.state.URL} />
-                </>
+                <div className={classes.PDF}>
+                    <PDFReader width={720} url={this.props.url} />
+                </div>
             );
         }
     }
 }
-export default PdfReader;
+export default PdfView;
