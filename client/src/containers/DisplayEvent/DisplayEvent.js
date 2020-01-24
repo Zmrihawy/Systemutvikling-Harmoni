@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import EventInfo from '../../components/EventInfo/EventInfo';
 
 import profileHolder from '../../pictures/profileHolder.svg';
+import Spinner from '../../components/UI/Spinner/Spinner';
 import { eventService } from '../../services';
 import { history } from '../App';
 
@@ -24,6 +25,7 @@ export default class DisplayEvent extends Component {
         latitude: 63.446827,
         firstname: '',
         lastname: '',
+        loading: true, 
         artists: [
             {
                 id: '',
@@ -68,7 +70,8 @@ export default class DisplayEvent extends Component {
                     longitude: recivedEvent.longitude,
                     latitude: recivedEvent.latitude,
                     firstname: recivedEvent.firstName,
-                    lastname: recivedEvent.surname
+                    lastname: recivedEvent.surname,
+                    loading: false
                 });
             })
             .catch((error: Error) => console.log(error));
@@ -165,8 +168,11 @@ export default class DisplayEvent extends Component {
     };
 
     render() {
-        return (
-            <EventInfo
+        let output;
+
+        return !this.state.loading ? (
+            (output = (
+                <EventInfo
                 title={this.state.title}
                 description={this.state.description}
                 location={this.state.location}
@@ -187,6 +193,9 @@ export default class DisplayEvent extends Component {
                 artistToken={parseInt(sessionStorage.getItem('artist'))}
                 eventId={this.state.id}
             />
-        );
+            ))
+        ) : <Spinner />
     }
 }
+
+

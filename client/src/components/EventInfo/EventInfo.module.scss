@@ -17,10 +17,9 @@
 .top__section {
     grid-area: top__section;
     display: grid;
-    grid-template-areas:
-        'title'
-        'button__edit';
+    grid-template-areas: 'title button__edit';
     place-items: center center;
+    grid-template-columns: 1fr auto;
     margin: 0px 40px;
 }
 
@@ -42,6 +41,7 @@
     border-radius: 6px;
     display: inline-block;
     transition: all 0.3s ease 0s;
+    transform: translateY(25%);
 }
 
 .button__edit:hover {
@@ -164,7 +164,6 @@
     padding: 0;
     border: none;
     font-size: 1.2em;
-
 }
 .artist__list {
     display: grid;
@@ -432,6 +431,12 @@
         grid-template-columns: repeat(2, 1fr);
         font-size: 1.5em;
         height: fit-content;
+    }
+
+    .top__section {
+        grid-template-areas:
+            'title'
+            'button__edit';
     }
 }
 

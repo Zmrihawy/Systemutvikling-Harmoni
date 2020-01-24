@@ -212,6 +212,13 @@ export default class EventInfo extends Component {
                                                 onClick={
                                                     this.handleEditContract
                                                 }
+                                                style={{
+                                                    visibility:
+                                                        this.props
+                                                            .artistToken === 1
+                                                            ? 'hidden'
+                                                            : 'visible'
+                                                }}
                                             >
                                                 {this.state.newContract
                                                     ? 'Tilbake'
