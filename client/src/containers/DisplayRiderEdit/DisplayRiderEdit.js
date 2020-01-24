@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import RiderEdit from '../../components/RiderEdit/RiderEdit';
 
+import Spinner from '../../components/UI/Spinner/Spinner';
 import { eventService } from '../../services';
 import { history } from '../App';
 
@@ -16,7 +17,8 @@ export default class DisplayRiderEdit extends Component {
 
     state = {
         name: 'artist',
-        riders: []
+        riders: [],
+        loading: true
     };
 
     //Fetches the riders from the database
@@ -35,6 +37,8 @@ export default class DisplayRiderEdit extends Component {
                     this.setState({ riders: serverRiders });
                     this.setState({ name: serverRiders[0].performanceName });
                 }
+
+                this.setState({ loading: false });
             })
             .catch(error => console.error(error));
     }
@@ -84,6 +88,8 @@ export default class DisplayRiderEdit extends Component {
     //Triggered when the user clicks the 'Lagre endringer' button
     handleButtonSubmitClick = e => {
         e.preventDefault();
+
+        this.setState({ loading: true }); 
 
         if (!window.confirm('Er du sikker på at du vil lagre endringene?'))
             return;
@@ -180,21 +186,27 @@ export default class DisplayRiderEdit extends Component {
             })
             .catch(() => {
                 window.alert('Teknisk feil!');
-                history.push('/arrangement/' + eventId); 
+                history.push('/arrangement/' + eventId);
             });
     };
 
     render() {
-        return (
-            <RiderEdit
-                riders={this.state.riders}
-                name={this.state.name}
-                handleChange={this.handleChange}
-                handleButtonAddClick={this.handleButtonAddClick}
-                handleButtonDeleteClick={this.handleButtonDeleteClick}
-                handleButtonSubmitClick={this.handleButtonSubmitClick}
-                artistToken={parseInt(sessionStorage.getItem('artist'))}
-            />
+        let output;
+
+        return !this.state.loading ? (
+            (output = (
+                <RiderEdit
+                    riders={this.state.riders}
+                    name={this.state.name}
+                    handleChange={this.handleChange}
+                    handleButtonAddClick={this.handleButtonAddClick}
+                    handleButtonDeleteClick={this.handleButtonDeleteClick}
+                    handleButtonSubmitClick={this.handleButtonSubmitClick}
+                    artistToken={parseInt(sessionStorage.getItem('artist'))}
+                />
+            ))
+        ) : (
+            <Spinner />
         );
     }
 }

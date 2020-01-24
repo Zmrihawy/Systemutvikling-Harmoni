@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import StaffEdit from '../../components/StaffEdit/StaffEdit';
 
+import Spinner from '../../components/UI/Spinner/Spinner';
 import { eventService } from '../../services';
 import { history } from '../App';
 
@@ -15,7 +16,8 @@ export default class DisplayStaffEdit extends Component {
     };
 
     state = {
-        staff: []
+        staff: [],
+        loading: true
     };
 
     //Fetches the staff from the databse
@@ -26,7 +28,7 @@ export default class DisplayStaffEdit extends Component {
             .getCrew(eventId)
             .then(serverStaff => {
                 this.initialStaff = JSON.parse(JSON.stringify(serverStaff));
-                this.setState({ staff: serverStaff });
+                this.setState({ staff: serverStaff, loading: false });
             })
             .catch(error => console.error(error));
     }
@@ -75,6 +77,9 @@ export default class DisplayStaffEdit extends Component {
 
         if (!window.confirm('Er du sikker på at du vil lagre endringene?'))
             return;
+
+        this.setState({ loading: true }); 
+        
         let eventId = this.props.match.params.id;
 
         let oldStaff = this.initialStaff;
@@ -114,7 +119,7 @@ export default class DisplayStaffEdit extends Component {
         });
 
         let promises = [];
-        
+
         //Adds the new artists to the database
         addList.map(person => {
             let promise = eventService.createCrew(
@@ -150,7 +155,7 @@ export default class DisplayStaffEdit extends Component {
             let promise = eventService.deleteCrew(eventId, person.id);
             promises.push(promise);
             return promise;
-        }); 
+        });
 
         //Redirects to the event page
         Promise.all(promises)
@@ -158,21 +163,28 @@ export default class DisplayStaffEdit extends Component {
                 window.alert('Endringene ble lagret!');
                 history.push('/arrangement/' + eventId);
             })
-            .catch(() => {
+            .catch(error => {
+                console.error(error);
                 window.alert('Teknisk feil!');
-                history.push('/arrangement/' + eventId); 
+                history.push('/arrangement/' + eventId);
             });
     };
 
     render() {
-        return (
-            <StaffEdit
-                staff={this.state.staff}
-                handleChange={this.handleChange}
-                handleButtonAddClick={this.handleButtonAddClick}
-                handleButtonDeleteClick={this.handleButtonDeleteClick}
-                handleButtonSubmitClick={this.handleButtonSubmitClick}
-            />
+        let output;
+
+        return !this.state.loading ? (
+            (output = (
+                <StaffEdit
+                    staff={this.state.staff}
+                    handleChange={this.handleChange}
+                    handleButtonAddClick={this.handleButtonAddClick}
+                    handleButtonDeleteClick={this.handleButtonDeleteClick}
+                    handleButtonSubmitClick={this.handleButtonSubmitClick}
+                />
+            ))
+        ) : (
+            <Spinner />
         );
     }
 }

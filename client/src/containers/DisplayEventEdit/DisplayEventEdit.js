@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import EventEdit from '../../components/EventEdit/EventEdit';
 
+import Spinner from '../../components/UI/Spinner/Spinner';
 import { eventService } from '../../services';
 import { history } from '../App';
 
@@ -17,7 +18,8 @@ export default class DisplayEventEdit extends Component {
             latitude: 63.446827,
             startTime: '2020-02-01 00:00:00',
             endTime: '2020-02-10 00:00:00'
-        }
+        }, 
+        loading: true
     };
 
     //fethces the event from the database
@@ -33,7 +35,7 @@ export default class DisplayEventEdit extends Component {
                     .replace('Z', '')
                     .replace('T', ' ');
 
-                this.setState({ event });
+                this.setState({ event: event, loading: false });
             })
             .catch(error => console.error(error));
     }
@@ -122,10 +124,19 @@ export default class DisplayEventEdit extends Component {
         if (!window.confirm('Er du sikker på at du vil slette arrangementet?'))
             return;
 
+        this.setState({ loading: true }); 
+
         eventService
             .deleteEvent(this.state.event.id)
-            .then(responce => history.push('/arrangement'))
-            .catch(error => console.error(error));
+            .then(() => {
+                window.alert('Arrangementet ble slettet!');
+                history.push('/arrangement');
+            })
+            .catch(error => {
+                console.error(error);
+                window.alert('Teknisk feil!');
+                history.push('/arrangement');
+            });
     };
 
     //Triggered the user clicks the 'Arkiver/Gjenopprett arrangement' button
@@ -133,9 +144,11 @@ export default class DisplayEventEdit extends Component {
         e.preventDefault();
 
         if (
-            !window.confirm('Er du sikker på at du vil arkivere arrangementet?')
+            !window.confirm('Er du sikker på at du vil endre arrangementet?')
         )
             return;
+
+        this.setState({ loading: true }); 
 
         let event = this.state.event;
         this.state.event.active === 1 ? (event.active = 0) : (event.active = 1);
@@ -154,8 +167,15 @@ export default class DisplayEventEdit extends Component {
                 this.state.event.startTime,
                 this.state.event.endTime
             )
-            .then(response => history.push('/arrangement'))
-            .catch(error => console.error(error));
+           .then(() => {
+                window.alert('Arrangementet ble endret!');
+                history.push('/arrangement');
+            })
+            .catch(error => {
+                console.error(error);
+                window.alert('Teknisk feil!');
+                history.push('/arrangement');
+            });
     };
 
     //Triggered the user clicks the 'Lagre endringer' button
@@ -164,6 +184,8 @@ export default class DisplayEventEdit extends Component {
 
         if (!window.confirm('Er du sikker på at du vil lagre endringene?'))
             return;
+
+        this.setState({ loading: true }); 
 
         eventService
             .updateEvent(
@@ -178,14 +200,22 @@ export default class DisplayEventEdit extends Component {
                 this.state.event.startTime,
                 this.state.event.endTime
             )
-            .then(response =>
-                history.push('/arrangement/' + this.state.event.id)
-            )
-            .catch(error => console.error(error));
+           .then(() => {
+                window.alert('Endringene ble lagret!');
+                history.push('/arrangement/' + this.state.event.id);
+            })
+            .catch(error => {
+                console.error(error);
+                window.alert('Teknisk feil!');
+                history.push('/arrangement/' + this.state.event.id);
+            });
     };
 
     render() {
-        return (
+        let output;
+
+        return !this.state.loading ? (
+            (output = (
             <EventEdit
                 event={this.state.event}
                 handleButtonSubmitClick={this.handleButtonSubmitClick}
@@ -199,6 +229,7 @@ export default class DisplayEventEdit extends Component {
                 latitude={this.state.event.latitude}
                 location={this.state.event.location}
             />
-        );
+        ))
+        ) : <Spinner />
     }
 }

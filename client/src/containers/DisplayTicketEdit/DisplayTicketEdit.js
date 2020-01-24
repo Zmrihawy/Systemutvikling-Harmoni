@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import TicketEdit from '../../components/TicketEdit/TicketEdit';
 
+import Spinner from '../../components/UI/Spinner/Spinner';
 import { eventService } from '../../services';
 import { history } from '../App';
 
@@ -15,7 +16,8 @@ export default class DisplayTicketEdit extends Component {
     };
 
     state = {
-        tickets: []
+        tickets: [], 
+        loading: true 
     };
 
     //Fetches tickets from the database
@@ -30,6 +32,7 @@ export default class DisplayTicketEdit extends Component {
 
                 this.initialTickets = JSON.parse(JSON.stringify(serverTickets));
                 this.setState({ tickets: serverTickets });
+                this.setState({ loading: false });
             })
             .catch(error => console.error(error));
     }
@@ -76,7 +79,11 @@ export default class DisplayTicketEdit extends Component {
     handleButtonSubmitClick = e => {
         e.preventDefault();
 
+
         if (!window.confirm('Er du sikker på at du vil lagre endringene?')) return;
+
+        this.setState({ loading: true }); 
+
         let eventId = this.props.match.params.id;
 
         let oldTickets = this.initialTickets;
@@ -161,14 +168,18 @@ export default class DisplayTicketEdit extends Component {
                 window.alert('Endringene ble lagret!');
                 history.push('/arrangement/' + eventId);
             })
-            .catch(() => {
+            .catch(error => {
+                console.error(error);
                 window.alert('Teknisk feil!');
                 history.push('/arrangement/' + eventId); 
             });
     };
 
     render() {
-        return (
+        let output;
+
+        return !this.state.loading ? (
+            (output = (
             <TicketEdit
                 tickets={this.state.tickets}
                 handleChange={this.handleChange}
@@ -176,6 +187,7 @@ export default class DisplayTicketEdit extends Component {
                 handleButtonSubmitClick={this.handleButtonSubmitClick}
                 handleButtonDeleteClick={this.handleButtonDeleteClick}
             />
-        );
+       ))
+        ) : <Spinner/>
     }
 }
