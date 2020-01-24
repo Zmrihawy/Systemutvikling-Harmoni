@@ -40,7 +40,6 @@ const eventEdit = props => {
             <Calendar
                 className={classes.calendar}
                 selectRange={true}
-                minDate={new Date()}
                 value={[
                     new Date(props.event.startTime.replace(/-/g, '/')),
                     new Date(props.event.endTime.replace(/-/g, '/'))
