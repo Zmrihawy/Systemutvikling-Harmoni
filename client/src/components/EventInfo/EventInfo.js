@@ -21,10 +21,10 @@ import {
 export default class EventInfo extends Component {
     state = {
         newContract: false,
-        showModal: true,
+        showModal: false,
         url: 'TOM',
         callerID: null,
-        hasContract: false
+        hasContract: new Array(this.props.artists.length)
     };
 
     handleToggleModal = () => {
@@ -34,17 +34,19 @@ export default class EventInfo extends Component {
         }));
     };
 
-    handleContractView = performanceId => {
+    handleContractView = (performanceId, index) => {
         this.setState({ callerID: performanceId, showModal: true });
         eventService
             .getContract(this.props.eventId, performanceId)
             .then(data => {
+                let contracts = [...this.state.hasContract];
                 if (!data) {
-                    this.setState({ hasContract: false });
+                    contracts[index] = 0;
+                    this.setState({ hasContract: contracts });
                     return;
                 }
-
-                this.setState({ url: data });
+                contracts[index] = 1;
+                this.setState({ url: data, hasContract: contracts });
             });
         this.handleToggleModal();
     };
@@ -112,12 +114,14 @@ export default class EventInfo extends Component {
                 </div>
                 <div className={classes.desc}>
                     <h1 className={classes.descTitle}>Om arrangementet</h1>
-                    {this.props.description.split(/\r?\n/).map(paragraph => (
-                        <p>
-                            {paragraph}
-                            <br />
-                        </p>
-                    ))}
+                    {this.props.description
+                        .split(/\r?\n/)
+                        .map((paragraph, i) => (
+                            <p key={i}>
+                                {paragraph}
+                                <br />
+                            </p>
+                        ))}
                 </div>
 
                 <div className={classes.info}>
@@ -212,7 +216,10 @@ export default class EventInfo extends Component {
                                     <button
                                         className={classes.button__contract}
                                         onClick={() => {
-                                            this.handleContractView(artist.id);
+                                            this.handleContractView(
+                                                artist.id,
+                                                i
+                                            );
                                             this.handleToggleModal();
                                         }}
                                         style={{
