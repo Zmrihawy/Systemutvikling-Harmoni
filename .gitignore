@@ -1,1 +1,9 @@
 node_modules
+.idea
+package-lock.json
+lib
+coverage
+flow-coverage
+npm-debug.log
+documents
+docs
