@@ -50,7 +50,6 @@
         'ticket__list'
         'button__add'
         'button__submit';
-    grid-gap: 15px;
     width: 100%;
 }
 
@@ -104,11 +103,15 @@
 }
 
 .ticket__wrapper > input {
-    padding: 15px 5px;
-    font-size: 1.4em;
-    background-color: #fdfdfd;
-    border: 1px solid lightgray;
     min-width: 0px;
+    margin: 0; 
+    font-size: 1.8em;
+    height: 50px;
+    padding: 1rem;
+}
+
+.ticket__wrapper > input:focus {
+    transform: none;
 }
 
 @media only screen and (max-width: 800px) {

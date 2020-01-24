@@ -24,7 +24,7 @@ const ticketEdit = props => {
                     {props.tickets.map((e, i) => (
                         <div className={classes.ticket__wrapper} key={i} id={i}>
                             <input
-                                className={classes.input__name}
+                                className={`${classes.input__name} ${'Input'}`}
                                 type="text"
                                 name="name"
                                 value={e.name}
@@ -32,7 +32,7 @@ const ticketEdit = props => {
                                 required
                             />
                             <input
-                                className={classes.input__price}
+                                className={`${classes.input__price} ${'Input'}`}
                                 type="number"
                                 name="price"
                                 value={e.price}
@@ -40,7 +40,7 @@ const ticketEdit = props => {
                                 required
                             />
                             <input
-                                className={classes.input__amount}
+                                className={`${classes.input__amount} ${'Input'}`}
                                 type="number"
                                 name="amount"
                                 value={e.amount}
@@ -48,7 +48,7 @@ const ticketEdit = props => {
                                 required
                             />
                             <input
-                                className={classes.button__delete}
+                                className={`${classes.button__delete} ${'Button'}`}
                                 onClick={props.handleButtonDeleteClick}
                                 type="button"
                                 value="-"
@@ -57,13 +57,13 @@ const ticketEdit = props => {
                     ))}
                 </div>
                 <input
-                    className={classes.button__add}
+                    className={`${classes.button__add} ${'Button'}`}
                     onClick={props.handleButtonAddClick}
                     type="button"
                     value="+"
                 />
                 <input
-                    className={classes.button__submit}
+                    className={`${classes.button__submit} ${'Button'}`}
                     type="submit"
                     value="Lagre endringer"
                 />

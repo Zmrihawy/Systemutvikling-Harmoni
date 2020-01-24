@@ -21,7 +21,7 @@ const staffEdit = props => {
                     {props.staff.map((e, i) => (
                         <div className={classes.staff__wrapper} key={i} id={i}>
                             <input
-                                className={classes.input__name}
+                                className={`${classes.input__name} ${'Input'}`}
                                 type="text"
                                 name="name"
                                 value={e.name}
@@ -29,7 +29,7 @@ const staffEdit = props => {
                                 required
                             />
                             <input
-                                className={classes.input__profession}
+                                className={`${classes.input__proffesion} ${'Input'}`}
                                 type="text"
                                 name="profession"
                                 value={e.profession}
@@ -37,7 +37,7 @@ const staffEdit = props => {
                                 required
                             />
                              <input
-                                className={classes.input__contactInfo}
+                                className={`${classes.input__contactInfo} ${'Input'}`}
                                 type="text"
                                 name="contactInfo"
                                 value={e.contactInfo}
@@ -45,7 +45,7 @@ const staffEdit = props => {
                                 required
                             />
                             <input
-                                className={classes.button__delete}
+                                className={`${classes.button__delete} ${'Button'}`}
                                 onClick={props.handleButtonDeleteClick}
                                 type="button"
                                 value="-"
@@ -54,13 +54,13 @@ const staffEdit = props => {
                     ))}
                 </div>
                 <input
-                    className={classes.button__add}
+                    className={`${classes.button__add} ${'Button'}`}
                     onClick={props.handleButtonAddClick}
                     type="button"
                     value="+"
                 />
                 <input
-                    className={classes.button__submit}
+                    className={`${classes.button__submit} ${'Button'}`}
                     type="submit"
                     value="Lagre endringer"
                 />
