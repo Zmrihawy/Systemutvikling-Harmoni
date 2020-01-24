@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Progress from './Progress/Progress';
 import Dropzone from './Dropzone/Dropzone';
 import './Upload.css';
-import { eventService } from './../../services';
 
 class UploadFile extends Component {
     constructor(props) {
@@ -12,11 +11,6 @@ class UploadFile extends Component {
             uploadProgress: {},
             successfullUploaded: false
         };
-
-        // this.onFilesAdded = this.onFilesAdded.bind(this);
-        //this.uploadFiles = this.uploadFiles.bind(this);
-        //this.sendRequest = this.sendRequest.bind(this);
-        //this.renderActions = this.renderActions.bind(this);
     }
 
     async uploadFiles() {
@@ -95,14 +89,9 @@ class UploadFile extends Component {
                             })}
                     </div>
                 </div>
-                {/* <div className="Actions"> {this.renderActions()} </div> */}
             </div>
         );
     }
-}
-
-function refreshToken(jwt) {
-    window.sessionStorage.setItem('jwt', jwt);
 }
 
 export default UploadFile;

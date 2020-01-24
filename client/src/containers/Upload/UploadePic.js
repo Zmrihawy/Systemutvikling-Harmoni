@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import Progress from './Progress/Progress';
 import Dropzone from './Dropzone/Dropzone';
 import './Upload.css';
-import { UserService } from './../../services';
-import { history } from '../App';
 
 const userId = window.sessionStorage.getItem('user');
 class UploadPic extends Component {
@@ -28,7 +26,7 @@ class UploadPic extends Component {
         }));
     }
 
-    sendRequest(file,userId) {
+    sendRequest(file, userId) {
         return new Promise((resolve, reject) => {
             const req = new XMLHttpRequest();
 
@@ -47,22 +45,15 @@ class UploadPic extends Component {
     }
 
     async uploadFiles() {
-        //this.setState({ uploadProgress: {}, uploading: true });
         const promises = [];
         this.state.files.forEach(file => {
             promises.push(this.sendRequest(file, userId));
         });
         try {
             this.props.handleModal();
-            await Promise.all(promises)
-                .then(window.location.reload())
-
-
-
-            // this.setState({ successfullUploaded: true, uploading: false });
+            await Promise.all(promises).then(window.location.reload());
         } catch (e) {
-            // Not Production ready! Do some error handling here instead...
-            //this.setState({ successfullUploaded: true, uploading: false });
+            console.log(e.error);
         }
     }
 
@@ -155,10 +146,6 @@ class UploadPic extends Component {
             </div>
         );
     }
-}
-
-function refreshToken(jwt) {
-    window.sessionStorage.setItem('jwt', jwt);
 }
 
 export default UploadPic;

@@ -13,7 +13,6 @@ import DisplayEventEdit from '../DisplayEventEdit/DisplayEventEdit';
 import DisplayStaffEdit from '../DisplayStaffEdit/DisplayStaffEdit';
 import DisplayTicketEdit from '../DisplayTicketEdit/DisplayTicketEdit';
 import DisplayArtistEdit from '../DisplayArtistEdit/DisplayArtistEdit';
-import Header from '../../components/Header/Header';
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
 export default class Main extends Component {

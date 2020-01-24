@@ -15,7 +15,6 @@ export default class ContractAdder extends Component {
     };
 
     handleFilesAdded = newFiles => {
-        console.log(newFiles);
         let files = [...this.state.files];
         files[this.state.callerID] = newFiles;
 

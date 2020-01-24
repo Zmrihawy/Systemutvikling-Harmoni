@@ -22,8 +22,6 @@ class Dropzone extends Component {
     onFilesAdded(evt) {
         if (this.props.disabled) return;
         const files = evt.target.files;
-        console.log(files[0] === 'undefined');
-        console.log(files);
 
         if (files === null || files.length === 0) return;
         else if (this.props.picture) {
@@ -35,18 +33,8 @@ class Dropzone extends Component {
                 filename.charAt(files[0].name.length - 2) +
                 filename.charAt(files[0].name.length - 1);
 
-            console.log(char);
-            console.log(char === '.pdf');
-            console.log(char === undefined);
-
             if (!(char === '.pdf' || char === null)) return;
         }
-
-        /* 
-        console.log(char);
-        console.log(char === '.pdf');
-        console.log(files[0].name);
- */
 
         if (this.props.onFilesAdded) {
             const array = this.fileListToArray(files);

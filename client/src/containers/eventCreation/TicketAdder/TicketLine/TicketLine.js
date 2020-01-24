@@ -10,9 +10,13 @@ const ticketLine = props => {
                 value={props.description}
                 name="description"
             >
+                <option value="" selected disabled hidden>
+                    Billettype
+                </option>
                 {props.options.map((option, i) => {
+                    const chosen = props.selectedTickets.includes(option);
                     return (
-                        <option key={i} value={option}>
+                        <option key={i} value={option} disabled={chosen}>
                             {option}
                         </option>
                     );

@@ -13,9 +13,9 @@ export default class TicketAdder extends Component {
         showModal: false
     };
 
-    handleNewTicket = ticketName => {
+    handleNewTicket = (event, ticketName) => {
         let description;
-        ticketName ? (description = ticketName) : (description = 'Early Bird');
+        ticketName ? (description = ticketName) : (description = '');
         let tickets = [...this.state.tickets];
         tickets.push({ description, amount: '', price: '' });
 
@@ -27,7 +27,7 @@ export default class TicketAdder extends Component {
         const ticketInput = this.state.ticketInput;
         if (ticketInput.trim()) {
             ticketOptions.push(this.state.ticketInput);
-            this.handleNewTicket(this.state.ticketInput);
+            this.handleNewTicket(null, this.state.ticketInput);
 
             this.setState({ ticketOptions, ticketInput: '' });
             this.handleToggleModal();
@@ -63,6 +63,13 @@ export default class TicketAdder extends Component {
     };
 
     render() {
+        let selectedTickets = [];
+        if (this.state.tickets) {
+            selectedTickets = this.state.tickets.map(ticket => {
+                return ticket.description;
+            });
+        }
+
         return (
             <div className={classes.TicketAdder}>
                 <div className="MediumTitle">
@@ -110,6 +117,7 @@ export default class TicketAdder extends Component {
                                     amount={el.amount}
                                     price={el.price}
                                     options={this.state.ticketOptions}
+                                    selectedTickets={selectedTickets}
                                 />
                                 <span
                                     onClick={this.handleDeleteTickets}

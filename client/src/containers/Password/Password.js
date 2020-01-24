@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import './password.scss';
-import { User, userService } from '../../services.js';
-import { history } from '../App';
-import Password from '../Password/Password';
 
 import zxcvbn from 'zxcvbn';
 
@@ -39,8 +36,7 @@ export default class ShowPassword extends Component {
     }
 
     render() {
-
-        if(this.props.strength === true){
+        if (this.props.strength === true) {
             return (
                 <label className="password">
                     <input
@@ -58,8 +54,9 @@ export default class ShowPassword extends Component {
                         data-score={this.state.score}
                     />
                 </label>
-            )
-        }else return (
+            );
+        } else
+            return (
                 <label className="password">
                     <input
                         type={this.state.type}

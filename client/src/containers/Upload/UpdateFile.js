@@ -64,12 +64,9 @@ class UpdateFile extends Component {
         });
         try {
             Promise.all(promises);
-            /* this.props.toggleModal(); */
 
             this.setState({ successfullUploaded: true, uploading: false });
-            console.log('javell');
         } catch (e) {
-            console.log(e);
             this.setState({ successfullUploaded: true, uploading: false });
         }
         window.location.reload();
@@ -78,7 +75,6 @@ class UpdateFile extends Component {
     renderProgress(file) {
         const uploadProgress = this.state.uploadProgress[file.name];
         if (this.state.uploading || this.state.successfullUploaded) {
-            console.log(uploadProgress);
             return (
                 <div className="ProgressWrapper">
                     <Progress
@@ -119,8 +115,6 @@ class UpdateFile extends Component {
     }
 
     render() {
-        console.log(this.state.files);
-
         return (
             <div className="Upload">
                 <span className="Title">
@@ -162,10 +156,6 @@ class UpdateFile extends Component {
             </div>
         );
     }
-}
-
-function refreshToken(jwt) {
-    window.sessionStorage.setItem('jwt', jwt);
 }
 
 export default UpdateFile;

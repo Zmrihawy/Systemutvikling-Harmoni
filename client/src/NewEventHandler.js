@@ -94,10 +94,8 @@ class NewEventHandler {
         if (promises.length > 0) {
             try {
                 await Promise.all(promises);
-
-                //this.setState({ successfullUploaded: true, uploading: false });
             } catch (e) {
-                //this.setState({ successfullUploaded: true, uploading: false });
+                console.log(e.error);
             }
         } else {
             return 1;
@@ -139,7 +137,6 @@ class NewEventHandler {
         startTime,
         endTime
     ) => {
-        console.log(`Longitude: ${longitude}, Latitude: ${latitude}`);
         const event = await eventService.createEvent(
             id,
             name,

@@ -12,13 +12,11 @@ import StaffAdder from '../eventCreation/StaffAdder/StaffAdder';
 import TicketAdder from '../eventCreation/TicketAdder/TicketAdder';
 import RiderAdder from '../eventCreation/RiderAdder/RiderAdder';
 import ContractAdder from '../../containers/eventCreation/ContractAdder/ContractAdder';
-import pdfReader from '../../components/PdfView/PdfViewPc';
 import CreateEventSummary from './CreateEventSummary/CreateEventSummary';
 import NoArtists from '../../components/NoArtists/NoArtists';
 import Type from '../../components/UI/Type/Type';
 import manWithFiles from '../../assets/images/manWithFiles.svg';
 import engineer from '../../assets/images/engineer.svg';
-import PdfReader from '../../components/PdfView/PdfViewPc';
 
 import classes from './CreateEvent.module.scss';
 
@@ -164,7 +162,6 @@ export default class CreateEvent extends Component {
         } else if (select === 'times') {
             result = [...input];
         } else if (select === 'contracts') {
-            console.log(input);
             result = [...input];
         }
 
