@@ -129,7 +129,7 @@ module.exports = class ServerDao extends Dao {
      * This function deletes a rider from the database
      */
     deleteRiderArtist(sql: { performanceId: string | number, name: string, userId: string | number }, callback: (status: number, data: *) => void): void {
-        super.query(`DELETE FROM ${CONSTANTS.RIDER_TABLE} WHERE ${CONSTANTS.RIDER_NAME} IN (SELECT r.${CONSTANTS.RIDER_NAME} FROM ${CONSTANTS.RIDER} r 
+        super.query(`DELETE FROM ${CONSTANTS.RIDER_TABLE} WHERE ${CONSTANTS.RIDER_NAME} IN (SELECT r.${CONSTANTS.RIDER_NAME} FROM ${CONSTANTS.RIDER_TABLE} r 
             JOIN ${CONSTANTS.PERFORMANCE_TABLE} p ON p.${CONSTANTS.PERFORMANCE_ID} = r.${CONSTANTS.RIDER_PERFORMANCE_ID} WHERE r.${CONSTANTS.RIDER_NAME} = ? AND p.${CONSTANTS.PERFORMANCE_ARTIST_ID} = ?)`, [sql.performanceId, sql.name, sql.userId], callback);
     }
 
