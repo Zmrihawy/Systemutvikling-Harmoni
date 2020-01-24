@@ -16,8 +16,8 @@ export class Event {
     endTime: string;
     picture: string;
 
-    firstName:string;
-    surname:string;
+    firstName: string;
+    surname: string;
 
     constructor(
         id: number,
@@ -55,12 +55,7 @@ export class Ticket {
     price: number;
     amount: number;
 
-    constructor(
-        name: string,
-        eventId: number,
-        price: number,
-        amount: number
-    ) {
+    constructor(name: string, eventId: number, price: number, amount: number) {
         this.name = name;
         this.eventId = eventId;
         this.price = price;
@@ -100,7 +95,6 @@ export class Performance {
     username: string;
     name: string;
     picture: string;
-
 
     constructor(
         id: number,
@@ -200,7 +194,7 @@ class EventService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -237,7 +231,6 @@ class EventService {
         }
     }
 
-    
     /**
      * This function gets all performances for a specific event from the database via server
      */
@@ -248,7 +241,7 @@ class EventService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -288,14 +281,21 @@ class EventService {
     getContract(eventId: number, performanceId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
-            fetch('/api/event/' + eventId + '/performance/' + performanceId + '/contract', {
-                method: 'GET',
-                headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+            fetch(
+                '/api/event/' +
+                    eventId +
+                    '/performance/' +
+                    performanceId +
+                    '/contract',
+                {
+                    method: 'GET',
+                    headers: {
+                        'x-access-token': window.sessionStorage.getItem('jwt'),
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    }
                 }
-            })
+            )
                 .then(response => {
                     isError = isErrorRequest(response);
                     return response.json();
@@ -309,8 +309,9 @@ class EventService {
         });
 
         function handleGetContractResponse(json) {
+            if (!json) return false;
             var arrayBufferView = new Uint8Array(json.data);
-            var blob = new Blob([arrayBufferView], {type: 'application/pdf'});
+            var blob = new Blob([arrayBufferView], { type: 'application/pdf' });
             var urlCreator = window.URL || window.webkitURL;
             var contractUrl = urlCreator.createObjectURL(blob);
             urlCreator.revokeObjectURL(blob);
@@ -328,7 +329,7 @@ class EventService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -357,21 +358,17 @@ class EventService {
         }
     }
 
-    
     /**
      * This function gets all riders in a performance from the database via server
      */
-    getPerformanceRiders(
-        eventId: number,
-        performanceId: number
-    ): Promise<any> {
+    getPerformanceRiders(eventId: number, performanceId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/performance/' + performanceId, {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -388,17 +385,19 @@ class EventService {
         });
 
         function handleGetPerformanceRidersResponse(json) {
-            return json.map(
-                data => {
-                    let rider: Rider = new Rider(data.performance_id, data.name, data.amount, data.confirmed);
-                    rider.performanceName = data.performance_name;
-                    return rider;
-                }
-            );
+            return json.map(data => {
+                let rider: Rider = new Rider(
+                    data.performance_id,
+                    data.name,
+                    data.amount,
+                    data.confirmed
+                );
+                rider.performanceName = data.performance_name;
+                return rider;
+            });
         }
     }
 
-    
     /**
      * This function gets all events linked to a specific user from the databse via server
      */
@@ -409,7 +408,7 @@ class EventService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -427,26 +426,24 @@ class EventService {
 
         function handleGetUsersEventsResponse(json) {
             return json.map(data => {
-                    let pictureUrl: string = bufferToPicture(data.picture);
-                    return new Event(
-                        data.event_id,
-                        data.name,
-                        userId,
-                        active,
-                        data.location,
-                        0,
-                        0,
-                        '',
-                        data.start_time,
-                        data.end_time,
-                        pictureUrl
-                    )
-                }
-            );
+                let pictureUrl: string = bufferToPicture(data.picture);
+                return new Event(
+                    data.event_id,
+                    data.name,
+                    userId,
+                    active,
+                    data.location,
+                    0,
+                    0,
+                    '',
+                    data.start_time,
+                    data.end_time,
+                    pictureUrl
+                );
+            });
         }
     }
 
-    
     /**
      * This function gets all crews in an event from the database via server
      */
@@ -457,7 +454,7 @@ class EventService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -488,7 +485,7 @@ class EventService {
     }
 
     //POST
-    
+
     /**
      * This function sends a new event to the database via server
      */
@@ -518,7 +515,7 @@ class EventService {
                 method: 'POST',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -537,7 +534,6 @@ class EventService {
         });
     }
 
-    
     /**
      * This function sends a new ticket to the database via server
      */
@@ -558,7 +554,7 @@ class EventService {
                 method: 'POST',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -577,7 +573,6 @@ class EventService {
         });
     }
 
-    
     /**
      * This function sends a performance to the database via server
      */
@@ -600,7 +595,7 @@ class EventService {
                 method: 'POST',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -619,7 +614,6 @@ class EventService {
         });
     }
 
-    
     /**
      * This function sends a new rider to the database via server
      */
@@ -629,18 +623,25 @@ class EventService {
         name: string,
         amount: number
     ): Promise<any> {
-        let data = {name: name, amount: amount};
+        let data = { name: name, amount: amount };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
-            fetch('/api/event/' + eventId + '/performance/' + performanceId + '/rider', {
-                method: 'POST',
-                headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
+            fetch(
+                '/api/event/' +
+                    eventId +
+                    '/performance/' +
+                    performanceId +
+                    '/rider',
+                {
+                    method: 'POST',
+                    headers: {
+                        'x-access-token': window.sessionStorage.getItem('jwt'),
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }
+            )
                 .then(response => {
                     isError = isErrorRequest(response);
                     return response.json();
@@ -655,7 +656,6 @@ class EventService {
         });
     }
 
-    
     /**
      * This function sends a new crew to the datbase via server
      */
@@ -676,7 +676,7 @@ class EventService {
                 method: 'POST',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -696,13 +696,13 @@ class EventService {
     }
 
     //DELETE
-    
+
     /**
      * This function deletes a crew from the database via the server
      */
     deleteCrew(eventId: number, crewId: number): Promise<any> {
         let isError: boolean = false;
-        let data = {crewId: crewId};
+        let data = { crewId: crewId };
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/crew', {
                 method: 'DELETE',
@@ -727,7 +727,6 @@ class EventService {
         });
     }
 
-    
     /**
      * This function deletes a rider from the database via the server
      */
@@ -736,18 +735,25 @@ class EventService {
         performanceId: number,
         name: string
     ): Promise<any> {
-        let data = {name: name};
+        let data = { name: name };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
-            fetch('/api/event/' + eventId + '/performance/' + performanceId + '/rider', {
-                method: 'DELETE',
-                headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
+            fetch(
+                '/api/event/' +
+                    eventId +
+                    '/performance/' +
+                    performanceId +
+                    '/rider',
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'x-access-token': window.sessionStorage.getItem('jwt'),
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }
+            )
                 .then(response => {
                     isError = isErrorRequest(response);
                     return response.json();
@@ -772,7 +778,7 @@ class EventService {
                 method: 'DELETE',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -791,7 +797,7 @@ class EventService {
     }
 
     //PUT
-    
+
     /**
      * This function updates a ticket in the database via the server
      */
@@ -814,7 +820,7 @@ class EventService {
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -833,7 +839,6 @@ class EventService {
         });
     }
 
-    
     /**
      * This function updates a rider in the database via the server
      */
@@ -853,15 +858,22 @@ class EventService {
         };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
-            fetch('/api/event/' + eventId + '/performance/' + performanceId + '/rider', {
-                method: 'PUT',
-                headers: {
-                    'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
+            fetch(
+                '/api/event/' +
+                    eventId +
+                    '/performance/' +
+                    performanceId +
+                    '/rider',
+                {
+                    method: 'PUT',
+                    headers: {
+                        'x-access-token': window.sessionStorage.getItem('jwt'),
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }
+            )
                 .then(response => {
                     isError = isErrorRequest(response);
                     return response.json();
@@ -886,10 +898,7 @@ class EventService {
             const formData: FormData = new FormData();
             formData.append('file', file, file.name);
 
-            req.open(
-                'PUT',
-                '/api/event/' + eventId + '/picture'
-            );
+            req.open('PUT', '/api/event/' + eventId + '/picture');
 
             req.setRequestHeader(
                 'x-access-token',
@@ -902,7 +911,6 @@ class EventService {
         });
     }
 
-    
     /**
      * This function updates an event in the database via the server
      */
@@ -936,7 +944,7 @@ class EventService {
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -958,7 +966,11 @@ class EventService {
     /**
      * This function updates a contract in the database via the server
      */
-    updateContract(file: File, eventId: number, performanceId: number): Promise<any> {
+    updateContract(
+        file: File,
+        eventId: number,
+        performanceId: number
+    ): Promise<any> {
         return new Promise(resolve => {
             const req: XMLHttpRequest = new XMLHttpRequest();
 
@@ -967,7 +979,11 @@ class EventService {
 
             req.open(
                 'PUT',
-                '/api/event/' + eventId + '/performance/' + performanceId + '/contract'
+                '/api/event/' +
+                    eventId +
+                    '/performance/' +
+                    performanceId +
+                    '/contract'
             );
 
             req.setRequestHeader(
@@ -981,7 +997,6 @@ class EventService {
         });
     }
 
-    
     /**
      * This function updates a performance in the database via the server
      */
@@ -1003,7 +1018,7 @@ class EventService {
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1022,7 +1037,6 @@ class EventService {
         });
     }
 
-    
     /**
      * This function updates a crew in the database via the server
      */
@@ -1047,7 +1061,7 @@ class EventService {
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1066,19 +1080,18 @@ class EventService {
         });
     }
 
-    
     /**
      * This function delets a ticket from the database via the server
      */
     deleteTicket(name: string, eventId: number): Promise<any> {
-        let data = {name: name, eventId: eventId};
+        let data = { name: name, eventId: eventId };
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/ticket', {
                 method: 'DELETE',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1100,19 +1113,16 @@ class EventService {
     /**
      * This function deletes a performance from the database via the server
      */
-    deletePerformance(
-        eventId: number,
-        performanceId: number
-    ): Promise<any> {
+    deletePerformance(eventId: number, performanceId: number): Promise<any> {
         let isError: boolean = false;
         return new Promise((resolve, reject) => {
             fetch('/api/event/' + eventId + '/performance/' + performanceId, {
                 method: 'DELETE',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
-                },
+                }
             })
                 .then(response => {
                     isError = isErrorRequest(response);
@@ -1134,7 +1144,7 @@ class EventService {
  */
 class UserService {
     //GET
-    
+
     /**
      * This function gets a user from the database via server
      */
@@ -1145,7 +1155,7 @@ class UserService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -1187,7 +1197,7 @@ class UserService {
                 method: 'GET',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -1221,19 +1231,19 @@ class UserService {
     }
 
     //DELETE
-    
+
     /**
      * This function deletes a user from the database via server
      */
     deleteUser(userId: number, password: string): Promise<any> {
         let isError: boolean = false;
-        let data = {password: password};
+        let data = { password: password };
         return new Promise((resolve, reject) => {
             fetch('/api/user/' + userId, {
                 method: 'DELETE',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1252,7 +1262,7 @@ class UserService {
     }
 
     //PUT
-    
+
     /**
      * This function updates a user in the database via the server
      */
@@ -1279,7 +1289,7 @@ class UserService {
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1308,7 +1318,7 @@ class UserService {
             fetch('/user/' + email, {
                 method: 'PUT',
                 headers: {
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
@@ -1324,7 +1334,11 @@ class UserService {
     /**
      * This function updates a password in the database via the server
      */
-    updatePassword(userId: string, oldPassword: string, newPassword: string): Promise<any> {
+    updatePassword(
+        userId: string,
+        oldPassword: string,
+        newPassword: string
+    ): Promise<any> {
         let data = {
             oldPassword: oldPassword,
             newPassword: newPassword
@@ -1335,7 +1349,7 @@ class UserService {
                 method: 'PUT',
                 headers: {
                     'x-access-token': window.sessionStorage.getItem('jwt'),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1364,10 +1378,7 @@ class UserService {
             const formData: FormData = new FormData();
             formData.append('file', file, file.name);
 
-            req.open(
-                'PUT',
-                '/api/user/' + userId + '/picture'
-            );
+            req.open('PUT', '/api/user/' + userId + '/picture');
 
             req.setRequestHeader(
                 'x-access-token',
@@ -1380,9 +1391,8 @@ class UserService {
         });
     }
 
-
     //POST
-    
+
     /**
      * This function posts a new user to the database via the server
      */
@@ -1409,7 +1419,7 @@ class UserService {
             fetch('/user', {
                 method: 'POST',
                 headers: {
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1428,7 +1438,6 @@ class UserService {
         });
     }
 
-    
     /**
      * This function logs in a user via server
      */
@@ -1446,7 +1455,7 @@ class UserService {
             fetch('/login', {
                 method: 'POST',
                 headers: {
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -1473,7 +1482,7 @@ class UserService {
 function bufferToPicture(buffer: *) {
     if (buffer == null) return '';
     let arrayBufferView = new Uint8Array(buffer.data);
-    let blob = new Blob([arrayBufferView], {type: 'image'});
+    let blob = new Blob([arrayBufferView], { type: 'image' });
     let urlCreator = window.URL || window.webkitURL;
     let pictureUrl = urlCreator.createObjectURL(blob);
     urlCreator.revokeObjectURL(blob);
@@ -1506,10 +1515,13 @@ function isErrorRequest(response: *): boolean {
             printError(response, 'SQL-error!');
             return true;
         default:
-            console.log('Unhandled status: ' + response.status + '. Possibly an error, but treated as a success request.');
+            console.log(
+                'Unhandled status: ' +
+                    response.status +
+                    '. Possibly an error, but treated as a success request.'
+            );
             return false;
     }
-
 
     function printError(response: *, errorMsg: string): void {
         response.json().then(json => {

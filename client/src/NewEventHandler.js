@@ -93,8 +93,6 @@ class NewEventHandler {
         });
         if (promises.length > 0) {
             try {
-                console.log('Promises');
-                console.log(promises);
                 await Promise.all(promises);
 
                 //this.setState({ successfullUploaded: true, uploading: false });
@@ -107,10 +105,6 @@ class NewEventHandler {
     }
 
     sendRequest(file, eventId, performanceId) {
-        console.log('Request:');
-        console.log(file);
-        console.log(eventId);
-        console.log(performanceId);
         return new Promise((resolve, reject) => {
             const req = new XMLHttpRequest();
 

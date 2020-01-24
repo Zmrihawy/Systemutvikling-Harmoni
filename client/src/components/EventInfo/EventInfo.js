@@ -21,23 +21,29 @@ import {
 export default class EventInfo extends Component {
     state = {
         newContract: false,
-        showModal: false,
-        url: 'TOM'
+        showModal: true,
+        url: 'TOM',
+        callerID: null,
+        hasContract: false
     };
 
     handleToggleModal = () => {
         this.setState(prevState => ({
-            showModal: !prevState.showModal,
+            showModal: !prevState.showModal /* !prevState.showModal */,
             newContract: false
         }));
     };
 
     handleContractView = performanceId => {
+        this.setState({ callerID: performanceId, showModal: true });
         eventService
             .getContract(this.props.eventId, performanceId)
             .then(data => {
-                if (!data) return;
-                console.log(data);
+                if (!data) {
+                    this.setState({ hasContract: false });
+                    return;
+                }
+
                 this.setState({ url: data });
             });
         this.handleToggleModal();
@@ -52,6 +58,43 @@ export default class EventInfo extends Component {
     render() {
         return (
             <div className={classes.container}>
+                <Modal
+                    show={this.state.showModal}
+                    clicked={this.handleToggleModal}
+                >
+                    {this.state.url !== 'TOM' && !this.state.newContract ? (
+                        <PdfView url={this.state.url} />
+                    ) : this.state.newContract ? null : (
+                        <Spinner />
+                    )}
+                    {this.state.newContract ? (
+                        <UpdateFile
+                            toggleModal={this.handleToggleModal}
+                            eventId={this.props.eventId}
+                            performanceId={this.state.callerID}
+                        />
+                    ) : null}
+                    <div>
+                        <button
+                            className="Button Button--inverse"
+                            onClick={this.handleEditContract}
+                            style={{
+                                visibility:
+                                    this.props.artistToken === 1
+                                        ? 'hidden'
+                                        : 'visible'
+                            }}
+                        >
+                            {this.state.newContract ? 'Tilbake' : 'Endre'}
+                        </button>
+                        <button
+                            className="Button"
+                            onClick={this.handleToggleModal}
+                        >
+                            Lukk
+                        </button>
+                    </div>
+                </Modal>
                 <div className={classes.top__section}>
                     <h1 className={classes.title}>{this.props.title}</h1>
                     <button
@@ -168,9 +211,10 @@ export default class EventInfo extends Component {
                                     <h3>{artist.name}</h3>
                                     <button
                                         className={classes.button__contract}
-                                        onClick={() =>
-                                            this.handleContractView(artist.id)
-                                        }
+                                        onClick={() => {
+                                            this.handleContractView(artist.id);
+                                            this.handleToggleModal();
+                                        }}
                                         style={{
                                             visibility:
                                                 this.props.artistToken === 0 ||
@@ -187,51 +231,6 @@ export default class EventInfo extends Component {
                                     >
                                         Kontrakt
                                     </button>
-                                    <Modal
-                                        show={this.state.showModal}
-                                        closed={this.handleToggleModal}
-                                    >
-                                        {this.state.url !== 'TOM' &&
-                                        !this.state.newContract ? (
-                                            <PdfView url={this.state.url} />
-                                        ) : this.state.newContract ? null : (
-                                            <Spinner />
-                                        )}
-                                        {this.state.newContract ? (
-                                            <UpdateFile
-                                                toggleModal={
-                                                    this.handleToggleModal
-                                                }
-                                                eventId={this.props.eventId}
-                                                performanceId={artist.id}
-                                            />
-                                        ) : null}
-                                        <div>
-                                            <button
-                                                className="Button Button--inverse"
-                                                onClick={
-                                                    this.handleEditContract
-                                                }
-                                                style={{
-                                                    visibility:
-                                                        this.props
-                                                            .artistToken === 1
-                                                            ? 'hidden'
-                                                            : 'visible'
-                                                }}
-                                            >
-                                                {this.state.newContract
-                                                    ? 'Tilbake'
-                                                    : 'Endre'}
-                                            </button>
-                                            <button
-                                                className="Button"
-                                                onClick={this.handleToggleModal}
-                                            >
-                                                Lukk
-                                            </button>
-                                        </div>
-                                    </Modal>
                                     <button
                                         className={classes.button__rider}
                                         onClick={event =>
