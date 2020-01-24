@@ -50,8 +50,8 @@ class UploadPic extends Component {
             promises.push(this.sendRequest(file, userId));
         });
         try {
-            this.props.handleModal();
-            await Promise.all(promises).then(window.location.reload());
+            Promise.all(promises);
+            window.location.reload();
         } catch (e) {
             console.log(e.error);
         }
